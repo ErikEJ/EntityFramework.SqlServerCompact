@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>EntityFramework.SqlServerCompact</id>
+    <version>$version$-alpha</version>
+    <title>$title$</title>
+    <authors>ErikEJ</authors>
+    <owners>ErikEJ</owners>
+    <projectUrl>https://github.com/ErikEJ/EntityFramework.SqlServerCompact</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Tag1 Tag2</tags>
+  </metadata>
+</package>

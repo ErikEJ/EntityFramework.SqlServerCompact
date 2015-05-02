@@ -94,7 +94,11 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\SqlServerCompactDbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerCompactOptionsExtensions.cs" />
+    <Compile Include="Utilities\Check.cs" />
+    <Compile Include="Utilities\CodeAnnotations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityFramework.SqlServerCompact.nuspec" />

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.Entity.Infrastructure;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public interface ISqlServerCompactDatabaseFactory : IDatabaseFactory
+    public interface ISqlServerCeDatabaseFactory : IDatabaseFactory
     {
     }
 }

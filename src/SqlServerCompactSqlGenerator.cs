@@ -5,9 +5,9 @@ using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Update;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCompactSqlGenerator : SqlGenerator, ISqlServerCompactSqlGenerator
+    public class SqlServerCeSqlGenerator : SqlGenerator, ISqlServerCeSqlGenerator
     {
         protected override void AppendIdentityWhereCondition(StringBuilder builder, ColumnModification columnModification)
         {

@@ -8,14 +8,14 @@ using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCompactMigrationSqlGenerator : MigrationSqlGenerator, ISqlServerCompactMigrationSqlGenerator
+    public class SqlServerCeMigrationSqlGenerator : MigrationSqlGenerator, ISqlServerCeMigrationSqlGenerator
     {
-        private readonly ISqlServerCompactSqlGenerator _sql;
+        private readonly ISqlServerCeSqlGenerator _sql;
 
-        public SqlServerCompactMigrationSqlGenerator(
-            [NotNull] ISqlServerCompactSqlGenerator sqlGenerator)
+        public SqlServerCeMigrationSqlGenerator(
+            [NotNull] ISqlServerCeSqlGenerator sqlGenerator)
             : base(sqlGenerator)
         {
             _sql = sqlGenerator;

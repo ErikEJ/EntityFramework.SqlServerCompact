@@ -12,7 +12,7 @@ using Microsoft.Data.Entity.Storage;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
+namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class SqlServerDataStoreCreatorTest
     {
@@ -30,7 +30,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task Exists_returns_false_when_database_doesnt_exist_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: false))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: false))
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
@@ -52,7 +52,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task Exists_returns_true_when_database_exists_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: true))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: true))
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
@@ -74,7 +74,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task HasTables_throws_when_database_doesnt_exist_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: false))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: false))
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
@@ -102,7 +102,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task HasTables_returns_false_when_database_exists_but_has_no_tables_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: true))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: true))
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
@@ -124,7 +124,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task HasTables_returns_true_when_database_exists_and_has_any_tables_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: true))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: true))
             {
                 testDatabase.ExecuteNonQuery("CREATE TABLE SomeTable (Id uniqueidentifier)");
 
@@ -148,7 +148,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task Delete_will_delete_database_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: true))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: true))
             {
                 testDatabase.Connection.Close();
 
@@ -183,7 +183,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task Delete_throws_when_database_doesnt_exist_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: false))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: false))
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
@@ -304,7 +304,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task Create_creates_physical_database_but_not_tables_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: false))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: false))
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
@@ -347,7 +347,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
 
         private static async Task Create_throws_if_database_already_exists_test(bool async)
         {
-            using (var testDatabase = SqlServerCompactTestStore.CreateScratch(createDatabase: true))
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: true))
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
@@ -359,15 +359,15 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
             }
         }
 
-        private static IServiceProvider CreateContextServices(SqlServerCompactTestStore testStore)
+        private static IServiceProvider CreateContextServices(SqlServerCeTestStore testStore)
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection
                 .AddEntityFramework()
-                .AddSqlServerCompact();
+                .AddSqlServerCe();
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCompact(testStore.Connection.ConnectionString);
+            optionsBuilder.UseSqlServerCe(testStore.Connection.ConnectionString);
 
             return ((IAccessor<IServiceProvider>)new DbContext(
                 serviceCollection.BuildServiceProvider(),
@@ -375,9 +375,9 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
                 .Service;
         }
 
-        private static ISqlServerCompactDataStoreCreator GetDataStoreCreator(SqlServerCompactTestStore testStore)
+        private static ISqlServerCeDataStoreCreator GetDataStoreCreator(SqlServerCeTestStore testStore)
         {
-            return CreateContextServices(testStore).GetRequiredService<ISqlServerCompactDataStoreCreator>();
+            return CreateContextServices(testStore).GetRequiredService<ISqlServerCeDataStoreCreator>();
         }
 
         private class BloggingContext : DbContext

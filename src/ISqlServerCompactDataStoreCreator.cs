@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.Entity.Relational;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public interface ISqlServerCompactDataStoreCreator : IRelationalDataStoreCreator
+    public interface ISqlServerCeDataStoreCreator : IRelationalDataStoreCreator
     {
 
     }

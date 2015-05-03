@@ -7,18 +7,18 @@ using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Utilities;
 using System.IO;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCompactDataStoreCreator : RelationalDataStoreCreator, ISqlServerCompactDataStoreCreator
+    public class SqlServerCeDataStoreCreator : RelationalDataStoreCreator, ISqlServerCeDataStoreCreator
     {
-        private readonly ISqlServerCompactConnection _connection;
+        private readonly ISqlServerCeConnection _connection;
         private readonly IModelDiffer _modelDiffer;
         //TODO
         //private readonly ISqliteMigrationSqlGenerator _migrationSqlGenerator;
         private readonly ISqlStatementExecutor _executor;
 
-        public SqlServerCompactDataStoreCreator(
-            [NotNull] ISqlServerCompactConnection connection,
+        public SqlServerCeDataStoreCreator(
+            [NotNull] ISqlServerCeConnection connection,
             [NotNull] IModelDiffer modelDiffer,
             //[NotNull] ISqliteMigrationSqlGenerator migrationSqlGenerator,
             [NotNull] ISqlStatementExecutor sqlStatementExecutor)

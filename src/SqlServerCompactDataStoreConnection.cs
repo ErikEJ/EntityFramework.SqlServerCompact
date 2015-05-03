@@ -4,13 +4,13 @@ using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
 using System.Data.SqlServerCe;
 using Microsoft.Framework.Logging;
-using ErikEJ.Data.Entity.SqlServerCompact.Extensions;
+using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCompactDataStoreConnection : RelationalConnection, ISqlServerCompactConnection
+    public class SqlServerCeDataStoreConnection : RelationalConnection, ISqlServerCeConnection
     {
-        public SqlServerCompactDataStoreConnection([NotNull] IDbContextOptions options, [NotNull] ILoggerFactory loggerFactory)
+        public SqlServerCeDataStoreConnection([NotNull] IDbContextOptions options, [NotNull] ILoggerFactory loggerFactory)
             : base(options, loggerFactory)
         {
         }

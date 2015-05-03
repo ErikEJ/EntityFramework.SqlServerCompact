@@ -1,5 +1,5 @@
 ﻿using System.Data.Common;
-using ErikEJ.Data.Entity.SqlServerCompact;
+using ErikEJ.Data.Entity.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
@@ -7,9 +7,9 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity
 {
-    public static class SqlServerCompactDbContextOptionsBuilderExtensions
+    public static class SqlServerCeDbContextOptionsBuilderExtensions
     {
-        public static RelationalDbContextOptionsBuilder UseSqlServerCompact([NotNull] this DbContextOptionsBuilder options, [NotNull] string connectionString)
+        public static RelationalDbContextOptionsBuilder UseSqlServerCe([NotNull] this DbContextOptionsBuilder options, [NotNull] string connectionString)
         {
             Check.NotNull(options, nameof(options));
             Check.NotEmpty(connectionString, nameof(connectionString));
@@ -22,7 +22,7 @@ namespace Microsoft.Data.Entity
             return new RelationalDbContextOptionsBuilder(options);
         }
 
-        public static RelationalDbContextOptionsBuilder UseSqlServerCompact([NotNull] this DbContextOptionsBuilder options, [NotNull] DbConnection connection)
+        public static RelationalDbContextOptionsBuilder UseSqlServerCe([NotNull] this DbContextOptionsBuilder options, [NotNull] DbConnection connection)
         {
             Check.NotNull(options, nameof(options));
             Check.NotNull(connection, nameof(connection));
@@ -35,13 +35,13 @@ namespace Microsoft.Data.Entity
             return new RelationalDbContextOptionsBuilder(options);
         }
 
-        private static SqlServerCompactOptionsExtension GetOrCreateExtension(DbContextOptionsBuilder options)
+        private static SqlServerCeOptionsExtension GetOrCreateExtension(DbContextOptionsBuilder options)
         {
-            var existingExtension = options.Options.FindExtension<SqlServerCompactOptionsExtension>();
+            var existingExtension = options.Options.FindExtension<SqlServerCeOptionsExtension>();
 
             return existingExtension != null
-                ? new SqlServerCompactOptionsExtension(existingExtension)
-                : new SqlServerCompactOptionsExtension();
+                ? new SqlServerCeOptionsExtension(existingExtension)
+                : new SqlServerCeOptionsExtension();
         }
     }
 }

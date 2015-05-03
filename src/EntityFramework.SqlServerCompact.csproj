@@ -99,6 +99,7 @@
     <Compile Include="Extensions\SqlServerCompactEntityServicesBuilderExtensions.cs" />
     <Compile Include="ISqlServerCompactConnection.cs" />
     <Compile Include="ISqlServerCompactDataFactory.cs" />
+    <Compile Include="ISqlServerCompactDataStore.cs" />
     <Compile Include="ISqlServerCompactDataStoreCreator.cs" />
     <Compile Include="ISqlServerCompactDataStoreServices.cs" />
     <Compile Include="ISqlServerCompactSqlGenerator.cs" />
@@ -107,12 +108,19 @@
     <Compile Include="Migrations\SqlServerCompactHistoryRepository.cs" />
     <Compile Include="Migrations\SqlServerCompactMigrationSqlGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\ISqlServerCompactValueBufferFactoryFactory.cs" />
+    <Compile Include="Query\SqlServerCeQueryCompilationContext.cs" />
+    <Compile Include="Query\SqlServerCeQueryGenerator.cs" />
     <Compile Include="SqlServerCompactDataFactory.cs" />
+    <Compile Include="SqlServerCompactDataStore.cs" />
     <Compile Include="SqlServerCompactDataStoreConnection.cs" />
     <Compile Include="SqlServerCompactDataStoreCreator.cs" />
     <Compile Include="SqlServerCompactDataStoreServices.cs" />
+    <Compile Include="SqlServerCompactDataStoreSource.cs" />
     <Compile Include="SqlServerCompactOptionsExtensions.cs" />
     <Compile Include="SqlServerCompactSqlGenerator.cs" />
+    <Compile Include="Update\ISqlServerCompactCommandBatchExecutor.cs" />
+    <Compile Include="Update\ISqlServerCompactCommandBatchPreparer.cs" />
     <Compile Include="Utilities\Check.cs" />
     <Compile Include="Utilities\CodeAnnotations.cs" />
   </ItemGroup>
@@ -122,6 +130,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -2,7 +2,7 @@
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public interface ISqlServerCeDataStoreServices : IRelationalDataStoreServices
+    public interface ISqlServerCeDataStore : IRelationalDataStore
     {
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact.Migrations
+namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 {
-    public class SqlServerCompactHistoryRepository : ISqlServerCompactHistoryRepository
+    public class SqlServerCeHistoryRepository : ISqlServerCeHistoryRepository
     {
         public virtual string BeginIfExists(string migrationId)
         {

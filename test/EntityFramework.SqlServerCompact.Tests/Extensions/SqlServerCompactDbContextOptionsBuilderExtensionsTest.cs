@@ -1,19 +1,19 @@
 ﻿using System.Data.SqlServerCe;
 using System.Linq;
-using ErikEJ.Data.Entity.SqlServerCompact;
+using ErikEJ.Data.Entity.SqlServerCe;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
+namespace Microsoft.Data.Entity.SqlServerCe.Extensions
 {
-    public class SqlServerCompactDbContextOptionsBuilderExtensionsTest
+    public class SqlServerCeDbContextOptionsBuilderExtensionsTest
     {
         [Fact]
         public void Can_add_extension_with_connection_string()
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCompact("Data Source=C:\\data\\Unicorn.sdf");
+            optionsBuilder.UseSqlServerCe("Data Source=C:\\data\\Unicorn.sdf");
 
-            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCompactOptionsExtension>().Single();
+            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 
             Assert.Equal("Data Source=C:\\data\\Unicorn.sdf", extension.ConnectionString);
             Assert.Equal(1, extension.MaxBatchSize);
@@ -24,9 +24,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
         public void Can_add_extension_with_connection_string_using_generic_options()
         {
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
-            optionsBuilder.UseSqlServerCompact("Data Source=C:\\data\\Multicorn.sdf");
+            optionsBuilder.UseSqlServerCe("Data Source=C:\\data\\Multicorn.sdf");
 
-            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCompactOptionsExtension>().Single();
+            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 
             Assert.Equal("Data Source=C:\\data\\Multicorn.sdf", extension.ConnectionString);
             Assert.Equal(1, extension.MaxBatchSize);
@@ -39,9 +39,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
             var optionsBuilder = new DbContextOptionsBuilder();
             var connection = new SqlCeConnection();
 
-            optionsBuilder.UseSqlServerCompact(connection);
+            optionsBuilder.UseSqlServerCe(connection);
 
-            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCompactOptionsExtension>().Single();
+            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 
             Assert.Same(connection, extension.Connection);
             Assert.Equal(1, extension.MaxBatchSize);
@@ -54,9 +54,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
             var connection = new SqlCeConnection();
 
-            optionsBuilder.UseSqlServerCompact(connection);
+            optionsBuilder.UseSqlServerCe(connection);
 
-            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCompactOptionsExtension>().Single();
+            var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 
             Assert.Same(connection, extension.Connection);
             Assert.Equal(1, extension.MaxBatchSize);

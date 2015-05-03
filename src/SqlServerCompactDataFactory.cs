@@ -6,20 +6,20 @@ using Microsoft.Data.Entity.Relational.Migrations;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCompactDatabaseFactory : ISqlServerCompactDatabaseFactory
+    public class SqlServerCeDatabaseFactory : ISqlServerCeDatabaseFactory
     {
         private readonly DbContext _context;
-        private readonly ISqlServerCompactDataStoreCreator _dataStoreCreator;
-        private readonly ISqlServerCompactConnection _connection;
+        private readonly ISqlServerCeDataStoreCreator _dataStoreCreator;
+        private readonly ISqlServerCeConnection _connection;
         private readonly IMigrator _migrator;
         private readonly ILoggerFactory _loggerFactory;
 
-        public SqlServerCompactDatabaseFactory(
+        public SqlServerCeDatabaseFactory(
             [NotNull] DbContext context,
-            [NotNull] ISqlServerCompactDataStoreCreator dataStoreCreator,
-            [NotNull] ISqlServerCompactConnection connection,
+            [NotNull] ISqlServerCeDataStoreCreator dataStoreCreator,
+            [NotNull] ISqlServerCeConnection connection,
             [NotNull] IMigrator migrator,
             [NotNull] ILoggerFactory loggerFactory)
         {

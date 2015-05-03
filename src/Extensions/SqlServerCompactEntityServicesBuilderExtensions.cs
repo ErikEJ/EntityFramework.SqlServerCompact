@@ -4,7 +4,7 @@
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
-using ErikEJ.Data.Entity.SqlServerCompact;
+using ErikEJ.Data.Entity.SqlServerCe;
 //TODO
 //using Microsoft.Data.Entity.Sqlite.Metadata;
 //using Microsoft.Data.Entity.Sqlite.Migrations;
@@ -13,23 +13,24 @@ using ErikEJ.Data.Entity.SqlServerCompact;
 //using Microsoft.Data.Entity.Sqlite.ValueGeneration;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
-using ErikEJ.Data.Entity.SqlServerCompact.Migrations;
+using ErikEJ.Data.Entity.SqlServerCe.Migrations;
+using ErikEJ.Data.Entity.SqlServerCe.Update;
 
 namespace Microsoft.Framework.DependencyInjection
 {
     public static class SqliteEntityFrameworkServicesBuilderExtensions
     {
-        public static EntityFrameworkServicesBuilder AddSqlServerCompact([NotNull] this EntityFrameworkServicesBuilder services)
+        public static EntityFrameworkServicesBuilder AddSqlServerCe([NotNull] this EntityFrameworkServicesBuilder services)
         {
             Check.NotNull(services, nameof(services));
 
             //TODO TODO TODO
             ((IAccessor<IServiceCollection>)services.AddRelational()).Service
-                .AddSingleton<IDataStoreSource, SqliteDataStoreSource>()
+                .AddSingleton<IDataStoreSource, SqlServerCeDataStoreSource>()
                 .TryAdd(new ServiceCollection()
                     //.AddSingleton<ISqliteModelBuilderFactory, SqliteModelBuilderFactory>()
                     //.AddSingleton<ISqliteValueGeneratorCache, SqliteValueGeneratorCache>()
-                    //.AddSingleton<ISqliteSqlGenerator, SqliteSqlGenerator>()
+                    .AddSingleton<ISqlServerCeSqlGenerator, SqlServerCeSqlGenerator>()
                     .AddScoped<ISqlStatementExecutor, SqlStatementExecutor>()
                     //.AddScoped<ISqliteTypeMapper, SqliteTypeMapper>()
                     //.AddSingleton<ISqliteModificationCommandBatchFactory, SqliteModificationCommandBatchFactory>()
@@ -38,15 +39,15 @@ namespace Microsoft.Framework.DependencyInjection
                     //.AddSingleton<ISqliteValueBufferFactoryFactory, SqliteValueBufferFactoryFactory>()
                     //.AddScoped<ISqliteQueryContextFactory, SqliteQueryContextFactory>()
                     //.AddScoped<ISqliteValueGeneratorSelector, SqliteValueGeneratorSelector>()
-                    //.AddScoped<ISqliteBatchExecutor, SqliteBatchExecutor>()
-                    .AddScoped<ISqlServerCompactDataStoreServices, SqlServerCompactDataStoreServices>()
-                    //.AddScoped<ISqliteDataStore, SqliteDataStore>()
-                    .AddScoped<ISqlServerCompactConnection, SqlServerCompactDataStoreConnection>()
+                    //.AddScoped<ISqlServerCeBatchExecutor, SqlServerCeBatchExecutor>()
+                    .AddScoped<ISqlServerCeDataStoreServices, SqlServerCeDataStoreServices>()
+                    .AddScoped<ISqlServerCeDataStore, SqlServerCeDataStore>()
+                    .AddScoped<ISqlServerCeConnection, SqlServerCeDataStoreConnection>()
                     //.AddScoped<ISqliteModelDiffer, SqliteModelDiffer>()
-                    .AddScoped<ISqlServerCompactDatabaseFactory, SqlServerCompactDatabaseFactory>()
-                    //.AddScoped<ISqliteMigrationSqlGenerator, SqliteMigrationSqlGenerator>()
-                    .AddScoped<ISqlServerCompactDataStoreCreator, SqlServerCompactDataStoreCreator>()
-                    .AddScoped<ISqlServerCompactHistoryRepository, SqlServerCompactHistoryRepository>()
+                    .AddScoped<ISqlServerCeDatabaseFactory, SqlServerCeDatabaseFactory>()
+                    .AddScoped<ISqlServerCeMigrationSqlGenerator, SqlServerCeMigrationSqlGenerator>()
+                    .AddScoped<ISqlServerCeDataStoreCreator, SqlServerCeDataStoreCreator>()
+                    .AddScoped<ISqlServerCeHistoryRepository, SqlServerCeHistoryRepository>()
                     );
 
             return services;

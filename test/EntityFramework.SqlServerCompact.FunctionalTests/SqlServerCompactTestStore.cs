@@ -4,35 +4,35 @@ using System.IO;
 using System.Threading;
 using Microsoft.Data.Entity.Relational.FunctionalTests;
 using System.Data.SqlServerCe;
-using ErikEJ.Data.Entity.SqlServerCompact.Extensions;
+using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
+namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class SqlServerCompactTestStore : RelationalTestStore
+    public class SqlServerCeTestStore : RelationalTestStore
     {
         private static int _scratchCount;
 
-        //public static SqlServerCompactTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
-        //    new SqlServerCompactTestStore(name).CreateShared(initializeDatabase);
+        //public static SqlServerCeTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
+        //    new SqlServerCeTestStore(name).CreateShared(initializeDatabase);
 
-        public static SqlServerCompactTestStore CreateScratch(bool createDatabase) =>
-            new SqlServerCompactTestStore("scratch-" + Interlocked.Increment(ref _scratchCount)).CreateTransient(createDatabase);
+        public static SqlServerCeTestStore CreateScratch(bool createDatabase) =>
+            new SqlServerCeTestStore("scratch-" + Interlocked.Increment(ref _scratchCount)).CreateTransient(createDatabase);
 
         private SqlCeConnection _connection;
         private SqlCeTransaction _transaction;
         private readonly string _name;
         private bool _deleteDatabase;
 
-        public SqlServerCompactTestStore(string name)
+        public SqlServerCeTestStore(string name)
         {
             _name = name;
         }
 
-        //private SqlServerCompactTestStore CreateShared(Action initializeDatabase)
+        //private SqlServerCeTestStore CreateShared(Action initializeDatabase)
         //{
-        //    CreateShared(typeof(SqlServerCompactTestStore).Name + _name, initializeDatabase);
+        //    CreateShared(typeof(SqlServerCeTestStore).Name + _name, initializeDatabase);
 
         //    _connection = new SqlCeConnection(CreateConnectionString(_name));
 
@@ -42,7 +42,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
         //    return this;
         //}
 
-        private SqlServerCompactTestStore CreateTransient(bool createDatabase)
+        private SqlServerCeTestStore CreateTransient(bool createDatabase)
         {
             _connection = new SqlCeConnection(CreateConnectionString(_name));
 

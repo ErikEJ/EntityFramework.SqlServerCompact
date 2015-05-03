@@ -3,9 +3,9 @@
 
 using Microsoft.Data.Entity.Relational.Migrations.History;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact.Migrations
+namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 {
-    public interface ISqlServerCompactHistoryRepository : IHistoryRepository
+    public interface ISqlServerCeHistoryRepository : IHistoryRepository
     {
     }
 }

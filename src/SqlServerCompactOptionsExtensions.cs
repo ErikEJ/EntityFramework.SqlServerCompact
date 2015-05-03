@@ -4,15 +4,15 @@ using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.DependencyInjection;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCompactOptionsExtension : RelationalOptionsExtension
+    public class SqlServerCeOptionsExtension : RelationalOptionsExtension
     {
-        public SqlServerCompactOptionsExtension()
+        public SqlServerCeOptionsExtension()
         {
         }
 
-        public SqlServerCompactOptionsExtension([NotNull] SqlServerCompactOptionsExtension copyFrom)
+        public SqlServerCeOptionsExtension([NotNull] SqlServerCeOptionsExtension copyFrom)
             : base(copyFrom)
         {
         }
@@ -21,7 +21,7 @@ namespace ErikEJ.Data.Entity.SqlServerCompact
         {
             Check.NotNull(builder, nameof(builder));
             //TODO - but requires everything to be implemented!
-            //builder.AddSqlServerCompact();
+            //builder.AddSqlServerCe();
         }
     }
 }

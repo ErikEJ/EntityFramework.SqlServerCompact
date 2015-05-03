@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.Entity.Relational.Migrations.Sql;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact
+namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public interface ISqlServerCompactMigrationSqlGenerator : IMigrationSqlGenerator
+    public interface ISqlServerCeMigrationSqlGenerator : IMigrationSqlGenerator
     {
     }
 }

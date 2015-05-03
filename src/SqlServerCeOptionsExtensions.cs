@@ -20,8 +20,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         public override void ApplyServices(EntityFrameworkServicesBuilder builder)
         {
             Check.NotNull(builder, nameof(builder));
-            //TODO - but requires everything to be implemented!
-            //builder.AddSqlServerCe();
+            builder.AddSqlServerCe();
         }
     }
 }

@@ -112,7 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\SqlServerCompactDbContextOptionsBuilderExtensionsTest.cs" />
+    <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

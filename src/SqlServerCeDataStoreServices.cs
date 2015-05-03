@@ -1,8 +1,8 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
+﻿using System;
+using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using ErikEJ.Data.Entity.SqlServerCe.Migrations;
+using ErikEJ.Data.Entity.SqlServerCe.Query;
+using ErikEJ.Data.Entity.SqlServerCe.ValueGeneration;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata.Builders;
@@ -11,10 +11,6 @@ using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
-//TODO
-//using Microsoft.Data.Entity.Sqlite.Metadata;
-//using Microsoft.Data.Entity.Sqlite.Query;
-//using Microsoft.Data.Entity.Sqlite.ValueGeneration;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Data.Entity.ValueGeneration;
@@ -38,14 +34,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         public virtual IDatabaseFactory DatabaseFactory => _services.GetRequiredService<ISqlServerCeDatabaseFactory>();
         public virtual IHistoryRepository HistoryRepository => _services.GetRequiredService<ISqlServerCeHistoryRepository>();
         public virtual IMigrationSqlGenerator MigrationSqlGenerator => _services.GetRequiredService<ISqlServerCeMigrationSqlGenerator>();
-        //TODO Implement!
-        //public virtual IModelBuilderFactory ModelBuilderFactory => _services.GetRequiredService<ISqliteModelBuilderFactory>();
-        //public virtual IModelDiffer ModelDiffer => _services.GetRequiredService<ISqliteModelDiffer>();
-        //public virtual IModelSource ModelSource => _services.GetRequiredService<ISqliteModelSource>();
-        //public virtual IQueryContextFactory QueryContextFactory => _services.GetRequiredService<ISqliteQueryContextFactory>();
+        public virtual IModelBuilderFactory ModelBuilderFactory => _services.GetRequiredService<ISqlServerCeModelBuilderFactory>();
+        public virtual IModelDiffer ModelDiffer => _services.GetRequiredService<ISqlServerCeModelDiffer>();
+        public virtual IModelSource ModelSource => _services.GetRequiredService<ISqlServerCeModelSource>();
+        public virtual IQueryContextFactory QueryContextFactory => _services.GetRequiredService<ISqlServerCeQueryContextFactory>();
         public virtual IRelationalConnection RelationalConnection => _services.GetRequiredService<ISqlServerCeConnection>();
         public virtual ISqlGenerator SqlGenerator => _services.GetRequiredService<ISqlServerCeSqlGenerator>();
         public virtual IDataStore Store => _services.GetRequiredService<ISqlServerCeDataStore>();
-        //public virtual IValueGeneratorSelector ValueGeneratorSelector => _services.GetRequiredService<ISqliteValueGeneratorSelector>();
+        public virtual IValueGeneratorSelector ValueGeneratorSelector => _services.GetRequiredService<ISqlServerCeValueGeneratorSelector>();
     }
 }

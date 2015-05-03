@@ -2,8 +2,6 @@
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
-//TODO
-//using Microsoft.Data.Entity.Sqlite.Migrations;
 using Microsoft.Data.Entity.Utilities;
 using System.IO;
 
@@ -13,25 +11,23 @@ namespace ErikEJ.Data.Entity.SqlServerCe
     {
         private readonly ISqlServerCeConnection _connection;
         private readonly IModelDiffer _modelDiffer;
-        //TODO
-        //private readonly ISqliteMigrationSqlGenerator _migrationSqlGenerator;
+        private readonly ISqlServerCeMigrationSqlGenerator _migrationSqlGenerator;
         private readonly ISqlStatementExecutor _executor;
 
         public SqlServerCeDataStoreCreator(
             [NotNull] ISqlServerCeConnection connection,
             [NotNull] IModelDiffer modelDiffer,
-            //[NotNull] ISqliteMigrationSqlGenerator migrationSqlGenerator,
+            [NotNull] ISqlServerCeMigrationSqlGenerator migrationSqlGenerator,
             [NotNull] ISqlStatementExecutor sqlStatementExecutor)
         {
             Check.NotNull(connection, nameof(connection));
             Check.NotNull(modelDiffer, nameof(modelDiffer));
-            //TODO - CreateTables!
-            //Check.NotNull(migrationSqlGenerator, nameof(migrationSqlGenerator));
+            Check.NotNull(migrationSqlGenerator, nameof(migrationSqlGenerator));
             Check.NotNull(sqlStatementExecutor, nameof(sqlStatementExecutor));
 
             _connection = connection;
             _modelDiffer = modelDiffer;
-            //_migrationSqlGenerator = migrationSqlGenerator;
+            _migrationSqlGenerator = migrationSqlGenerator;
             _executor = sqlStatementExecutor;
         }
 

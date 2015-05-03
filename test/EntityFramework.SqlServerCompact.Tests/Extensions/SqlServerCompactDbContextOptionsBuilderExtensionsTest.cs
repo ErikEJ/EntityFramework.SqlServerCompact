@@ -11,11 +11,11 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
         public void Can_add_extension_with_connection_string()
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCompact("Database=Crunchie");
+            optionsBuilder.UseSqlServerCompact("Data Source=C:\\data\\Unicorn.sdf");
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCompactOptionsExtension>().Single();
 
-            Assert.Equal("Database=Crunchie", extension.ConnectionString);
+            Assert.Equal("Data Source=C:\\data\\Unicorn.sdf", extension.ConnectionString);
             Assert.Equal(1, extension.MaxBatchSize);
             Assert.Null(extension.Connection);
         }
@@ -24,11 +24,11 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
         public void Can_add_extension_with_connection_string_using_generic_options()
         {
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
-            optionsBuilder.UseSqlServerCompact("Database=Whisper");
+            optionsBuilder.UseSqlServerCompact("Data Source=C:\\data\\Multicorn.sdf");
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCompactOptionsExtension>().Single();
 
-            Assert.Equal("Database=Whisper", extension.ConnectionString);
+            Assert.Equal("Data Source=C:\\data\\Multicorn.sdf", extension.ConnectionString);
             Assert.Equal(1, extension.MaxBatchSize);
             Assert.Null(extension.Connection);
         }

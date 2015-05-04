@@ -21,7 +21,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             new SqlServerCeTestStore("scratch-" + Interlocked.Increment(ref _scratchCount)).CreateTransient(createDatabase);
 
         private SqlCeConnection _connection;
-        private SqlCeTransaction _transaction;
+        //private SqlCeTransaction _transaction;
         private readonly string _name;
         private bool _deleteDatabase;
 
@@ -58,7 +58,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         }
 
         public override DbConnection Connection => _connection;
-        public override DbTransaction Transaction => _transaction;
+        //public override DbTransaction Transaction => _transaction;
+        public override DbTransaction Transaction => null;
 
         public int ExecuteNonQuery(string sql, params object[] parameters)
         {
@@ -95,10 +96,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             var command = _connection.CreateCommand();
 
-            if (_transaction != null)
-            {
-                command.Transaction = _transaction;
-            }
+            //if (_transaction != null)
+            //{
+            //    command.Transaction = _transaction;
+            //}
 
             command.CommandText = commandText;
 

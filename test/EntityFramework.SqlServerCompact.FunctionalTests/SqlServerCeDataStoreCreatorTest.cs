@@ -79,11 +79,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 var creator = GetDataStoreCreator(testDatabase);
 
                 var errorNumber = async
-                    ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.HasTablesAsync())).ErrorCode
-                    : Assert.Throws<SqlCeException>(() => creator.HasTables()).ErrorCode;
+                    ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.HasTablesAsync())).NativeError
+                    : Assert.Throws<SqlCeException>(() => creator.HasTables()).NativeError;
 
                 Assert.Equal(
-                    4060, // Login failed error number
+                    25046, // The database file cannot be found. Check the path to the database.
                     errorNumber);
             }
         }
@@ -328,7 +328,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
                 Assert.Equal(0, (testDatabase.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES")).Count());
 
-
                 Assert.True(testDatabase.Exists());
             }
         }
@@ -351,11 +350,14 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             {
                 var creator = GetDataStoreCreator(testDatabase);
 
+                var errorNumber =
+                        async
+                        ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.CreateAsync())).NativeError
+                        : Assert.Throws<SqlCeException>(() => creator.Create()).NativeError;
+
                 Assert.Equal(
-                    1801, // Database with given name already exists
-                    async
-                        ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.CreateAsync())).ErrorCode
-                        : Assert.Throws<SqlCeException>(() => creator.Create()).ErrorCode);
+                    25114, // File already exists. Try using a different database name.
+                    errorNumber);
             }
         }
 

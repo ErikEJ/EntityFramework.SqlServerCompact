@@ -22,8 +22,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
             return File.Exists(PathFromConnectionString(connection.ConnectionString));
         }
 
-        public static void Drop([NotNull] this SqlCeConnection connection)
+        public static void Drop([NotNull] this SqlCeConnection connection, bool throwOnOpen = true)
         {
+            if (throwOnOpen)
+            {
+                connection.Open();
+            }
             connection.Close();
             var path = PathFromConnectionString(connection.ConnectionString);
             if (File.Exists(path))

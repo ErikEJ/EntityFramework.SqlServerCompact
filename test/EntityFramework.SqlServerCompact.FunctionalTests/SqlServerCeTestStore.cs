@@ -114,9 +114,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             Transaction?.Dispose();
 
-            _connection.Drop();            
-
-            _connection.Dispose();
+            if (_connection.Exists())
+            {
+                _connection.Drop(throwOnOpen: false);
+            }
+            _connection.Close();
         }
 
         public static string CreateConnectionString(string name) =>

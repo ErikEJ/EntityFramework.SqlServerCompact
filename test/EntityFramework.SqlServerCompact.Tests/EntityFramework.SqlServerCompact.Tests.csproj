@@ -38,6 +38,9 @@
       <HintPath>..\..\packages\EntityFramework.Core.7.0.0-beta5-13087\lib\net45\EntityFramework.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.Core.Tests">
+      <HintPath>..\..\libs\EntityFramework.Core.Tests.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.Relational, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.Relational.7.0.0-beta5-13087\lib\net45\EntityFramework.Relational.dll</HintPath>
       <Private>True</Private>
@@ -112,6 +115,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiConsistencyTest.cs" />
     <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerCeTypeMapperTest.cs" />

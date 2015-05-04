@@ -28,16 +28,16 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             };
 
         private readonly RelationalTypeMapping _nonKeyStringMapping
-            = new RelationalTypeMapping("nvarchar(max)", DbType.String);
+            = new RelationalTypeMapping("nvarchar(4000)", DbType.String);
 
         private readonly RelationalTypeMapping _keyStringMapping
-            = new RelationalSizedTypeMapping("nvarchar(450)", DbType.String, 900);
+            = new RelationalSizedTypeMapping("nvarchar(256)", DbType.String, 512);
 
         private readonly RelationalTypeMapping _nonKeyByteArrayMapping
-            = new RelationalTypeMapping("varbinary(max)", DbType.Binary);
+            = new RelationalTypeMapping("image", DbType.Binary);
 
         private readonly RelationalTypeMapping _keyByteArrayMapping
-            = new RelationalSizedTypeMapping("varbinary(900)", DbType.Binary, 900);
+            = new RelationalSizedTypeMapping("varbinary(512)", DbType.Binary, 512);
 
         private readonly RelationalTypeMapping _rowVersionMapping
             = new RelationalSizedTypeMapping("rowversion", DbType.Binary, 8);

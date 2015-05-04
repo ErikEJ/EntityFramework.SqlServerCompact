@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerCeTypeMapperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\EntityFramework.SqlServerCompact.csproj">

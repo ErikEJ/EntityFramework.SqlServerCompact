@@ -53,10 +53,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override bool HasTables()
         {
-            var count = (long)_executor.ExecuteScalar(
+            var count = (int)_executor.ExecuteScalar(
                 _connection,
                 null,
-                "SELECT COUNT(*) FROM INFORAMTION_SCHEMA.TABLES WHERE TABLE_TYPE <> N'SYSTEM TABLE';");
+                "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE <> N'SYSTEM TABLE';");
 
             return count != 0;
         }

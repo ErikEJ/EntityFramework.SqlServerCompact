@@ -14,30 +14,21 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         {
             Check.NotNull(builder, nameof(builder));
             Check.NotNull(columnModification, nameof(columnModification));
-            //TODO
+
             builder
                 .Append(DelimitIdentifier(columnModification.ColumnName))
                 .Append(" = ")
-                .Append("last_insert_rowid()");
+                .Append("@@IDENTITY");
         }
 
         public override void AppendSelectAffectedCountCommand(StringBuilder builder, string tableName, string schemaName)
         {
-            Check.NotNull(builder, nameof(builder));
-            Check.NotEmpty(tableName, nameof(tableName));
-            //TODO
-            builder
-                .Append("SELECT changes()")
-                .Append(BatchCommandSeparator)
-                .AppendLine();
+            throw new NotImplementedException();
         }
 
         protected override void AppendRowsAffectedWhereCondition(StringBuilder builder, int expectedRowsAffected)
         {
-            //TODO
-            Check.NotNull(builder, nameof(builder));
-
-            builder.Append("changes() = " + expectedRowsAffected);
+            throw new NotImplementedException();
         }
 
         public override string BatchSeparator => "GO";

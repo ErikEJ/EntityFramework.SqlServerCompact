@@ -118,6 +118,7 @@
     <Compile Include="ApiConsistencyTest.cs" />
     <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerCeDataStoreTest.cs" />
     <Compile Include="SqlServerCeTypeMapperTest.cs" />
   </ItemGroup>
   <ItemGroup>

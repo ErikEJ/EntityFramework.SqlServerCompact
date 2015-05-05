@@ -1,9 +1,10 @@
-﻿using JetBrains.Annotations;
+﻿using System.Data.SqlServerCe;
+using ErikEJ.Data.Entity.SqlServerCe.Extensions;
+using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Utilities;
-using System.IO;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
@@ -33,7 +34,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override void Create()
         {
-            _connection.CreateDatabase();
+            var connection = _connection.DbConnection as SqlCeConnection;
+            connection.CreateEmptyDatabase();
         }
 
         public override void CreateTables(IModel model)
@@ -48,8 +50,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override bool Exists()
         {
-            return _connection.Exists();
-        }        
+            var connection = _connection.DbConnection as SqlCeConnection;
+            return connection.Exists();
+        }
 
         public override bool HasTables()
         {
@@ -63,7 +66,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override void Delete()
         {
-            _connection.Delete();
+            var connection = _connection.DbConnection as SqlCeConnection;
+            connection.Drop();
         }
     }
 }

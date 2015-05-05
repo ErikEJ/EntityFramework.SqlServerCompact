@@ -23,7 +23,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         private SqlCeConnection _connection;
         //private SqlCeTransaction _transaction;
         private readonly string _name;
-        private bool _deleteDatabase;
+        //private bool _deleteDatabase;
 
         public SqlServerCeTestStore(string name)
         {
@@ -52,7 +52,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 _connection.Open();
             }
 
-            _deleteDatabase = true;
+            //_deleteDatabase = true;
 
             return this;
         }

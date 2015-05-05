@@ -3,14 +3,20 @@
   <metadata>
     <id>EntityFramework.SqlServerCompact</id>
     <version>$version$-alpha</version>
-    <title>$title$</title>
+    <title>EntityFramework.SqlServerCompact</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>
     <projectUrl>https://github.com/ErikEJ/EntityFramework.SqlServerCompact</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes></releaseNotes>
-    <copyright>Copyright 2015</copyright>
-    <tags>EntityFramework sqlce entity framework provider sql server compact</tags>
+    <description>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</description>
+    <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</summary>
+    <releaseNotes>early alpha bits</releaseNotes>
+    <tags>EntityFramework EF sqlce entity framework provider sql server compact</tags>
+    <dependencies>
+      <dependency id="EntityFramework.Relaional" version="7.0.0-beta5-13087" />
+    </dependencies>
   </metadata>
+  <files>
+    <file src="bin\$configuration$\EntityFramework.SqlServerCompact.dll" target="lib\net45\" />
+  </files>
 </package>

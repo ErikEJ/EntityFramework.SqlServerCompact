@@ -40,12 +40,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override void CreateTables(IModel model)
         {
-            //TODO - MIgrations
-            //    Check.NotNull(model, nameof(model));
+            Check.NotNull(model, nameof(model));
 
-            //    var operations = _modelDiffer.GetDifferences(null, model);
-            //    var statements = _migrationSqlGenerator.Generate(operations, model);
-            //    _executor.ExecuteNonQuery(_connection, null, statements);
+            var operations = _modelDiffer.GetDifferences(null, model);
+            var statements = _migrationSqlGenerator.Generate(operations, model);
+            _executor.ExecuteNonQuery(_connection, null, statements);
         }
 
         public override bool Exists()

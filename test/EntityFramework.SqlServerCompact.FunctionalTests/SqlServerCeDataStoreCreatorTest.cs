@@ -198,97 +198,92 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             }
         }
 
-        //TODO 
+        [Fact]
+        public async Task CreateTables_creates_schema_in_existing_database()
+        {
+            await CreateTables_creates_schema_in_existing_database_test(async: false);
+        }
 
-        //[Fact]
-        //public async Task CreateTables_creates_schema_in_existing_database()
-        //{
-        //    await CreateTables_creates_schema_in_existing_database_test(async: false);
-        //}
+        [Fact]
+        public async Task CreateTablesAsync_creates_schema_in_existing_database()
+        {
+            await CreateTables_creates_schema_in_existing_database_test(async: true);
+        }
 
-        //[Fact]
-        //public async Task CreateTablesAsync_creates_schema_in_existing_database()
-        //{
-        //    await CreateTables_creates_schema_in_existing_database_test(async: true);
-        //}
+        private static async Task CreateTables_creates_schema_in_existing_database_test(bool async)
+        {
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: true))
+            {
+                var serviceCollection = new ServiceCollection();
+                serviceCollection
+                    .AddEntityFramework()
+                    .AddSqlServerCe();
 
-        //private static async Task CreateTables_creates_schema_in_existing_database_test(bool async)
-        //{
-        //    using (var testDatabase = await SqlServerTestStore.CreateScratchAsync())
-        //    {
-        //        var serviceCollection = new ServiceCollection();
-        //        serviceCollection
-        //            .AddEntityFramework()
-        //            .AddSqlServer();
+                var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        //        var serviceProvider = serviceCollection.BuildServiceProvider();
+                var optionsBuilder = new DbContextOptionsBuilder();
+                optionsBuilder.UseSqlServerCe(testDatabase.Connection.ConnectionString);
 
-        //        var optionsBuilder = new DbContextOptionsBuilder();
-        //        optionsBuilder.UseSqlServer(testDatabase.Connection.ConnectionString);
+                using (var context = new BloggingContext(serviceProvider, optionsBuilder.Options))
+                {
+                    var contextServices = ((IAccessor<IServiceProvider>)context).Service;
 
-        //        using (var context = new BloggingContext(serviceProvider, optionsBuilder.Options))
-        //        {
-        //            var contextServices = ((IAccessor<IServiceProvider>)context).Service;
+                    var creator = (RelationalDataStoreCreator)contextServices.GetRequiredService<IDataStoreCreator>();
 
-        //            var creator = (RelationalDataStoreCreator)contextServices.GetRequiredService<IDataStoreCreator>();
+                    if (async)
+                    {
+                        await creator.CreateTablesAsync(context.Model);
+                    }
+                    else
+                    {
+                        creator.CreateTables(context.Model);
+                    }
 
-        //            if (async)
-        //            {
-        //                await creator.CreateTablesAsync(context.Model);
-        //            }
-        //            else
-        //            {
-        //                creator.CreateTables(context.Model);
-        //            }
+                    if (testDatabase.Connection.State != ConnectionState.Open)
+                    {
+                        await testDatabase.Connection.OpenAsync();
+                    }
 
-        //            if (testDatabase.Connection.State != ConnectionState.Open)
-        //            {
-        //                await testDatabase.Connection.OpenAsync();
-        //            }
+                    var tables = testDatabase.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
+                    Assert.Equal(1, tables.Count());
+                    Assert.Equal("Blog", tables.Single());
 
-        //            var tables = await testDatabase.QueryAsync<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
-        //            Assert.Equal(1, tables.Count());
-        //            Assert.Equal("Blog", tables.Single());
+                    var columns = testDatabase.Query<string>("SELECT TABLE_NAME + '.' + COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS");
+                    Assert.Equal(2, columns.Count());
+                    Assert.True(columns.Any(c => c == "Blog.Id"));
+                    Assert.True(columns.Any(c => c == "Blog.Name"));
+                }
+            }
+        }
 
-        //            var columns = await testDatabase.QueryAsync<string>("SELECT TABLE_NAME + '.' + COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS");
-        //            Assert.Equal(2, columns.Count());
-        //            Assert.True(columns.Any(c => c == "Blog.Id"));
-        //            Assert.True(columns.Any(c => c == "Blog.Name"));
-        //        }
-        //    }
-        //}
+        [Fact]
+        public async Task CreateTables_throws_if_database_does_not_exist()
+        {
+            await CreateTables_throws_if_database_does_not_exist_test(async: false);
+        }
 
-        //[Fact]
-        //public async Task CreateTables_throws_if_database_does_not_exist()
-        //{
-        //    await CreateTables_throws_if_database_does_not_exist_test(async: false);
-        //}
+        [Fact]
+        public async Task CreateTablesAsync_throws_if_database_does_not_exist()
+        {
+            await CreateTables_throws_if_database_does_not_exist_test(async: true);
+        }
 
-        //[Fact]
-        //public async Task CreateTablesAsync_throws_if_database_does_not_exist()
-        //{
-        //    await CreateTables_throws_if_database_does_not_exist_test(async: true);
-        //}
+        private static async Task CreateTables_throws_if_database_does_not_exist_test(bool async)
+        {
+            using (var testDatabase = SqlServerCeTestStore.CreateScratch(createDatabase: false))
+            {
+                var creator = GetDataStoreCreator(testDatabase);
 
-        //private static async Task CreateTables_throws_if_database_does_not_exist_test(bool async)
-        //{
-        //    using (var testDatabase = await SqlServerTestStore.CreateScratchAsync(createDatabase: false))
-        //    {
-        //        var creator = GetDataStoreCreator(testDatabase);
+                var errorNumber
+                    = async
+                        ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.CreateTablesAsync(new Model()))).NativeError
+                        : Assert.Throws<SqlCeException>(() => creator.CreateTables(new Model())).NativeError;
 
-        //        var errorNumber
-        //            = async
-        //                ? (await Assert.ThrowsAsync<SqlException>(() => creator.CreateTablesAsync(new Model()))).Number
-        //                : Assert.Throws<SqlException>(() => creator.CreateTables(new Model())).Number;
-
-        //        if (errorNumber != 233) // skip if no-process transient failure
-        //        {
-        //            Assert.Equal(
-        //                4060, // Login failed error number
-        //                errorNumber);
-        //        }
-        //    }
-        //}
+                Assert.Equal(
+                    25046, // The database file cannot be found. Check the path to the database.
+                    errorNumber);
+            }
+        }
 
         [Fact]
         public async Task Create_creates_physical_database_but_not_tables()

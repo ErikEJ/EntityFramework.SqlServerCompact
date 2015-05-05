@@ -7,8 +7,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 {
     public class SqlServerCeTypeMapper : RelationalTypeMapper, ISqlServerCeTypeMapper
     {
-        //TODO Add tests for this (see the SqlServer provider tests)
-
         // This dictionary is for invariant mappings from a sealed CLR type to a single
         // store type. If the CLR type is unsealed or if the mapping varies based on how the
         // type is used (e.g. in keys), then add custom mapping below.

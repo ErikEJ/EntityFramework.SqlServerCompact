@@ -1,5 +1,6 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Update;
@@ -13,7 +14,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         {
             Check.NotNull(builder, nameof(builder));
             Check.NotNull(columnModification, nameof(columnModification));
-
+            //TODO
             builder
                 .Append(DelimitIdentifier(columnModification.ColumnName))
                 .Append(" = ")
@@ -24,7 +25,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         {
             Check.NotNull(builder, nameof(builder));
             Check.NotEmpty(tableName, nameof(tableName));
-
+            //TODO
             builder
                 .Append("SELECT changes()")
                 .Append(BatchCommandSeparator)
@@ -33,9 +34,39 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         protected override void AppendRowsAffectedWhereCondition(StringBuilder builder, int expectedRowsAffected)
         {
+            //TODO
             Check.NotNull(builder, nameof(builder));
 
             builder.Append("changes() = " + expectedRowsAffected);
         }
+
+        public override string BatchSeparator => "GO";
+
+        public override string DelimitIdentifier(string identifier)
+            => "[" + EscapeIdentifier(Check.NotEmpty(identifier, nameof(identifier))) + "]";
+
+        public override string EscapeIdentifier(string identifier)
+            => Check.NotEmpty(identifier, nameof(identifier)).Replace("]", "]]");
+
+        public override string GenerateLiteral(byte[] literal)
+        {
+            Check.NotNull(literal, nameof(literal));
+
+            var builder = new StringBuilder();
+
+            builder.Append("0x");
+
+            var parts = literal.Select(b => b.ToString("X2", CultureInfo.InvariantCulture));
+            foreach (var part in parts)
+            {
+                builder.Append(part);
+            }
+
+            return builder.ToString();
+        }
+
+        public override string GenerateLiteral(bool literal) => literal ? "1" : "0";
+        public override string GenerateLiteral(DateTime literal) => "'" + literal.ToString(@"yyyy-MM-dd HH\:mm\:ss.fffffff") + "'";
+        public virtual string GenerateLiteral(Guid literal) => "'" + literal + "'";
     }
 }

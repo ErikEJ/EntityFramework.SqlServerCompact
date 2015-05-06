@@ -11,6 +11,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.TestModels
         {
         }
 
-        public static SqlServerCeTestStore GetSharedStore() => SqlServerCeTestStore.GetOrCreateShared("nw40", () => { });
+        public static SqlServerCeTestStore GetSharedStore() => SqlServerCeTestStore.GetOrCreateShared("NorthwindEF7", () => { });
     }
 }

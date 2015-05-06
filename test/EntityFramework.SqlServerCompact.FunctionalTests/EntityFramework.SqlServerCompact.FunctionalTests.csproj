@@ -120,9 +120,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NorthwindQuerySqlServerCeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerCeDataStoreCreatorTest.cs" />
     <Compile Include="SqlServerCeTestStore.cs" />
+    <Compile Include="TestModels\SqlServerCeNorthwindContext.cs" />
+    <Compile Include="TestSqlServerCeModelSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -132,6 +135,11 @@
       <Project>{0bdb0cbb-c42a-45e5-8518-14e0c31119ad}</Project>
       <Name>EntityFramework.SqlServerCompact</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="nw40.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

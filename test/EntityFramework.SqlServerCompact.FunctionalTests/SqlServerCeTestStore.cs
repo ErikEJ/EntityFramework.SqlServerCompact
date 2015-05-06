@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Data.Common;
-using System.IO;
-using System.Threading;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
-using System.Data.SqlServerCe;
-using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlServerCe;
 using System.Linq;
+using System.Threading;
+using ErikEJ.Data.Entity.SqlServerCe.Extensions;
+using Microsoft.Data.Entity.Relational.FunctionalTests;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
@@ -14,33 +13,33 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
     {
         private static int _scratchCount;
 
-        //public static SqlServerCeTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
-        //    new SqlServerCeTestStore(name).CreateShared(initializeDatabase);
+        public static SqlServerCeTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
+            new SqlServerCeTestStore(name).CreateShared(initializeDatabase);
 
         public static SqlServerCeTestStore CreateScratch(bool createDatabase) =>
             new SqlServerCeTestStore("scratch-" + Interlocked.Increment(ref _scratchCount)).CreateTransient(createDatabase);
 
         private SqlCeConnection _connection;
-        //private SqlCeTransaction _transaction;
+        private SqlCeTransaction _transaction;
         private readonly string _name;
-        //private bool _deleteDatabase;
+        private bool _deleteDatabase;
 
         public SqlServerCeTestStore(string name)
         {
             _name = name;
         }
 
-        //private SqlServerCeTestStore CreateShared(Action initializeDatabase)
-        //{
-        //    CreateShared(typeof(SqlServerCeTestStore).Name + _name, initializeDatabase);
+        private SqlServerCeTestStore CreateShared(Action initializeDatabase)
+        {
+            CreateShared(typeof(SqlServerCeTestStore).Name + _name, initializeDatabase);
 
-        //    _connection = new SqlCeConnection(CreateConnectionString(_name));
+            _connection = new SqlCeConnection(CreateConnectionString(_name));
 
-        //    _connection.Open();
-        //    _transaction = _connection.BeginTransaction();
+            _connection.Open();
+            _transaction = _connection.BeginTransaction();
 
-        //    return this;
-        //}
+            return this;
+        }
 
         private SqlServerCeTestStore CreateTransient(bool createDatabase)
         {
@@ -52,14 +51,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 _connection.Open();
             }
 
-            //_deleteDatabase = true;
+            _deleteDatabase = true;
 
             return this;
         }
 
         public override DbConnection Connection => _connection;
-        //public override DbTransaction Transaction => _transaction;
-        public override DbTransaction Transaction => null;
+        public override DbTransaction Transaction => _transaction;
 
         public int ExecuteNonQuery(string sql, params object[] parameters)
         {
@@ -96,10 +94,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             var command = _connection.CreateCommand();
 
-            //if (_transaction != null)
-            //{
-            //    command.Transaction = _transaction;
-            //}
+            if (_transaction != null)
+            {
+                command.Transaction = _transaction;
+            }
 
             command.CommandText = commandText;
 
@@ -115,7 +113,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             Transaction?.Dispose();
 
-            if (_connection.Exists())
+            if (_connection.Exists() && _deleteDatabase)
             {
                 _connection.Drop(throwOnOpen: false);
             }

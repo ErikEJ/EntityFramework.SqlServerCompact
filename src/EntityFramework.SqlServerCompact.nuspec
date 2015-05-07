@@ -13,7 +13,7 @@
     <releaseNotes>early alpha bits</releaseNotes>
     <tags>EntityFramework EF sqlce entity framework provider sql server compact</tags>
     <dependencies>
-      <dependency id="EntityFramework.Relaional" version="7.0.0-beta5-13087" />
+      <dependency id="EntityFramework.Relational" version="[7.0.0-beta5-13087]" />
       <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
     </dependencies>
   </metadata>

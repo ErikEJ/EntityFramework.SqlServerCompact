@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>EntityFramework.SqlServerCompact</id>
-    <version>$version$-alpha</version>
+    <version>$version$</version>
     <title>EntityFramework.SqlServerCompact</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>

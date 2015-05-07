@@ -18,6 +18,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\$configuration$\EntityFramework.SqlServerCompact.dll" target="lib\net45\" />
+    <file src="bin\Release\EntityFramework.SqlServerCompact.dll" target="lib\net45\" />
   </files>
 </package>

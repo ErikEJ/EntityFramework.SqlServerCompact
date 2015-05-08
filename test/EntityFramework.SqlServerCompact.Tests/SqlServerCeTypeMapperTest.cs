@@ -200,6 +200,17 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             Assert.Equal("rowversion", typeMapping.StoreTypeName);
         }
 
+        [Fact]
+        public void Does_ntext_mapping()
+        {
+            var typeMapping = (RelationalSizedTypeMapping)new SqlServerCeTypeMapper()
+                .GetTypeMapping("ntext", "MyColumn", typeof(string), isKey: false, isConcurrencyToken: false);
+
+            Assert.Equal(DbType.String, typeMapping.StoreType);
+            Assert.Equal(int.MaxValue, typeMapping.Size);
+            Assert.Equal("ntext", typeMapping.StoreTypeName);
+        }
+
         private static RelationalTypeMapping GetTypeMapping(Type propertyType)
         {
             return new SqlServerCeTypeMapper().GetTypeMapping(null, "MyColumn", propertyType, isKey: false, isConcurrencyToken: false);

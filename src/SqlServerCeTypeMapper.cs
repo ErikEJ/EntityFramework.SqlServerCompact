@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Data.Entity.Relational;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
@@ -18,10 +19,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 Tuple.Create(typeof(bool), new RelationalTypeMapping("bit", DbType.Boolean)),
                 Tuple.Create(typeof(byte), new RelationalTypeMapping("tinyint", DbType.Byte)),
                 Tuple.Create(typeof(double), new RelationalTypeMapping("float", DbType.Double)),
+                Tuple.Create(typeof(float), new RelationalTypeMapping("real", DbType.Single)),
                 Tuple.Create(typeof(char), new RelationalTypeMapping("int", DbType.Int32)),
                 Tuple.Create(typeof(sbyte), new RelationalTypeMapping("smallint", DbType.SByte)),
+                Tuple.Create(typeof(short), new RelationalTypeMapping("smallint", DbType.Int16)),
                 Tuple.Create(typeof(ushort), new RelationalTypeMapping("int", DbType.UInt16)),
                 Tuple.Create(typeof(uint), new RelationalTypeMapping("bigint", DbType.UInt32)),
+                Tuple.Create(typeof(long), new RelationalTypeMapping("bigint", DbType.Int64)),
                 Tuple.Create(typeof(ulong), new RelationalTypeMapping("numeric(20, 0)", DbType.UInt64))
             };
 
@@ -40,6 +44,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         private readonly RelationalTypeMapping _rowVersionMapping
             = new RelationalSizedTypeMapping("rowversion", DbType.Binary, 8);
 
+        private readonly RelationalTypeMapping _ntextMapping
+            = new RelationalSizedTypeMapping("ntext", DbType.String, int.MaxValue);
+
+        private readonly RelationalDecimalTypeMapping _decimalMapping
+            = new RelationalDecimalTypeMapping(18, 2);
+
         public override RelationalTypeMapping GetTypeMapping(
             string specifiedType, string storageName, Type propertyType, bool isKey, bool isConcurrencyToken)
         {
@@ -53,6 +63,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
             if (propertyType == typeof(string))
             {
+                if (!string.IsNullOrEmpty(specifiedType) && specifiedType.ToLowerInvariant() == "ntext")
+                {
+                    return _ntextMapping;
+                }
                 if (isKey)
                 {
                     return _keyStringMapping;
@@ -66,16 +80,24 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 {
                     return _keyByteArrayMapping;
                 }
-
                 if (isConcurrencyToken)
                 {
                     return _rowVersionMapping;
                 }
-
                 return _nonKeyByteArrayMapping;
             }
 
-            return base.GetTypeMapping(specifiedType, storageName, propertyType, isKey, isConcurrencyToken);
+            if (propertyType == typeof(decimal))
+            {
+                return _decimalMapping;
+            }
+
+            if (propertyType.GetTypeInfo().IsEnum)
+            {
+                return GetTypeMapping(specifiedType, storageName, Enum.GetUnderlyingType(propertyType), isKey, isConcurrencyToken);
+            }
+
+            throw new NotSupportedException(Strings.UnsupportedType(storageName, propertyType.Name));
         }
     }
 }

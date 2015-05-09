@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
@@ -139,12 +140,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 model,
                 builder);
 
-            //TODO - Valuegeneration is always on if key is int or bigint, see #25
-            //var valueGeneration = (string)annotatable[SqlServerAnnotationNames.Prefix + SqlServerAnnotationNames.ValueGeneration];
-            //if (valueGeneration == "Identity")
-            //{
-            //    builder.Append(" IDENTITY");
-            //}
+            var valueGeneration = (string)annotatable[SqlServerCeAnnotationNames.Prefix + SqlServerCeAnnotationNames.ValueGeneration];
+            if (valueGeneration == SqlServerCeAnnotationNames.Strategy)
+            {
+                builder.Append(" IDENTITY");
+            }
         }
     }
 }

@@ -106,6 +106,8 @@
     <Compile Include="MetaData\ISqlServerCeModelBuilderFactory.cs" />
     <Compile Include="ISqlServerCeSqlGenerator.cs" />
     <Compile Include="ISqlServerCeTypeMapper.cs" />
+    <Compile Include="MetaData\ModelConventions\SqlServerCeValueGenerationStrategyConvention.cs" />
+    <Compile Include="MetaData\SqlServerCeAnnotationNames.cs" />
     <Compile Include="MetaData\SqlServerCeModelBuilderFactory.cs" />
     <Compile Include="Migrations\ISqlServerCeHistoryRepository.cs" />
     <Compile Include="Migrations\ISqlServerCeMigrationSqlGenerator.cs" />

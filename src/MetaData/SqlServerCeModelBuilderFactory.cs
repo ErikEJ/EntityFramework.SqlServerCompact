@@ -1,8 +1,18 @@
-﻿using Microsoft.Data.Entity.Metadata.Builders;
+﻿using ErikEJ.Data.Entity.SqlServerCompact.MetaData.ModelConventions;
+using Microsoft.Data.Entity.Metadata.Builders;
+using Microsoft.Data.Entity.Metadata.ModelConventions;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
 {
     public class SqlServerCeModelBuilderFactory : ModelBuilderFactory, ISqlServerCeModelBuilderFactory
     {
+        protected override ConventionSet CreateConventionSet()
+        {
+            var conventions = base.CreateConventionSet();
+
+            conventions.ModelConventions.Add(new SqlServerCeValueGenerationStrategyConvention());
+
+            return conventions;
+        }
     }
 }

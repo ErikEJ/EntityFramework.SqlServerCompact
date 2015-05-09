@@ -49,10 +49,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             if (operation.NewName != null)
             {
                 builder
-                    .Append("ALTER TABLE ")
-                    .Append(_sql.DelimitIdentifier(operation.Name))
-                    .Append(" RENAME TO ")
-                    .Append(_sql.DelimitIdentifier(operation.NewName));
+                    .Append("sp_rename '")
+                    .Append(operation.Name)
+                    .Append("', '")
+                    .Append(operation.NewName)
+                    .Append("'");
             }
         }
 
@@ -61,9 +62,89 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             throw new NotImplementedException();
         }
 
-        public override void Generate(AlterColumnOperation operation, IModel model, SqlBatchBuilder builder)
+        public override void Generate(
+            [NotNull] AddColumnOperation operation,
+            [CanBeNull] IModel model,
+            [NotNull] SqlBatchBuilder builder)
         {
-            throw new NotImplementedException();
+            Check.NotNull(operation, nameof(operation));
+            Check.NotNull(builder, nameof(builder));
+
+            builder
+                .Append("ALTER TABLE ")
+                .Append(_sql.DelimitIdentifier(operation.Table))
+                .Append(" ADD ");
+            ColumnDefinition(operation, model, builder);
+        }
+
+
+        public override void Generate(
+            [NotNull] AlterColumnOperation operation,
+            [CanBeNull] IModel model,
+            [NotNull] SqlBatchBuilder builder)
+        {
+            Check.NotNull(operation, nameof(operation));
+            Check.NotNull(builder, nameof(builder));
+
+            // TODO: Test default value/expression
+            builder
+                .Append("ALTER TABLE ")
+                .Append(_sql.DelimitIdentifier(operation.Table))
+                .Append(" ALTER COLUMN ");
+            ColumnDefinition(operation, model, builder);
+        }
+
+        public virtual void ColumnDefinition(
+            [NotNull] AlterColumnOperation operation,
+            [CanBeNull] IModel model,
+            [NotNull] SqlBatchBuilder builder) =>
+                ColumnDefinition(
+                    operation.Schema,
+                    operation.Table,
+                    operation.Name,
+                    operation.Type,
+                    operation.IsNullable,
+                    operation.DefaultValue,
+                    operation.DefaultExpression,
+                    operation,
+                    model,
+                    builder);
+
+        public override void ColumnDefinition(
+            string schema,
+            string table,
+            string name,
+            string type,
+            bool nullable,
+            object defaultValue,
+            string defaultExpression,
+            IAnnotatable annotatable,
+            IModel model,
+            SqlBatchBuilder builder)
+        {
+            Check.NotEmpty(name, nameof(name));
+            Check.NotEmpty(type, nameof(type));
+            Check.NotNull(annotatable, nameof(annotatable));
+            Check.NotNull(builder, nameof(builder));
+
+            base.ColumnDefinition(
+                schema,
+                table,
+                name,
+                type,
+                nullable,
+                defaultValue,
+                defaultExpression,
+                annotatable,
+                model,
+                builder);
+
+            //TODO - Valuegeneration is always on if key is int or bigint, see #25
+            //var valueGeneration = (string)annotatable[SqlServerAnnotationNames.Prefix + SqlServerAnnotationNames.ValueGeneration];
+            //if (valueGeneration == "Identity")
+            //{
+            //    builder.Append(" IDENTITY");
+            //}
         }
     }
 }

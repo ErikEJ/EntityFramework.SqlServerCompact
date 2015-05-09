@@ -1,4 +1,5 @@
 ﻿using System;
+using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Xunit;
@@ -33,7 +34,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 Sql);
         }
 
-        [Fact(Skip = "Await model builder class, see #25")]
+        [Fact]
         public virtual void AddColumnOperation_identity()
         {
             Generate(
@@ -42,7 +43,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                     Table = "People",
                     Name = "Id",
                     Type = "int",
-                    IsNullable = false
+                    IsNullable = false,
+                    [SqlServerCeAnnotationNames.Prefix + SqlServerCeAnnotationNames.ValueGeneration] =
+                        SqlServerCeAnnotationNames.Strategy
                 });
 
             Assert.Equal(

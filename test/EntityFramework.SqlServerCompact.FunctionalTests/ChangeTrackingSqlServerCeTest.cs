@@ -1,7 +1,6 @@
-﻿using ErikEJ.Data.Entity.SqlServerCe.FunctionalTests;
-using Microsoft.Data.Entity.FunctionalTests;
+﻿using Microsoft.Data.Entity.FunctionalTests;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests
+namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class ChangeTrackingSqlServerCeTest : ChangeTrackingTestBase<NorthwindQuerySqlServerCeFixture>
     {

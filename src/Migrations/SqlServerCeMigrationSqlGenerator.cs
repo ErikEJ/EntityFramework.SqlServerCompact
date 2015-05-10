@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
@@ -28,6 +27,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             Check.NotNull(builder, nameof(builder));
 
             builder
+                .EndBatch()
                 .Append("DROP INDEX ")
                 .Append(_sql.DelimitIdentifier(operation.Name));
         }
@@ -50,6 +50,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             if (operation.NewName != null)
             {
                 builder
+                    .EndBatch()
                     .Append("sp_rename '")
                     .Append(operation.Name)
                     .Append("', '")
@@ -63,6 +64,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             throw new NotImplementedException();
         }
 
+        public override void Generate([NotNull]CreateTableOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            builder.EndBatch();
+            base.Generate(operation, model, builder);
+            
+        }
+
         public override void Generate(
             [NotNull] AddColumnOperation operation,
             [CanBeNull] IModel model,
@@ -72,6 +80,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             Check.NotNull(builder, nameof(builder));
 
             builder
+                .EndBatch()
                 .Append("ALTER TABLE ")
                 .Append(_sql.DelimitIdentifier(operation.Table))
                 .Append(" ADD ");
@@ -89,9 +98,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
             // TODO: Test default value/expression
             builder
+                .EndBatch()
                 .Append("ALTER TABLE ")
                 .Append(_sql.DelimitIdentifier(operation.Table))
-                .Append(" ALTER COLUMN ");
+                .Append(" ALTER COLUMN ");                            
             ColumnDefinition(operation, model, builder);
         }
 

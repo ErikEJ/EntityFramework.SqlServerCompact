@@ -43,13 +43,5 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
         public override ISqlQueryGenerator CreateSqlQueryGenerator(SelectExpression selectExpression)
             => new SqlServerCeQueryGenerator(Check.NotNull(selectExpression, nameof(selectExpression)));
 
-        //public override string GetTableName(IEntityType entityType)
-        //    => Check.NotNull(entityType, nameof(entityType)).SqlServer().Table;
-
-        //public override string GetSchema(IEntityType entityType)
-        //    => Check.NotNull(entityType, nameof(entityType)).SqlServer().Schema;
-
-        //public override string GetColumnName(IProperty property)
-        //    => Check.NotNull(property, nameof(property)).SqlServer().Column;
     }
 }

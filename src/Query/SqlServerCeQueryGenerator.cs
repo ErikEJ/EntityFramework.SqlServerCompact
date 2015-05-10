@@ -16,17 +16,5 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
         protected override string DelimitIdentifier(string identifier)
             => "[" + identifier.Replace("]", "]]") + "]";
 
-        //public override Expression VisitCountExpression(CountExpression countExpression)
-        //{
-        //    Check.NotNull(countExpression, nameof(countExpression));
-
-        //    if (countExpression.Type == typeof(long))
-        //    {
-        //        Sql.Append("COUNT_BIG(*)");
-        //        return countExpression;
-        //    }
-
-        //    return base.VisitCountExpression(countExpression);
-        //}
     }
 }

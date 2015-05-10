@@ -14,11 +14,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         {
             Check.NotNull(builder, nameof(builder));
             Check.NotNull(columnModification, nameof(columnModification));
-
+            //TODO add test of this!
             builder
                 .Append(DelimitIdentifier(columnModification.ColumnName))
                 .Append(" = ")
-                .Append("@@IDENTITY");
+                .Append("CAST (@@IDENTITY AS ")
+                .Append(columnModification.Property.EntityType.Name)
+                .Append(")");
         }
 
         public override void AppendSelectAffectedCountCommand(StringBuilder builder, string tableName, string schemaName)

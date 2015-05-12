@@ -47,7 +47,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 
             var command = (SqlCeCommand)_connection.DbConnection.CreateCommand();
             command.CommandText =
-                @"SELECT 1 FROM [INFORMATION_SCHEMA].[TABLES]
+                @"SELECT 1 FROM INFORMATION_SCHEMA.TABLES
 WHERE [TABLE_NAME] = '" + MigrationHistoryTableName + "' AND [TABLE_TYPE] <> N'SYSTEM TABLE'";
 
             _connection.Open();

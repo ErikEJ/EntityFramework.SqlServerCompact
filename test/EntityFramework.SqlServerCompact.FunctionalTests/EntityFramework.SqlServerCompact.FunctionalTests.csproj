@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsNoTrackingSqlServerCeTest.cs" />
+    <Compile Include="BasicEndToEndScenario.cs" />
     <Compile Include="ChangeTrackingSqlServerCeTest.cs" />
     <Compile Include="ComplexNavigationsQuerySqlServerCeFixture.cs" />
     <Compile Include="IncludeAsyncSqlServerCeTest.cs" />

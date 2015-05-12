@@ -35,6 +35,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
             var property = ((Property)target);
             var propertyType = target.ClrType;
 
+            if (property.ClrType == typeof(Guid) && property.IsKey())
+            {
+                property.GenerateValueOnAdd = null;
+                return false;
+            }
+
             if (property.GenerateValueOnAdd.HasValue && property.GenerateValueOnAdd.Value)
             {
                 if (!propertyType.IsIntegerForIdentity())

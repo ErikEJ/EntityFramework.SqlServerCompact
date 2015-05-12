@@ -1,4 +1,4 @@
-﻿using ErikEJ.Data.Entity.SqlServerCompact.MetaData.ModelConventions;
+﻿using ErikEJ.Data.Entity.SqlServerCe.MetaData.ModelConventions;
 using Microsoft.Data.Entity.Metadata.Builders;
 using Microsoft.Data.Entity.Metadata.ModelConventions;
 

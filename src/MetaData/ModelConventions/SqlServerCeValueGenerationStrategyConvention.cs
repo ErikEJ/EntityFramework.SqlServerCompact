@@ -2,7 +2,7 @@
 using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.Metadata.ModelConventions;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact.MetaData.ModelConventions
+namespace ErikEJ.Data.Entity.SqlServerCe.MetaData.ModelConventions
 {
     public class SqlServerCeValueGenerationStrategyConvention : IModelConvention
     {

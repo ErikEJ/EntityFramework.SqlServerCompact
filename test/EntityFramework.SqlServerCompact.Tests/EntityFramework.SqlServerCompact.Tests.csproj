@@ -9,7 +9,7 @@
     <ProjectGuid>{C38B58D7-F346-40A2-9849-D12CB9EC5C69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ErikEJ.Data.Entity.SqlServerCompact.Tests</RootNamespace>
+    <RootNamespace>ErikEJ.Data.Entity.SqlServerCe.Tests</RootNamespace>
     <AssemblyName>EntityFramework.SqlServerCompact.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -37,6 +37,10 @@
     <Reference Include="EntityFramework.Core, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.Core.7.0.0-beta5-13087\lib\net45\EntityFramework.Core.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Core.FunctionalTests, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\EntityFramework.Core.FunctionalTests.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.Core.Tests">
       <HintPath>..\..\libs\EntityFramework.Core.Tests.dll</HintPath>
@@ -120,10 +124,14 @@
   <ItemGroup>
     <Compile Include="ApiConsistencyTest.cs" />
     <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensionsTest.cs" />
+    <Compile Include="Metadata\ModelConventions\SqlServerCeValueGenerationStrategyConventionTest.cs" />
     <Compile Include="Migrations\SqlServerMigrationSqlGeneratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlServerCeDataStoreTest.cs" />
+    <Compile Include="SqlServerCeDataStoreConnectionTest.cs" />
+    <Compile Include="SqlServerCeDataStoreSourceTest.cs" />
+    <Compile Include="SqlServerCeTestHelper.cs" />
     <Compile Include="SqlServerCeTypeMapperTest.cs" />
+    <Compile Include="SqlServerEntityFrameworkServicesBuilderExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\EntityFramework.SqlServerCompact.csproj">

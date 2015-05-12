@@ -9,7 +9,7 @@
     <ProjectGuid>{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ErikEJ.Data.Entity.SqlServerCompact.FunctionalTests</RootNamespace>
+    <RootNamespace>ErikEJ.Data.Entity.SqlServerCe.FunctionalTests</RootNamespace>
     <AssemblyName>EntityFramework.SqlServerCompact.FunctionalTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

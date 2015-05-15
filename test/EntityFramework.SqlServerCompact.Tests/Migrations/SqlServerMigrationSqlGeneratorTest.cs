@@ -6,7 +6,7 @@ using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 {
-    public class SqliteMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
+    public class SqlServerCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
         protected override IMigrationSqlGenerator SqlGenerator => new SqlServerCeMigrationSqlGenerator(new SqlServerCeSqlGenerator());
 

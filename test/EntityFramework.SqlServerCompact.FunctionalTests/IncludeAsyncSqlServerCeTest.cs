@@ -2,9 +2,9 @@
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class IncludeAsyncSqliteTest : IncludeAsyncTestBase<NorthwindQuerySqlServerCeFixture>
+    public class IncludeAsyncSqlServerCeTest : IncludeAsyncTestBase<NorthwindQuerySqlServerCeFixture>
     {
-        public IncludeAsyncSqliteTest(NorthwindQuerySqlServerCeFixture fixture)
+        public IncludeAsyncSqlServerCeTest(NorthwindQuerySqlServerCeFixture fixture)
             : base(fixture)
         {
         }

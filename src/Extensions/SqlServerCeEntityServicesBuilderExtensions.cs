@@ -12,7 +12,7 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Framework.DependencyInjection
 {
-    public static class SqliteEntityFrameworkServicesBuilderExtensions
+    public static class SqlServerCeEntityFrameworkServicesBuilderExtensions
     {
         public static EntityFrameworkServicesBuilder AddSqlServerCe([NotNull] this EntityFrameworkServicesBuilder services)
         {

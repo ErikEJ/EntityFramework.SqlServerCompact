@@ -25,12 +25,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override void AppendSelectAffectedCountCommand(StringBuilder builder, string tableName, string schemaName)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         protected override void AppendRowsAffectedWhereCondition(StringBuilder builder, int expectedRowsAffected)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public override string BatchSeparator => "GO";

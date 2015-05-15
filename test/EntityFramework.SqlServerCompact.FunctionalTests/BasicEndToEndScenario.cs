@@ -8,7 +8,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class BasicEndToEndScenario
     {
-        [Fact(Skip = "Waiting for Update pipeline to support single statement batches")]
+        [Fact]
         public void Can_run_end_to_end_scenario()
         {
             using (var db = new BloggingContext())

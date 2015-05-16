@@ -10,12 +10,37 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
     {
         protected override IMigrationSqlGenerator SqlGenerator => new SqlServerCeMigrationSqlGenerator(new SqlServerCeSqlGenerator());
 
+        public override void AlterSequenceOperation_without_minValue_and_maxValue()
+        {
+            Assert.Throws<NotImplementedException>(() => base.AlterSequenceOperation_without_minValue_and_maxValue());
+        }
+
+        public override void AlterSequenceOperation_with_minValue_and_maxValue()
+        {
+            Assert.Throws<NotImplementedException>(() => base.AlterSequenceOperation_with_minValue_and_maxValue());
+        }
+
+        public override void CreateSequenceOperation_without_minValue_and_maxValue()
+        {
+            Assert.Throws<NotImplementedException>(() => base.CreateSequenceOperation_without_minValue_and_maxValue());
+        }
+
+        public override void CreateSequenceOperation_with_minValue_and_maxValue()
+        {
+            Assert.Throws<NotImplementedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue());
+        }
+
+        public override void DropSequenceOperation()
+        {
+            Assert.Throws<NotImplementedException>(() => base.DropSequenceOperation());
+        }
+
         public override void DropIndexOperation()
         {
             base.DropIndexOperation();
 
             Assert.Equal(
-                "DROP INDEX [IX_People_Name];" + EOL,
+                "DROP INDEX [IX_People_Name]",
                 Sql);
         }
 
@@ -55,7 +80,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "sp_rename 'People', 'Person';" + EOL,
+                "sp_rename 'People', 'Person'",
                 Sql);
         }
 
@@ -74,7 +99,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY;" + EOL,
+                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY",
                 Sql);
         }
 
@@ -89,7 +114,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD PRIMARY KEY ([Id]);" + EOL,
+                "ALTER TABLE [People] ADD PRIMARY KEY ([Id])",
                 Sql);
         }
 
@@ -98,7 +123,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
             base.AlterColumnOperation();
 
             Assert.Equal(
-                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] int NOT NULL DEFAULT 7;" + EOL,
+                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] int NOT NULL DEFAULT 7",
                 Sql);
         }
 
@@ -114,7 +139,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "CREATE INDEX [IX_People_Name] ON [People] ([Name]);" + EOL,
+                "CREATE INDEX [IX_People_Name] ON [People] ([Name])",
                 Sql);
         }
     }

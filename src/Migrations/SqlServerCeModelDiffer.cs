@@ -45,10 +45,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
             {
                 if (!propertyType.IsIntegerForIdentity())
                 {
-                    throw new ArgumentException("Bad identity type");
-                    //TODO
-                    //throw new ArgumentException(Strings.IdentityBadType(
-                    //    target.Name, target.EntityType.Name, propertyType.Name));
+                    //TODO Localize?
+                    throw new ArgumentException(string.Format(
+                        "Identity value generation cannot be used for the property '{0}' on entity type '{1}' because the property type is '{2}'.Identity value generation can only be used with signed integer properties.",
+                        target.Name, target.EntityType.Name, propertyType.Name));
                 }
 
                 property[SqlServerCeAnnotationNames.Prefix + SqlServerCeAnnotationNames.ValueGeneration] =

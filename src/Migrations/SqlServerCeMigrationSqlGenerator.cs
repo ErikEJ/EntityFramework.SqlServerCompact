@@ -109,7 +109,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
 
-            // TODO: Test default value/expression
             builder
                 .EndBatch()
                 .Append("ALTER TABLE ")

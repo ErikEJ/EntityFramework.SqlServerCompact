@@ -14,12 +14,16 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         {
             Check.NotNull(builder, nameof(builder));
             Check.NotNull(columnModification, nameof(columnModification));
-            //TODO add test of this!
+
+            var castAs = columnModification.Property.ClrType == typeof(Int32)
+                ? "int"
+                : "bigint";
+
             builder
                 .Append(DelimitIdentifier(columnModification.ColumnName))
                 .Append(" = ")
                 .Append("CAST (@@IDENTITY AS ")
-                .Append(columnModification.Property.EntityType.Name)
+                .Append(castAs)
                 .Append(")");
         }
 
@@ -30,7 +34,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         protected override void AppendRowsAffectedWhereCondition(StringBuilder builder, int expectedRowsAffected)
         {
-            return;
+            Check.NotNull(builder, nameof(builder));
+
+            builder
+                .Append("1 = 1");
         }
 
         public override string BatchSeparator => "GO";

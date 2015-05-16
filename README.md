@@ -5,4 +5,6 @@ This provider is mainly intended for desktop applications under .NET 4.5 (Consol
 
 See the [Wiki pages](https://github.com/ErikEJ/EntityFramework.SqlServerCompact/wiki) for information on how to get started with the source code and the NuGet package.
 
+You can find the latest build on the [MyGet feed](https://www.myget.org/gallery/ef7-sqlce)
+
 Pull requests are most welcome!

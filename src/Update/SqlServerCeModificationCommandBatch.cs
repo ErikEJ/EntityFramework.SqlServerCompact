@@ -35,12 +35,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             Check.NotNull(context, nameof(context));
             Check.NotNull(logger, nameof(logger));
 
-            var commandText = GetCommandText();
+            var initialCommandText = GetCommandText();
+            Tuple<string, string> commandText = SplitCommandText(initialCommandText);
 
             Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
 
             var commandIndex = 0;
-            using (var storeCommand = CreateStoreCommand(commandText, transaction.DbTransaction, typeMapper, transaction.Connection?.CommandTimeout))
+            using (var storeCommand = CreateStoreCommand(commandText.Item1, transaction.DbTransaction, typeMapper, transaction.Connection?.CommandTimeout))
             {
                 if (logger.IsEnabled(LogLevel.Verbose))
                 {
@@ -52,11 +53,32 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
                 {
                     using (var reader = storeCommand.ExecuteReader())
                     {
-                        commandIndex = ModificationCommands[commandIndex].RequiresResultPropagation
-                        ? ConsumeResultSetWithPropagation(commandIndex, reader, context)
-                        : ConsumeResultSetWithoutPropagation(commandIndex, reader, context);
+                        DbCommand returningCommand = null;
+                        DbDataReader returningReader = null;
+                        try
+                        {
+                            if (commandText.Item2.Length > 0)
+                            {
+                                returningCommand = CreateStoreCommand(commandText.Item2, transaction.DbTransaction, typeMapper, transaction.Connection?.CommandTimeout);
+                                returningReader = returningCommand.ExecuteReader();
+                            }
+                            commandIndex = ModificationCommands[commandIndex].RequiresResultPropagation
+                            ? ConsumeResultSetWithPropagation(commandIndex, returningReader, context)
+                            : ConsumeResultSetWithoutPropagation(commandIndex, reader, context);
 
-                        Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
+                            Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
+                        }
+                        finally
+                        {
+                            if (returningReader != null)
+                            {
+                                returningReader.Dispose();
+                            }
+                            if (returningCommand != null)
+                            {
+                                returningCommand.Dispose();
+                            }
+                        }
                     }
                 }
                 catch (DbUpdateException)
@@ -73,6 +95,21 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             }
 
             return commandIndex;
+        }
+
+        private Tuple<string, string> SplitCommandText(string commandText)
+        {
+            var test = ";" + Environment.NewLine + "SELECT ";
+            string item1 = commandText;
+            string item2 = string.Empty;
+
+            if (commandText.Contains(test))
+            {
+                item1 = commandText.Substring(0, commandText.IndexOf(test) + 1);
+                item2 = commandText.Substring(commandText.LastIndexOf(test) + 1);
+            }
+
+            return new Tuple<string, string>(item1, item2);
         }
 
         private int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader, DbContext context)
@@ -94,8 +131,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
         //TODO Wait for update EF binaries available from MyGet
         private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbContext context)
         {
-            return 1;
-
             //var rowsAffected = 0;
             //var valueReader = new RelationalTypedValueReader(reader);
             //do
@@ -123,7 +158,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             //while (++commandIndex < ResultSetEnds.Count
             //       && !ResultSetEnds[commandIndex - 1]);
 
-            //return commandIndex;
+            return ++commandIndex;
         }
     }
 }

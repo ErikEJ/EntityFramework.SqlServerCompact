@@ -129,6 +129,7 @@
     <Compile Include="NorthwindQuerySqlServerCeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerCeDataStoreCreatorTest.cs" />
+    <Compile Include="SqlServerCeMigrationsTest.cs" />
     <Compile Include="SqlServerCeTestStore.cs" />
     <Compile Include="TestModels\SqlServerCeNorthwindContext.cs" />
     <Compile Include="TestSqlServerCeModelSource.cs" />

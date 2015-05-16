@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
@@ -32,7 +33,22 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 .Append(_sql.DelimitIdentifier(operation.Name));
         }
 
-        public override void Generate(RenameSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        public override void Generate([NotNull]CreateSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate([NotNull]AlterSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate([NotNull]DropSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate([NotNull]RenameSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
         {
             throw new NotImplementedException();
         }
@@ -42,11 +58,16 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             throw new NotImplementedException();
         }
 
+        public override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void Generate(RenameTableOperation operation, IModel model, SqlBatchBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
-
+            //TODO Test!
             if (operation.NewName != null)
             {
                 builder
@@ -59,16 +80,18 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             }
         }
 
-        public override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
+        public override IReadOnlyList<SqlBatch> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
         {
-            throw new NotImplementedException();
-        }
+            Check.NotNull(operations, nameof(operations));
 
-        public override void Generate([NotNull]CreateTableOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
-        {
-            builder.EndBatch();
-            base.Generate(operation, model, builder);
-            
+            var builder = new SqlBatchBuilder();
+            foreach (var operation in operations)
+            {
+                // TODO: Too magic?
+                ((dynamic)this).Generate((dynamic)operation, model, builder);
+                builder.EndBatch();
+            }
+            return builder.SqlBatches;
         }
 
         public override void Generate(

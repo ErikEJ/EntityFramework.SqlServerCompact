@@ -8,7 +8,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class BasicEndToEndScenarioForIdentity
     {
-        [Fact]
+        [Fact(Skip = "Waiting for latest EF7 daily")]
         public void Can_run_end_to_end_scenario()
         {
             using (var db = new BloggingContextForIdentity())

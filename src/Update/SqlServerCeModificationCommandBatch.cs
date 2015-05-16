@@ -99,8 +99,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
 
         private Tuple<string, string> SplitCommandText(string commandText)
         {
-            var test = @";
-SELECT ";
+            var test = ";" + Environment.NewLine + "SELECT ";
             string item1 = commandText;
             string item2 = string.Empty;
 

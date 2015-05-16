@@ -21,6 +21,36 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             _sql = sqlGenerator;
         }
 
+        public override void Generate([NotNull]DropSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate([NotNull]CreateSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate([NotNull]AlterSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate([NotNull]RenameSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate(RenameColumnOperation operation, IModel model, SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void Generate(DropIndexOperation operation, IModel model, SqlBatchBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
@@ -30,16 +60,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 .EndBatch()
                 .Append("DROP INDEX ")
                 .Append(_sql.DelimitIdentifier(operation.Name));
-        }
-
-        public override void Generate(RenameSequenceOperation operation, IModel model, SqlBatchBuilder builder)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Generate(RenameColumnOperation operation, IModel model, SqlBatchBuilder builder)
-        {
-            throw new NotImplementedException();
         }
 
         public override void Generate(RenameTableOperation operation, IModel model, SqlBatchBuilder builder)
@@ -59,16 +79,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             }
         }
 
-        public override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Generate([NotNull]CreateTableOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
         {
             builder.EndBatch();
             base.Generate(operation, model, builder);
-            
         }
 
         public override void Generate(
@@ -86,7 +100,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 .Append(" ADD ");
             ColumnDefinition(operation, model, builder);
         }
-
 
         public override void Generate(
             [NotNull] AlterColumnOperation operation,

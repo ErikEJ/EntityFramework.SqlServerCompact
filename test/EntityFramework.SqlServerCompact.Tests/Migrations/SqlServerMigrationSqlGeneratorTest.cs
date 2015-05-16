@@ -44,31 +44,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 Sql);
         }
 
-        public override void AlterSequenceOperation_without_minValue_and_maxValue()
-        {
-            Assert.Throws<NotImplementedException>(() => base.AlterSequenceOperation_without_minValue_and_maxValue());
-        }
-
-        public override void AlterSequenceOperation_with_minValue_and_maxValue()
-        {
-            Assert.Throws<NotImplementedException>(() => base.AlterSequenceOperation_with_minValue_and_maxValue());
-        }
-
-        public override void CreateSequenceOperation_without_minValue_and_maxValue()
-        {
-            Assert.Throws<NotImplementedException>(() => base.CreateSequenceOperation_without_minValue_and_maxValue());
-        }
-
-        public override void CreateSequenceOperation_with_minValue_and_maxValue()
-        {
-            Assert.Throws<NotImplementedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue());
-        }
-
-        public override void DropSequenceOperation()
-        {
-            Assert.Throws<NotImplementedException>(() => base.DropSequenceOperation());
-        }
-
         [Fact]
         public virtual void RenameTableOperation()
         {

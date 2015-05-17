@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>EntityFramework.SqlServerCompact</id>
     <version>$version$</version>
@@ -13,8 +13,10 @@
     <releaseNotes>early alpha bits</releaseNotes>
     <tags>EntityFramework EF sqlce entity framework provider sql server compact</tags>
     <dependencies>
-      <dependency id="EntityFramework.Relational" version="[7.0.0-beta5-13087]" />
-      <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
+        <group targetFramework=".NETFramework4.5">
+            <dependency id="EntityFramework.Relational" version="[7.0.0-beta5-13087]" />
+            <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
+         </group>
     </dependencies>
   </metadata>
   <files>

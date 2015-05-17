@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using ErikEJ.Data.Entity.SqlServerCompact.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.ChangeTracking.Internal;
@@ -45,8 +48,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             {
                 if (logger.IsEnabled(LogLevel.Verbose))
                 {
-                    //TODO Cant log!?
-                    //logger.LogCommand(storeCommand);
+                    logger.LogCommand(storeCommand);
                 }
 
                 try
@@ -95,6 +97,24 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             }
 
             return commandIndex;
+        }
+
+        //TODO Test (most likely included in one of the pending Functional Tests)
+        public override Task<int> ExecuteAsync(
+            RelationalTransaction transaction, 
+            IRelationalTypeMapper typeMapper, 
+            DbContext context, 
+            ILogger logger, 
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            Check.NotNull(transaction, nameof(transaction));
+            Check.NotNull(typeMapper, nameof(typeMapper));
+            Check.NotNull(context, nameof(context));
+            Check.NotNull(logger, nameof(logger));
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(Execute(transaction, typeMapper, context, logger));
         }
 
         private Tuple<string, string> SplitCommandText(string commandText)

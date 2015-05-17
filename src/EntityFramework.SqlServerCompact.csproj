@@ -94,6 +94,7 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\LoggerExtensions.cs" />
     <Compile Include="Extensions\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Extensions\SqlServerCeEntityServicesBuilderExtensions.cs" />

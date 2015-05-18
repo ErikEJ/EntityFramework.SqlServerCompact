@@ -67,7 +67,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
-            //TODO Test!
             if (operation.NewName != null)
             {
                 builder
@@ -87,7 +86,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             var builder = new SqlBatchBuilder();
             foreach (var operation in operations)
             {
-                // TODO: Too magic?
+                // TODO: Too magic? (Wait for changes in EF7 code base)
                 ((dynamic)this).Generate((dynamic)operation, model, builder);
                 builder.EndBatch();
             }

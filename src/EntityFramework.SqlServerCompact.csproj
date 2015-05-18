@@ -123,7 +123,7 @@
     <Compile Include="Query\SqlServerCeQueryContextFactory.cs" />
     <Compile Include="Query\SqlServerCeQueryGenerator.cs" />
     <Compile Include="Query\SqlServerCeValueBufferFactoryFactory.cs" />
-    <Compile Include="SharedTypeExtensions.cs" />
+    <Compile Include="Extensions\SharedTypeExtensions.cs" />
     <Compile Include="SqlServerCeDataFactory.cs" />
     <Compile Include="SqlServerCeDataStore.cs" />
     <Compile Include="SqlServerCeDataStoreConnection.cs" />

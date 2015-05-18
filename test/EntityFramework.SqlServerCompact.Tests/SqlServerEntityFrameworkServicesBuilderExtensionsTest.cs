@@ -39,7 +39,7 @@ namespace Microsoft.Data.Entity.SqlServer.Tests
             VerifySingleton<ISqlServerCeCommandBatchPreparer>();
             VerifySingleton<ISqlServerCeModelSource>();
 
-            // SQL Server scoped
+            // SQL Server Ce scoped
             VerifyScoped<ISqlServerCeQueryContextFactory>();
             VerifyScoped<ISqlServerCeValueGeneratorSelector>();
             VerifyScoped<ISqlServerCeBatchExecutor>();

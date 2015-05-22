@@ -8,7 +8,7 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCeSqlGenerator : SqlGenerator, ISqlServerCeSqlGenerator
+    public class SqlServerCeSqlGenerator : SqlGenerator
     {
         protected override void AppendIdentityWhereCondition(StringBuilder builder, ColumnModification columnModification)
         {

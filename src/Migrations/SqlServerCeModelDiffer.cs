@@ -4,14 +4,15 @@ using System.Linq;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 {
-    public class SqlServerCeModelDiffer : ModelDiffer, ISqlServerCeModelDiffer
+    public class SqlServerCeModelDiffer : ModelDiffer
     {
-        public SqlServerCeModelDiffer([NotNull] ISqlServerCeTypeMapper typeMapper)
+        public SqlServerCeModelDiffer([NotNull] IRelationalTypeMapper typeMapper)
             : base(typeMapper)
         {
         }

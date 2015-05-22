@@ -4,21 +4,22 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Microsoft.Data.Entity.Utilities;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCeDataStoreCreator : RelationalDataStoreCreator, ISqlServerCeDataStoreCreator
+    public class SqlServerCeDataStoreCreator : RelationalDataStoreCreator
     {
-        private readonly ISqlServerCeConnection _connection;
+        private readonly IRelationalConnection _connection;
         private readonly IModelDiffer _modelDiffer;
-        private readonly ISqlServerCeMigrationSqlGenerator _migrationSqlGenerator;
+        private readonly IMigrationSqlGenerator _migrationSqlGenerator;
         private readonly ISqlStatementExecutor _executor;
 
         public SqlServerCeDataStoreCreator(
-            [NotNull] ISqlServerCeConnection connection,
+            [NotNull] IRelationalConnection connection,
             [NotNull] IModelDiffer modelDiffer,
-            [NotNull] ISqlServerCeMigrationSqlGenerator migrationSqlGenerator,
+            [NotNull] IMigrationSqlGenerator migrationSqlGenerator,
             [NotNull] ISqlStatementExecutor sqlStatementExecutor)
         {
             Check.NotNull(connection, nameof(connection));

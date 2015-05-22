@@ -19,13 +19,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
 {
     public class SqlServerCeModificationCommandBatch : SingularModificationCommandBatch
     {
-        public SqlServerCeModificationCommandBatch([NotNull] ISqlGenerator sqlGenerator)
-            : base(sqlGenerator)
+        public SqlServerCeModificationCommandBatch(
+            [NotNull] ISqlGenerator sqlGenerator,
+            [NotNull] IRelationalMetadataExtensionProvider metadataExtensionProvider)
+            : base(sqlGenerator, metadataExtensionProvider)
         {
         }
-
-        public override IRelationalPropertyExtensions GetPropertyExtensions(IProperty property) => 
-            property.Relational();
 
         public override int Execute(
             RelationalTransaction transaction,

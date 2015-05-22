@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Metadata.ModelConventions;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
 {
-    public class SqlServerCeModelBuilderFactory : ModelBuilderFactory, ISqlServerCeModelBuilderFactory
+    public class SqlServerCeModelBuilderFactory : ModelBuilderFactory
     {
         protected override ConventionSet CreateConventionSet()
         {

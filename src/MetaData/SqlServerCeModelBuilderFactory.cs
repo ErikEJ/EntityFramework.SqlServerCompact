@@ -6,13 +6,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
 {
     public class SqlServerCeModelBuilderFactory : ModelBuilderFactory
     {
-        protected override ConventionSet CreateConventionSet()
-        {
-            var conventions = base.CreateConventionSet();
+        //protected override ConventionSet CreateConventionSet()
+        //{
+        //    var conventions = base.CreateConventionSet();
 
-            conventions.ModelConventions.Add(new SqlServerCeValueGenerationStrategyConvention());
+        //    conventions.ModelConventions.Add(new SqlServerCeValueGenerationStrategyConvention());
 
-            return conventions;
-        }
+        //    return conventions;
+        //}
     }
 }

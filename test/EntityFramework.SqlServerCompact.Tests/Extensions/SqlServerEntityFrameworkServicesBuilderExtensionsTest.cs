@@ -30,27 +30,23 @@ namespace Microsoft.Data.Entity.SqlServer.Tests
             VerifySingleton<IComparer<ModificationCommand>>();
 
             // SQL Server Ce dingletones
-            VerifySingleton<ISqlServerCeModelBuilderFactory>();
-            VerifySingleton<ISqlServerCeValueGeneratorCache>();
-            VerifySingleton<ISqlServerCeSqlGenerator>();
+            VerifySingleton<SqlServerCeModelBuilderFactory>();
+            VerifySingleton<SqlServerCeValueGeneratorCache>();
+            VerifySingleton<SqlServerCeSqlGenerator>();
             VerifySingleton<ISqlStatementExecutor>();
-            VerifySingleton<ISqlServerCeTypeMapper>();
-            VerifySingleton<ISqlServerCeModificationCommandBatchFactory>();
-            VerifySingleton<ISqlServerCeCommandBatchPreparer>();
-            VerifySingleton<ISqlServerCeModelSource>();
+            VerifySingleton<SqlServerCeTypeMapper>();
+            
+            VerifySingleton<SqlServerCeModelSource>();
 
             // SQL Server Ce scoped
-            VerifyScoped<ISqlServerCeQueryContextFactory>();
-            VerifyScoped<ISqlServerCeValueGeneratorSelector>();
-            VerifyScoped<ISqlServerCeBatchExecutor>();
-            VerifyScoped<ISqlServerCeDataStoreServices>();
-            VerifyScoped<ISqlServerCeDataStore>();
-            VerifyScoped<ISqlServerCeConnection>();
-            VerifyScoped<ISqlServerCeModelDiffer>();
-            VerifyScoped<ISqlServerCeDatabaseFactory>();
-            VerifyScoped<ISqlServerCeMigrationSqlGenerator>();
-            VerifyScoped<ISqlServerCeDataStoreCreator>();
-            VerifyScoped<ISqlServerCeHistoryRepository>();
+            VerifyScoped<SqlServerCeModificationCommandBatchFactory>();
+            VerifyScoped<SqlServerCeDataStoreServices>();
+            VerifyScoped<SqlServerCeDataStore>();
+            VerifyScoped<SqlServerCeDataStoreConnection>();
+            VerifyScoped<SqlServerCeModelDiffer>();
+            VerifyScoped<SqlServerCeMigrationSqlGenerator>();
+            VerifyScoped<SqlServerCeDataStoreCreator>();
+            VerifyScoped<SqlServerCeHistoryRepository>();
 
             VerifyCommonDataStoreServices();
 

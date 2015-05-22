@@ -9,6 +9,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         {
         }
 
-        public override string Name => "SQL Server Compact Data Store";
+        public override string Name => "SqlServerCeDataStore";
     }
 }

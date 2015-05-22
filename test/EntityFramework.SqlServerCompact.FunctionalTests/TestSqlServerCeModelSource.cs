@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Builders;
@@ -18,7 +19,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             _testModelSource = new TestModelSource(onModelCreating, setFinder);
         }
 
-        public static Func<IServiceProvider, ISqlServerCeModelSource> GetFactory(Action<ModelBuilder> onModelCreating) =>
+        public static Func<IServiceProvider, IModelSource> GetFactory(Action<ModelBuilder> onModelCreating) =>
             p => new TestSqlServerCeModelSource(
                 onModelCreating,
                 p.GetRequiredService<IDbSetFinder>(),

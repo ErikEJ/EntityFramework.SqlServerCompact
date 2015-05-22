@@ -7,6 +7,7 @@ using ErikEJ.Data.Entity.SqlServerCe.ValueGeneration;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
+using Microsoft.Data.Entity.Sqlite.Metadata;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 
@@ -26,8 +27,9 @@ namespace Microsoft.Framework.DependencyInjection
                     .AddSingleton<SqlServerCeSqlGenerator>()
                     .AddSingleton<SqlStatementExecutor>()
                     .AddSingleton<SqlServerCeTypeMapper>()
-                    .AddSingleton<SqlServerCeModificationCommandBatchFactory>()
+                    .AddSingleton<SqlServerCeMetadataExtensionProvider>()                    
                     .AddSingleton<SqlServerCeModelSource>()
+                    .AddScoped<SqlServerCeModificationCommandBatchFactory>()
                     .AddScoped<SqlServerCeDataStoreServices>()
                     .AddScoped<SqlServerCeDataStore>()
                     .AddScoped<SqlServerCeDataStoreConnection>()

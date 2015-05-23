@@ -19,7 +19,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             _testModelSource = new TestModelSource(onModelCreating, setFinder);
         }
 
-        public static Func<IServiceProvider, IModelSource> GetFactory(Action<ModelBuilder> onModelCreating) =>
+        public static Func<IServiceProvider, SqlServerCeModelSource> GetFactory(Action<ModelBuilder> onModelCreating) =>
             p => new TestSqlServerCeModelSource(
                 onModelCreating,
                 p.GetRequiredService<IDbSetFinder>(),

@@ -6,7 +6,7 @@ using Microsoft.Data.Entity.Relational;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCeTypeMapper : RelationalTypeMapper, ISqlServerCeTypeMapper
+    public class SqlServerCeTypeMapper : RelationalTypeMapper
     {
         // This dictionary is for invariant mappings from a sealed CLR type to a single
         // store type. If the CLR type is unsealed or if the mapping varies based on how the

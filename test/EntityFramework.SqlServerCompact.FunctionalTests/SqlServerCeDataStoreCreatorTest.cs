@@ -372,9 +372,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .Service;
         }
 
-        private static ISqlServerCeDataStoreCreator GetDataStoreCreator(SqlServerCeTestStore testStore)
+        private static SqlServerCeDataStoreCreator GetDataStoreCreator(SqlServerCeTestStore testStore)
         {
-            return CreateContextServices(testStore).GetRequiredService<ISqlServerCeDataStoreCreator>();
+            return CreateContextServices(testStore).GetService<SqlServerCeDataStoreCreator>();
         }
 
         private class BloggingContext : DbContext

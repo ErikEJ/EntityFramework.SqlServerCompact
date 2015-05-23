@@ -11,22 +11,23 @@ using ErikEJ.Data.Entity.SqlServerCe.Query;
 using ErikEJ.Data.Entity.SqlServerCe.Update;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
+using Microsoft.Data.Entity.Relational.Update;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCeDataStore : RelationalDataStore, ISqlServerCeDataStore
+    public class SqlServerCeDataStore : RelationalDataStore
     {
         public SqlServerCeDataStore(
             [NotNull] IModel model,
             [NotNull] IEntityKeyFactorySource entityKeyFactorySource,
             [NotNull] IEntityMaterializerSource entityMaterializerSource,
             [NotNull] IClrAccessorSource<IClrPropertyGetter> clrPropertyGetterSource,
-            [NotNull] ISqlServerCeConnection connection,
-            [NotNull] ISqlServerCeCommandBatchPreparer batchPreparer,
-            [NotNull] ISqlServerCeBatchExecutor batchExecutor,
+            [NotNull] IRelationalConnection connection,
+            [NotNull] ICommandBatchPreparer batchPreparer,
+            [NotNull] IBatchExecutor batchExecutor,
             [NotNull] IDbContextOptions options,
             [NotNull] ILoggerFactory loggerFactory,
-            [NotNull] ISqlServerCeValueBufferFactoryFactory valueBufferFactoryFactory)
+            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory)
             : base(
                 Check.NotNull(model, nameof(model)),
                 Check.NotNull(entityKeyFactorySource, nameof(entityKeyFactorySource)),
@@ -62,7 +63,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 ClrPropertyGetterSource,
                 enumerableMethodProvider,
                 methodCallTranslator,
-                (ISqlServerCeValueBufferFactoryFactory)ValueBufferFactoryFactory);
+                ValueBufferFactoryFactory);
         }
     }
 }

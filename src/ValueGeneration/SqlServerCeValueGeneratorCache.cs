@@ -2,7 +2,7 @@ using Microsoft.Data.Entity.ValueGeneration;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.ValueGeneration
 {
-    public class SqlServerCeValueGeneratorCache : ValueGeneratorCache, ISqlServerCeValueGeneratorCache
+    public class SqlServerCeValueGeneratorCache : ValueGeneratorCache
     {
     }
 }

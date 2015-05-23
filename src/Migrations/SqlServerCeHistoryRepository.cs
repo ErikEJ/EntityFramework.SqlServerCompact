@@ -4,26 +4,27 @@ using System.Data.SqlServerCe;
 using System.Text;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Utilities;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 {
-    public class SqlServerCeHistoryRepository : ISqlServerCeHistoryRepository
+    public class SqlServerCeHistoryRepository : IHistoryRepository
     {
         public const string MigrationHistoryTableName = "__MigrationHistory";
 
-        private readonly ISqlServerCeConnection _connection;
-        private readonly ISqlServerCeDataStoreCreator _creator;
+        private readonly IRelationalConnection _connection;
+        private readonly IRelationalDataStoreCreator _creator;
         private readonly Type _contextType;
-        private readonly ISqlServerCeSqlGenerator _sql;
+        private readonly ISqlGenerator _sql;
 
         public SqlServerCeHistoryRepository(
-            [NotNull] ISqlServerCeConnection connection,
-            [NotNull] ISqlServerCeDataStoreCreator creator,
+            [NotNull] IRelationalConnection connection,
+            [NotNull] IRelationalDataStoreCreator creator,
             [NotNull] DbContext context,
-            [NotNull] ISqlServerCeSqlGenerator sqlGenerator)
+            [NotNull] ISqlGenerator sqlGenerator)
         {
             Check.NotNull(connection, nameof(connection));
             Check.NotNull(creator, nameof(creator));

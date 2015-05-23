@@ -1,6 +1,7 @@
 ﻿using System;
 using ErikEJ.Data.Entity.SqlServerCe;
 using ErikEJ.Data.Entity.SqlServerCe.Migrations;
+using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Moq;
@@ -77,8 +78,8 @@ namespace Microsoft.Data.Entity.SqlServer.Migrations
         private static IHistoryRepository CreateHistoryRepository()
         {
             return new SqlServerCeHistoryRepository(
-                Mock.Of<ISqlServerCeConnection>(),
-                Mock.Of<ISqlServerCeDataStoreCreator>(),
+                Mock.Of<IRelationalConnection>(),
+                Mock.Of<IRelationalDataStoreCreator>(),
                 new Context(),
                 new SqlServerCeSqlGenerator());
         }

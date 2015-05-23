@@ -11,12 +11,12 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlServerCeMigrationSqlGenerator : MigrationSqlGenerator, ISqlServerCeMigrationSqlGenerator
+    public class SqlServerCeMigrationSqlGenerator : MigrationSqlGenerator
     {
-        private readonly ISqlServerCeSqlGenerator _sql;
+        private readonly ISqlGenerator _sql;
 
         public SqlServerCeMigrationSqlGenerator(
-            [NotNull] ISqlServerCeSqlGenerator sqlGenerator)
+            [NotNull] ISqlGenerator sqlGenerator)
             : base(sqlGenerator)
         {
             _sql = sqlGenerator;

@@ -80,9 +80,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 get { return "EF7"; }
             }
 
-            public override IModel Target
+            public override void BuildTargetModel(ModelBuilder modelBuilder)
             {
-                get { return new Model(); }
             }
         }
     }

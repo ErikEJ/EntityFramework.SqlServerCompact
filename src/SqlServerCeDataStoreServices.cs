@@ -35,10 +35,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         public override IRelationalConnection RelationalConnection => GetService<SqlServerCeDataStoreConnection>();
         public override ISqlGenerator SqlGenerator => GetService<SqlServerCeSqlGenerator>();
         public override IDataStore Store => GetService<SqlServerCeDataStore>();
-        public override IRelationalDataStoreCreator RelationalDataStoreCreator => GetService<SqlServerCeDataStoreCreator>();
         public override IValueGeneratorCache ValueGeneratorCache => GetService<SqlServerCeValueGeneratorCache>();
-        public override IModificationCommandBatchFactory ModificationCommandBatchFactory => GetService<SqlServerCeModificationCommandBatchFactory>();
-        public override IRelationalMetadataExtensionProvider MetadataExtensionProvider => GetService<SqlServerCeMetadataExtensionProvider>();
         public override IRelationalTypeMapper TypeMapper => GetService<SqlServerCeTypeMapper>();
+        public override IModificationCommandBatchFactory ModificationCommandBatchFactory => GetService<SqlServerCeModificationCommandBatchFactory>();
+        public override IRelationalDataStoreCreator RelationalDataStoreCreator => GetService<SqlServerCeDataStoreCreator>();                
+        public override IRelationalMetadataExtensionProvider MetadataExtensionProvider => GetService<SqlServerCeMetadataExtensionProvider>();
     }
 }

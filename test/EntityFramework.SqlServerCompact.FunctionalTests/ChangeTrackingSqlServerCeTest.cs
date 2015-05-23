@@ -2,13 +2,13 @@
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class ChangeTrackingSqlServerCeTest : ChangeTrackingTestBase<NorthwindQuerySqlServerCeFixture>
-    {
-        public ChangeTrackingSqlServerCeTest(NorthwindQuerySqlServerCeFixture fixture)
-            : base(fixture)
-        {
-        }
-    }
+    //public class ChangeTrackingSqlServerCeTest : ChangeTrackingTestBase<NorthwindQuerySqlServerCeFixture>
+    //{
+    //    public ChangeTrackingSqlServerCeTest(NorthwindQuerySqlServerCeFixture fixture)
+    //        : base(fixture)
+    //    {
+    //    }
+    //}
 }
 
 

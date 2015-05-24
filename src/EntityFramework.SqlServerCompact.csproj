@@ -110,7 +110,7 @@
     <Compile Include="Extensions\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Extensions\SqlServerCeEntityServicesBuilderExtensions.cs" />
-    <Compile Include="MetaData\ModelConventions\SqlServerCeValueGenerationStrategyConvention.cs" />
+    <Compile Include="MetaData\ModelConventions\SqlServerCeIdentityConvention.cs" />
     <Compile Include="MetaData\SqlServerCeAnnotationNames.cs" />
     <Compile Include="MetaData\SqlServerCeMetaDataExtensionProvider.cs" />
     <Compile Include="MetaData\SqlServerCeModelBuilderFactory.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\SqlServerCeQueryCompilationContext.cs" />
     <Compile Include="Query\SqlServerCeQueryGenerator.cs" />
-    <Compile Include="Extensions\SharedTypeExtensions.cs" />
+    <Compile Include="Utilities\SharedTypeExtensions.cs" />
     <Compile Include="SqlServerCeDataStore.cs" />
     <Compile Include="SqlServerCeDataStoreConnection.cs" />
     <Compile Include="SqlServerCeDataStoreCreator.cs" />

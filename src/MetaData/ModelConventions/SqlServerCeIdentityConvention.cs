@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Metadata.ModelConventions;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.MetaData.ModelConventions
 {
-    public class SqlServerCeValueGenerationStrategyConvention : IModelConvention
+    public class SqlServerCeIdentityConvention : IModelConvention
     {
         public virtual InternalModelBuilder Apply(InternalModelBuilder modelBuilder)
         {

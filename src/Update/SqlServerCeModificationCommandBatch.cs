@@ -64,7 +64,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
                                 returningReader = returningCommand.ExecuteReader();
                             }
                             commandIndex = ModificationCommands[commandIndex].RequiresResultPropagation
-                            ? ConsumeResultSetWithPropagation(commandIndex, returningReader, context)
+                            ? ConsumeResultSetWithPropagation(commandIndex, reader, returningReader, context)
                             : ConsumeResultSetWithoutPropagation(commandIndex, reader, context);
 
                             Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
@@ -118,6 +118,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
 
         private Tuple<string, string> SplitCommandText(string commandText)
         {
+            //TODO Improve this for readablility and performance, if possible
             var test = ";" + Environment.NewLine + "SELECT ";
             string item1 = commandText;
             string item2 = string.Empty;
@@ -146,36 +147,33 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
 
             return commandIndex;
         }
-
-        //TODO Wait for update EF binaries available from MyGet
-        private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbContext context)
+       
+        private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader, DbContext context)
         {
-            //var rowsAffected = 0;
-            //var valueReader = new RelationalTypedValueReader(reader);
-            //do
-            //{
-            //    var tableModification = ModificationCommands[commandIndex];
-            //    Debug.Assert(tableModification.RequiresResultPropagation);
+            var tableModification = ModificationCommands[commandIndex];
+            Debug.Assert(tableModification.RequiresResultPropagation);
 
-            //    if (!reader.Read())
-            //    {
-            //        var expectedRowsAffected = rowsAffected + 1;
-            //        while (++commandIndex < ResultSetEnds.Count
-            //               && !ResultSetEnds[commandIndex - 1])
-            //        {
-            //            expectedRowsAffected++;
-            //        }
+            var expectedRowsAffected = 1;
 
-            //        throw new DbUpdateConcurrencyException(
-            //            Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-            //            context);
-            //    }
+            reader.Read();
+            var rowsAffected = reader.RecordsAffected;
+            if (rowsAffected != expectedRowsAffected)
+            {
+                throw new DbUpdateConcurrencyException(
+                    Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
+                    context);
+            }
 
-            //    tableModification.PropagateResults(valueReader);
-            //    rowsAffected++;
-            //}
-            //while (++commandIndex < ResultSetEnds.Count
-            //       && !ResultSetEnds[commandIndex - 1]);
+            returningReader.Read();
+            rowsAffected = reader.RecordsAffected;
+            if (rowsAffected != expectedRowsAffected)
+            {
+                throw new DbUpdateConcurrencyException(
+                    Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
+                    context);
+            }
+
+            tableModification.PropagateResults(tableModification.ValueBufferFactory.CreateValueBuffer(returningReader));
 
             return ++commandIndex;
         }

@@ -12,7 +12,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
         {
             var conventions = base.CreateConventionSet();
 
-            conventions.ModelConventions.Add(new SqlServerCeValueGenerationStrategyConvention());
+            conventions.ModelConventions.Add(new SqlServerCeIdentityConvention());
 
             return conventions;
         }

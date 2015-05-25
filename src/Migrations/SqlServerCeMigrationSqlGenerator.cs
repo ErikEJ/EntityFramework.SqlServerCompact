@@ -172,7 +172,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 builder);
 
             var valueGeneration = (string)annotatable[SqlServerCeAnnotationNames.Prefix + SqlServerCeAnnotationNames.ValueGeneration];
-            if (valueGeneration == SqlServerCeAnnotationNames.Strategy)
+            if (valueGeneration == SqlServerCeAnnotationNames.Identity)
             {
                 builder.Append(" IDENTITY");
             }

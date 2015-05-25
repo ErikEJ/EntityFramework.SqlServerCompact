@@ -71,13 +71,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
                         }
                         finally
                         {
-                            if (returningReader != null)
-                            {
-                                returningReader.Dispose();
-                            }
                             if (returningCommand != null)
                             {
                                 returningCommand.Dispose();
+                                if (returningReader != null)
+                                {
+                                    returningReader.Dispose();
+                                }
                             }
                         }
                     }

@@ -10,7 +10,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.MetaData.ModelConventions
         {
             modelBuilder.Annotation(
                 SqlServerCeAnnotationNames.Prefix + SqlServerCeAnnotationNames.ValueGeneration,
-                SqlServerCeAnnotationNames.Strategy,
+                SqlServerCeAnnotationNames.Identity,
                 ConfigurationSource.Convention);
 
             return modelBuilder;

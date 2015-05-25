@@ -70,7 +70,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                     Type = "int",
                     IsNullable = false,
                     [SqlServerCeAnnotationNames.Prefix + SqlServerCeAnnotationNames.ValueGeneration] =
-                        SqlServerCeAnnotationNames.Strategy
+                        SqlServerCeAnnotationNames.Identity
                 });
 
             Assert.Equal(

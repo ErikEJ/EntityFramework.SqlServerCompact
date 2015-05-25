@@ -8,7 +8,7 @@ namespace Microsoft.Data.Entity.SqlServer.Tests.Metadata.ModelConventions
 {
     public class SqlServerCeValueGenerationStrategyConventionTest
     {
-        [Fact]
+        [Fact(Skip = "Awaits API design decisions")]
         public void Annotations_are_added_when_conventional_model_builder_is_used()
         {
             var model = new SqlServerCeModelBuilderFactory().CreateConventionBuilder(new Model()).Model;
@@ -16,7 +16,7 @@ namespace Microsoft.Data.Entity.SqlServer.Tests.Metadata.ModelConventions
             Assert.Equal(1, model.Annotations.Count());
 
             Assert.Equal(SqlServerCeAnnotationNames.Prefix + SqlServerCeAnnotationNames.ValueGeneration, model.Annotations.ElementAt(0).Name);
-            Assert.Equal(SqlServerCeAnnotationNames.Strategy, model.Annotations.ElementAt(0).Value);
+            Assert.Equal(SqlServerCeAnnotationNames.Identity, model.Annotations.ElementAt(0).Value);
         }
     }
 }

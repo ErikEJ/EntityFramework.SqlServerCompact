@@ -2,8 +2,8 @@
 {
     public static class SqlServerCeAnnotationNames
     {
-        public const string Prefix = "SqlServerCe:";
+        public const string Prefix = "SqlCe:";
         public const string ValueGeneration = "ValueGeneration";
-        public const string Strategy = "Identity";
+        public const string Identity = "True";
     }
 }

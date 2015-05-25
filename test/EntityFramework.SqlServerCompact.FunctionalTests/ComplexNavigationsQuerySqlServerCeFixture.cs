@@ -20,7 +20,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             _serviceProvider = new ServiceCollection()
                 .AddEntityFramework()
-                .AddSqlServerCe()
+                .AddSqlCe()
                 .ServiceCollection()
                 .AddSingleton(TestSqlServerCeModelSource.GetFactory(OnModelCreating))
                 .AddInstance<ILoggerFactory>(new TestSqlLoggerFactory())
@@ -33,7 +33,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 () =>
                 {
                     var optionsBuilder = new DbContextOptionsBuilder();
-                    optionsBuilder.UseSqlServerCe(_connectionString);
+                    optionsBuilder.UseSqlCe(_connectionString);
 
                     using (var context = new ComplexNavigationsContext(_serviceProvider, optionsBuilder.Options))
                     {
@@ -49,7 +49,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override ComplexNavigationsContext CreateContext(SqlServerCeTestStore testStore)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCe(testStore.Connection);
+            optionsBuilder.UseSqlCe(testStore.Connection);
 
             var context = new ComplexNavigationsContext(_serviceProvider, optionsBuilder.Options);
             context.Database.AsRelational().Connection.UseTransaction(testStore.Transaction);

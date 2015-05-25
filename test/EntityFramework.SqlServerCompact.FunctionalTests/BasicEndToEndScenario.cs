@@ -32,7 +32,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlServerCe(@"Data Source=Blogging.sdf");
+                optionsBuilder.UseSqlCe(@"Data Source=Blogging.sdf");
             }
 
             protected override void OnModelCreating(ModelBuilder builder)

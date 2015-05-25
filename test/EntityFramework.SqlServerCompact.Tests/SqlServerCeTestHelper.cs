@@ -14,12 +14,12 @@ namespace Microsoft.Data.Entity.Tests
 
         protected override EntityFrameworkServicesBuilder AddProviderServices(EntityFrameworkServicesBuilder builder)
         {
-            return builder.AddSqlServerCe();
+            return builder.AddSqlCe();
         }
 
         protected override void UseProviderOptions(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServerCe(new SqlCeConnection("Data Source=DummyDatabase"));
+            optionsBuilder.UseSqlCe(new SqlCeConnection("Data Source=DummyDatabase"));
         }
     }
 }

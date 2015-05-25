@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Relational.Metadata;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServer.Tests.Metadata.ModelConventions
+namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Metadata.ModelConventions
 {
     public class SqlServerCeValueGenerationStrategyConventionTest
     {

@@ -145,9 +145,12 @@
     <Compile Include="BasicEndToEndScenario.cs" />
     <Compile Include="ChangeTrackingSqlServerCeTest.cs" />
     <Compile Include="ComplexNavigationsQuerySqlServerCeFixture.cs" />
+    <Compile Include="F1SqlServerCeFixture.cs" />
     <Compile Include="IncludeAsyncSqlServerCeTest.cs" />
     <Compile Include="IncludeSqlServerCeTest.cs" />
     <Compile Include="NorthwindQuerySqlServerCeFixture.cs" />
+    <Compile Include="NullKeySqlServerCeTest.cs" />
+    <Compile Include="OneToOneQuerySqlServerCeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerCeDataStoreCreatorTest.cs" />
     <Compile Include="SqlServerCeMigrationsTest.cs" />

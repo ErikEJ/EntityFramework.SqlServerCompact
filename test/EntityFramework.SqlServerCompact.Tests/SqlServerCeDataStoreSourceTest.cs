@@ -15,7 +15,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         public void Is_configured_when_configuration_contains_associated_extension()
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCe("Database=Crunchie");
+            optionsBuilder.UseSqlCe("Database=Crunchie");
 
             Assert.True(new SqlServerCeDataStoreSource().IsConfigured(optionsBuilder.Options));
         }

@@ -30,7 +30,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlServerCe(@"Data Source=BloggingNoIdentity.sdf");
+                optionsBuilder.UseSqlCe(@"Data Source=BloggingNoIdentity.sdf");
             }
         }
 

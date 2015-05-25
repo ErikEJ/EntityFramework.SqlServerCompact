@@ -33,12 +33,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             var serviceProvider =
                 new ServiceCollection()
                     .AddEntityFramework()
-                    .AddSqlServerCe()
+                    .AddSqlCe()
                     .ServiceCollection()
                     .BuildServiceProvider();
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCe(testStore.Connection.ConnectionString);
+            optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
 
             return new BloggingContext(serviceProvider, optionsBuilder.Options);
         }

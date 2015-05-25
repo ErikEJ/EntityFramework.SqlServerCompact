@@ -217,12 +217,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 var serviceCollection = new ServiceCollection();
                 serviceCollection
                     .AddEntityFramework()
-                    .AddSqlServerCe();
+                    .AddSqlCe();
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlServerCe(testDatabase.Connection.ConnectionString);
+                optionsBuilder.UseSqlCe(testDatabase.Connection.ConnectionString);
 
                 using (var context = new BloggingContext(serviceProvider, optionsBuilder.Options))
                 {
@@ -361,10 +361,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             var serviceCollection = new ServiceCollection();
             serviceCollection
                 .AddEntityFramework()
-                .AddSqlServerCe();
+                .AddSqlCe();
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCe(testStore.Connection.ConnectionString);
+            optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
 
             return ((IAccessor<IServiceProvider>)new DbContext(
                 serviceCollection.BuildServiceProvider(),

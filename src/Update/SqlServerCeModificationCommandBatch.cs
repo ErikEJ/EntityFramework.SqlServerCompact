@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using ErikEJ.Data.Entity.SqlServerCompact.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.ChangeTracking.Internal;
-using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Metadata;
 using Microsoft.Data.Entity.Relational.Update;
@@ -98,7 +96,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             return commandIndex;
         }
 
-        //TODO Test (most likely included in one of the pending Functional Tests)
         public override Task<int> ExecuteAsync(
             RelationalTransaction transaction, 
             IRelationalTypeMapper typeMapper, 

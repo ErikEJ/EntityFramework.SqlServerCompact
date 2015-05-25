@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using ErikEJ.Data.Entity.SqlServerCe;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using ErikEJ.Data.Entity.SqlServerCe.Migrations;
-using ErikEJ.Data.Entity.SqlServerCe.Query;
 using ErikEJ.Data.Entity.SqlServerCe.Update;
 using ErikEJ.Data.Entity.SqlServerCe.ValueGeneration;
+using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations;
@@ -17,7 +16,7 @@ using Microsoft.Data.Entity.Tests;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServer.Tests
+namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 {
     public class SqlServerCeEntityFrameworkServicesBuilderExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
     {
@@ -63,7 +62,7 @@ namespace Microsoft.Data.Entity.SqlServer.Tests
         {
             return (services ?? new ServiceCollection())
                 .AddEntityFramework()
-                .AddSqlServerCe()
+                .AddSqlCe()
                 .ServiceCollection();
         }
 

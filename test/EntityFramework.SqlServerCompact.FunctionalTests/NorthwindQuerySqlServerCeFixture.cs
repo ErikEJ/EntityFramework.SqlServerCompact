@@ -22,14 +22,14 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             _serviceProvider = new ServiceCollection()
                 .AddEntityFramework()
-                .AddSqlServerCe()
+                .AddSqlCe()
                 .ServiceCollection()
                 .AddSingleton(TestSqlServerCeModelSource.GetFactory(OnModelCreating))
                 .AddInstance<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCe(_testStore.Connection.ConnectionString);
+            optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
             _options = optionsBuilder.Options;
 
             _serviceProvider.GetRequiredService<ILoggerFactory>()

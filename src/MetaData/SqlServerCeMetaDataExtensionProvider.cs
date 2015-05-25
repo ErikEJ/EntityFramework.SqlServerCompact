@@ -1,7 +1,8 @@
-﻿using Microsoft.Data.Entity.Metadata;
+﻿using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Metadata;
 
-namespace Microsoft.Data.Entity.Sqlite.Metadata
+namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
 {
     public class SqlServerCeMetadataExtensionProvider : IRelationalMetadataExtensionProvider
     {

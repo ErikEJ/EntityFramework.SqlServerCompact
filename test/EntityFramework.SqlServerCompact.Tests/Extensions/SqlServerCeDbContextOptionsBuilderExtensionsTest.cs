@@ -1,9 +1,9 @@
 ﻿using System.Data.SqlServerCe;
 using System.Linq;
-using ErikEJ.Data.Entity.SqlServerCe;
+using Microsoft.Data.Entity;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServerCe.Extensions
+namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
 {
     public class SqlServerCeDbContextOptionsBuilderExtensionsTest
     {
@@ -11,7 +11,7 @@ namespace Microsoft.Data.Entity.SqlServerCe.Extensions
         public void Can_add_extension_with_connection_string()
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlServerCe("Data Source=C:\\data\\Unicorn.sdf");
+            optionsBuilder.UseSqlCe("Data Source=C:\\data\\Unicorn.sdf");
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 
@@ -24,7 +24,7 @@ namespace Microsoft.Data.Entity.SqlServerCe.Extensions
         public void Can_add_extension_with_connection_string_using_generic_options()
         {
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
-            optionsBuilder.UseSqlServerCe("Data Source=C:\\data\\Multicorn.sdf");
+            optionsBuilder.UseSqlCe("Data Source=C:\\data\\Multicorn.sdf");
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 
@@ -39,7 +39,7 @@ namespace Microsoft.Data.Entity.SqlServerCe.Extensions
             var optionsBuilder = new DbContextOptionsBuilder();
             var connection = new SqlCeConnection();
 
-            optionsBuilder.UseSqlServerCe(connection);
+            optionsBuilder.UseSqlCe(connection);
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 
@@ -54,7 +54,7 @@ namespace Microsoft.Data.Entity.SqlServerCe.Extensions
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
             var connection = new SqlCeConnection();
 
-            optionsBuilder.UseSqlServerCe(connection);
+            optionsBuilder.UseSqlCe(connection);
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlServerCeOptionsExtension>().Single();
 

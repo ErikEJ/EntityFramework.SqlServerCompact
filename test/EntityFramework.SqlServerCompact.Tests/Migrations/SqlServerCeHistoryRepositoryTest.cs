@@ -1,13 +1,12 @@
 ﻿using System;
-using ErikEJ.Data.Entity.SqlServerCe;
-using ErikEJ.Data.Entity.SqlServerCe.Migrations;
+using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Moq;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServer.Migrations
+namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 {
     public class SqlServerCeHistoryRepositoryTest
     {

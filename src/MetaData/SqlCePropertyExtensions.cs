@@ -34,7 +34,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
                         && (!propertyType.IsIntegerForIdentity()))
                     {
                         throw new ArgumentException(string.Format(
-                            "Identity value generation cannot be used for the property '{0}' on entity type '{1}' because the property type is '{2}'.Identity value generation can only be used with signed integer properties.",
+                            Strings.IdentityBadType,
                             property.Name, property.EntityType.Name, propertyType.Name));
                     }
 

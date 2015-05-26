@@ -7,7 +7,7 @@
     <ProjectGuid>{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ErikEJ.Data.Entity.SqlServerCompact</RootNamespace>
+    <RootNamespace>ErikEJ.Data.Entity.SqlServerCe</RootNamespace>
     <AssemblyName>EntityFramework.SqlServerCompact</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -130,6 +130,11 @@
     <Compile Include="Query\SqlCeQueryGenerator.cs" />
     <Compile Include="SqlCeBuilderExtensions.cs" />
     <Compile Include="SqlCeMetaDataExtensions.cs" />
+    <Compile Include="Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\SharedTypeExtensions.cs" />
     <Compile Include="SqlCeDataStore.cs" />
     <Compile Include="SqlCeDataStoreConnection.cs" />
@@ -153,7 +158,13 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

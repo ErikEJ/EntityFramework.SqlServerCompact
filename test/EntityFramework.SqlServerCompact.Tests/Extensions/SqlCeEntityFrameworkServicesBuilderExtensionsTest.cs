@@ -16,7 +16,7 @@ using Microsoft.Data.Entity.Tests;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Tests
+namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
 {
     public class SqlCeEntityFrameworkServicesBuilderExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
     {

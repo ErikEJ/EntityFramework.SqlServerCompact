@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Data.Entity;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
+namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
 {
     public class SqlCeDbContextOptionsBuilderExtensionsTest
     {

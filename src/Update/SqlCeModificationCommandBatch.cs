@@ -87,7 +87,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
                 catch (Exception ex)
                 {
                     throw new DbUpdateException(
-                        Strings.UpdateStoreException,
+                        Microsoft.Data.Entity.Relational.Strings.UpdateStoreException,
                         context,
                         ex);
                 }
@@ -138,7 +138,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             if (rowsAffected != expectedRowsAffected)
             {
                 throw new DbUpdateConcurrencyException(
-                    Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
+                    Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
                     context);
             }
 
@@ -157,7 +157,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             if (rowsAffected != expectedRowsAffected)
             {
                 throw new DbUpdateConcurrencyException(
-                    Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
+                    Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
                     context);
             }
 
@@ -166,7 +166,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
             if (rowsAffected != expectedRowsAffected)
             {
                 throw new DbUpdateConcurrencyException(
-                    Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
+                    Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
                     context);
             }
 

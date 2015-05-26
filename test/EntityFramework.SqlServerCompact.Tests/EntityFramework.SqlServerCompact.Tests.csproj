@@ -143,17 +143,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\EntityFrameworkServiceCollectionExtensionsTest.cs" />
-    <Compile Include="Extensions\SqlServerCeDbContextOptionsBuilderExtensionsTest.cs" />
-    <Compile Include="Metadata\ModelConventions\SqlServerCeValueGenerationStrategyConventionTest.cs" />
+    <Compile Include="Extensions\SqlCeDbContextOptionsBuilderExtensionsTest.cs" />
+    <Compile Include="Metadata\ModelConventions\SqlCeValueGenerationStrategyConventionTest.cs" />
     <Compile Include="Migrations\MigrationSqlGeneratorTestBase.cs" />
-    <Compile Include="Migrations\SqlServerCeHistoryRepositoryTest.cs" />
-    <Compile Include="Migrations\SqlServerMigrationSqlGeneratorTest.cs" />
+    <Compile Include="Migrations\SqlCeHistoryRepositoryTest.cs" />
+    <Compile Include="Migrations\SqlCeMigrationSqlGeneratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlServerCeDataStoreConnectionTest.cs" />
-    <Compile Include="SqlServerCeDataStoreSourceTest.cs" />
-    <Compile Include="SqlServerCeTestHelper.cs" />
-    <Compile Include="SqlServerCeTypeMapperTest.cs" />
-    <Compile Include="Extensions\SqlServerEntityFrameworkServicesBuilderExtensionsTest.cs" />
+    <Compile Include="SqlCeDataStoreConnectionTest.cs" />
+    <Compile Include="SqlCeDataStoreSourceTest.cs" />
+    <Compile Include="SqlCeTestHelper.cs" />
+    <Compile Include="SqlCeTypeMapperTest.cs" />
+    <Compile Include="Extensions\SqlCeEntityFrameworkServicesBuilderExtensionsTest.cs" />
     <Compile Include="TestExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Data.Entity.Relational;
+//using Microsoft.Data.Entity.Relational;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
@@ -97,7 +98,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 return GetTypeMapping(specifiedType, storageName, Enum.GetUnderlyingType(propertyType), isKey, isConcurrencyToken);
             }
 
-            throw new NotSupportedException(Strings.UnsupportedType(storageName, propertyType.Name));
+            throw new NotSupportedException(Microsoft.Data.Entity.Relational.Strings.UnsupportedType(storageName, propertyType.Name));
         }
     }
 }

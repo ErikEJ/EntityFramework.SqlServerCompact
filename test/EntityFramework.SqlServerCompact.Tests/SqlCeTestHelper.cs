@@ -17,7 +17,7 @@ namespace Microsoft.Data.Entity.Tests
             return builder.AddSqlCe();
         }
 
-        protected override void UseProviderOptions(DbContextOptionsBuilder optionsBuilder)
+        protected override void UseProviderOptions(EntityOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlCe(new SqlCeConnection("Data Source=DummyDatabase"));
         }

@@ -66,7 +66,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
                 .ServiceCollection();
         }
 
-        protected override DbContextOptions GetOptions()
+        protected override EntityOptions GetOptions()
         {
             return SqlCeTestHelpers.Instance.CreateOptions();
         }

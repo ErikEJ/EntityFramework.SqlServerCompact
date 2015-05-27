@@ -6,7 +6,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.TestModels
 {
     public class SqlCeNorthwindContext : NorthwindContext
     {
-        public SqlCeNorthwindContext(IServiceProvider serviceProvider, DbContextOptions options)
+        public SqlCeNorthwindContext(IServiceProvider serviceProvider, EntityOptions options)
             : base(serviceProvider, options)
         {
         }

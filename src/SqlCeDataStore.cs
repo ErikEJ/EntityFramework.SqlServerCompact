@@ -25,7 +25,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             [NotNull] IRelationalConnection connection,
             [NotNull] ICommandBatchPreparer batchPreparer,
             [NotNull] IBatchExecutor batchExecutor,
-            [NotNull] IDbContextOptions options,
+            [NotNull] IEntityOptions options,
             [NotNull] ILoggerFactory loggerFactory,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory)
             : base(

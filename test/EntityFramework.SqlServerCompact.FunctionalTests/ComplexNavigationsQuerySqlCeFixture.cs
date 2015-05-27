@@ -32,7 +32,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 DatabaseName,
                 () =>
                 {
-                    var optionsBuilder = new DbContextOptionsBuilder();
+                    var optionsBuilder = new EntityOptionsBuilder();
                     optionsBuilder.UseSqlCe(_connectionString);
 
                     using (var context = new ComplexNavigationsContext(_serviceProvider, optionsBuilder.Options))
@@ -48,7 +48,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         public override ComplexNavigationsContext CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var optionsBuilder = new EntityOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection);
 
             var context = new ComplexNavigationsContext(_serviceProvider, optionsBuilder.Options);

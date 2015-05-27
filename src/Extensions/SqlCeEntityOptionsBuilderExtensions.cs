@@ -7,9 +7,9 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity
 {
-    public static class SqlCeDbContextOptionsBuilderExtensions
+    public static class SqlCeEntityOptionsBuilderExtensions
     {
-        public static RelationalDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder options, [NotNull] string connectionString)
+        public static RelationalEntityOptionsBuilder UseSqlCe([NotNull] this EntityOptionsBuilder options, [NotNull] string connectionString)
         {
             Check.NotNull(options, nameof(options));
             Check.NotEmpty(connectionString, nameof(connectionString));
@@ -19,10 +19,10 @@ namespace Microsoft.Data.Entity
             extension.MaxBatchSize = 1;
             ((IOptionsBuilderExtender)options).AddOrUpdateExtension(extension);
 
-            return new RelationalDbContextOptionsBuilder(options);
+            return new RelationalEntityOptionsBuilder(options);
         }
 
-        public static RelationalDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder options, [NotNull] DbConnection connection)
+        public static RelationalEntityOptionsBuilder UseSqlCe([NotNull] this EntityOptionsBuilder options, [NotNull] DbConnection connection)
         {
             Check.NotNull(options, nameof(options));
             Check.NotNull(connection, nameof(connection));
@@ -32,10 +32,10 @@ namespace Microsoft.Data.Entity
             extension.MaxBatchSize = 1;
             ((IOptionsBuilderExtender)options).AddOrUpdateExtension(extension);
 
-            return new RelationalDbContextOptionsBuilder(options);
+            return new RelationalEntityOptionsBuilder(options);
         }
 
-        private static SqlCeOptionsExtension GetOrCreateExtension(DbContextOptionsBuilder options)
+        private static SqlCeOptionsExtension GetOrCreateExtension(EntityOptionsBuilder options)
         {
             var existingExtension = options.Options.FindExtension<SqlCeOptionsExtension>();
 

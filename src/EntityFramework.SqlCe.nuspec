@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>EntityFramework.SqlServerCompact</id>
+    <id>EntityFramework.SqlCe</id>
     <version>$version$</version>
-    <title>EntityFramework.SqlServerCompact</title>
+    <title>EntityFramework.SqlCe</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>
     <projectUrl>https://github.com/ErikEJ/EntityFramework.SqlServerCompact</projectUrl>
@@ -14,7 +14,6 @@
     <tags>EntityFramework EF sqlce entity framework provider sql server compact</tags>
     <dependencies>
         <group targetFramework=".NETFramework4.5">
-            <dependency id="EntityFramework.Core" version="[7.0.0-beta5-13266]" />
             <dependency id="EntityFramework.Relational" version="[7.0.0-beta5-13266]" />
             <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>

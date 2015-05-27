@@ -221,7 +221,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
-                var optionsBuilder = new DbContextOptionsBuilder();
+                var optionsBuilder = new EntityOptionsBuilder();
                 optionsBuilder.UseSqlCe(testDatabase.Connection.ConnectionString);
 
                 using (var context = new BloggingContext(serviceProvider, optionsBuilder.Options))
@@ -363,7 +363,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .AddEntityFramework()
                 .AddSqlCe();
 
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var optionsBuilder = new EntityOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
 
             return ((IAccessor<IServiceProvider>)new DbContext(
@@ -379,7 +379,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         private class BloggingContext : DbContext
         {
-            public BloggingContext(IServiceProvider serviceProvider, DbContextOptions options)
+            public BloggingContext(IServiceProvider serviceProvider, EntityOptions options)
                 : base(serviceProvider, options)
             {
             }

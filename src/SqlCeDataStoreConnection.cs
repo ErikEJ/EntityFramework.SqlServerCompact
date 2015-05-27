@@ -9,7 +9,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 {
     public class SqlCeDataStoreConnection : RelationalConnection
     { 
-        public SqlCeDataStoreConnection([NotNull] IDbContextOptions options, [NotNull] ILoggerFactory loggerFactory)
+        public SqlCeDataStoreConnection([NotNull] IEntityOptions options, [NotNull] ILoggerFactory loggerFactory)
             : base(options, loggerFactory)
         {
         }

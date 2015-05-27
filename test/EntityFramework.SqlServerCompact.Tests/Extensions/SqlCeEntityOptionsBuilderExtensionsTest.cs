@@ -5,12 +5,12 @@ using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
 {
-    public class SqlCeDbContextOptionsBuilderExtensionsTest
+    public class SqlCeEntityOptionsBuilderExtensionsTest
     {
         [Fact]
         public void Can_add_extension_with_connection_string()
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var optionsBuilder = new EntityOptionsBuilder();
             optionsBuilder.UseSqlCe("Data Source=C:\\data\\Unicorn.sdf");
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
@@ -23,7 +23,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
         [Fact]
         public void Can_add_extension_with_connection_string_using_generic_options()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
+            var optionsBuilder = new EntityOptionsBuilder<DbContext>();
             optionsBuilder.UseSqlCe("Data Source=C:\\data\\Multicorn.sdf");
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
@@ -36,7 +36,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
         [Fact]
         public void Can_add_extension_with_connection()
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var optionsBuilder = new EntityOptionsBuilder();
             var connection = new SqlCeConnection();
 
             optionsBuilder.UseSqlCe(connection);
@@ -51,7 +51,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
         [Fact]
         public void Can_add_extension_with_connection_using_generic_options()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
+            var optionsBuilder = new EntityOptionsBuilder<DbContext>();
             var connection = new SqlCeConnection();
 
             optionsBuilder.UseSqlCe(connection);

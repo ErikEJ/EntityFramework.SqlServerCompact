@@ -145,6 +145,7 @@
     <Compile Include="BasicEndToEndScenario.cs" />
     <Compile Include="ChangeTrackingSqlCeTest.cs" />
     <Compile Include="ComplexNavigationsQuerySqlCeFixture.cs" />
+    <Compile Include="ComplexNavigationsQuerySqlCeTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
     <Compile Include="IncludeAsyncSqlCeTest.cs" />
     <Compile Include="IncludeSqlCeTest.cs" />

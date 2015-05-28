@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsNoTrackingSqlCeTest.cs" />
+    <Compile Include="AsyncFromSqlQuerySqlCeTest.cs" />
     <Compile Include="BasicEndToEndScenarioForNoIdentity.cs" />
     <Compile Include="BasicEndToEndScenarioForIdentity.cs" />
     <Compile Include="BasicEndToEndScenario.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="ComplexNavigationsQuerySqlCeFixture.cs" />
     <Compile Include="ComplexNavigationsQuerySqlCeTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
+    <Compile Include="FromSqlQuerySqlCeTest.cs" />
     <Compile Include="IncludeAsyncSqlCeTest.cs" />
     <Compile Include="IncludeSqlCeTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />

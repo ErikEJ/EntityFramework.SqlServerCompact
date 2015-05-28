@@ -9,9 +9,9 @@ using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class ComplexNavigationsQuerySqlServerCeTest : ComplexNavigationsQueryTestBase<SqlServerCeTestStore, ComplexNavigationsQuerySqlServerCeFixture>
+    public class ComplexNavigationsQuerySqlCeTest : ComplexNavigationsQueryTestBase<SqlCeTestStore, ComplexNavigationsQuerySqlCeFixture>
     {
-        public ComplexNavigationsQuerySqlServerCeTest(ComplexNavigationsQuerySqlServerCeFixture fixture)
+        public ComplexNavigationsQuerySqlCeTest(ComplexNavigationsQuerySqlCeFixture fixture)
             : base(fixture)
         {
         }

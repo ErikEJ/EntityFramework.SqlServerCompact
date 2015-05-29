@@ -151,6 +151,8 @@
     <Compile Include="FromSqlQuerySqlCeTest.cs" />
     <Compile Include="IncludeAsyncSqlCeTest.cs" />
     <Compile Include="IncludeSqlCeTest.cs" />
+    <Compile Include="MappingQuerySqlCeFixture.cs" />
+    <Compile Include="MappingQuerySqlCeTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />
     <Compile Include="NullKeySqlCeTest.cs" />
     <Compile Include="OneToOneQuerySqlCeFixture.cs" />

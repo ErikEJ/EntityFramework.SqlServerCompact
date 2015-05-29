@@ -149,6 +149,8 @@
     <Compile Include="ComplexNavigationsQuerySqlCeTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
     <Compile Include="FromSqlQuerySqlCeTest.cs" />
+    <Compile Include="GearsOfWarQuerySqlCeFixture.cs" />
+    <Compile Include="GearsOfWarSqlCeTest.cs" />
     <Compile Include="IncludeAsyncSqlCeTest.cs" />
     <Compile Include="IncludeSqlCeTest.cs" />
     <Compile Include="MappingQuerySqlCeFixture.cs" />

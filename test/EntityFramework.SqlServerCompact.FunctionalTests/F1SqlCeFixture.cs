@@ -59,8 +59,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {            
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ForSqlCe().UseIdentity();
+            modelBuilder.Entity<Team>(b =>
+            {
+                b.Property(t => t.Id).ForSqlCe().UseNoValueGeneration();                    
+            });
         }
     }
 }

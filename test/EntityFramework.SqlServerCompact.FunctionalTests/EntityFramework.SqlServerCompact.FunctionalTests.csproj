@@ -153,6 +153,8 @@
     <Compile Include="GearsOfWarSqlCeTest.cs" />
     <Compile Include="IncludeAsyncSqlCeTest.cs" />
     <Compile Include="IncludeSqlCeTest.cs" />
+    <Compile Include="InheritanceSqlCeFixture.cs" />
+    <Compile Include="InheritanceSqlCeTest.cs" />
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />

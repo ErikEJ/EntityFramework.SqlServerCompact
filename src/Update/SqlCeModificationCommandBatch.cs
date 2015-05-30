@@ -115,7 +115,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
 
         private Tuple<string, string> SplitCommandText(string commandText)
         {
-            //TODO Improve this for readablility and performance, if possible
+            //TODO ErikEJ Improve this for readablility and performance, if possible
             var test = ";" + Environment.NewLine + "SELECT ";
             string item1 = commandText;
             string item2 = string.Empty;

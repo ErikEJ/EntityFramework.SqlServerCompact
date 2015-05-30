@@ -2370,10 +2370,8 @@ INNER JOIN [Orders] AS [o0] ON [o].[CustomerID] = [o0].[CustomerID]",
         {
             base.Where_chain();
 
-            Assert.Equal(
-                @"@__p_0: 01-01-1998 00:00:00
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+            Assert.Contains(
+                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = 'QUICK' AND [o].[OrderDate] > @__p_0)",
                 Sql);

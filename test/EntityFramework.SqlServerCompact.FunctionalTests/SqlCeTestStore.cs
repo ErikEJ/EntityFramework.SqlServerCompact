@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlServerCe;
+using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 using Microsoft.Data.Entity.Relational.FunctionalTests;
 
@@ -16,8 +18,22 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public static SqlCeTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
             new SqlCeTestStore(name).CreateShared(initializeDatabase);
 
-        public static SqlCeTestStore CreateScratch(bool createDatabase) =>
-            new SqlCeTestStore("scratch-" + Interlocked.Increment(ref _scratchCount)).CreateTransient(createDatabase);
+        public static SqlCeTestStore CreateScratch(bool createDatabase)
+        {
+            string name;
+            do
+            {
+                name = "scratch-" + Interlocked.Increment(ref _scratchCount);
+            }
+            while (File.Exists(name + ".sdf"));
+
+            return new SqlCeTestStore(name).CreateTransient(createDatabase);
+        }
+
+        public static Task<SqlCeTestStore> CreateScratchAsync(bool createDatabase = true)
+        {
+            return Task.FromResult(CreateScratch(createDatabase));
+        }
 
         private SqlCeConnection _connection;
         private SqlCeTransaction _transaction;
@@ -54,6 +70,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             _deleteDatabase = true;
 
             return this;
+        }
+
+        private async Task<SqlCeTestStore> CreateTransientAsync(bool createDatabase)
+        {
+            return await Task.FromResult(CreateTransient(createDatabase));
         }
 
         public override DbConnection Connection => _connection;

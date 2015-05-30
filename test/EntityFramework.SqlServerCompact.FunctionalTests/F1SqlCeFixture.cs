@@ -64,7 +64,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             modelBuilder.ForSqlCe().UseIdentity();
             modelBuilder.Entity<Team>(b =>
             {
-                b.Property(t => t.Id).ForSqlCe().UseNoValueGeneration();                    
+                b.Property(t => t.Id)
+                    .StoreGeneratedPattern(Microsoft.Data.Entity.Metadata.StoreGeneratedPattern.None);
+                b.Property(t => t.Id)
+                    .GenerateValueOnAdd(true);                  
             });
         }
     }

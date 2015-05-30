@@ -15,15 +15,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             base.Property_entry_original_value_is_set();
 
             Assert.Contains(
-                @"SELECT ""e"".""Id"", ""e"".""EngineSupplierId"", ""e"".""Name""
-FROM ""Engines"" AS ""e""
-LIMIT 1",
+                @"SELECT TOP(1) [e].[Id], [e].[EngineSupplierId], [e].[Name]
+FROM [Engines] AS [e]",
                 Sql);
 
             Assert.Contains(
-                @"UPDATE ""Engines"" SET ""Name"" = @p0
-WHERE ""Id"" = @p1 AND ""EngineSupplierId"" = @p2 AND ""Name"" = @p3;
-SELECT changes();",
+                @"UPDATE [Engines] SET [Name] = @p0
+WHERE [Id] = @p1 AND [EngineSupplierId] = @p2 AND [Name] = @p3;",
                 Sql);
         }
 

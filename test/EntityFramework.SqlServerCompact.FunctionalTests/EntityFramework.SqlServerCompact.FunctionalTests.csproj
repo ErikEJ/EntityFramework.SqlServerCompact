@@ -141,6 +141,7 @@
   <ItemGroup>
     <Compile Include="AsNoTrackingSqlCeTest.cs" />
     <Compile Include="AsyncFromSqlQuerySqlCeTest.cs" />
+    <Compile Include="AsyncQuerySqlCeTest.cs" />
     <Compile Include="BasicEndToEndScenarioForNoIdentity.cs" />
     <Compile Include="BasicEndToEndScenarioForIdentity.cs" />
     <Compile Include="BasicEndToEndScenario.cs" />
@@ -156,12 +157,16 @@
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />
-    <Compile Include="NullKeySqlCeTest.cs" />
+    <Compile Include="NullKeysSqlCeTest.cs" />
+    <Compile Include="NullSemanticsQuerySqlCeFixture.cs" />
+    <Compile Include="NullSemanticsQuerySqlCeTest.cs" />
     <Compile Include="OneToOneQuerySqlCeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuerySqlCeTest.cs" />
     <Compile Include="SqlCeDataStoreCreatorTest.cs" />
     <Compile Include="SqlCeMigrationsTest.cs" />
     <Compile Include="SqlCeTestStore.cs" />
+    <Compile Include="StoreGeneratedSqlCeTest.cs" />
     <Compile Include="TestModels\SqlCeNorthwindContext.cs" />
     <Compile Include="TestSqlCeModelSource.cs" />
   </ItemGroup>

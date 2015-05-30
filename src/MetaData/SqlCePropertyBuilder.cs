@@ -27,7 +27,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
         public virtual SqlCePropertyBuilder UseNoValueGeneration()
         {
             _property.SqlCe().IdentityKeyGeneration = null;
-            //TODO Need to set this?
+            //TODO ErikEJ Need to set this?
             _property.StoreGeneratedPattern = StoreGeneratedPattern.None;
             return this;
         }

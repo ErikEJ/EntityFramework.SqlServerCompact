@@ -7,7 +7,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Metadata.ModelConventions
 {
     public class SqlCeValueGenerationStrategyConventionTest
     {
-        [Fact(Skip = "Awaits API design decisions")]
+        [Fact(Skip = "Awaits API design decisions (ErikEJ)")]
         public void Annotations_are_added_when_conventional_model_builder_is_used()
         {
             var model = new SqlCeModelBuilderFactory().CreateConventionBuilder(new Model()).Model;

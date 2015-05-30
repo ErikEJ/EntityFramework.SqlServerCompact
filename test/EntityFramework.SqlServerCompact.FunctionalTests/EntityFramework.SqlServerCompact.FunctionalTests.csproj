@@ -164,6 +164,7 @@
     <Compile Include="NullSemanticsQuerySqlCeTest.cs" />
     <Compile Include="OneToOneQuerySqlCeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyEntrySqlCeTest.cs" />
     <Compile Include="QuerySqlCeTest.cs" />
     <Compile Include="SqlCeDataStoreCreatorTest.cs" />
     <Compile Include="SqlCeMigrationsTest.cs" />

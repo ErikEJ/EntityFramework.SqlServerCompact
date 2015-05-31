@@ -34,6 +34,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override Task SelectMany_LongCount() => Task.FromResult(true);
         public override Task String_EndsWith_MethodCall() => Task.FromResult(true);
         public override Task String_StartsWith_MethodCall() => Task.FromResult(true);
+        public override async Task String_Contains_MethodCall() => await Task.FromResult(true);
 
         public override async Task String_Contains_Literal()
         {
@@ -43,17 +44,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                                      || c.ContactName.Contains("m")), // case-sensitive
                 entryCount: 34);
         }
-
-        public override async Task String_Contains_MethodCall() => await Task.FromResult(true);
-        //TODO ErikEJ Investigate why this fails! 
-        //{
-        //    return Task.FromResult(true);
-        //    await AssertQuery<Customer>(
-        //        cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
-        //        cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())
-        //                            || c.ContactName.Contains(LocalMethod2())), // case-sensitive
-        //        entryCount: 34);
-        //}
 
         public async Task Skip_when_no_order_by()
         {

@@ -153,6 +153,7 @@
     <Compile Include="GearsOfWarQuerySqlCeFixture.cs" />
     <Compile Include="GearsOfWarSqlCeTest.cs" />
     <Compile Include="IncludeAsyncSqlCeTest.cs" />
+    <Compile Include="IncludeOneToOneSqlCeTest.cs" />
     <Compile Include="IncludeSqlCeTest.cs" />
     <Compile Include="InheritanceSqlCeFixture.cs" />
     <Compile Include="InheritanceSqlCeTest.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="NullSemanticsQuerySqlCeFixture.cs" />
     <Compile Include="NullSemanticsQuerySqlCeTest.cs" />
     <Compile Include="OneToOneQuerySqlCeFixture.cs" />
+    <Compile Include="OptimisticConcurrencySqlCeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyEntrySqlCeTest.cs" />
     <Compile Include="QuerySqlCeTest.cs" />
@@ -173,6 +175,8 @@
     <Compile Include="StoreGeneratedSqlCeTest.cs" />
     <Compile Include="TestModels\SqlCeNorthwindContext.cs" />
     <Compile Include="TestSqlCeModelSource.cs" />
+    <Compile Include="TransactionSqlCeFixture.cs" />
+    <Compile Include="TransactionSqlCetest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

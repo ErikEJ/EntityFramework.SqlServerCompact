@@ -133,12 +133,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override void Dispose()
         {
             Transaction?.Dispose();
+            Connection?.Dispose();
 
             if (_connection.Exists() && _deleteDatabase)
             {
                 _connection.Drop(throwOnOpen: false);
             }
-            _connection.Close();
+            base.Dispose();
         }
 
         public static string CreateConnectionString(string name) =>

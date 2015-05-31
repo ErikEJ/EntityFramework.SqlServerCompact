@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Threading;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using ErikEJ.Data.Entity.SqlServerCompact.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.ChangeTracking.Internal;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Metadata;
 using Microsoft.Data.Entity.Relational.Update;
@@ -115,31 +117,36 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
 
         private Tuple<string, string> SplitCommandText(string commandText)
         {
-            //TODO ErikEJ Improve this for readablility and performance, if possible
-            var test = ";" + Environment.NewLine + "SELECT ";
-            string item1 = commandText;
-            string item2 = string.Empty;
+            var stringToFind = ";" + Environment.NewLine + "SELECT ";
+            var stringToFindIndex = commandText.IndexOf(stringToFind);
 
-            if (commandText.Contains(test))
+            if (stringToFindIndex > 0)
             {
-                item1 = commandText.Substring(0, commandText.IndexOf(test) + 1);
-                item2 = commandText.Substring(commandText.LastIndexOf(test) + 1);
+                return new Tuple<string, string>(
+                    commandText.Substring(0, stringToFindIndex + 1),
+                    commandText.Substring(commandText.LastIndexOf(stringToFind) + 1));
             }
-
-            return new Tuple<string, string>(item1, item2);
+            else
+            {
+                return new Tuple<string, string>(
+                    commandText,
+                    string.Empty);
+            }
         }
 
         private int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader, DbContext context)
         {
             var expectedRowsAffected = 1;
             var rowsAffected = reader.RecordsAffected;
+
             ++commandIndex;
 
             if (rowsAffected != expectedRowsAffected)
             {
                 throw new DbUpdateConcurrencyException(
                     Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-                    context);
+                    context,
+                    AggregateEntries(commandIndex, expectedRowsAffected));
             }
 
             return commandIndex;
@@ -148,31 +155,37 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
         private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader, DbContext context)
         {
             var tableModification = ModificationCommands[commandIndex];
+            var expectedRowsAffected = 1;
             Debug.Assert(tableModification.RequiresResultPropagation);
 
-            var expectedRowsAffected = 1;
+            ++commandIndex;
 
             reader.Read();
+
             var rowsAffected = reader.RecordsAffected;
             if (rowsAffected != expectedRowsAffected)
             {
                 throw new DbUpdateConcurrencyException(
                     Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-                    context);
+                    context,
+                    AggregateEntries(commandIndex, expectedRowsAffected));
             }
 
             returningReader.Read();
-            rowsAffected = reader.RecordsAffected;
-            if (rowsAffected != expectedRowsAffected)
-            {
-                throw new DbUpdateConcurrencyException(
-                    Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-                    context);
-            }
 
             tableModification.PropagateResults(tableModification.ValueBufferFactory.CreateValueBuffer(returningReader));
 
-            return ++commandIndex;
+            return commandIndex;
+        }
+
+        private IReadOnlyList<InternalEntityEntry> AggregateEntries(int endIndex, int commandCount)
+        {
+            var entries = new List<InternalEntityEntry>();
+            for (var i = endIndex - commandCount; i < endIndex; i++)
+            {
+                entries.AddRange(ModificationCommands[i].Entries);
+            }
+            return entries;
         }
     }
 }

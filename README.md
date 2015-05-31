@@ -9,4 +9,4 @@ See the [Wiki pages](https://github.com/ErikEJ/EntityFramework.SqlServerCompact/
 
 You can find the latest build on the [MyGet feed](https://www.myget.org/gallery/ef7-sqlce)
 
-Pull requests are most welcome!
+Testing, comments, questions, pull requests are most welcome!

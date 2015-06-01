@@ -153,6 +153,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlCeDataStoreConnectionTest.cs" />
     <Compile Include="SqlCeDataStoreSourceTest.cs" />
+    <Compile Include="SqlCeSqlGeneratorTest.cs" />
     <Compile Include="SqlCeTestHelper.cs" />
     <Compile Include="SqlCeTypeMapperTest.cs" />
     <Compile Include="Extensions\SqlCeEntityFrameworkServicesBuilderExtensionsTest.cs" />

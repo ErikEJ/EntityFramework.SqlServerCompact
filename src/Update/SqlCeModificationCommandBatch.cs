@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using ErikEJ.Data.Entity.SqlServerCompact.Extensions;
+using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.ChangeTracking.Internal;

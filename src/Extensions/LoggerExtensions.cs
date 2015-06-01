@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Framework.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCompact.Extensions
+namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
 {
     internal static class RelationalLoggerExtensions
     {

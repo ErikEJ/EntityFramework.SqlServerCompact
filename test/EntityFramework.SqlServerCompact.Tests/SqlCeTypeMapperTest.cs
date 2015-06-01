@@ -211,6 +211,15 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             Assert.Equal("ntext", typeMapping.StoreTypeName);
         }
 
+        [Fact]
+        public void Does_not_Timespan_mapping()
+        {
+            Assert.Throws<NotSupportedException>
+                (() =>
+                   new SqlCeTypeMapper().GetTypeMapping("time", "MyColumn", typeof(TimeSpan), isKey: false, isConcurrencyToken: false)
+                );
+        }
+
         private static RelationalTypeMapping GetTypeMapping(Type propertyType)
         {
             return new SqlCeTypeMapper().GetTypeMapping(null, "MyColumn", propertyType, isKey: false, isConcurrencyToken: false);

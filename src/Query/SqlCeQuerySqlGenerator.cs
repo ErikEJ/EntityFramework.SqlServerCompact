@@ -5,9 +5,9 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Query
 {
-    public class SqlCeQueryGenerator : DefaultSqlQueryGenerator
+    public class SqlCeQuerySqlGenerator : DefaultQuerySqlGenerator
     {
-        public SqlCeQueryGenerator([NotNull] SelectExpression selectExpression)
+        public SqlCeQuerySqlGenerator([NotNull] SelectExpression selectExpression)
             : base(Check.NotNull(selectExpression, nameof(selectExpression)))
         {
         }

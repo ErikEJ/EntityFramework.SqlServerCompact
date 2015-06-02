@@ -4,6 +4,7 @@ using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
 using Microsoft.Data.Entity.Relational.FunctionalTests;
 using Microsoft.Data.Entity.Storage;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
@@ -2629,9 +2630,11 @@ ORDER BY COALESCE([c].[Region], 'ZZ')",
                 Sql);
         }
 
-        public QuerySqlCeTest(NorthwindQuerySqlCeFixture fixture)
+        public QuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
+            //To enable debug window output
+            //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
 
         private static string Sql => TestSqlLoggerFactory.Sql;

@@ -7,15 +7,19 @@ using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
+using Microsoft.Data.Entity.Relational.Metadata;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 {
     public class SqlCeModelDiffer : ModelDiffer
     {
-        public SqlCeModelDiffer([NotNull] IRelationalTypeMapper typeMapper)
-            : base(typeMapper)
+        public SqlCeModelDiffer(
+            [NotNull] IRelationalTypeMapper typeMapper,
+            [NotNull] IRelationalMetadataExtensionProvider metadataExtensions)
+            : base(typeMapper, metadataExtensions)
         {
         }
+
 
         protected override IEnumerable<MigrationOperation> Add(IProperty target)
         {

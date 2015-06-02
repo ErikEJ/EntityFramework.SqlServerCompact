@@ -2,6 +2,7 @@
 using Microsoft.Data.Entity.Relational.Query.Expressions;
 using Microsoft.Data.Entity.Relational.Query.Sql;
 using Microsoft.Data.Entity.Utilities;
+using System.Linq;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Query
 {
@@ -15,5 +16,15 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
         protected override string DelimitIdentifier(string identifier)
             => "[" + identifier.Replace("]", "]]") + "]";
 
+        protected override void GenerateLimitOffset(SelectExpression selectExpression)
+        {
+            if (selectExpression.Offset != null
+                && !selectExpression.OrderBy.Any())
+            {
+                Sql.AppendLine().Append("ORDER BY GETDATE()");
+            }
+
+            base.GenerateLimitOffset(selectExpression);
+        }
     }
 }

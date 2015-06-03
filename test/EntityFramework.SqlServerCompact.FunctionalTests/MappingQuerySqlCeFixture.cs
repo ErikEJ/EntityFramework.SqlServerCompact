@@ -47,7 +47,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             modelBuilder.Entity<MappingQueryTestBase.MappedCustomer>(e =>
             {
-                // TODO ErikEJ Use .SqlCe() when available - if it is not removed!
                 e.Property(c => c.CompanyName2).Metadata.Relational().Column = "CompanyName";
                 e.Metadata.Relational().Table = "Customers";
             });

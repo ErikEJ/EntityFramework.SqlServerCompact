@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using Microsoft.Framework.DependencyInjection;
+using System;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Framework.DependencyInjection;
 using Xunit;
-using Microsoft.Data.Entity;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
@@ -72,18 +73,17 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             await EnsureDeleted_will_delete_database_test(async: true, openConnection: false);
         }
 
-        //TODO ErikEJ SQLCE does not like open connections on other threads
-        //[Fact]
-        //public async Task EnsureDeleted_will_delete_database_with_opened_connections()
-        //{
-        //    await EnsureDeleted_will_delete_database_test(async: false, openConnection: true);
-        //}
+        [Fact]
+        public async Task EnsureDeleted_will_not_delete_database_with_opened_connections()
+        {
+            await EnsureDeleted_will_delete_database_test(async: false, openConnection: true);
+        }
 
-        //[Fact]
-        //public async Task EnsureDeletedAsync_will_delete_database_with_opened_connections()
-        //{
-        //    await EnsureDeleted_will_delete_database_test(async: true, openConnection: true);
-        //}
+        [Fact]
+        public async Task EnsureDeletedAsync_will_not_delete_database_with_opened_connections()
+        {
+            await EnsureDeleted_will_delete_database_test(async: true, openConnection: true);
+        }
 
         private static async Task EnsureDeleted_will_delete_database_test(bool async, bool openConnection)
         {
@@ -98,20 +98,28 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 {
                     Assert.True(async ? await context.Database.AsRelational().ExistsAsync() : context.Database.AsRelational().Exists());
 
-                    if (async)
+                    if (openConnection)
                     {
-                        Assert.True(await context.Database.EnsureDeletedAsync());
+
+                        Assert.Throws<IOException>(() => context.Database.EnsureDeleted());
                     }
                     else
                     {
-                        Assert.True(context.Database.EnsureDeleted());
+                        if (async)
+                        {
+                            Assert.True(await context.Database.EnsureDeletedAsync());
+                        }
+                        else
+                        {
+                            Assert.True(context.Database.EnsureDeleted());
+                        }
+
+                        Assert.Equal(ConnectionState.Closed, context.Database.AsRelational().Connection.DbConnection.State);
+
+                        Assert.False(async ? await context.Database.AsRelational().ExistsAsync() : context.Database.AsRelational().Exists());
+
+                        Assert.Equal(ConnectionState.Closed, context.Database.AsRelational().Connection.DbConnection.State);
                     }
-
-                    Assert.Equal(ConnectionState.Closed, context.Database.AsRelational().Connection.DbConnection.State);
-
-                    Assert.False(async ? await context.Database.AsRelational().ExistsAsync() : context.Database.AsRelational().Exists());
-
-                    Assert.Equal(ConnectionState.Closed, context.Database.AsRelational().Connection.DbConnection.State);
                 }
             }
         }

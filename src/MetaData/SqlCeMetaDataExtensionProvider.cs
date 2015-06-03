@@ -12,7 +12,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
         public virtual IRelationalIndexExtensions Extensions(IIndex index) => index.Relational();
         public virtual IRelationalKeyExtensions Extensions(IKey key) => key.Relational();
         public virtual IRelationalModelExtensions Extensions(IModel model) => model.SqlCe();
-        //TODO ErikEJ Expand (maybe)
         public virtual IRelationalPropertyExtensions Extensions(IProperty property) => property.SqlCe();
     }
 }

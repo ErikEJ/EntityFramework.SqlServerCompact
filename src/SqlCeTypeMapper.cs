@@ -9,10 +9,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 {
     public class SqlCeTypeMapper : RelationalTypeMapper
     {
-        private readonly RelationalTypeMapping _nvarcharmax = new RelationalTypeMapping("ntext");
-        private readonly RelationalTypeMapping _nvarchardefault = new RelationalTypeMapping("nvarchar(4000)");
-        private readonly RelationalTypeMapping _nvarchar256 = new RelationalSizedTypeMapping("nvarchar(256)", 256);
         private readonly RelationalTypeMapping _varbinarymax = new RelationalTypeMapping("image", DbType.Binary);
+        private readonly RelationalSizedTypeMapping _nvarchar256 = new RelationalSizedTypeMapping("nvarchar(256)", 256);
         private readonly RelationalTypeMapping _varbinary512 = new RelationalSizedTypeMapping("varbinary(512)", DbType.Binary, 512);
         private readonly RelationalTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", DbType.Binary, 8);
         private readonly RelationalTypeMapping _int = new RelationalTypeMapping("int", DbType.Int32);
@@ -21,7 +19,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         private readonly RelationalTypeMapping _smallint = new RelationalTypeMapping("smallint", DbType.Int16);
         private readonly RelationalTypeMapping _tinyint = new RelationalTypeMapping("tinyint", DbType.Byte);
         private readonly RelationalSizedTypeMapping _nchar = new RelationalSizedTypeMapping("nchar", DbType.StringFixedLength, 1);
-        private readonly RelationalSizedTypeMapping _nvarchar = new RelationalSizedTypeMapping("nvarchar", 4000);
+        private readonly RelationalSizedTypeMapping _nvarchar = new RelationalSizedTypeMapping("nvarchar(4000)", 4000);
+        private readonly RelationalTypeMapping _nvarcharmax = new RelationalTypeMapping("ntext");
         private readonly RelationalSizedTypeMapping _varbinary = new RelationalSizedTypeMapping("binary", DbType.Binary, 1);
         private readonly RelationalTypeMapping _double = new RelationalTypeMapping("float");
         private readonly RelationalTypeMapping _real = new RelationalTypeMapping("real");
@@ -42,7 +41,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                         { "nvarchar", _nvarchar },
                         { "national char varying", _nvarchar },
                         { "national character varying", _nvarchar },
-                        { "ntext", _nvarchar },
+                        { "ntext", _nvarcharmax },
                         { "binary", _varbinary },
                         { "varbinary", _varbinary },
                         { "binary varying", _varbinary },
@@ -103,18 +102,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
             var clrType = property.ClrType.UnwrapEnumType();
 
-            //if (!property.GetMaxLength().HasValue && clrType == typeof(string))
-            //{
-            //    return MapString(property, "ntext", _nvarcharmax);
-            //}
-            //else
-            //{
-                return clrType == typeof(string)
-                    ? MapString(property, "nvarchar", _nvarchardefault, _nvarchar256)
-                    : clrType == typeof(byte[])
-                        ? MapByteArray(property, "varbinary", _varbinarymax, _varbinary512, _rowversion)
-                        : base.MapCustom(property);
-            //}
+            return clrType == typeof(string)
+                ? MapString(property, "nvarchar", _nvarchar, _nvarchar256)
+                : clrType == typeof(byte[])
+                    ? MapByteArray(property, "varbinary", _varbinarymax, _varbinary512, _rowversion)
+                    : base.MapCustom(property);
         }
     }
 }

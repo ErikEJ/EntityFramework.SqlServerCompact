@@ -178,19 +178,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             Assert.Equal("nvarchar(4000)", typeMapping.DefaultTypeName);
         }
 
-        //TODO ErikEJ Ntext mapping
-        //[Fact]
-        //public void Does_ntext_mapping()
-        //{
-        //    var property = CreateEntityType().AddProperty("MyProp", typeof(string), shadowProperty: true);
-        //    property.SetMaxLength(null);
-        //    property.IsNullable = false;
-        //    var typeMapping = new SqlCeTypeMapper().MapPropertyType(property);
-
-        //    Assert.Null(typeMapping.StoreType);
-        //    Assert.Equal("ntext", typeMapping.DefaultTypeName);
-        //}
-
         [Fact]
         public void Does_key_SQL_Server_string_mapping()
         {

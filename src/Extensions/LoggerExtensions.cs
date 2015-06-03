@@ -4,6 +4,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Framework.Logging;
+using System.Globalization;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
 {
@@ -20,11 +21,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
             }
             var paramList = new StringBuilder();
 
-            paramList.AppendFormat("{0}: {1}", (parameters[0]).ParameterName, (parameters[0]).Value);
+            paramList.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}", (parameters[0]).ParameterName, parameters[0].Value);
             for (var i = 1; i < parameters.Count; i++)
             {
                 paramList.AppendLine();
-                paramList.AppendFormat("{0}: {1}", (parameters[i]).ParameterName, (parameters[i]).Value);
+                paramList.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}", (parameters[i]).ParameterName, (parameters[i]).Value);
             }
             logger.LogDebug(RelationalLoggingEventIds.Sql, paramList.ToString());
         }

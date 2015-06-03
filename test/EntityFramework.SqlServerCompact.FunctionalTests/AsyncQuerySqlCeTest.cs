@@ -29,18 +29,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             //base.Projection_when_arithmetic_mixed_subqueries();
         }
 
-        //TODO ErikEJ Why does this fail?
-        public override async Task GroupJoin_DefaultIfEmpty3()
-        {
-            //return base.GroupJoin_DefaultIfEmpty3();
-        }
-
         //TODO ErikEJ Investigate (see sync queries)
         public override Task Select_local() => Task.FromResult(true);
         public override Task SelectMany_LongCount() => Task.FromResult(true);
         public override Task String_EndsWith_MethodCall() => Task.FromResult(true);
         public override Task String_StartsWith_MethodCall() => Task.FromResult(true);
-        public override async Task String_Contains_MethodCall() => await Task.FromResult(true);
+        public override Task String_Contains_MethodCall() => Task.FromResult(true);
 
         public override async Task String_Contains_Literal()
         {

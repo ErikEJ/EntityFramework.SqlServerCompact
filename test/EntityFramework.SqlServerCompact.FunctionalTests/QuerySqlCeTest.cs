@@ -553,6 +553,18 @@ OFFSET 5 ROWS",
                 Sql);
         }
 
+        public override void Skip_no_orderby()
+        {
+            base.Skip_no_orderby();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY GETDATE()
+OFFSET 5 ROWS",
+                Sql);
+        }
+
         public override void Skip_Take()
         {
             base.Skip_Take();
@@ -774,10 +786,33 @@ FROM [Customers] AS [c]",
                 Sql);
         }
 
+//        Test Name:	ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.QuerySqlCeTest.Select_local
+//Test FullName:	ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.QuerySqlCeTest.Select_local
+//Test Source:	C:\Code\EntityFramework.SqlServerCompact\test\EntityFramework.SqlServerCompact.FunctionalTests\QuerySqlCeTest.cs : line 790
+//Test Outcome:	Failed
+//Test Duration:	0:00:00,018
+
+//Result StackTrace:	
+//at System.Data.SqlServerCe.SqlCeCommand.ProcessResults(Int32 hr)
+//   at System.Data.SqlServerCe.SqlCeCommand.CompileQueryPlan()
+//   at System.Data.SqlServerCe.SqlCeCommand.ExecuteCommand(CommandBehavior behavior, String method, ResultSetOptions options)
+//   at System.Data.SqlServerCe.SqlCeCommand.ExecuteDbDataReader(CommandBehavior behavior)
+//   at System.Data.Common.DbCommand.ExecuteReader()
+//   at Microsoft.Data.Entity.Relational.Query.QueryingEnumerable.Enumerator.MoveNext()
+//   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+//   at System.Linq.Enumerable.<SelectManyIterator>d__1`2.MoveNext()
+//   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+//   at Microsoft.Data.Entity.Query.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext()
+//   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+//   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+//   at Microsoft.Data.Entity.FunctionalTests.QueryTestBase`1.AssertQuery[TItem](Func`2 query, Boolean assertOrder, Int32 entryCount)
+//   at Microsoft.Data.Entity.FunctionalTests.QueryTestBase`1.Select_local()
+//   at ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.QuerySqlCeTest.Select_local() in C:\Code\EntityFramework.SqlServerCompact\test\EntityFramework.SqlServerCompact.FunctionalTests\QuerySqlCeTest.cs:line 791
+//Result Message:	System.Data.SqlServerCe.SqlCeException : A parameter is not allowed in this location.Ensure that the '@' sign is in a valid location or that parameters are valid at all in this SQL statement.
+
+        //TODO ErikEJ Investigate
         public override void Select_local()
         {
-            //TODO ErikEJ Is this standard SQL
-            //This syntax is not supported by SQLCE
 //            base.Select_local();
 
 //            Assert.Equal(
@@ -1457,9 +1492,13 @@ CROSS JOIN [Orders] AS [o]",
                 Sql);
         }
 
+        //TODO ErikEJ Investigate
+        //at System.Data.Common.DbDataReader.GetFieldValue[T](Int32 ordinal)
+        //System.InvalidCastException : Specified cast is not valid.
+        //at lambda_method(Closure , DbDataReader )
+        //at Microsoft.Data.Entity.Relational.TypedValueBufferFactory.CreateValueBuffer(DbDataReader dataReader)
         public override void SelectMany_LongCount()
         {
-            //TODO ErikEJ Investigate how to avoid "Specified cast is not valid" error
 //            base.SelectMany_LongCount();
 
 //            Assert.Equal(
@@ -2174,10 +2213,11 @@ FROM [Customers] AS [c]
 WHERE [c].[ContactName] LIKE [c].[ContactName] + '%'",
                 Sql);
         }
-
+        //TODO ErikEJ Investigate
+        //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
+        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format.
         public override void String_StartsWith_MethodCall()
         {
-            //TODO ErikEJ Why error: Input string was not in a correct format
 //            base.String_StartsWith_MethodCall();
 
 //            Assert.Equal(
@@ -2221,10 +2261,11 @@ FROM [Customers] AS [c]
 WHERE [c].[ContactName] LIKE '%' + [c].[ContactName]",
                 Sql);
         }
-
+        //TODO ErikEJ Investigate
+        //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
+        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format.
         public override void String_EndsWith_MethodCall()
         {
-            //TODO ErikEJ Why error: Input string was not in a correct format
 //            base.String_EndsWith_MethodCall();
 
 //            Assert.Equal(
@@ -2272,9 +2313,11 @@ WHERE [c].[ContactName] LIKE ('%' + [c].[ContactName] + '%')",
                 Sql);
         }
 
+        //TODO ErikEJ Investigate
+        //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
+        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format.
         public override void String_Contains_MethodCall()
         {
-            //TODO EriKEJ Why error: Input string was not in a correct format
 //            AssertQuery<Customer>(
 //                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
 //                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1()) || c.ContactName.Contains(LocalMethod2())), // case-sensitive
@@ -2639,7 +2682,6 @@ ORDER BY COALESCE([c].[Region], 'ZZ')",
         public QuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
-            //To enable debug window output
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
 

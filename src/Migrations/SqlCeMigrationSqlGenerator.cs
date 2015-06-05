@@ -9,7 +9,7 @@ using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 {
     public class SqlCeMigrationSqlGenerator : MigrationSqlGenerator
     {
@@ -108,7 +108,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 .Append(" ADD ");
             ColumnDefinition(operation, model, builder);
         }
-
 
         public override void Generate(
             [NotNull] AlterColumnOperation operation,

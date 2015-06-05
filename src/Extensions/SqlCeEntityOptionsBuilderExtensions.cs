@@ -5,6 +5,8 @@ using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Utilities;
 
+// ReSharper disable CheckNamespace
+
 namespace Microsoft.Data.Entity
 {
     public static class SqlCeEntityOptionsBuilderExtensions

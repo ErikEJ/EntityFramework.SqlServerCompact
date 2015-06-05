@@ -9,6 +9,8 @@ using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 
+// ReSharper disable CheckNamespace
+
 namespace Microsoft.Framework.DependencyInjection
 {
     public static class SqlCeEntityFrameworkServicesBuilderExtensions

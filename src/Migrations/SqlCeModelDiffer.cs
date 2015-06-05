@@ -20,7 +20,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
         {
         }
 
-
         protected override IEnumerable<MigrationOperation> Add(IProperty target)
         {
             var operation = base.Add(target).Cast<AddColumnOperation>().Single();

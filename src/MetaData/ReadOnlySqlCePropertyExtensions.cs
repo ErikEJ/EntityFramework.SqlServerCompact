@@ -34,10 +34,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
                 {
                     return null;
                 }
-                else
-                {
-                    return bool.Parse(value);
-                }
+                return bool.Parse(value);
             }
         }
     }

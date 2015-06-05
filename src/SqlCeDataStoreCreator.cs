@@ -35,8 +35,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override void Create()
         {
+            Check.NotNull(_connection, nameof(_connection));
             var connection = _connection.DbConnection as SqlCeConnection;
-            connection.CreateEmptyDatabase();
+            connection?.CreateEmptyDatabase();
         }
 
         public override void CreateTables(IModel model)
@@ -51,7 +52,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         public override bool Exists()
         {
             var connection = _connection.DbConnection as SqlCeConnection;
-            return connection.Exists();
+            return connection != null && connection.Exists();
         }
 
         public override bool HasTables()
@@ -67,7 +68,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         public override void Delete()
         {
             var connection = _connection.DbConnection as SqlCeConnection;
-            connection.Drop();
+            connection?.Drop();
         }
     }
 }

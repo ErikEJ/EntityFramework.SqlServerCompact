@@ -20,14 +20,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
                 // TODO: Issue #777: Non-string annotations
                 var value = Model[SqlServerCeValueGenerationAnnotation] as string;
 
-                if (value == null)
-                {
-                    return null;
-                }
-                else
+                if (value != null)
                 {
                     return bool.Parse(value);
-                };
+                }
+                return null;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
+using ErikEJ.Data.Entity.SqlServerCe.Migrations;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Xunit;

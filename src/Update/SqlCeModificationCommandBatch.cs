@@ -74,10 +74,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
                             if (returningCommand != null)
                             {
                                 returningCommand.Dispose();
-                                if (returningReader != null)
-                                {
-                                    returningReader.Dispose();
-                                }
+                                returningReader?.Dispose();
                             }
                         }
                     }
@@ -118,25 +115,22 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
         private Tuple<string, string> SplitCommandText(string commandText)
         {
             var stringToFind = ";" + Environment.NewLine + "SELECT ";
-            var stringToFindIndex = commandText.IndexOf(stringToFind);
+            var stringToFindIndex = commandText.IndexOf(stringToFind, StringComparison.OrdinalIgnoreCase);
 
             if (stringToFindIndex > 0)
             {
                 return new Tuple<string, string>(
                     commandText.Substring(0, stringToFindIndex + 1),
-                    commandText.Substring(commandText.LastIndexOf(stringToFind) + 1));
+                    commandText.Substring(commandText.LastIndexOf(stringToFind, StringComparison.OrdinalIgnoreCase) + 1));
             }
-            else
-            {
-                return new Tuple<string, string>(
-                    commandText,
-                    string.Empty);
-            }
+            return new Tuple<string, string>(
+                commandText,
+                string.Empty);
         }
 
         private int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader, DbContext context)
         {
-            var expectedRowsAffected = 1;
+            const int expectedRowsAffected = 1;
             var rowsAffected = reader.RecordsAffected;
 
             ++commandIndex;
@@ -154,8 +148,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
        
         private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader, DbContext context)
         {
+            const int expectedRowsAffected = 1;
             var tableModification = ModificationCommands[commandIndex];
-            var expectedRowsAffected = 1;
+
             Debug.Assert(tableModification.RequiresResultPropagation);
 
             ++commandIndex;

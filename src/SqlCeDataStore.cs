@@ -8,7 +8,6 @@ using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Query;
 using Microsoft.Data.Entity.Relational.Query.Methods;
 using ErikEJ.Data.Entity.SqlServerCe.Query;
-using ErikEJ.Data.Entity.SqlServerCe.Update;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
 using Microsoft.Data.Entity.Relational.Update;

@@ -15,7 +15,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             Check.NotNull(builder, nameof(builder));
             Check.NotNull(columnModification, nameof(columnModification));
 
-            var castAs = columnModification.Property.ClrType == typeof(Int32)
+            var castAs = columnModification.Property.ClrType == typeof(int)
                 ? "int"
                 : "bigint";
 
@@ -29,7 +29,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 
         public override void AppendSelectAffectedCountCommand(StringBuilder builder, string tableName, string schemaName)
         {
-            return;
         }
 
         protected override void AppendRowsAffectedWhereCondition(StringBuilder builder, int expectedRowsAffected)

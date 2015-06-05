@@ -43,7 +43,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 
             if (!_creator.Exists())
             {
-                return exists;
+                return false;
             }
 
             var command = (SqlCeCommand)_connection.DbConnection.CreateCommand();

@@ -31,7 +31,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         //TODO ErikEJ Investigate (see sync queries)
         public override Task Select_local() => Task.FromResult(true);
-        public override Task SelectMany_LongCount() => Task.FromResult(true);
         public override Task String_EndsWith_MethodCall() => Task.FromResult(true);
         public override Task String_StartsWith_MethodCall() => Task.FromResult(true);
         public override Task String_Contains_MethodCall() => Task.FromResult(true);

@@ -786,31 +786,8 @@ FROM [Customers] AS [c]",
                 Sql);
         }
 
-//        Test Name:	ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.QuerySqlCeTest.Select_local
-//Test FullName:	ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.QuerySqlCeTest.Select_local
-//Test Source:	C:\Code\EntityFramework.SqlServerCompact\test\EntityFramework.SqlServerCompact.FunctionalTests\QuerySqlCeTest.cs : line 790
-//Test Outcome:	Failed
-//Test Duration:	0:00:00,018
-
-//Result StackTrace:	
-//at System.Data.SqlServerCe.SqlCeCommand.ProcessResults(Int32 hr)
-//   at System.Data.SqlServerCe.SqlCeCommand.CompileQueryPlan()
-//   at System.Data.SqlServerCe.SqlCeCommand.ExecuteCommand(CommandBehavior behavior, String method, ResultSetOptions options)
-//   at System.Data.SqlServerCe.SqlCeCommand.ExecuteDbDataReader(CommandBehavior behavior)
-//   at System.Data.Common.DbCommand.ExecuteReader()
-//   at Microsoft.Data.Entity.Relational.Query.QueryingEnumerable.Enumerator.MoveNext()
-//   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
-//   at System.Linq.Enumerable.<SelectManyIterator>d__1`2.MoveNext()
-//   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
-//   at Microsoft.Data.Entity.Query.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext()
-//   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
-//   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
-//   at Microsoft.Data.Entity.FunctionalTests.QueryTestBase`1.AssertQuery[TItem](Func`2 query, Boolean assertOrder, Int32 entryCount)
-//   at Microsoft.Data.Entity.FunctionalTests.QueryTestBase`1.Select_local()
-//   at ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.QuerySqlCeTest.Select_local() in C:\Code\EntityFramework.SqlServerCompact\test\EntityFramework.SqlServerCompact.FunctionalTests\QuerySqlCeTest.cs:line 791
-//Result Message:	System.Data.SqlServerCe.SqlCeException : A parameter is not allowed in this location.Ensure that the '@' sign is in a valid location or that parameters are valid at all in this SQL statement.
-
         //TODO ErikEJ Investigate
+        // https://github.com/aspnet/EntityFramework/issues/2317
         public override void Select_local()
         {
 //            base.Select_local();

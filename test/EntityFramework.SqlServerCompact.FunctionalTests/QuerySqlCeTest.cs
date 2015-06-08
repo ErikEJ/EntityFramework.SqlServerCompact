@@ -1492,20 +1492,15 @@ CROSS JOIN [Orders] AS [o]",
                 Sql);
         }
 
-        //TODO ErikEJ Investigate
-        //at System.Data.Common.DbDataReader.GetFieldValue[T](Int32 ordinal)
-        //System.InvalidCastException : Specified cast is not valid.
-        //at lambda_method(Closure , DbDataReader )
-        //at Microsoft.Data.Entity.Relational.TypedValueBufferFactory.CreateValueBuffer(DbDataReader dataReader)
         public override void SelectMany_LongCount()
         {
-//            base.SelectMany_LongCount();
+            base.SelectMany_LongCount();
 
-//            Assert.Equal(
-//                @"SELECT COUNT_BIG(*)
-//FROM [Customers] AS [c]
-//CROSS JOIN [Orders] AS [o]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT CAST(COUNT(*) AS bigint)
+FROM [Customers] AS [c]
+CROSS JOIN [Orders] AS [o]",
+                Sql);
         }
 
         public override void SelectMany_OrderBy_ThenBy_Any()

@@ -163,19 +163,21 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_non_key_SQL_Server_string_mapping()
         {
-            var typeMapping = GetTypeMapping(typeof(string));
+            var typeMapping = (RelationalSizedTypeMapping)GetTypeMapping(typeof(string));
 
             Assert.Null(typeMapping.StoreType);
             Assert.Equal("nvarchar(4000)", typeMapping.DefaultTypeName);
+            Assert.Equal(4000, typeMapping.Size);
         }
 
         [Fact]
         public void Does_non_key_SQL_Server_required_string_mapping()
         {
-            var typeMapping = GetTypeMapping(typeof(string), isNullable: false);
+            var typeMapping = (RelationalSizedTypeMapping)GetTypeMapping(typeof(string), isNullable: false);
 
             Assert.Null(typeMapping.StoreType);
             Assert.Equal("nvarchar(4000)", typeMapping.DefaultTypeName);
+            Assert.Equal(4000, typeMapping.Size);
         }
 
         [Fact]

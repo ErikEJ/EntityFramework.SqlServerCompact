@@ -12,7 +12,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
         {
             var conventions = base.CreateConventionSet();
 
-            //TODO ErikEJ Proper API usage? Would like UseIdentity to be default 
+            //TODO ErikEJ Proper API usage? Need to discuss with EF team. Would like UseIdentity to be default 
             // - but do I need a top level UseNoValueGeneration then?
             //conventions.ModelConventions.Add(new SqlServerCeIdentityConvention());
 

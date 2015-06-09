@@ -26,7 +26,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             [NotNull] IBatchExecutor batchExecutor,
             [NotNull] IEntityOptions options,
             [NotNull] ILoggerFactory loggerFactory,
-            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory)
+            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
+            [NotNull] IMethodCallTranslator compositeMethodCallTranslator,
+            [NotNull] IMemberTranslator compositeMemberTranslator)
             : base(
                 Check.NotNull(model, nameof(model)),
                 Check.NotNull(entityKeyFactorySource, nameof(entityKeyFactorySource)),
@@ -37,7 +39,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 Check.NotNull(batchExecutor, nameof(batchExecutor)),
                 Check.NotNull(options, nameof(options)),
                 Check.NotNull(loggerFactory, nameof(loggerFactory)),
-                Check.NotNull(valueBufferFactoryFactory, nameof(valueBufferFactoryFactory)))
+                Check.NotNull(valueBufferFactoryFactory, nameof(valueBufferFactoryFactory)),
+                Check.NotNull(compositeMethodCallTranslator, nameof(compositeMethodCallTranslator)),
+                Check.NotNull(compositeMemberTranslator, nameof(compositeMemberTranslator)))
         {
         }
 
@@ -45,12 +49,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             ILinqOperatorProvider linqOperatorProvider,
             IResultOperatorHandler resultOperatorHandler,
             IQueryMethodProvider enumerableMethodProvider,
-            IMethodCallTranslator methodCallTranslator)
+            IMethodCallTranslator compositeMethodCallTranslator,
+            IMemberTranslator compositeMemberTranslator)
         {
             Check.NotNull(linqOperatorProvider, nameof(linqOperatorProvider));
             Check.NotNull(resultOperatorHandler, nameof(resultOperatorHandler));
             Check.NotNull(enumerableMethodProvider, nameof(enumerableMethodProvider));
-            Check.NotNull(methodCallTranslator, nameof(methodCallTranslator));
+            Check.NotNull(compositeMethodCallTranslator, nameof(compositeMethodCallTranslator));
 
             return new SqlCeQueryCompilationContext(
                 Model,
@@ -61,7 +66,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 EntityKeyFactorySource,
                 ClrPropertyGetterSource,
                 enumerableMethodProvider,
-                methodCallTranslator,
+                compositeMethodCallTranslator,
+                compositeMemberTranslator,
                 ValueBufferFactoryFactory);
         }
     }

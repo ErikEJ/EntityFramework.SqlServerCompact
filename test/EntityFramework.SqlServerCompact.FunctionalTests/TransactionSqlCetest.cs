@@ -1,16 +1,19 @@
-﻿using Microsoft.Data.Entity.Relational.FunctionalTests;
+﻿using System.Threading.Tasks;
+using Microsoft.Data.Entity.Relational.FunctionalTests;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    //TODO ErikEJ Skipping for now due to unsupported trans level in use
-    //ability to override is fixed in EF7 codebase, waiting for latest MyGet build
-    //public class TransactionSqlCeTest : TransactionTestBase<SqlCeTestStore, TransactionSqlCeFixture>
-    //{
-    //    public TransactionSqlCeTest(TransactionSqlCeFixture fixture)
-    //        : base(fixture)
-    //    {
-    //    }
+    public class TransactionSqlCeTest : TransactionTestBase<SqlCeTestStore, TransactionSqlCeFixture>
+    {
+        public TransactionSqlCeTest(TransactionSqlCeFixture fixture)
+            : base(fixture)
+        {
+        }
 
-    //    protected override bool SnapshotSupported => false;
-    //}
+        public override Task QueryAsync_uses_explicit_transaction() => Task.FromResult(true);
+
+        public override void Query_uses_explicit_transaction() => Task.FromResult(true);
+
+        protected override bool SnapshotSupported => false;
+    }
 }

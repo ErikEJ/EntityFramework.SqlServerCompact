@@ -11,6 +11,7 @@ using Microsoft.Data.Entity.Relational.Metadata;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
+using Microsoft.Data.Entity.Relational.Query.Methods;
 using Microsoft.Data.Entity.Relational.Update;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.ValueGeneration;
@@ -39,5 +40,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         public override IModificationCommandBatchFactory ModificationCommandBatchFactory => GetService<SqlCeModificationCommandBatchFactory>();
         public override IRelationalDataStoreCreator RelationalDataStoreCreator => GetService<SqlCeDataStoreCreator>();                
         public override IRelationalMetadataExtensionProvider MetadataExtensionProvider => GetService<SqlCeMetadataExtensionProvider>();
+        public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
+        public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
     }
 }

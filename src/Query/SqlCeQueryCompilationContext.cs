@@ -24,7 +24,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
             [NotNull] IEntityKeyFactorySource entityKeyFactorySource,
             [NotNull] IClrAccessorSource<IClrPropertyGetter> clrPropertyGetterSource,
             [NotNull] IQueryMethodProvider queryMethodProvider,
-            [NotNull] IMethodCallTranslator methodCallTranslator,
+            [NotNull] IMethodCallTranslator compositeMethodCallTranslator,
+            [NotNull] IMemberTranslator compositeMemberTranslator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory)
             : base(
                 Check.NotNull(model, nameof(model)),
@@ -35,7 +36,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
                 Check.NotNull(entityKeyFactorySource, nameof(entityKeyFactorySource)),
                 Check.NotNull(clrPropertyGetterSource, nameof(clrPropertyGetterSource)),
                 Check.NotNull(queryMethodProvider, nameof(queryMethodProvider)),
-                Check.NotNull(methodCallTranslator, nameof(methodCallTranslator)),
+                Check.NotNull(compositeMethodCallTranslator, nameof(compositeMethodCallTranslator)),
+                Check.NotNull(compositeMemberTranslator, nameof(compositeMemberTranslator)),
                 Check.NotNull(valueBufferFactoryFactory, nameof(valueBufferFactoryFactory)))
         {
         }

@@ -14,7 +14,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
         {
         }
 
-        public override Expression VisitCountExpression(CountExpression countExpression)
+        public override Expression VisitCount(CountExpression countExpression)
         {
             Check.NotNull(countExpression, nameof(countExpression));
 
@@ -24,7 +24,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
 
                 return countExpression;
             }
-            return base.VisitCountExpression(countExpression);
+            return base.VisitCount(countExpression);
         }
 
         protected override string DelimitIdentifier(string identifier)

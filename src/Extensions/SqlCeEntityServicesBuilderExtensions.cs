@@ -36,6 +36,8 @@ namespace Microsoft.Framework.DependencyInjection
                     .AddScoped<SqlCeMigrationSqlGenerator>()
                     .AddScoped<SqlCeDataStoreCreator>()
                     .AddScoped<SqlCeHistoryRepository>()
+                    .AddScoped<SqlCeCompositeMethodCallTranslator>()
+                    .AddScoped<SqlCeCompositeMemberTranslator>()
                     );
 
             return services;

@@ -6,6 +6,10 @@ using Microsoft.Data.Entity.Storage;
 using Xunit;
 using Xunit.Abstractions;
 
+#if DNXCORE50
+using System.Threading;
+#endif
+
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class QuerySqlCeTest : QueryTestBase<NorthwindQuerySqlCeFixture>
@@ -1134,7 +1138,21 @@ WHERE [e].[ReportsTo] = @__nullableIntPrm_0",
 
             Assert.Equal(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]",
+FROM [Customers] AS [c]
+WHERE (LEN([c].[City]) = 6)",
+                Sql);
+        }
+
+        public override void Where_datetime_now()
+        {
+            base.Where_datetime_now();
+
+            Assert.Equal(
+                @"@__myDatetime_0: 04/10/2015 00:00:00
+
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE (GETDATE() <> @__myDatetime_0)",
                 Sql);
         }
 
@@ -1465,7 +1483,7 @@ CROSS JOIN [Employees] AS [e3]",
             Assert.Equal(
                 @"SELECT COUNT(*)
 FROM [Customers] AS [c]
-CROSS JOIN [Orders] AS [o]",
+CROSS JOIN [Orders] AS [o]", 
                 Sql);
         }
 
@@ -1476,7 +1494,7 @@ CROSS JOIN [Orders] AS [o]",
             Assert.Equal(
                 @"SELECT CAST(COUNT(*) AS bigint)
 FROM [Customers] AS [c]
-CROSS JOIN [Orders] AS [o]",
+CROSS JOIN [Orders] AS [o]", 
                 Sql);
         }
 
@@ -1493,7 +1511,7 @@ CROSS JOIN [Orders] AS [o]",
             CROSS JOIN [Orders] AS [o])
         )
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-END",
+END", 
                 Sql);
         }
 
@@ -2185,9 +2203,10 @@ FROM [Customers] AS [c]
 WHERE [c].[ContactName] LIKE [c].[ContactName] + '%'",
                 Sql);
         }
+
         //TODO ErikEJ Investigate
         //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
-        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format.
+        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format
         public override void String_StartsWith_MethodCall()
         {
 //            base.String_StartsWith_MethodCall();
@@ -2200,6 +2219,7 @@ WHERE [c].[ContactName] LIKE [c].[ContactName] + '%'",
 //WHERE [c].[ContactName] LIKE @__LocalMethod1_0 + '%'",
 //                Sql);
         }
+
 
         public override void String_EndsWith_Literal()
         {
@@ -2233,9 +2253,10 @@ FROM [Customers] AS [c]
 WHERE [c].[ContactName] LIKE '%' + [c].[ContactName]",
                 Sql);
         }
+
         //TODO ErikEJ Investigate
         //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
-        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format.
+        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format
         public override void String_EndsWith_MethodCall()
         {
 //            base.String_EndsWith_MethodCall();
@@ -2287,7 +2308,7 @@ WHERE [c].[ContactName] LIKE ('%' + [c].[ContactName] + '%')",
 
         //TODO ErikEJ Investigate
         //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
-        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format.
+        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format
         public override void String_Contains_MethodCall()
         {
 //            AssertQuery<Customer>(
@@ -2302,6 +2323,162 @@ WHERE [c].[ContactName] LIKE ('%' + [c].[ContactName] + '%')",
 //FROM [Customers] AS [c]
 //WHERE [c].[ContactName] LIKE ('%' + @__LocalMethod1_0 + '%')",
 //                Sql);
+        }
+
+        public override void Where_math_abs1()
+        {
+            base.Where_math_abs1();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (abs([od].[ProductID]) > 10)",
+                Sql);
+        }
+
+        public override void Where_math_abs2()
+        {
+            base.Where_math_abs2();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (abs([od].[Quantity]) > 10)",
+                Sql);
+        }
+
+        public override void Where_math_abs3()
+        {
+            base.Where_math_abs3();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (abs([od].[UnitPrice]) > 10)",
+                Sql);
+        }
+
+        public override void Where_math_abs_uncorrelated()
+        {
+            base.Where_math_abs_uncorrelated();
+
+            Assert.Equal(
+                @"@__Abs_0: 10
+
+SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE @__Abs_0 < [od].[ProductID]",
+                Sql);
+        }
+
+        public override void Where_math_ceiling1()
+        {
+            base.Where_math_ceiling1();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (CEILING([od].[Discount]) > 0E0)",
+                Sql);
+        }
+
+        public override void Where_math_ceiling2()
+        {
+            base.Where_math_ceiling2();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (CEILING([od].[UnitPrice]) > 10)",
+                Sql);
+        }
+
+        public override void Where_math_floor()
+        {
+            base.Where_math_floor();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (FLOOR([od].[UnitPrice]) > 10)",
+                Sql);
+        }
+
+        public override void Where_math_power()
+        {
+            base.Where_math_power();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (POWER([od].[Discount], 2E0) > 0.0500000007450581E0)",
+                Sql);
+        }
+
+        public override void Where_math_round()
+        {
+            base.Where_math_round();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (ROUND([od].[UnitPrice], 0) > 10)",
+                Sql);
+        }
+
+        public override void Where_math_truncate()
+        {
+            base.Where_math_truncate();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (ROUND([od].[UnitPrice], 0, 1) > 10)",
+                Sql);
+        }
+
+        public override void Where_guid_newguid()
+        {
+            base.Where_guid_newguid();
+
+            Assert.Equal(
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+WHERE (NEWID() <> '00000000-0000-0000-0000-000000000000')",
+                Sql);
+        }
+
+        public override void Where_functions_nested()
+        {
+            base.Where_functions_nested();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE (POWER(LEN([c].[CustomerID]), 2E0) = 25E0)",
+                Sql);
+        }
+
+        public override void Where_string_to_lower()
+        {
+            base.Where_string_to_lower();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE (LOWER([c].[CustomerID]) = 'alfki')",
+                Sql);
+        }
+
+        public override void Where_string_to_upper()
+        {
+            base.Where_string_to_upper();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE (UPPER([c].[CustomerID]) = 'ALFKI')",
+                Sql);
         }
 
         public override void Select_nested_collection()
@@ -2390,8 +2567,10 @@ INNER JOIN [Orders] AS [o0] ON [o].[CustomerID] = [o0].[CustomerID]",
         {
             base.Where_chain();
 
-            Assert.Contains(
-                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+            Assert.Equal(
+                @"@__p_0: 01/01/1998 00:00:00
+
+SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = 'QUICK' AND [o].[OrderDate] > @__p_0)",
                 Sql);

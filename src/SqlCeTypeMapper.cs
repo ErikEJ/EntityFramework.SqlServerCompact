@@ -91,7 +91,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                    ?? TryMapScaled(typeName, typeNamePrefix, new[] { "decimal", "numeric", "dec" }, firstQualifier, secondQualifier)
                    ?? TryMapScaled(typeName, typeNamePrefix, new[] { "float", "double precision" }, firstQualifier, secondQualifier)
                    ?? TryMapScaled(typeName, typeNamePrefix, new[] { "datetime" }, firstQualifier, secondQualifier, DbType.DateTime)
-                   ?? TryMapSized(typeName, typeNamePrefix, new[] { "nchar", "national char", "national character" }, firstQualifier, DbType.AnsiStringFixedLength)
+                   ?? TryMapSized(typeName, typeNamePrefix, new[] { "nchar", "national char", "national character" }, firstQualifier, DbType.StringFixedLength)
                    ?? TryMapSized(typeName, typeNamePrefix, new[] { "binary" }, firstQualifier, DbType.Binary)
                    ?? base.TryMapFromName(typeName, typeNamePrefix, firstQualifier, secondQualifier);
         }

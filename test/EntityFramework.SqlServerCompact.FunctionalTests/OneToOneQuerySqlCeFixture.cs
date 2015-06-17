@@ -42,11 +42,5 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             return new DbContext(_serviceProvider, _options);
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ForSqlCe().UseIdentity();
-        }
     }
 }

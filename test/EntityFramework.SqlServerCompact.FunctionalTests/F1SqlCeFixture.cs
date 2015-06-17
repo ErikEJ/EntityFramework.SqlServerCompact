@@ -61,13 +61,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ForSqlCe().UseIdentity();
             modelBuilder.Entity<Team>(b =>
             {
                 b.Property(t => t.Id)
                     .StoreGeneratedPattern(Microsoft.Data.Entity.Metadata.StoreGeneratedPattern.None);
-                b.Property(t => t.Id)
-                    .GenerateValueOnAdd(true);                  
             });
         }
     }

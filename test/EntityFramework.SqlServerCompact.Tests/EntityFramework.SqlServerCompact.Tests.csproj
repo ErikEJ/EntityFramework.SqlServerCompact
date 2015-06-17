@@ -141,9 +141,6 @@
   <ItemGroup>
     <Compile Include="Extensions\EntityFrameworkServiceCollectionExtensionsTest.cs" />
     <Compile Include="Extensions\SqlCeEntityOptionsBuilderExtensionsTest.cs" />
-    <Compile Include="Metadata\ModelConventions\SqlCeValueGenerationStrategyConventionTest.cs" />
-    <Compile Include="Metadata\SqlCeMetaDataExtensionsTest.cs" />
-    <Compile Include="Metadata\SqlCeModelBuilderExtensionsTest.cs" />
     <Compile Include="Migrations\MigrationSqlGeneratorTestBase.cs" />
     <Compile Include="Migrations\SqlCeHistoryRepositoryTest.cs" />
     <Compile Include="Migrations\SqlCeMigrationSqlGeneratorTest.cs" />

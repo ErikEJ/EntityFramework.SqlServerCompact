@@ -106,18 +106,8 @@
     <Compile Include="Extensions\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlCeEntityOptionsBuilderExtensions.cs" />
     <Compile Include="Extensions\SqlCeEntityServicesBuilderExtensions.cs" />
-    <Compile Include="MetaData\ISqlCeModelExtensions.cs" />
-    <Compile Include="MetaData\ISqlCePropertyExtensions.cs" />
-    <Compile Include="MetaData\ModelConventions\SqlCeIdentityConvention.cs" />
-    <Compile Include="MetaData\ReadOnlySqlCeModelExtensions.cs" />
     <Compile Include="MetaData\SqlCeAnnotationNames.cs" />
     <Compile Include="MetaData\SqlCeMetaDataExtensionProvider.cs" />
-    <Compile Include="MetaData\SqlCeModelBuilder.cs" />
-    <Compile Include="MetaData\SqlCeModelBuilderFactory.cs" />
-    <Compile Include="MetaData\SqlCeModelExtensions.cs" />
-    <Compile Include="MetaData\SqlCePropertyBuilder.cs" />
-    <Compile Include="MetaData\ReadOnlySqlCePropertyExtensions.cs" />
-    <Compile Include="MetaData\SqlCePropertyExtensions.cs" />
     <Compile Include="Migrations\SqlCeHistoryRepository.cs" />
     <Compile Include="Migrations\SqlCeMigrationSqlGenerator.cs" />
     <Compile Include="Migrations\SqlCeModelDiffer.cs" />
@@ -137,11 +127,9 @@
     <Compile Include="Query\Methods\StringToUpperTranslator.cs" />
     <Compile Include="Query\SqlCeQueryCompilationContext.cs" />
     <Compile Include="Query\SqlCeQuerySqlGenerator.cs" />
-    <Compile Include="SqlCeBuilderExtensions.cs" />
     <Compile Include="SqlCeCompositeMemberTranslator.cs" />
     <Compile Include="SqlCeCompositeMethodCallTranslator.cs" />
     <Compile Include="SqlCeMaxLengthMapping.cs" />
-    <Compile Include="SqlCeMetaDataExtensions.cs" />
     <Compile Include="SqlCeTypeMapper.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>

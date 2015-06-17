@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Framework.DependencyInjection;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
@@ -62,7 +63,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 modelBuilder.Entity<Gumball>(b =>
                 {
                     b.Property(e => e.Id)
-                        .ForSqlCe().UseIdentity();
+                        .StoreGeneratedPattern(StoreGeneratedPattern.Identity);
 
                     b.Property(e => e.Identity)
                         .DefaultValue("Banana Joe");

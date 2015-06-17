@@ -32,7 +32,7 @@ namespace ErikEJ.Data.Entity.SqlCe.FunctionalTests
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
-                var optionsBuilder = new EntityOptionsBuilder();
+                var optionsBuilder = new DbContextOptionsBuilder();
                 optionsBuilder.UseSqlCe(_connectionString);
 
                 using (var context = new GearsOfWarContext(_serviceProvider, optionsBuilder.Options))
@@ -51,7 +51,7 @@ namespace ErikEJ.Data.Entity.SqlCe.FunctionalTests
 
         public override GearsOfWarContext CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection);
 
             var context = new GearsOfWarContext(_serviceProvider, optionsBuilder.Options);

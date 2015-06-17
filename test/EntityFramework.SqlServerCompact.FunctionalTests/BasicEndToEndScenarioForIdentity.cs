@@ -29,7 +29,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             public DbSet<Blog> Blogs { get; set; }
 
-            protected override void OnConfiguring(EntityOptionsBuilder optionsBuilder)
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlCe(@"Data Source=BloggingIdentity.sdf");
             }

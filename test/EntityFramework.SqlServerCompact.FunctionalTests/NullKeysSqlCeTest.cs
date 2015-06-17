@@ -16,7 +16,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public class NullKeysSqlServerCeFixture : NullKeysFixtureBase
         {
             private readonly IServiceProvider _serviceProvider;
-            private readonly EntityOptions _options;
+            private readonly DbContextOptions _options;
 
             public NullKeysSqlServerCeFixture()
             {
@@ -27,7 +27,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .BuildServiceProvider();
 
-                var optionsBuilder = new EntityOptionsBuilder();
+                var optionsBuilder = new DbContextOptionsBuilder();
                 optionsBuilder.UseSqlCe(SqlCeTestStore.CreateConnectionString("StringsContext"));
                 _options = optionsBuilder.Options;
 

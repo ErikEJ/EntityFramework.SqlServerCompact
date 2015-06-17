@@ -6,10 +6,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe
     public class SqlCeModelSource : ModelSource
     {
         public SqlCeModelSource(
-            [NotNull] IDbSetFinder setFinder, 
-            [NotNull] IModelValidator modelValidator
+            [NotNull] IDbSetFinder setFinder
             )
-            : base(setFinder, modelValidator)
+            : base(setFinder)
         {
         }
     }

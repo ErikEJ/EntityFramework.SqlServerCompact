@@ -221,7 +221,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
-                var optionsBuilder = new EntityOptionsBuilder();
+                var optionsBuilder = new DbContextOptionsBuilder();
                 optionsBuilder.UseSqlCe(testDatabase.Connection.ConnectionString);
 
                 using (var context = new BloggingContext(serviceProvider, optionsBuilder.Options))
@@ -232,11 +232,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
                     if (async)
                     {
-                        await creator.CreateTablesAsync(context.Model);
+                        await creator.CreateTablesAsync();
                     }
                     else
                     {
-                        creator.CreateTables(context.Model);
+                        creator.CreateTables();
                     }
 
                     if (testDatabase.Connection.State != ConnectionState.Open)
@@ -276,8 +276,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
                 var errorNumber
                     = async
-                        ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.CreateTablesAsync(new Model()))).NativeError
-                        : Assert.Throws<SqlCeException>(() => creator.CreateTables(new Model())).NativeError;
+                        ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.CreateTablesAsync())).NativeError
+                        : Assert.Throws<SqlCeException>(() => creator.CreateTables()).NativeError;
 
                 Assert.Equal(
                     25046, // The database file cannot be found. Check the path to the database.
@@ -363,7 +363,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .AddEntityFramework()
                 .AddSqlCe();
 
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
 
             return ((IAccessor<IServiceProvider>)new DbContext(
@@ -379,7 +379,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         private class BloggingContext : DbContext
         {
-            public BloggingContext(IServiceProvider serviceProvider, EntityOptions options)
+            public BloggingContext(IServiceProvider serviceProvider, DbContextOptions options)
                 : base(serviceProvider, options)
             {
             }

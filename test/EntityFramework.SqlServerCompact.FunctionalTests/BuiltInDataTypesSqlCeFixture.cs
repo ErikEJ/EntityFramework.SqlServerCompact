@@ -11,7 +11,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
     public class BuiltInDataTypesSqlCeFixture : BuiltInDataTypesFixtureBase
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly EntityOptions _options;
+        private readonly DbContextOptions _options;
         private readonly SqlCeTestStore _testStore;
 
         public BuiltInDataTypesSqlCeFixture()
@@ -25,7 +25,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                 .BuildServiceProvider();
 
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(_testStore.Connection);
 
             _options = optionsBuilder.Options;
@@ -129,8 +129,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override void Dispose() => _testStore.Dispose();
 
         public override bool SupportsBinaryKeys => true;
-
-        public override bool SupportsMaxLength => true;
     }
 
     public class MappedDataTypes

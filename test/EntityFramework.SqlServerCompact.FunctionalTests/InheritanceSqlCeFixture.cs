@@ -11,7 +11,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class InheritanceSqlCeFixture : InheritanceFixtureBase
     {
-        private readonly EntityOptions _options;
+        private readonly DbContextOptions _options;
         private readonly IServiceProvider _serviceProvider;
 
         public InheritanceSqlCeFixture()
@@ -27,7 +27,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             var testStore = SqlCeTestStore.CreateScratch(createDatabase: true);
 
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection);
             _options = optionsBuilder.Options;
 

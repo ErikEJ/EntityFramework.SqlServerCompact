@@ -13,7 +13,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
     public class NorthwindQuerySqlCeFixture : NorthwindQueryRelationalFixture, IDisposable
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly EntityOptions _options;
+        private readonly DbContextOptions _options;
         private readonly SqlCeTestStore _testStore;
 
         public NorthwindQuerySqlCeFixture()
@@ -28,7 +28,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .AddInstance<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
 
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
             _options = optionsBuilder.Options;
 

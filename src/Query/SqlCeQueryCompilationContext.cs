@@ -26,24 +26,25 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
             [NotNull] IQueryMethodProvider queryMethodProvider,
             [NotNull] IMethodCallTranslator compositeMethodCallTranslator,
             [NotNull] IMemberTranslator compositeMemberTranslator,
-            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory)
+            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
+            [NotNull] IRelationalTypeMapper typeMapper)
             : base(
-                Check.NotNull(model, nameof(model)),
-                Check.NotNull(logger, nameof(logger)),
-                Check.NotNull(linqOperatorProvider, nameof(linqOperatorProvider)),
-                Check.NotNull(resultOperatorHandler, nameof(resultOperatorHandler)),
-                Check.NotNull(entityMaterializerSource, nameof(entityMaterializerSource)),
-                Check.NotNull(entityKeyFactorySource, nameof(entityKeyFactorySource)),
-                Check.NotNull(clrPropertyGetterSource, nameof(clrPropertyGetterSource)),
-                Check.NotNull(queryMethodProvider, nameof(queryMethodProvider)),
-                Check.NotNull(compositeMethodCallTranslator, nameof(compositeMethodCallTranslator)),
-                Check.NotNull(compositeMemberTranslator, nameof(compositeMemberTranslator)),
-                Check.NotNull(valueBufferFactoryFactory, nameof(valueBufferFactoryFactory)))
+                model,
+                logger,
+                linqOperatorProvider,
+                resultOperatorHandler,
+                entityMaterializerSource,
+                entityKeyFactorySource,
+                clrPropertyGetterSource,
+                queryMethodProvider,
+                compositeMethodCallTranslator,
+                compositeMemberTranslator,
+                valueBufferFactoryFactory,
+                typeMapper)
         {
         }
 
         public override ISqlQueryGenerator CreateSqlQueryGenerator(SelectExpression selectExpression)
-            => new SqlCeQuerySqlGenerator(Check.NotNull(selectExpression, nameof(selectExpression)));
-
+            => new SqlCeQuerySqlGenerator(Check.NotNull(selectExpression, nameof(selectExpression)), TypeMapper);
     }
 }

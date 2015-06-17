@@ -14,8 +14,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
         }
 
         public override ModificationCommandBatch Create(
-           IEntityOptions options,
+           IDbContextOptions options,
            IRelationalMetadataExtensionProvider metadataExtensionProvider)
-           => new SqlCeModificationCommandBatch(SqlGenerator, metadataExtensionProvider);
+           => new SqlCeModificationCommandBatch(SqlGenerator);
     }
 }

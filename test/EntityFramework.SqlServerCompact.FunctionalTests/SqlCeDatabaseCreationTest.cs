@@ -313,7 +313,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 _testStore = testStore;
             }
 
-            protected override void OnConfiguring(EntityOptionsBuilder optionsBuilder)
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
             }

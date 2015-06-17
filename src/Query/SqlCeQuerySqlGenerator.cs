@@ -4,13 +4,16 @@ using Microsoft.Data.Entity.Relational.Query.Sql;
 using Microsoft.Data.Entity.Utilities;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.Data.Entity.Relational;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Query
 {
     public class SqlCeQuerySqlGenerator : DefaultQuerySqlGenerator
     {
-        public SqlCeQuerySqlGenerator([NotNull] SelectExpression selectExpression)
-            : base(Check.NotNull(selectExpression, nameof(selectExpression)))
+        public SqlCeQuerySqlGenerator(
+            [NotNull] SelectExpression selectExpression,
+            [NotNull] IRelationalTypeMapper typeMapper)
+            : base(selectExpression, typeMapper)
         {
         }
 

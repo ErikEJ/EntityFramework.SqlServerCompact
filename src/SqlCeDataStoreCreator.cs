@@ -20,7 +20,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             [NotNull] IRelationalConnection connection,
             [NotNull] IModelDiffer modelDiffer,
             [NotNull] IMigrationSqlGenerator migrationSqlGenerator,
-            [NotNull] ISqlStatementExecutor sqlStatementExecutor)
+            [NotNull] ISqlStatementExecutor sqlStatementExecutor,
+            [NotNull] IModel model)
+             : base(model)
         {
             Check.NotNull(connection, nameof(connection));
             Check.NotNull(modelDiffer, nameof(modelDiffer));
@@ -40,12 +42,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             connection?.CreateEmptyDatabase();
         }
 
-        public override void CreateTables(IModel model)
+        public override void CreateTables()
         {
-            Check.NotNull(model, nameof(model));
-
-            var operations = _modelDiffer.GetDifferences(null, model);
-            var statements = _migrationSqlGenerator.Generate(operations, model);
+            var operations = _modelDiffer.GetDifferences(null, Model);
+            var statements = _migrationSqlGenerator.Generate(operations, Model);
             _executor.ExecuteNonQuery(_connection, null, statements);
         }
 

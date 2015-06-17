@@ -35,7 +35,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         public override DbContext CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
 
             return new DbContext(_serviceProvider, optionsBuilder.Options);
@@ -43,7 +43,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         public override DbContext CreateContext(DbConnection connection)
         {
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(connection);
 
             return new DbContext(_serviceProvider, optionsBuilder.Options);

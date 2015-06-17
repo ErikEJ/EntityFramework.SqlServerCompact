@@ -17,9 +17,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             }
         }
 
-        public static IEntityOptions CreateOptions()
+        public static IDbContextOptions CreateOptions()
         {
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(@"Data Source=C:\data\EF7SQLCE.sdf;");
 
             return optionsBuilder.Options;

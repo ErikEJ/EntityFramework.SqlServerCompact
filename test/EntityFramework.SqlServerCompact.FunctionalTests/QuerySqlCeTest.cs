@@ -785,23 +785,21 @@ FROM [Employees] AS [e]",
             base.Select_constant_null_string();
 
             Assert.Equal(
-                @"SELECT NULL
+                @"SELECT 1
 FROM [Customers] AS [c]",
                 Sql);
         }
 
-        //TODO ErikEJ Investigate
-        // https://github.com/aspnet/EntityFramework/issues/2317
         public override void Select_local()
         {
-//            base.Select_local();
+            base.Select_local();
 
-//            Assert.Equal(
-//                 @"@__x_0: 10
+            Assert.Equal(
+                 @"@__x_0: 10
 
-//SELECT @__x_0
-//FROM [Customers] AS [c]",
-//                 Sql);
+SELECT @__x_0
+FROM [Customers] AS [c]",
+                 Sql);
         }
 
         public override void Where_simple()

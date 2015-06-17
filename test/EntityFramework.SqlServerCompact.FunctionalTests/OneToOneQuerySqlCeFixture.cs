@@ -10,7 +10,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class OneToOneQuerySqlCeFixture : OneToOneQueryFixtureBase
     {
-        private readonly EntityOptions _options;
+        private readonly DbContextOptions _options;
         private readonly IServiceProvider _serviceProvider;
 
         public OneToOneQuerySqlCeFixture()
@@ -26,7 +26,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             var database = SqlCeTestStore.CreateScratch(createDatabase: true);
 
-            var optionsBuilder = new EntityOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(database.Connection.ConnectionString);
             _options = optionsBuilder.Options;
 

@@ -9,9 +9,9 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity
 {
-    public static class SqlCeEntityOptionsBuilderExtensions
+    public static class SqlCeDbContextOptionsBuilderExtensions
     {
-        public static RelationalEntityOptionsBuilder UseSqlCe([NotNull] this EntityOptionsBuilder options, [NotNull] string connectionString)
+        public static RelationalDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder options, [NotNull] string connectionString)
         {
             Check.NotNull(options, nameof(options));
             Check.NotEmpty(connectionString, nameof(connectionString));
@@ -19,12 +19,12 @@ namespace Microsoft.Data.Entity
             var extension = GetOrCreateExtension(options);
             extension.ConnectionString = connectionString;
             extension.MaxBatchSize = 1;
-            ((IOptionsBuilderExtender)options).AddOrUpdateExtension(extension);
+            ((IDbContextOptionsBuilderInfrastructure)options).AddOrUpdateExtension(extension);
 
-            return new RelationalEntityOptionsBuilder(options);
+            return new RelationalDbContextOptionsBuilder(options);
         }
 
-        public static RelationalEntityOptionsBuilder UseSqlCe([NotNull] this EntityOptionsBuilder options, [NotNull] DbConnection connection)
+        public static RelationalDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder options, [NotNull] DbConnection connection)
         {
             Check.NotNull(options, nameof(options));
             Check.NotNull(connection, nameof(connection));
@@ -32,12 +32,12 @@ namespace Microsoft.Data.Entity
             var extension = GetOrCreateExtension(options);
             extension.Connection = connection;
             extension.MaxBatchSize = 1;
-            ((IOptionsBuilderExtender)options).AddOrUpdateExtension(extension);
+            ((IDbContextOptionsBuilderInfrastructure)options).AddOrUpdateExtension(extension);
 
-            return new RelationalEntityOptionsBuilder(options);
+            return new RelationalDbContextOptionsBuilder(options);
         }
 
-        private static SqlCeOptionsExtension GetOrCreateExtension(EntityOptionsBuilder options)
+        private static SqlCeOptionsExtension GetOrCreateExtension(DbContextOptionsBuilder options)
         {
             var existingExtension = options.Options.FindExtension<SqlCeOptionsExtension>();
 

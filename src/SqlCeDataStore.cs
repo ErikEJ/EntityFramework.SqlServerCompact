@@ -24,24 +24,26 @@ namespace ErikEJ.Data.Entity.SqlServerCe
             [NotNull] IRelationalConnection connection,
             [NotNull] ICommandBatchPreparer batchPreparer,
             [NotNull] IBatchExecutor batchExecutor,
-            [NotNull] IEntityOptions options,
+            [NotNull] IDbContextOptions options,
             [NotNull] ILoggerFactory loggerFactory,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
             [NotNull] IMethodCallTranslator compositeMethodCallTranslator,
-            [NotNull] IMemberTranslator compositeMemberTranslator)
-            : base(
-                Check.NotNull(model, nameof(model)),
-                Check.NotNull(entityKeyFactorySource, nameof(entityKeyFactorySource)),
-                Check.NotNull(entityMaterializerSource, nameof(entityMaterializerSource)),
-                Check.NotNull(clrPropertyGetterSource, nameof(clrPropertyGetterSource)),
-                Check.NotNull(connection, nameof(connection)),
-                Check.NotNull(batchPreparer, nameof(batchPreparer)),
-                Check.NotNull(batchExecutor, nameof(batchExecutor)),
-                Check.NotNull(options, nameof(options)),
-                Check.NotNull(loggerFactory, nameof(loggerFactory)),
-                Check.NotNull(valueBufferFactoryFactory, nameof(valueBufferFactoryFactory)),
-                Check.NotNull(compositeMethodCallTranslator, nameof(compositeMethodCallTranslator)),
-                Check.NotNull(compositeMemberTranslator, nameof(compositeMemberTranslator)))
+            [NotNull] IMemberTranslator compositeMemberTranslator,
+            [NotNull] IRelationalTypeMapper typeMapper)
+             : base(
+                model,
+                entityKeyFactorySource,
+                entityMaterializerSource,
+                clrPropertyGetterSource,
+                connection,
+                batchPreparer,
+                batchExecutor,
+                options,
+                loggerFactory,
+                valueBufferFactoryFactory,
+                compositeMethodCallTranslator,
+                compositeMemberTranslator,
+                typeMapper)
         {
         }
 
@@ -68,7 +70,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                 enumerableMethodProvider,
                 compositeMethodCallTranslator,
                 compositeMemberTranslator,
-                ValueBufferFactoryFactory);
+                ValueBufferFactoryFactory,
+                TypeMapper);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
     public class MappingQuerySqlCeFixture : MappingQueryFixtureBase
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly EntityOptions _options;
+        private readonly DbContextOptions _options;
         private readonly SqlCeTestStore _testDatabase;
 
         public MappingQuerySqlCeFixture()
@@ -26,7 +26,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             _testDatabase = SqlCeNorthwindContext.GetSharedStore();
 
-            var optionsBuilder = new EntityOptionsBuilder().UseModel(CreateModel());
+            var optionsBuilder = new DbContextOptionsBuilder().UseModel(CreateModel());
             optionsBuilder.UseSqlCe(_testDatabase.Connection.ConnectionString);
             _options = optionsBuilder.Options;
         }

@@ -12,8 +12,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
     {
         private readonly TestModelSource _testModelSource;
 
-        public TestSqlCeModelSource(Action<ModelBuilder> onModelCreating, IDbSetFinder setFinder, IModelValidator modelValidator)
-            : base(setFinder, modelValidator)
+        public TestSqlCeModelSource(Action<ModelBuilder> onModelCreating, IDbSetFinder setFinder)
+            : base(setFinder)
         {
             _testModelSource = new TestModelSource(onModelCreating, setFinder);
         }
@@ -21,10 +21,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public static Func<IServiceProvider, SqlCeModelSource> GetFactory(Action<ModelBuilder> onModelCreating) =>
             p => new TestSqlCeModelSource(
                 onModelCreating,
-                p.GetRequiredService<IDbSetFinder>(),
-                p.GetRequiredService<IModelValidator>());
+                p.GetRequiredService<IDbSetFinder>());
 
-        public override IModel GetModel(DbContext context, IModelBuilderFactory modelBuilderFactory) =>
-            _testModelSource.GetModel(context, modelBuilderFactory);
+        public override IModel GetModel(DbContext context, IModelBuilderFactory modelBuilderFactory, IModelValidator validator) =>
+            _testModelSource.GetModel(context, modelBuilderFactory, validator);
     }
 }

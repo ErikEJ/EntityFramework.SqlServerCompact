@@ -20,9 +20,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
     public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
     {
         public SqlCeModificationCommandBatch(
-            [NotNull] ISqlGenerator sqlGenerator,
-            [NotNull] IRelationalMetadataExtensionProvider metadataExtensionProvider)
-            : base(sqlGenerator, metadataExtensionProvider)
+            [NotNull] ISqlGenerator sqlGenerator)
+            : base(sqlGenerator)
         {
         }
 

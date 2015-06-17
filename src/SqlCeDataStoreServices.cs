@@ -29,7 +29,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         public override IDataStoreCreator Creator => GetService<SqlCeDataStoreCreator>();
         public override IHistoryRepository HistoryRepository => GetService<SqlCeHistoryRepository>();
         public override IMigrationSqlGenerator MigrationSqlGenerator => GetService<SqlCeMigrationSqlGenerator>();
-        public override IModelBuilderFactory ModelBuilderFactory => GetService<SqlCeModelBuilderFactory>();
         public override IModelDiffer ModelDiffer => GetService<SqlCeModelDiffer>();
         public override IModelSource ModelSource => GetService<SqlCeModelSource>();
         public override IRelationalConnection RelationalConnection => GetService<SqlCeDataStoreConnection>();

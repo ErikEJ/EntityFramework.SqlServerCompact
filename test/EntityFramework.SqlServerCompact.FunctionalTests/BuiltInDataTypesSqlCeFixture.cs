@@ -4,6 +4,7 @@ using System.Reflection;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Framework.DependencyInjection;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
@@ -70,6 +71,32 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                     b.Ignore(dt => dt.TestNullableDateTimeOffset);
                     b.Ignore(dt => dt.TestNullableTimeSpan);
                 });
+
+            modelBuilder.Entity<MappedDataTypes>(b =>
+            {
+                b.Key(e => e.Int);
+                b.Property(e => e.Int)
+                    .StoreGeneratedPattern(StoreGeneratedPattern.None);
+            });
+
+            modelBuilder.Entity<MappedNullableDataTypes>(b =>
+            {
+                b.Key(e => e.Int);
+                b.Property(e => e.Int)
+                    .StoreGeneratedPattern(StoreGeneratedPattern.None);
+            });
+
+            modelBuilder.Entity<MappedSizedDataTypes>()
+                .Property(e => e.Id)
+                .StoreGeneratedPattern(StoreGeneratedPattern.None);
+
+            modelBuilder.Entity<MappedScaledDataTypes>()
+                .Property(e => e.Id)
+                .StoreGeneratedPattern(StoreGeneratedPattern.None);
+
+            modelBuilder.Entity<MappedPrecisionAndScaledDataTypes>()
+                .Property(e => e.Id)
+                .StoreGeneratedPattern(StoreGeneratedPattern.None);
 
             modelBuilder.Entity<MappedDataTypes>().Key(e => e.Int);
             modelBuilder.Entity<MappedNullableDataTypes>().Key(e => e.Int);

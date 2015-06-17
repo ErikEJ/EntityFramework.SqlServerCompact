@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using JetBrains.Annotations;
@@ -24,16 +25,15 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
         {
             var operation = base.Add(target).Cast<AddColumnOperation>().Single();
 
-            var generateIdentityKey = GetIdentityKeyGeneration(target);
+            var generateIdentityKey = target.StoreGeneratedPattern == StoreGeneratedPattern.Identity
+                                      && target.ClrType.IsIntegerForIdentity();
 
-            if (generateIdentityKey.HasValue && generateIdentityKey.Value)
+            if (generateIdentityKey)
             {
                 operation[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration] =
                     SqlCeAnnotationNames.Identity;
             }
             yield return operation;
         }
-
-        private bool? GetIdentityKeyGeneration(IProperty property) => property.SqlCe().IdentityKeyGeneration;
     }
 }

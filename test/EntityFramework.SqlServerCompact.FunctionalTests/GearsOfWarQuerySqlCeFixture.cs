@@ -58,11 +58,5 @@ namespace ErikEJ.Data.Entity.SqlCe.FunctionalTests
             context.Database.AsRelational().Connection.UseTransaction(testStore.Transaction);
             return context;
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ForSqlCe().UseIdentity();
-        }
     }
 }

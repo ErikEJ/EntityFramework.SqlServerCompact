@@ -1,5 +1,8 @@
 ﻿using System.Linq;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.FunctionalTests.TestModels.ComplexNavigationsModel;
+using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Query;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
@@ -31,6 +34,14 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlCe(@"Data Source=BloggingNoIdentity.sdf");
+            }
+
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                base.OnModelCreating(modelBuilder);
+                modelBuilder.Entity<Blog>()
+                    .Property(e => e.Id)
+                    .StoreGeneratedPattern(StoreGeneratedPattern.None);
             }
         }
 

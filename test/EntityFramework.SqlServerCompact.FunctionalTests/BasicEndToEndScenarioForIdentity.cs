@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Data.Entity;
 using Xunit;
 
@@ -32,11 +30,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlCe(@"Data Source=BloggingIdentity.sdf");
-            }
-
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                modelBuilder.ForSqlCe().UseIdentity();
             }
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
@@ -27,6 +26,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
 
             var generateIdentityKey = target.StoreGeneratedPattern == StoreGeneratedPattern.Identity
                                       && target.ClrType.IsIntegerForIdentity();
+
+            if (generateIdentityKey && !target.ClrType.IsIntegerForIdentity())
+            {
+                throw new ArgumentException(string.Format(
+                    Strings.IdentityBadType,
+                    target.Name, target.EntityType.Name, target.ClrType.Name));
+            }
 
             if (generateIdentityKey)
             {

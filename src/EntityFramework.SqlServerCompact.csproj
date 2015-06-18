@@ -104,7 +104,7 @@
   <ItemGroup>
     <Compile Include="Extensions\LoggerExtensions.cs" />
     <Compile Include="Extensions\SqlCeConnectionExtensions.cs" />
-    <Compile Include="Extensions\SqlCeEntityOptionsBuilderExtensions.cs" />
+    <Compile Include="Extensions\SqlCeDbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Extensions\SqlCeEntityServicesBuilderExtensions.cs" />
     <Compile Include="MetaData\SqlCeAnnotationNames.cs" />
     <Compile Include="MetaData\SqlCeMetaDataExtensionProvider.cs" />

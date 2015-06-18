@@ -1,13 +1,13 @@
 ﻿namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class GraphUpdatesWithIdentitySqlCeTest : GraphUpdatesSqlServerTestBase<GraphUpdatesWithIdentitySqlCeTest.GraphUpdatesWithIdentitySqlCeFixture>
+    public class GraphUpdatesWithIdentitySqlCeTest : GraphUpdatesSqlCeTestBase<GraphUpdatesWithIdentitySqlCeTest.GraphUpdatesWithIdentitySqlCeFixture>
     {
         public GraphUpdatesWithIdentitySqlCeTest(GraphUpdatesWithIdentitySqlCeFixture fixture)
             : base(fixture)
         {
         }
 
-        public class GraphUpdatesWithIdentitySqlCeFixture : GraphUpdatesSqlServerFixtureBase
+        public class GraphUpdatesWithIdentitySqlCeFixture : GraphUpdatesSqlCeFixtureBase
         {
             protected override string DatabaseName => "GraphIdentityUpdatesTest";
 

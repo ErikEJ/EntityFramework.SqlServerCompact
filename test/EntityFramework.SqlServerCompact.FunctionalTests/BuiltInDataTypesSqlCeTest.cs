@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using Microsoft.Data.Entity;
@@ -20,13 +19,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         [Fact]
         public override void Can_insert_and_read_with_max_length_set()
         {
-            //base.Can_insert_and_read_with_max_length_set();
+           //base.Can_insert_and_read_with_max_length_set();
         }
 
         [Fact]
         public override void Can_perform_query_with_max_length()
         {
-            //base.Can_perform_query_with_max_length();
+           //base.Can_perform_query_with_max_length();
         }
 
         [Fact]
@@ -218,17 +217,17 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             //{
             //    context.Set<MappedSizedDataTypes>().Add(
             //        new MappedSizedDataTypes
-            //            {
-            //                Id = 77,
-            //                Nchar = "Wont",
-            //                National_character = "Squeeze",
-            //                Nvarchar = "Into",
-            //                National_char_varying = "These",
-            //                National_character_varying = "Columns",
-            //                //Binary = new byte[] { 10, 11, 12, 13 },
-            //                //Varbinary = new byte[] { 11, 12, 13, 14 },
-            //                //Binary_varying = new byte[] { 12, 13, 14, 15 }
-            //            });
+            //        {
+            //            Id = 77,
+            //            Nchar = "Wont",
+            //            National_character = "Squeeze",
+            //            Nvarchar = "Into",
+            //            National_char_varying = "These",
+            //            National_character_varying = "Columns",
+            //            //Binary = new byte[] { 10, 11, 12, 13 },
+            //            //Varbinary = new byte[] { 11, 12, 13, 14 },
+            //            //Binary_varying = new byte[] { 12, 13, 14, 15 }
+            //        });
 
             //    Assert.Equal(1, context.SaveChanges());
             //}
@@ -271,9 +270,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 Assert.Null(entity.Nvarchar);
                 Assert.Null(entity.National_char_varying);
                 Assert.Null(entity.National_character_varying);
-                //Assert.Null(entity.Binary);
-                //Assert.Null(entity.Varbinary);
-                //Assert.Null(entity.Binary_varying);
+                Assert.Null(entity.Binary);
+                Assert.Null(entity.Varbinary);
             }
         }
 
@@ -517,12 +515,14 @@ MappedScaledDataTypes.Dec ---> [numeric] [Precision = 3 Scale = 0]
 MappedScaledDataTypes.Decimal ---> [numeric] [Precision = 3 Scale = 0]
 MappedScaledDataTypes.Id ---> [int] [Precision = 10]
 MappedScaledDataTypes.Numeric ---> [numeric] [Precision = 3 Scale = 0]
+MappedSizedDataTypes.Binary ---> [nullable binary] [MaxLength = 3]
 MappedSizedDataTypes.Id ---> [int] [Precision = 10]
 MappedSizedDataTypes.National_char_varying ---> [nullable nvarchar] [MaxLength = 3]
 MappedSizedDataTypes.National_character ---> [nullable nchar] [MaxLength = 3]
 MappedSizedDataTypes.National_character_varying ---> [nullable nvarchar] [MaxLength = 3]
 MappedSizedDataTypes.Nchar ---> [nullable nchar] [MaxLength = 3]
 MappedSizedDataTypes.Nvarchar ---> [nullable nvarchar] [MaxLength = 3]
+MappedSizedDataTypes.Varbinary ---> [nullable varbinary] [MaxLength = 3]
 MaxLengthDataTypes.ByteArray5 ---> [nullable varbinary] [MaxLength = 5]
 MaxLengthDataTypes.ByteArray9000 ---> [nullable image] [MaxLength = 1073741823]
 MaxLengthDataTypes.Id ---> [int] [Precision = 10]

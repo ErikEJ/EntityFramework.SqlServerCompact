@@ -193,9 +193,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public string National_char_varying { get; set; }
         public string National_character_varying { get; set; }
         //TODO ErikEJ Is it possible to support these (maybe later update from Arthur fixes it)
-        //public byte[] Binary { get; set; }
-        //public byte[] Varbinary { get; set; }
-        //public byte[] Binary_varying { get; set; }
+        public byte[] Binary { get; set; }
+        public byte[] Varbinary { get; set; }
     }
 
     public class MappedScaledDataTypes

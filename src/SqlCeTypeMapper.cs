@@ -58,7 +58,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe
                         { "ntext", _nvarcharmax },
                         { "binary", _varbinary },
                         { "varbinary", _varbinary },
-                        { "binary varying", _varbinary },
                         { "rowversion", _rowversion },
                         { "datetime", _datetime },
                         { "timestamp", _rowversion },

@@ -154,6 +154,8 @@
     <Compile Include="FromSqlQuerySqlCeTest.cs" />
     <Compile Include="GearsOfWarQuerySqlCeFixture.cs" />
     <Compile Include="GearsOfWarSqlCeTest.cs" />
+    <Compile Include="GraphUpdatesSqlCeTestbase.cs" />
+    <Compile Include="GraphUpdateWithIdentitySqlCeTest.cs" />
     <Compile Include="IncludeAsyncSqlCeTest.cs" />
     <Compile Include="IncludeOneToOneSqlCeTest.cs" />
     <Compile Include="IncludeSqlCeTest.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="InheritanceSqlCeTest.cs" />
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
+    <Compile Include="MonsterFixUpSqlCeTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />
     <Compile Include="NullKeysSqlCeTest.cs" />
     <Compile Include="NullSemanticsQuerySqlCeFixture.cs" />

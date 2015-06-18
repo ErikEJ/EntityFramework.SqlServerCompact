@@ -220,19 +220,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             Assert.Null(typeMapping.StoreType);
             Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
             Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
-
-
-            //var property = CreateEntityType().AddProperty("MyProp", typeof(string), shadowProperty: true);
-            //var fkProperty = property.EntityType.AddProperty("FK", typeof(string), shadowProperty: true);
-            //var pk = property.EntityType.SetPrimaryKey(property);
-            //property.EntityType.AddForeignKey(fkProperty, pk);
-            //fkProperty.IsNullable = false;
-
-            //var typeMapping = (RelationalSizedTypeMapping)new SqlCeTypeMapper().MapPropertyType(fkProperty);
-
-            //Assert.Null(typeMapping.StoreType);
-            //Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
-            //Assert.Equal(256, typeMapping.Size);
         }
 
         [Fact]
@@ -336,6 +323,38 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         }
 
         private static EntityType CreateEntityType() => new Model().AddEntityType("MyType");
+
+        [Fact]
+        public void Does_default_mappings_for_sequence_types()
+        {
+            Assert.Equal("int", new SqlCeTypeMapper().GetDefaultMapping(typeof(int)).DefaultTypeName);
+            Assert.Equal("smallint", new SqlCeTypeMapper().GetDefaultMapping(typeof(short)).DefaultTypeName);
+            Assert.Equal("bigint", new SqlCeTypeMapper().GetDefaultMapping(typeof(long)).DefaultTypeName);
+            Assert.Equal("tinyint", new SqlCeTypeMapper().GetDefaultMapping(typeof(byte)).DefaultTypeName);
+        }
+
+        [Fact]
+        public void Does_default_mappings_for_strings_and_byte_arrays()
+        {
+            Assert.Equal("nvarchar(4000)", new SqlCeTypeMapper().GetDefaultMapping(typeof(string)).DefaultTypeName);
+            Assert.Equal("image", new SqlCeTypeMapper().GetDefaultMapping(typeof(byte[])).DefaultTypeName);
+        }
+
+        [Fact]
+        public void Does_default_mappings_for_values()
+        {
+            Assert.Equal("nvarchar(4000)", new SqlCeTypeMapper().GetDefaultMapping("Cheese").DefaultTypeName);
+            Assert.Equal("image", new SqlCeTypeMapper().GetDefaultMapping(new byte[1]).DefaultTypeName);
+            Assert.Equal("datetime", new SqlCeTypeMapper().GetDefaultMapping(new DateTime()).DefaultTypeName);
+        }
+
+        [Fact]
+        public void Does_default_mappings_for_null_values()
+        {
+            Assert.Equal("NULL", new SqlCeTypeMapper().GetDefaultMapping((object)null).DefaultTypeName);
+            Assert.Equal("NULL", new SqlCeTypeMapper().GetDefaultMapping(DBNull.Value).DefaultTypeName);
+            Assert.Equal("NULL", RelationalTypeMapperExtensions.GetDefaultMapping(null, "Itz").DefaultTypeName);
+        }
 
         private enum LongEnum : long
         {

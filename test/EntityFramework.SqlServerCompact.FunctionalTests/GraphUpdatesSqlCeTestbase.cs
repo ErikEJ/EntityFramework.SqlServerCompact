@@ -5,19 +5,19 @@ using Microsoft.Framework.DependencyInjection;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public abstract class GraphUpdatesSqlServerTestBase<TFixture> : GraphUpdatesTestBase<SqlCeTestStore, TFixture>
-        where TFixture : GraphUpdatesSqlServerTestBase<TFixture>.GraphUpdatesSqlServerFixtureBase, new()
+    public abstract class GraphUpdatesSqlCeTestBase<TFixture> : GraphUpdatesTestBase<SqlCeTestStore, TFixture>
+        where TFixture : GraphUpdatesSqlCeTestBase<TFixture>.GraphUpdatesSqlCeFixtureBase, new()
     {
-        protected GraphUpdatesSqlServerTestBase(TFixture fixture)
+        protected GraphUpdatesSqlCeTestBase(TFixture fixture)
             : base(fixture)
         {
         }
 
-        public abstract class GraphUpdatesSqlServerFixtureBase : GraphUpdatesFixtureBase
+        public abstract class GraphUpdatesSqlCeFixtureBase : GraphUpdatesFixtureBase
         {
             private readonly IServiceProvider _serviceProvider;
 
-            protected GraphUpdatesSqlServerFixtureBase()
+            protected GraphUpdatesSqlCeFixtureBase()
             {
                 _serviceProvider = new ServiceCollection()
                     .AddEntityFramework()

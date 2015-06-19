@@ -14,6 +14,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class QuerySqlCeTest : QueryTestBase<NorthwindQuerySqlCeFixture>
     {
+        public QuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
+            : base(fixture)
+        {
+            //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
+        }
+
         public override void Where_simple_closure()
         {
             base.Where_simple_closure();
@@ -705,8 +711,11 @@ FROM (
             base.Take_OrderBy_Count();
 
             Assert.Equal(
-                @"SELECT TOP(5) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]",
+                @"SELECT COUNT(*)
+FROM (
+    SELECT TOP(5) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+    FROM [Orders] AS [o]
+) AS [t0]",
                 Sql);
         }
 
@@ -770,13 +779,66 @@ FROM [Customers] AS [c]",
                 Sql);
         }
 
+        public override void Select_anonymous_one()
+        {
+            base.Select_anonymous_one();
+
+            Assert.Equal(
+                @"SELECT [c].[City]
+FROM [Customers] AS [c]",
+                Sql);
+        }
+
+        public override void Select_anonymous_two()
+        {
+            base.Select_anonymous_two();
+
+            Assert.Equal(
+                @"SELECT [c].[City], [c].[Phone]
+FROM [Customers] AS [c]",
+                Sql);
+        }
+
+        public override void Select_anonymous_three()
+        {
+            base.Select_anonymous_three();
+
+            Assert.Equal(
+                @"SELECT [c].[City], [c].[Phone], [c].[Country]
+FROM [Customers] AS [c]",
+                Sql);
+        }
+
+        public override void Select_anonymous_bool_constant_true()
+        {
+            base.Select_anonymous_bool_constant_true();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID]
+FROM [Customers] AS [c]",
+                Sql);
+        }
+
+        public override void Select_anonymous_bool_constant_in_expression()
+        {
+            base.Select_anonymous_bool_constant_in_expression();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], (LEN([c].[CustomerID]) + 5)
+FROM [Customers] AS [c]",
+                Sql);
+        }
+
         public override void Select_scalar_primitive_after_take()
         {
             base.Select_scalar_primitive_after_take();
 
             Assert.Equal(
-                @"SELECT TOP(9) [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
-FROM [Employees] AS [e]",
+                @"SELECT [t0].[EmployeeID]
+FROM (
+    SELECT TOP(9) [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
+    FROM [Employees] AS [e]
+) AS [t0]",
                 Sql);
         }
 
@@ -1416,6 +1478,20 @@ FROM [Customers] AS [c]",
                 Sql);
         }
 
+        public override void SelectMany_simple_subquery()
+        {
+            base.SelectMany_simple_subquery();
+
+            Assert.StartsWith(
+                @"SELECT [t0].[EmployeeID], [t0].[City], [t0].[Country], [t0].[FirstName], [t0].[ReportsTo], [t0].[Title], [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM (
+    SELECT TOP(9) [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
+    FROM [Employees] AS [e]
+) AS [t0]
+CROSS JOIN [Customers] AS [c]",
+                Sql);
+        }
+
         public override void SelectMany_simple1()
         {
             base.SelectMany_simple1();
@@ -1481,7 +1557,7 @@ CROSS JOIN [Employees] AS [e3]",
             Assert.Equal(
                 @"SELECT COUNT(*)
 FROM [Customers] AS [c]
-CROSS JOIN [Orders] AS [o]", 
+CROSS JOIN [Orders] AS [o]",
                 Sql);
         }
 
@@ -1492,7 +1568,7 @@ CROSS JOIN [Orders] AS [o]",
             Assert.Equal(
                 @"SELECT CAST(COUNT(*) AS bigint)
 FROM [Customers] AS [c]
-CROSS JOIN [Orders] AS [o]", 
+CROSS JOIN [Orders] AS [o]",
                 Sql);
         }
 
@@ -1509,7 +1585,7 @@ CROSS JOIN [Orders] AS [o]",
             CROSS JOIN [Orders] AS [o])
         )
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-END", 
+END",
                 Sql);
         }
 
@@ -1744,7 +1820,7 @@ FROM [Customers] AS [c]",
 
             Assert.Equal(
                 @"SELECT DISTINCT [c].[City]
-FROM [Customers] AS [c]", // Ordering not preserved by distinct
+FROM [Customers] AS [c]", // Ordering not preserved by distinct when ordering columns not projected.
                 Sql);
         }
 
@@ -1753,9 +1829,37 @@ FROM [Customers] AS [c]", // Ordering not preserved by distinct
             base.Distinct_OrderBy();
 
             Assert.Equal(
-                @"SELECT DISTINCT [c].[City]
-FROM [Customers] AS [c]",
-                //ORDER BY c.[City]", // TODO: Sub-query flattening
+                @"SELECT [t0].[Country]
+FROM (
+    SELECT DISTINCT [c].[Country]
+    FROM [Customers] AS [c]
+) AS [t0]
+ORDER BY [t0].[Country]",
+                Sql);
+        }
+
+        public override void Distinct_OrderBy2()
+        {
+            base.Distinct_OrderBy2();
+
+            Assert.Equal(
+                @"SELECT [t0].[CustomerID], [t0].[Address], [t0].[City], [t0].[CompanyName], [t0].[ContactName], [t0].[ContactTitle], [t0].[Country], [t0].[Fax], [t0].[Phone], [t0].[PostalCode], [t0].[Region]
+FROM (
+    SELECT DISTINCT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+    FROM [Customers] AS [c]
+) AS [t0]
+ORDER BY [t0].[CustomerID]",
+                Sql);
+        }
+
+        public override void Take_Distinct()
+        {
+            base.Take_Distinct();
+
+            Assert.Equal(
+                @"SELECT DISTINCT TOP(5) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Orders] AS [o]
+ORDER BY [o].[OrderID]",
                 Sql);
         }
 
@@ -1840,8 +1944,12 @@ WHERE 1 = 0",
             base.Where_primitive();
 
             Assert.Equal(
-                @"SELECT TOP(9) [e].[EmployeeID]
-FROM [Employees] AS [e]",
+                @"SELECT [t0].[EmployeeID]
+FROM (
+    SELECT TOP(9) [e].[EmployeeID]
+    FROM [Employees] AS [e]
+) AS [t0]
+WHERE [t0].[EmployeeID] = 5",
                 Sql);
         }
 
@@ -2141,12 +2249,12 @@ WHERE [c].[CustomerID] = 'ALFKI'",
 
         public override void Projection_when_arithmetic_expressions()
         {
-            //            base.Projection_when_arithmetic_expressions();
-            //
-            //            Assert.Equal(
-            //                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate], [o].[OrderID], [o].[OrderID] * 2, [o].[OrderID] + 23, 100000 - [o].[OrderID], [o].[OrderID] / ([o].[OrderID] / 2)
+            //base.Projection_when_arithmetic_expressions();
+
+            //Assert.Equal(
+            //    @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate], [o].[OrderID], [o].[OrderID] * 2, [o].[OrderID] + 23, 100000 - [o].[OrderID], [o].[OrderID] / ([o].[OrderID] / 2)
             //FROM [Orders] AS [o]",
-            //                Sql);
+            //    Sql);
         }
 
         public override void Projection_when_arithmetic_mixed()
@@ -2203,8 +2311,6 @@ WHERE [c].[ContactName] LIKE [c].[ContactName] + '%'",
         }
 
         //TODO ErikEJ Investigate
-        //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
-        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format
         public override void String_StartsWith_MethodCall()
         {
 //            base.String_StartsWith_MethodCall();
@@ -2252,9 +2358,7 @@ WHERE [c].[ContactName] LIKE '%' + [c].[ContactName]",
                 Sql);
         }
 
-        //TODO ErikEJ Investigate
-        //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
-        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format
+        //TODO ErikEJ Investigate - issue logged 
         public override void String_EndsWith_MethodCall()
         {
 //            base.String_EndsWith_MethodCall();
@@ -2305,8 +2409,6 @@ WHERE [c].[ContactName] LIKE ('%' + [c].[ContactName] + '%')",
         }
 
         //TODO ErikEJ Investigate
-        //at System.Data.SqlServerCe.SqlCeCommand.FillParameterDataBindings(Boolean verifyValue)
-        //System.FormatException : @__LocalMethod1_0 : M - Input string was not in a correct format
         public override void String_Contains_MethodCall()
         {
 //            AssertQuery<Customer>(
@@ -2826,12 +2928,6 @@ OFFSET 5 ROWS",
 FROM [Customers] AS [c]
 ORDER BY COALESCE([c].[Region], 'ZZ')",
                 Sql);
-        }
-
-        public QuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
-            : base(fixture)
-        {
-            //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
 
         private static string Sql => TestSqlLoggerFactory.Sql;

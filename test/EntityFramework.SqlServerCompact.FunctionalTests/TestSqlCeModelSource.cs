@@ -4,6 +4,7 @@ using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Builders;
+using Microsoft.Data.Entity.Metadata.ModelConventions;
 using Microsoft.Framework.DependencyInjection;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
@@ -12,18 +13,23 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
     {
         private readonly TestModelSource _testModelSource;
 
-        public TestSqlCeModelSource(Action<ModelBuilder> onModelCreating, IDbSetFinder setFinder)
-            : base(setFinder)
+        public TestSqlCeModelSource(
+            Action<ModelBuilder> onModelCreating,
+            IDbSetFinder setFinder,
+            ICoreConventionSetBuilder coreConventionSetBuilder)
+            : base(setFinder, coreConventionSetBuilder)
         {
-            _testModelSource = new TestModelSource(onModelCreating, setFinder);
+            _testModelSource = new TestModelSource(onModelCreating, setFinder, coreConventionSetBuilder);
         }
 
-        public static Func<IServiceProvider, SqlCeModelSource> GetFactory(Action<ModelBuilder> onModelCreating) =>
-            p => new TestSqlCeModelSource(
-                onModelCreating,
-                p.GetRequiredService<IDbSetFinder>());
+        public override IModel GetModel(DbContext context, IConventionSetBuilder conventionSetBuilder, IModelValidator validator)
+            => _testModelSource.GetModel(context, conventionSetBuilder, validator);
 
-        public override IModel GetModel(DbContext context, IModelBuilderFactory modelBuilderFactory, IModelValidator validator) =>
-            _testModelSource.GetModel(context, modelBuilderFactory, validator);
+        public static Func<IServiceProvider, SqlCeModelSource> GetFactory(Action<ModelBuilder> onModelCreating)
+            => p => new TestSqlCeModelSource(
+                onModelCreating,
+                p.GetRequiredService<IDbSetFinder>(),
+                p.GetRequiredService<ICoreConventionSetBuilder>());
     }
+
 }

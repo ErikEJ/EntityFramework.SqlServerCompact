@@ -12,70 +12,69 @@ using Microsoft.Framework.DependencyInjection;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    //TODO ErikEJ Wait for base test fix
-    //public class MonsterFixupSqlCeTest : MonsterFixupTestBase
-    //{
-    //    private static readonly HashSet<string> _createdDatabases = new HashSet<string>();
+    public class MonsterFixupSqlCeTest : MonsterFixupTestBase
+    {
+        private static readonly HashSet<string> _createdDatabases = new HashSet<string>();
 
-    //    private static readonly ConcurrentDictionary<string, AsyncLock> _creationLocks
-    //        = new ConcurrentDictionary<string, AsyncLock>();
+        private static readonly ConcurrentDictionary<string, AsyncLock> _creationLocks
+            = new ConcurrentDictionary<string, AsyncLock>();
 
-    //    protected override IServiceProvider CreateServiceProvider(bool throwingStateManager = false)
-    //    {
-    //        var serviceCollection = new ServiceCollection()
-    //            .AddEntityFramework()
-    //            .AddSqlCe()
-    //            .ServiceCollection();
+        protected override IServiceProvider CreateServiceProvider(bool throwingStateManager = false)
+        {
+            var serviceCollection = new ServiceCollection()
+                .AddEntityFramework()
+                .AddSqlCe()
+                .ServiceCollection();
 
-    //        if (throwingStateManager)
-    //        {
-    //            serviceCollection.AddScoped<IStateManager, ThrowingMonsterStateManager>();
-    //        }
+            if (throwingStateManager)
+            {
+                serviceCollection.AddScoped<IStateManager, ThrowingMonsterStateManager>();
+            }
 
-    //        return serviceCollection.BuildServiceProvider();
-    //    }
+            return serviceCollection.BuildServiceProvider();
+        }
 
-    //    protected override DbContextOptions CreateOptions(string databaseName)
-    //    {
-    //        var optionsBuilder = new DbContextOptionsBuilder();
-    //        optionsBuilder.UseSqlCe(CreateConnectionString(databaseName));
+        protected override DbContextOptions CreateOptions(string databaseName)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder();
+            optionsBuilder.UseSqlCe(CreateConnectionString(databaseName));
 
-    //        return optionsBuilder.Options;
-    //    }
+            return optionsBuilder.Options;
+        }
 
-    //    private static string CreateConnectionString(string name)
-    //    {
-    //        return new SqlCeConnectionStringBuilder
-    //        {
-    //            DataSource = name + ".sdf"
-    //        }.ConnectionString;
-    //    }
+        private static string CreateConnectionString(string name)
+        {
+            return new SqlCeConnectionStringBuilder
+            {
+                DataSource = name + ".sdf"
+            }.ConnectionString;
+        }
 
-    //    protected override async Task CreateAndSeedDatabase(string databaseName, Func<MonsterContext> createContext)
-    //    {
-    //        var creationLock = _creationLocks.GetOrAdd(databaseName, n => new AsyncLock());
-    //        using (await creationLock.LockAsync())
-    //        {
-    //            if (!_createdDatabases.Contains(databaseName))
-    //            {
-    //                using (var context = createContext())
-    //                {
-    //                    context.Database.EnsureDeleted();
-    //                    context.Database.EnsureCreated();
-    //                    context.SeedUsingFKs();
-    //                }
+        protected override async Task CreateAndSeedDatabase(string databaseName, Func<MonsterContext> createContext)
+        {
+            var creationLock = _creationLocks.GetOrAdd(databaseName, n => new AsyncLock());
+            using (await creationLock.LockAsync())
+            {
+                if (!_createdDatabases.Contains(databaseName))
+                {
+                    using (var context = createContext())
+                    {
+                        context.Database.EnsureDeleted();
+                        context.Database.EnsureCreated();
+                        context.SeedUsingFKs();
+                    }
 
-    //                _createdDatabases.Add(databaseName);
-    //            }
-    //        }
-    //    }
+                    _createdDatabases.Add(databaseName);
+                }
+            }
+        }
 
-    //    public override void OnModelCreating<TMessage, TProductPhoto, TProductReview>(ModelBuilder builder)
-    //    {
-    //        base.OnModelCreating<TMessage, TProductPhoto, TProductReview>(builder);
-    //        builder.Entity<TMessage>().Key(e => e.MessageId);
-    //        builder.Entity<TProductPhoto>().Key(e => e.PhotoId);
-    //        builder.Entity<TProductReview>().Key(e => e.ReviewId);
-    //    }
-    //}
+        public override void OnModelCreating<TMessage, TProductPhoto, TProductReview>(ModelBuilder builder)
+        {
+            base.OnModelCreating<TMessage, TProductPhoto, TProductReview>(builder);
+            builder.Entity<TMessage>().Key(e => e.MessageId);
+            builder.Entity<TProductPhoto>().Key(e => e.PhotoId);
+            builder.Entity<TProductReview>().Key(e => e.ReviewId);
+        }
+    }
 }

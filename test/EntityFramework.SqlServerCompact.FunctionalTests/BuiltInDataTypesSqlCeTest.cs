@@ -15,7 +15,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
         }
 
-        //TODO ErikEJ Need fix in base class for these
+        //TODO ErikEJ Need fix in base class for these (maybe) or bug?
         [Fact]
         public override void Can_insert_and_read_with_max_length_set()
         {
@@ -28,6 +28,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
            //base.Can_perform_query_with_max_length();
         }
 
+        //TODO ErikEJ Logged EF7 issue for these two:
         [Fact]
         public override void Can_query_using_any_data_type()
         {

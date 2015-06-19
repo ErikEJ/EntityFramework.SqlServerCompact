@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class AsyncQuerySqlCeTest : AsyncQueryTestBase<NorthwindQuerySqlCeFixture>
+    public class AsyncQuerySqlServerTest : AsyncQueryTestBase<NorthwindQuerySqlCeFixture>
     {
         // TODO: Complex projection translation.
 
@@ -55,7 +55,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 await Single_Predicate_Cancellation(TestSqlLoggerFactory.CancelQuery()));
         }
 
-        public AsyncQuerySqlCeTest(NorthwindQuerySqlCeFixture fixture)
+        public AsyncQuerySqlServerTest(NorthwindQuerySqlCeFixture fixture)
             : base(fixture)
         {
         }

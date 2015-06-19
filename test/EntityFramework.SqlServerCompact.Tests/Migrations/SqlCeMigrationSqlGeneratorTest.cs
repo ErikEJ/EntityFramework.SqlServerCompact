@@ -13,27 +13,27 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 
         public override void AlterSequenceOperation_without_minValue_and_maxValue()
         {
-            Assert.Throws<NotImplementedException>(() => base.AlterSequenceOperation_without_minValue_and_maxValue());
+            Assert.Throws<NotSupportedException>(() => base.AlterSequenceOperation_without_minValue_and_maxValue());
         }
 
         public override void AlterSequenceOperation_with_minValue_and_maxValue()
         {
-            Assert.Throws<NotImplementedException>(() => base.AlterSequenceOperation_with_minValue_and_maxValue());
+            Assert.Throws<NotSupportedException>(() => base.AlterSequenceOperation_with_minValue_and_maxValue());
         }
 
         public override void CreateSequenceOperation_without_minValue_and_maxValue()
         {
-            Assert.Throws<NotImplementedException>(() => base.CreateSequenceOperation_without_minValue_and_maxValue());
+            Assert.Throws<NotSupportedException>(() => base.CreateSequenceOperation_without_minValue_and_maxValue());
         }
 
         public override void CreateSequenceOperation_with_minValue_and_maxValue()
         {
-            Assert.Throws<NotImplementedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue());
+            Assert.Throws<NotSupportedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue());
         }
 
         public override void DropSequenceOperation()
         {
-            Assert.Throws<NotImplementedException>(() => base.DropSequenceOperation());
+            Assert.Throws<NotSupportedException>(() => base.DropSequenceOperation());
         }
 
         public override void DropIndexOperation()

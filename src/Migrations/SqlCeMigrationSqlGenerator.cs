@@ -33,34 +33,44 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
                 .Append(_sql.DelimitIdentifier(operation.Name));
         }
 
-        public override void Generate([NotNull]CreateSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        public override void Generate(CreateSchemaOperation operation, IModel model, SqlBatchBuilder builder)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
 
-        public override void Generate([NotNull]AlterSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        public override void Generate(DropSchemaOperation operation, IModel model, SqlBatchBuilder builder)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
 
-        public override void Generate([NotNull]DropSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        public override void Generate(CreateSequenceOperation operation, IModel model, SqlBatchBuilder builder)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        public override void Generate([NotNull]RenameSequenceOperation operation, [CanBeNull]IModel model, [NotNull]SqlBatchBuilder builder)
+        public override void Generate(AlterSequenceOperation operation, IModel model, SqlBatchBuilder builder)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("SQL Server Compact does not support sequences.");
+        }
+
+        public override void Generate(DropSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        {
+            throw new NotSupportedException("SQL Server Compact does not support sequences.");
+        }
+
+        public override void Generate(RenameSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        {
+            throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
         public override void Generate(RenameColumnOperation operation, IModel model, SqlBatchBuilder builder)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("SQL Server Compact does not support column renames.");
         }
 
         public override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("SQL Server Compact does not support index renames.");
         }
 
         public override void Generate(RenameTableOperation operation, IModel model, SqlBatchBuilder builder)

@@ -16,6 +16,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
         }
 
+        //TODO ErikEJ Investigate how to enable equals with ntext
         [Fact]
         public override void Can_perform_query_with_max_length()
         {

@@ -9,22 +9,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe
 {
     public class SqlCeTypeMapper : RelationalTypeMapper
     {
-        //private readonly RelationalTypeMapping _varbinarymax = new RelationalTypeMapping("image", DbType.Binary);
-        //private readonly RelationalSizedTypeMapping _nvarchar256 = new RelationalSizedTypeMapping("nvarchar(256)", 256);
-        //private readonly RelationalTypeMapping _varbinary512 = new RelationalSizedTypeMapping("varbinary(512)", DbType.Binary, 512);
-        //private readonly RelationalTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", DbType.Binary, 8);
-        //private readonly RelationalTypeMapping _int = new RelationalTypeMapping("int", DbType.Int32);
-        //private readonly RelationalTypeMapping _bigint = new RelationalTypeMapping("bigint", DbType.Int64);
-        //private readonly RelationalTypeMapping _bit = new RelationalTypeMapping("bit");
-        //private readonly RelationalTypeMapping _smallint = new RelationalTypeMapping("smallint", DbType.Int16);
-        //private readonly RelationalTypeMapping _tinyint = new RelationalTypeMapping("tinyint", DbType.Byte);
-        //private readonly RelationalSizedTypeMapping _nchar = new RelationalSizedTypeMapping("nchar", DbType.StringFixedLength, 1);
-        //private readonly RelationalSizedTypeMapping _nvarchar = new RelationalSizedTypeMapping("nvarchar(4000)", 4000);
-        //private readonly RelationalTypeMapping _nvarcharmax = new RelationalTypeMapping("ntext");
-        //private readonly RelationalSizedTypeMapping _varbinary = new RelationalSizedTypeMapping("binary", DbType.Binary, 1);
-
-        private readonly SqlCeMaxLengthMapping _nvarcharmax = new SqlCeMaxLengthMapping("ntext");
-        private readonly SqlCeMaxLengthMapping _nvarchar256 = new SqlCeMaxLengthMapping("nvarchar(256)");
+        private readonly SqlCeMaxLengthMapping _nvarcharmax = new SqlCeMaxLengthMapping("ntext", DbType.String);
+        private readonly SqlCeMaxLengthMapping _nvarchar256 = new SqlCeMaxLengthMapping("nvarchar(256)", DbType.String);
         private readonly SqlCeMaxLengthMapping _varbinarymax = new SqlCeMaxLengthMapping("image", DbType.Binary);
         private readonly SqlCeMaxLengthMapping _varbinary512 = new SqlCeMaxLengthMapping("varbinary(512)", DbType.Binary);
         private readonly RelationalSizedTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", DbType.Binary, 8);
@@ -34,12 +20,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe
         private readonly RelationalTypeMapping _smallint = new RelationalTypeMapping("smallint", DbType.Int16);
         private readonly RelationalTypeMapping _tinyint = new RelationalTypeMapping("tinyint", DbType.Byte);
         private readonly SqlCeMaxLengthMapping _nchar = new SqlCeMaxLengthMapping("nchar", DbType.StringFixedLength);
-        private readonly SqlCeMaxLengthMapping _nvarchar = new SqlCeMaxLengthMapping("nvarchar(4000)");
+        private readonly SqlCeMaxLengthMapping _nvarchar = new SqlCeMaxLengthMapping("nvarchar(4000)", DbType.String);
         private readonly SqlCeMaxLengthMapping _varbinary = new SqlCeMaxLengthMapping("varbinary(8000)", DbType.Binary);
         private readonly RelationalTypeMapping _double = new RelationalTypeMapping("float");
         private readonly RelationalTypeMapping _real = new RelationalTypeMapping("real");
-        private readonly RelationalTypeMapping _datetime = new RelationalTypeMapping("datetime");
-        private readonly RelationalTypeMapping _uniqueidentifier = new RelationalTypeMapping("uniqueidentifier");
+        private readonly RelationalTypeMapping _datetime = new RelationalTypeMapping("datetime", DbType.DateTime);
+        private readonly RelationalTypeMapping _uniqueidentifier = new RelationalTypeMapping("uniqueidentifier", DbType.Guid);
         private readonly RelationalTypeMapping _decimal = new RelationalTypeMapping("decimal(18, 2)");
 
         private readonly Dictionary<string, RelationalTypeMapping> _simpleNameMappings;

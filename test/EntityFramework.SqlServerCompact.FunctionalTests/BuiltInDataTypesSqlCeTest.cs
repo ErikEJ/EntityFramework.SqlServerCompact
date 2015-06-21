@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlServerCe;
 using System.Linq;
 using System.Text;
 using Microsoft.Data.Entity;
@@ -15,17 +16,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
         }
 
-        //TODO ErikEJ Need fix in base class for these (maybe) or bug?
-        [Fact]
-        public override void Can_insert_and_read_with_max_length_set()
-        {
-           //base.Can_insert_and_read_with_max_length_set();
-        }
-
         [Fact]
         public override void Can_perform_query_with_max_length()
         {
-           //base.Can_perform_query_with_max_length();
+            Assert.Equal(
+                "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",
+                Assert.Throws<SqlCeException>(() => base.Can_perform_query_with_max_length()).Message);
         }
 
         //TODO ErikEJ Logged EF7 issue for these two:

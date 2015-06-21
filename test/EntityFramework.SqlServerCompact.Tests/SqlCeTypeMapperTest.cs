@@ -80,9 +80,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         public void Does_simple_SQL_Server_mappings_to_DbTypes()
         {
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(int)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(string)).StoreType);
+            Assert.Equal(DbType.String, GetTypeMapping(typeof(string)).StoreType);
             Assert.Equal(DbType.Binary, GetTypeMapping(typeof(byte[])).StoreType);
-            Assert.Null(GetTypeMapping(typeof(Guid)).StoreType);
+            Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid)).StoreType);
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char)).StoreType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte)).StoreType);
             Assert.Null(GetTypeMapping(typeof(double)).StoreType);
@@ -94,16 +94,16 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long)).StoreType);
             Assert.Null(GetTypeMapping(typeof(float)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(DateTime)).StoreType);
+            Assert.Equal(DbType.DateTime, GetTypeMapping(typeof(DateTime)).StoreType);
         }
 
         [Fact]
         public void Does_simple_SQL_Server_mappings_for_nullable_CLR_types_to_DbTypes()
         {
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(int?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(string)).StoreType);
+            Assert.Equal(DbType.String, GetTypeMapping(typeof(string)).StoreType);
             Assert.Equal(DbType.Binary, GetTypeMapping(typeof(byte[])).StoreType);
-            Assert.Null(GetTypeMapping(typeof(Guid?)).StoreType);
+            Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid?)).StoreType);
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char?)).StoreType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte?)).StoreType);
             Assert.Null(GetTypeMapping(typeof(double?)).StoreType);
@@ -115,7 +115,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short?)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long?)).StoreType);
             Assert.Null(GetTypeMapping(typeof(float?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(DateTime?)).StoreType);
+            Assert.Equal(DbType.DateTime, GetTypeMapping(typeof(DateTime?)).StoreType);
         }
 
         [Fact]
@@ -162,7 +162,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var typeMapping = GetTypeMapping(typeof(string));
 
-            Assert.Null(typeMapping.StoreType);
+            Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(4000)", typeMapping.DefaultTypeName);
             Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
@@ -172,7 +172,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var typeMapping = GetTypeMapping(typeof(string), isNullable: false);
 
-            Assert.Null(typeMapping.StoreType);
+            Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(4000)", typeMapping.DefaultTypeName);
             Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
@@ -186,7 +186,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             var typeMapping = new SqlCeTypeMapper().MapPropertyType(property);
 
-            Assert.Null(typeMapping.StoreType);
+            Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
             Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
@@ -201,7 +201,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             var typeMapping = new SqlCeTypeMapper().MapPropertyType(fkProperty);
 
-            Assert.Null(typeMapping.StoreType);
+            Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
             Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
@@ -217,7 +217,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             var typeMapping = new SqlCeTypeMapper().MapPropertyType(fkProperty);
 
-            Assert.Null(typeMapping.StoreType);
+            Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
             Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }

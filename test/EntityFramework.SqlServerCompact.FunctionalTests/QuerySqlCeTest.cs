@@ -2310,18 +2310,17 @@ WHERE [c].[ContactName] LIKE [c].[ContactName] + '%'",
                 Sql);
         }
 
-        //TODO ErikEJ Investigate
         public override void String_StartsWith_MethodCall()
         {
-//            base.String_StartsWith_MethodCall();
+            base.String_StartsWith_MethodCall();
 
-//            Assert.Equal(
-//                @"@__LocalMethod1_0: M
+            Assert.Equal(
+                @"@__LocalMethod1_0: M
 
-//SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE [c].[ContactName] LIKE @__LocalMethod1_0 + '%'",
-//                Sql);
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE [c].[ContactName] LIKE @__LocalMethod1_0 + '%'",
+                Sql);
         }
 
 
@@ -2358,18 +2357,17 @@ WHERE [c].[ContactName] LIKE '%' + [c].[ContactName]",
                 Sql);
         }
 
-        //TODO ErikEJ Investigate - issue logged 
         public override void String_EndsWith_MethodCall()
         {
-//            base.String_EndsWith_MethodCall();
+            base.String_EndsWith_MethodCall();
 
-//            Assert.Equal(
-//                @"@__LocalMethod2_0: m
+            Assert.Equal(
+                @"@__LocalMethod2_0: m
 
-//SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE [c].[ContactName] LIKE '%' + @__LocalMethod2_0",
-//                Sql);
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE [c].[ContactName] LIKE '%' + @__LocalMethod2_0",
+                Sql);
         }
 
         public override void String_Contains_Literal()
@@ -2408,21 +2406,20 @@ WHERE [c].[ContactName] LIKE ('%' + [c].[ContactName] + '%')",
                 Sql);
         }
 
-        //TODO ErikEJ Investigate
         public override void String_Contains_MethodCall()
         {
-//            AssertQuery<Customer>(
-//                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
-//                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1()) || c.ContactName.Contains(LocalMethod2())), // case-sensitive
-//                entryCount: 34);
+            AssertQuery<Customer>(
+                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
+                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1()) || c.ContactName.Contains(LocalMethod2())), // case-sensitive
+                entryCount: 34);
 
-//            Assert.Equal(
-//                @"@__LocalMethod1_0: M
+            Assert.Equal(
+                @"@__LocalMethod1_0: M
 
-//SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE [c].[ContactName] LIKE ('%' + @__LocalMethod1_0 + '%')",
-//                Sql);
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE [c].[ContactName] LIKE ('%' + @__LocalMethod1_0 + '%')",
+                Sql);
         }
 
         public override void Where_math_abs1()

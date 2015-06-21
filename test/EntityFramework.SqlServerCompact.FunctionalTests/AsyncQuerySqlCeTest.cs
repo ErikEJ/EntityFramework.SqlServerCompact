@@ -29,17 +29,21 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             //base.Projection_when_arithmetic_mixed_subqueries();
         }
 
-        //TODO ErikEJ Investigate (see sync queries)
-        public override Task String_EndsWith_MethodCall() => Task.FromResult(true);
-        public override Task String_StartsWith_MethodCall() => Task.FromResult(true);
-        public override Task String_Contains_MethodCall() => Task.FromResult(true);
-
         public override async Task String_Contains_Literal()
         {
             await AssertQuery<Customer>(
                 cs => cs.Where(c => c.ContactName.Contains("M")), // case-insensitive
                 cs => cs.Where(c => c.ContactName.Contains("M")
                                      || c.ContactName.Contains("m")), // case-sensitive
+                entryCount: 34);
+        }
+
+        public override async Task String_Contains_MethodCall()
+        {
+            await AssertQuery<Customer>(
+                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
+                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())
+                                    || c.ContactName.Contains(LocalMethod2())), // case-sensitive
                 entryCount: 34);
         }
 

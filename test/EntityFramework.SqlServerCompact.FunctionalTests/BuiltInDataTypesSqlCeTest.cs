@@ -20,9 +20,46 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         [Fact]
         public override void Can_perform_query_with_max_length()
         {
-            Assert.Equal(
-                "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",
-                Assert.Throws<SqlCeException>(() => base.Can_perform_query_with_max_length()).Message);
+            //Copy from base test!
+            var shortString = "Sky";
+            var shortBinary = new byte[] { 8, 8, 7, 8, 7 };
+            var longString = new string('X', 9000);
+            var longBinary = new byte[9000];
+            for (var i = 0; i < longBinary.Length; i++)
+            {
+                longBinary[i] = (byte)(i);
+            }
+
+            using (var context = CreateContext())
+            {
+                context.Set<MaxLengthDataTypes>().Add(
+                    new MaxLengthDataTypes
+                    {
+                        Id = 799,
+                        String3 = shortString,
+                        ByteArray5 = shortBinary,
+                        String9000 = longString,
+                        ByteArray9000 = longBinary
+                    });
+
+                Assert.Equal(1, context.SaveChanges());
+            }
+
+            using (var context = CreateContext())
+            {
+                Assert.NotNull(context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.String3 == shortString));
+                Assert.NotNull(context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.ByteArray5 == shortBinary));
+
+                //Assert.NotNull(context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.String9000.Substring(1,4000).StartsWith(longString)));
+
+                Assert.Equal(
+                    "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",
+                    Assert.Throws<SqlCeException>(() => context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.ByteArray9000 == longBinary)).Message);
+
+                Assert.Equal(
+                    "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",
+                    Assert.Throws<SqlCeException>(() => context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.String9000 == longString)).Message);
+            }
         }
 
         //TODO ErikEJ Logged EF7 issue for these two:

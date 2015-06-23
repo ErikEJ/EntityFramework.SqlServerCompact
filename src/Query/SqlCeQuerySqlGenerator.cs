@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using Microsoft.Data.Entity.Relational.Query.Expressions;
 using Microsoft.Data.Entity.Relational.Query.Sql;
 using Microsoft.Data.Entity.Utilities;
@@ -33,6 +34,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
         protected override string DelimitIdentifier(string identifier)
             => "[" + identifier.Replace("]", "]]") + "]";
 
+        //TODO ErikEJ How to fail on this with 3.5?
         protected override void GenerateLimitOffset(SelectExpression selectExpression)
         {
             if (selectExpression.Offset != null

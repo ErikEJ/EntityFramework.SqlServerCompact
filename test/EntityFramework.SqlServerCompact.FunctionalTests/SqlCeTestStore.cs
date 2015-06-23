@@ -142,11 +142,17 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             base.Dispose();
         }
 
-        public static string CreateConnectionString(string name) =>
-            new SqlCeConnectionStringBuilder
+        public static string CreateConnectionString(string name)
+        {
+#if SQLCE35
+            return $"Data Source={name}.sdf";
+#else
+            return new SqlCeConnectionStringBuilder
             {
                 DataSource = name + ".sdf"
             }
             .ToString();
+#endif
+        }
     }
 }

@@ -38,8 +38,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
 
         private static string PathFromConnectionString(string connectionString)
         {
+#if SQLCE35
+            var conn = new SqlCeConnection(GetFullConnectionString(connectionString));
+            return conn.Database;
+#else
             var sb = new SqlCeConnectionStringBuilder(GetFullConnectionString(connectionString));
             return sb.DataSource;
+#endif
         }
 
         private static string GetFullConnectionString(string connectionString)

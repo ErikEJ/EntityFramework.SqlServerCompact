@@ -1,25 +1,24 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>EntityFramework.SqlCe</id>
+    <id>EntityFramework.SqlCe.Legacy</id>
     <version>$version$</version>
-    <title>EntityFramework.SqlCe</title>
+    <title>EntityFramework.SqlCe.Legacy</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>
     <projectUrl>https://github.com/ErikEJ/EntityFramework.SqlServerCompact</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</description>
-    <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</summary>
+    <description>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7. Requires the SQL Server Compact 3.5 SP2 runtime to be installed</description>
+    <summary>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7</summary>
     <releaseNotes>early alpha bits</releaseNotes>
-    <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact</tags>
+    <tags>EntityFramework EF sqlce sqlservercompact entity framework provider sql server compact</tags>
     <dependencies>
         <group targetFramework=".NETFramework4.5">
             <dependency id="EntityFramework.Relational" version="[7.0.0-beta6-13538]" />
-            <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFramework.SqlServerCompact.dll" target="lib\net45\" />
+    <file src="bin\Release\EntityFramework.SqlServerCompact.Legacy.dll" target="lib\net45\" />
   </files>
 </package>

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using Microsoft.Data.Entity.Relational.Query.Expressions;
 using Microsoft.Data.Entity.Relational.Query.Sql;
 using Microsoft.Data.Entity.Utilities;
@@ -35,6 +36,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
 
         protected override void GenerateLimitOffset(SelectExpression selectExpression)
         {
+#if SQLCE35
+            //TODO ErikEJ Add test for this!
+            throw new NotSupportedException("Skip and Take not supported by SQL Server Compact 3.5");
+#else
             if (selectExpression.Offset != null
                 && !selectExpression.OrderBy.Any())
             {
@@ -42,6 +47,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
             }
 
             base.GenerateLimitOffset(selectExpression);
+#endif
         }
     }
 }

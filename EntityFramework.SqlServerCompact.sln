@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23012.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact", "src\EntityFramework.SqlServerCompact.csproj", "{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.Legacy", "src\EntityFramework.SqlServerCompact.Legacy.csproj", "{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.Tests", "test\EntityFramework.SqlServerCompact.Tests\EntityFramework.SqlServerCompact.Tests.csproj", "{C38B58D7-F346-40A2-9849-D12CB9EC5C69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.FunctionalTests", "test\EntityFramework.SqlServerCompact.FunctionalTests\EntityFramework.SqlServerCompact.FunctionalTests.csproj", "{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.Legacy.FunctionalTests", "test\EntityFramework.SqlServerCompact.Legacy.FunctionalTests\EntityFramework.SqlServerCompact.Legacy.FunctionalTests.csproj", "{54867677-196E-4C26-832B-3846A937E649}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}.Release|x86.Build.0 = Release|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Debug|x86.Build.0 = Debug|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Release|x86.ActiveCfg = Release|Any CPU
+		{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}.Release|x86.Build.0 = Release|Any CPU
 		{C38B58D7-F346-40A2-9849-D12CB9EC5C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C38B58D7-F346-40A2-9849-D12CB9EC5C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C38B58D7-F346-40A2-9849-D12CB9EC5C69}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -43,6 +55,14 @@ Global
 		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Release|x86.ActiveCfg = Release|Any CPU
 		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Release|x86.Build.0 = Release|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Debug|x86.Build.0 = Debug|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Release|x86.ActiveCfg = Release|Any CPU
+		{54867677-196E-4C26-832B-3846A937E649}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,5 +70,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C38B58D7-F346-40A2-9849-D12CB9EC5C69} = {237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}
 		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24} = {237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}
+		{54867677-196E-4C26-832B-3846A937E649} = {237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}
 	EndGlobalSection
 EndGlobal

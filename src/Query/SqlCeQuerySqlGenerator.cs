@@ -34,12 +34,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
         protected override string DelimitIdentifier(string identifier)
             => "[" + identifier.Replace("]", "]]") + "]";
 
+        //TODO ErikEJ How to fail on this with 3.5?
         protected override void GenerateLimitOffset(SelectExpression selectExpression)
         {
-#if SQLCE35
-            //TODO ErikEJ Add test for this!
-            throw new NotSupportedException("Skip and Take not supported by SQL Server Compact 3.5");
-#else
             if (selectExpression.Offset != null
                 && !selectExpression.OrderBy.Any())
             {
@@ -47,7 +44,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Query
             }
 
             base.GenerateLimitOffset(selectExpression);
-#endif
         }
     }
 }

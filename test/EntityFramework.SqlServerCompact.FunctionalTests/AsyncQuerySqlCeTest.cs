@@ -49,7 +49,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         public async Task Skip_when_no_order_by()
         {
-            await Assert.ThrowsAsync<DataStoreException>(async () => await AssertQuery<Customer>(cs => cs.Skip(5).Take(10)));
+            await Assert.ThrowsAsync<DatabaseException>(async () => await AssertQuery<Customer>(cs => cs.Skip(5).Take(10)));
         }
 
         [Fact]

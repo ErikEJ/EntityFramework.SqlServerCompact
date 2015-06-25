@@ -17,13 +17,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
         public const string MigrationHistoryTableName = "__MigrationHistory";
 
         private readonly IRelationalConnection _connection;
-        private readonly IRelationalDataStoreCreator _creator;
+        private readonly IRelationalDatabaseCreator _creator;
         private readonly Type _contextType;
         private readonly ISqlGenerator _sql;
 
         public SqlCeHistoryRepository(
             [NotNull] IRelationalConnection connection,
-            [NotNull] IRelationalDataStoreCreator creator,
+            [NotNull] IRelationalDatabaseCreator creator,
             [NotNull] DbContext context,
             [NotNull] ISqlGenerator sqlGenerator)
         {

@@ -37,7 +37,6 @@ namespace Microsoft.Data.Entity.Relational.Tests
             VerifyScoped<RelationalQueryContextFactory>();
             VerifyScoped<BatchExecutor>();
             VerifyScoped<ModelDiffer>();
-            VerifyScoped<RelationalDatabaseFactory>();
             VerifyScoped<RelationalValueGeneratorSelector>();
             VerifyScoped<CommandBatchPreparer>();
 
@@ -52,7 +51,7 @@ namespace Microsoft.Data.Entity.Relational.Tests
             VerifyScoped<IModificationCommandBatchFactory>();
             VerifyScoped<ICommandBatchPreparer>();
             VerifyScoped<IRelationalValueBufferFactoryFactory>();
-            VerifyScoped<IRelationalDataStoreCreator>();
+            VerifyScoped<IRelationalDatabaseCreator>();
             VerifyScoped<ISqlGenerator>();
             VerifyScoped<IRelationalMetadataExtensionProvider>();
         }

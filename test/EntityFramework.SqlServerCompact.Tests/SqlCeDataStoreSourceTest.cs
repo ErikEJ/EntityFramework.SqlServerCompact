@@ -8,7 +8,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Returns_appropriate_name()
         {
-            Assert.Equal(typeof(SqlCeDataStore).Name, new SqlCeDataStoreSource().Name);
+            Assert.Equal(typeof(SqlCeDatabase).Name, new SqlCeDatabaseProvider().Name);
         }
 
         [Fact]
@@ -17,7 +17,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe("Database=Crunchie");
 
-            Assert.True(new SqlCeDataStoreSource().IsConfigured(optionsBuilder.Options));
+            Assert.True(new SqlCeDatabaseProvider().IsConfigured(optionsBuilder.Options));
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder();
 
-            var dataStoreSource = new SqlCeDataStoreSource();
+            var dataStoreSource = new SqlCeDatabaseProvider();
             dataStoreSource.AutoConfigure(optionsBuilder);
 
             Assert.False(dataStoreSource.IsConfigured(optionsBuilder.Options));
@@ -36,7 +36,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder();
 
-            Assert.False(new SqlCeDataStoreSource().IsConfigured(optionsBuilder.Options));
+            Assert.False(new SqlCeDatabaseProvider().IsConfigured(optionsBuilder.Options));
         }
     }
 }

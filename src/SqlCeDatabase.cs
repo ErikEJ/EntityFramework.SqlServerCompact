@@ -14,9 +14,9 @@ using Microsoft.Data.Entity.Relational.Update;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlCeDataStore : RelationalDataStore
+    public class SqlCeDatabase : RelationalDatabase
     {
-        public SqlCeDataStore(
+        public SqlCeDatabase(
             [NotNull] IModel model,
             [NotNull] IEntityKeyFactorySource entityKeyFactorySource,
             [NotNull] IEntityMaterializerSource entityMaterializerSource,

@@ -78,7 +78,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
         {
             return new SqlCeHistoryRepository(
                 Mock.Of<IRelationalConnection>(),
-                Mock.Of<IRelationalDataStoreCreator>(),
+                Mock.Of<IRelationalDatabaseCreator>(),
                 new Context(),
                 new SqlCeSqlGenerator());
         }

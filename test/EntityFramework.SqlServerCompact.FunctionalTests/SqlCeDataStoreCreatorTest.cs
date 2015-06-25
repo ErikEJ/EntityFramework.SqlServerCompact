@@ -228,7 +228,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 {
                     var contextServices = ((IAccessor<IServiceProvider>)context).Service;
 
-                    var creator = (RelationalDataStoreCreator)contextServices.GetRequiredService<IDataStoreCreator>();
+                    var creator = (RelationalDatabaseCreator)contextServices.GetRequiredService<IDatabaseCreator>();
 
                     if (async)
                     {
@@ -372,9 +372,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .Service;
         }
 
-        private static SqlCeDataStoreCreator GetDataStoreCreator(SqlCeTestStore testStore)
+        private static SqlCeDatabaseCreator GetDataStoreCreator(SqlCeTestStore testStore)
         {
-            return CreateContextServices(testStore).GetService<SqlCeDataStoreCreator>();
+            return CreateContextServices(testStore).GetService<SqlCeDatabaseCreator>();
         }
 
         private class BloggingContext : DbContext

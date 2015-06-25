@@ -37,12 +37,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
 
             // SQL Server Ce scoped
             VerifyScoped<SqlCeModificationCommandBatchFactory>();
-            VerifyScoped<SqlCeDataStoreServices>();
-            VerifyScoped<SqlCeDataStore>();
-            VerifyScoped<SqlCeDataStoreConnection>();
-            VerifyScoped<SqlCeModelDiffer>();
+            VerifyScoped<SqlCeDatabaseProviderServices>();
+            VerifyScoped<SqlCeDatabase>();
+            VerifyScoped<SqlCeDatabaseConnection>();
+            VerifyScoped<SqlCeMigrationAnnotationProvider>();
             VerifyScoped<SqlCeMigrationSqlGenerator>();
-            VerifyScoped<SqlCeDataStoreCreator>();
+            VerifyScoped<SqlCeDatabaseCreator>();
             VerifyScoped<SqlCeHistoryRepository>();
 
             // Migrations

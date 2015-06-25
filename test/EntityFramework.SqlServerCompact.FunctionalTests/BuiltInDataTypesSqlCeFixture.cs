@@ -40,7 +40,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override DbContext CreateContext()
         {
             var context = new DbContext(_serviceProvider, _options);
-            context.Database.AsRelational().Connection.UseTransaction(_testStore.Transaction);
+            context.Database.UseTransaction(_testStore.Transaction);
             return context;
         }
 

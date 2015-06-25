@@ -18,26 +18,26 @@ using Microsoft.Data.Entity.ValueGeneration;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlCeDataStoreServices : RelationalDataStoreServices
+    public class SqlCeDatabaseProviderServices : RelationalDatabaseProviderServices
     {
-        public SqlCeDataStoreServices([NotNull] IServiceProvider services)
+        public SqlCeDatabaseProviderServices([NotNull] IServiceProvider services)
             : base(services)
         {
         }
 
-        public override IDataStoreConnection Connection => GetService<SqlCeDataStoreConnection>();
-        public override IDataStoreCreator Creator => GetService<SqlCeDataStoreCreator>();
+        public override IDatabaseConnection Connection => GetService<SqlCeDatabaseConnection>();
+        public override IDatabaseCreator Creator => GetService<SqlCeDatabaseCreator>();
         public override IHistoryRepository HistoryRepository => GetService<SqlCeHistoryRepository>();
         public override IMigrationSqlGenerator MigrationSqlGenerator => GetService<SqlCeMigrationSqlGenerator>();
-        public override IModelDiffer ModelDiffer => GetService<SqlCeModelDiffer>();
+        public override IMigrationAnnotationProvider MigrationAnnotationProvider => GetService<SqlCeMigrationAnnotationProvider>();
         public override IModelSource ModelSource => GetService<SqlCeModelSource>();
-        public override IRelationalConnection RelationalConnection => GetService<SqlCeDataStoreConnection>();
+        public override IRelationalConnection RelationalConnection => GetService<SqlCeDatabaseConnection>();
         public override ISqlGenerator SqlGenerator => GetService<SqlCeSqlGenerator>();
-        public override IDataStore Store => GetService<SqlCeDataStore>();
+        public override IDatabase Database => GetService<SqlCeDatabase>();
         public override IValueGeneratorCache ValueGeneratorCache => GetService<SqlCeValueGeneratorCache>();
         public override IRelationalTypeMapper TypeMapper => GetService<SqlCeTypeMapper>();
         public override IModificationCommandBatchFactory ModificationCommandBatchFactory => GetService<SqlCeModificationCommandBatchFactory>();
-        public override IRelationalDataStoreCreator RelationalDataStoreCreator => GetService<SqlCeDataStoreCreator>();                
+        public override IRelationalDatabaseCreator RelationalDatabaseCreator => GetService<SqlCeDatabaseCreator>();                
         public override IRelationalMetadataExtensionProvider MetadataExtensionProvider => GetService<SqlCeMetadataExtensionProvider>();
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();

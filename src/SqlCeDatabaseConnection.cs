@@ -7,9 +7,9 @@ using Microsoft.Framework.Logging;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlCeDataStoreConnection : RelationalConnection
+    public class SqlCeDatabaseConnection : RelationalConnection
     { 
-        public SqlCeDataStoreConnection([NotNull] IDbContextOptions options, [NotNull] ILoggerFactory loggerFactory)
+        public SqlCeDatabaseConnection([NotNull] IDbContextOptions options, [NotNull] ILoggerFactory loggerFactory)
             : base(options, loggerFactory)
         {
         }

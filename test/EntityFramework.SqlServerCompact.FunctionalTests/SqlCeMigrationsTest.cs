@@ -7,6 +7,7 @@ using Microsoft.Data.Entity.Relational.Migrations.Builders;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
+using Microsoft.Data.Entity.Relational;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
@@ -20,9 +21,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 
                 using (var context = CreateContext(testDatabase))
                 {
-                    context.Database.AsRelational().ApplyMigrations();
+                    context.Database.ApplyMigrations();
 
-                    Assert.True(context.Database.AsRelational().Exists());
+                    Assert.True(context.GetService<IRelationalDatabaseCreator>().Exists());
                 }
             }
         }

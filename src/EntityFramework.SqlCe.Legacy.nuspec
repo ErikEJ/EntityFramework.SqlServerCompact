@@ -10,11 +10,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7. Requires the SQL Server Compact 3.5 SP2 runtime to be installed</description>
     <summary>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7</summary>
-    <releaseNotes>early alpha bits</releaseNotes>
+    <releaseNotes>for EF7 beta6</releaseNotes>
     <tags>EntityFramework EF sqlce sqlservercompact entity framework provider sql server compact</tags>
     <dependencies>
         <group targetFramework=".NETFramework4.5">
-            <dependency id="EntityFramework.Relational" version="[7.0.0-beta6-13538]" />
+            <dependency id="EntityFramework.Relational" version="[7.0.0-beta6-13586]" />
          </group>
     </dependencies>
   </metadata>

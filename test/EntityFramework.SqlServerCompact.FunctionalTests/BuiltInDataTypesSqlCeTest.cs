@@ -383,7 +383,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             using (var context = CreateContext())
             {
-                var connection = context.Database.AsRelational().Connection.DbConnection;
+                var connection = context.Database.GetDbConnection();
 
                 var command = connection.CreateCommand();
                 command.CommandText = query;

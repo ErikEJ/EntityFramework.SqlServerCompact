@@ -9,14 +9,14 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace ErikEJ.Data.Entity.SqlServerCe
 {
-    public class SqlCeDataStoreCreator : RelationalDataStoreCreator
+    public class SqlCeDatabaseCreator : RelationalDatabaseCreator
     {
         private readonly IRelationalConnection _connection;
         private readonly IModelDiffer _modelDiffer;
         private readonly IMigrationSqlGenerator _migrationSqlGenerator;
         private readonly ISqlStatementExecutor _executor;
 
-        public SqlCeDataStoreCreator(
+        public SqlCeDatabaseCreator(
             [NotNull] IRelationalConnection connection,
             [NotNull] IModelDiffer modelDiffer,
             [NotNull] IMigrationSqlGenerator migrationSqlGenerator,

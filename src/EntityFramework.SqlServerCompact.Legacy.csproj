@@ -107,8 +107,8 @@
     <Compile Include="MetaData\SqlCeAnnotationNames.cs" />
     <Compile Include="MetaData\SqlCeMetaDataExtensionProvider.cs" />
     <Compile Include="Migrations\SqlCeHistoryRepository.cs" />
+    <Compile Include="Migrations\SqlCeMigrationAnnotationProvider.cs" />
     <Compile Include="Migrations\SqlCeMigrationSqlGenerator.cs" />
-    <Compile Include="Migrations\SqlCeModelDiffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\Methods\DateTimeNowTranslator.cs" />
     <Compile Include="Query\Methods\MathAbsTranslator.cs" />
@@ -127,6 +127,11 @@
     <Compile Include="Query\SqlCeQuerySqlGenerator.cs" />
     <Compile Include="SqlCeCompositeMemberTranslator.cs" />
     <Compile Include="SqlCeCompositeMethodCallTranslator.cs" />
+    <Compile Include="SqlCeDatabase.cs" />
+    <Compile Include="SqlCeDatabaseConnection.cs" />
+    <Compile Include="SqlCeDatabaseCreator.cs" />
+    <Compile Include="SqlCeDatabaseProvider.cs" />
+    <Compile Include="SqlCeDatabaseProviderServices.cs" />
     <Compile Include="SqlCeMaxLengthMapping.cs" />
     <Compile Include="SqlCeTypeMapper.cs" />
     <Compile Include="Strings.Designer.cs">
@@ -135,11 +140,6 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\SharedTypeExtensions.cs" />
-    <Compile Include="SqlCeDataStore.cs" />
-    <Compile Include="SqlCeDataStoreConnection.cs" />
-    <Compile Include="SqlCeDataStoreCreator.cs" />
-    <Compile Include="SqlCeDataStoreServices.cs" />
-    <Compile Include="SqlCeDataStoreSource.cs" />
     <Compile Include="SqlCeModelSource.cs" />
     <Compile Include="SqlCeOptionsExtensions.cs" />
     <Compile Include="SqlCeSqlGenerator.cs" />

@@ -52,7 +52,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             optionsBuilder.UseSqlCe(testStore.Connection);
 
             var context = new ComplexNavigationsContext(_serviceProvider, optionsBuilder.Options);
-            context.Database.AsRelational().Connection.UseTransaction(testStore.Transaction);
+            context.Database.UseTransaction(testStore.Transaction);
 
             return context;
         }

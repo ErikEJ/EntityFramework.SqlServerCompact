@@ -26,7 +26,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
         }
 
         public override int Execute(
-            RelationalTransaction transaction,
+            IRelationalTransaction transaction,
             IRelationalTypeMapper typeMapper,
             DbContext context,
             ILogger logger)
@@ -95,7 +95,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Update
         }
 
         public override Task<int> ExecuteAsync(
-            RelationalTransaction transaction, 
+            IRelationalTransaction transaction, 
             IRelationalTypeMapper typeMapper, 
             DbContext context, 
             ILogger logger, 

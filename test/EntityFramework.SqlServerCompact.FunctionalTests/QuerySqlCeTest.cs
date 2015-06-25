@@ -553,6 +553,8 @@ FROM (
 
         public override void Skip()
         {
+#if SQLCE35
+#else
             base.Skip();
 
             Assert.Equal(
@@ -561,10 +563,35 @@ FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]
 OFFSET 5 ROWS",
                 Sql);
+#endif
         }
+
+#if SQLCE35
+        public override void Distinct_Skip()
+        {
+            //base.Distinct_Skip();
+        }
+
+        public override void Distinct_Skip_Take()
+        {
+            //base.Distinct_Skip_Take();
+        }
+
+        public override void Skip_Distinct()
+        {
+            //base.Skip_Distinct();
+        }
+
+        public override void Skip_Take_Distinct()
+        {
+            //base.Skip_Take_Distinct();
+        }
+#endif
 
         public override void Skip_no_orderby()
         {
+#if SQLCE35
+#else
             base.Skip_no_orderby();
 
             Assert.Equal(
@@ -573,10 +600,13 @@ FROM [Customers] AS [c]
 ORDER BY GETDATE()
 OFFSET 5 ROWS",
                 Sql);
+#endif
         }
 
         public override void Skip_Take()
         {
+#if SQLCE35
+#else
             base.Skip_Take();
 
             Assert.Equal(
@@ -585,10 +615,13 @@ FROM [Customers] AS [c]
 ORDER BY [c].[ContactName]
 OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY",
                 Sql);
+#endif
         }
 
         public override void Take_Skip()
         {
+#if SQLCE35
+#else
             base.Take_Skip();
 
             Assert.Equal(
@@ -601,10 +634,13 @@ FROM (
 ORDER BY [t0].[ContactName]
 OFFSET 5 ROWS",
                 Sql);
+#endif
         }
 
         public override void Take_Skip_Distinct()
         {
+#if SQLCE35
+#else
             base.Take_Skip_Distinct();
 
             Assert.Equal(
@@ -620,6 +656,7 @@ FROM (
     OFFSET 5 ROWS
 ) AS [t1]",
                 Sql);
+#endif
         }
 
         public void Skip_when_no_order_by()
@@ -2876,6 +2913,8 @@ WHERE (COALESCE([c].[CompanyName], [c].[ContactName]) = 'The Big Cheese')",
 
         public override void Take_skip_null_coalesce_operator()
         {
+#if SQLCE35
+#else
             base.Take_skip_null_coalesce_operator();
 
             Assert.Equal(@"SELECT DISTINCT [t1].*
@@ -2889,6 +2928,7 @@ FROM (
     ORDER BY COALESCE([t0].[Region], 'ZZ')
     OFFSET 5 ROWS
 ) AS [t1]", Sql);
+#endif
         }
 
         public override void Select_take_null_coalesce_operator()
@@ -2902,6 +2942,8 @@ ORDER BY [Coalesce]", Sql);
 
         public override void Select_take_skip_null_coalesce_operator()
         {
+#if SQLCE35
+#else
             base.Select_take_skip_null_coalesce_operator();
 
             Assert.Equal(
@@ -2914,6 +2956,7 @@ FROM (
 ORDER BY [Coalesce]
 OFFSET 5 ROWS",
             Sql);
+#endif
         }
 
         public override void Selected_column_can_coalesce()

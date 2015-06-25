@@ -141,6 +141,12 @@
     <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\BasicEndToEndScenarioForIdentity.cs">
       <Link>BasicEndToEndScenarioForIdentity.cs</Link>
     </Compile>
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\NorthwindQuerySqlCeFixture.cs">
+      <Link>NorthwindQuerySqlCeFixture.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\QuerySqlCeTest.cs">
+      <Link>QuerySqlCeTest.cs</Link>
+    </Compile>
     <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeDatabaseCreationTest.cs">
       <Link>SqlCeDatabaseCreationTest.cs</Link>
     </Compile>
@@ -150,9 +156,16 @@
     <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeTestStore.cs">
       <Link>SqlCeTestStore.cs</Link>
     </Compile>
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\TestModels\SqlCeNorthwindContext.cs">
+      <Link>TestModels\SqlCeNorthwindContext.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\TestSqlCeModelSource.cs">
+      <Link>TestSqlCeModelSource.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NWforEF7.sqlce" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +176,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NorthwindEF735.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

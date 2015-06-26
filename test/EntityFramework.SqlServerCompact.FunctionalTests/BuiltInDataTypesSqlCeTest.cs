@@ -16,7 +16,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
         }
 
-        //TODO ErikEJ Investigate how to enable equals with ntext
         [Fact]
         public override void Can_perform_query_with_max_length()
         {
@@ -49,8 +48,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             {
                 Assert.NotNull(context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.String3 == shortString));
                 Assert.NotNull(context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.ByteArray5 == shortBinary));
-
-                //Assert.NotNull(context.Set<MaxLengthDataTypes>().SingleOrDefault(e => e.Id == 799 && e.String9000.Substring(1,4000).StartsWith(longString)));
 
                 Assert.Equal(
                     "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",

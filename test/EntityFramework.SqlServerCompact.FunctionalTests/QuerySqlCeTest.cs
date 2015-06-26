@@ -554,6 +554,7 @@ FROM (
         public override void Skip()
         {
 #if SQLCE35
+            //TODO ErikEJ Wait for fix for this to enable client side eval
 #else
             base.Skip();
 
@@ -565,8 +566,8 @@ OFFSET 5 ROWS",
                 Sql);
 #endif
         }
-
 #if SQLCE35
+       //TODO ErikEJ Wait for fix for this to enable client side eval
         public override void Distinct_Skip()
         {
             //base.Distinct_Skip();
@@ -591,6 +592,7 @@ OFFSET 5 ROWS",
         public override void Skip_no_orderby()
         {
 #if SQLCE35
+            //TODO ErikEJ Wait for fix for this to enable client side eval
 #else
             base.Skip_no_orderby();
 
@@ -606,6 +608,7 @@ OFFSET 5 ROWS",
         public override void Skip_Take()
         {
 #if SQLCE35
+            //TODO ErikEJ Wait for fix for this to enable client side eval
 #else
             base.Skip_Take();
 
@@ -621,6 +624,7 @@ OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY",
         public override void Take_Skip()
         {
 #if SQLCE35
+            //TODO ErikEJ Wait for fix for this to enable client side eval
 #else
             base.Take_Skip();
 
@@ -640,6 +644,7 @@ OFFSET 5 ROWS",
         public override void Take_Skip_Distinct()
         {
 #if SQLCE35
+            //TODO ErikEJ Wait for fix for this to enable client side eval
 #else
             base.Take_Skip_Distinct();
 
@@ -2914,6 +2919,7 @@ WHERE (COALESCE([c].[CompanyName], [c].[ContactName]) = 'The Big Cheese')",
         public override void Take_skip_null_coalesce_operator()
         {
 #if SQLCE35
+            //TODO ErikEJ Wait for fix for this to enable client side eval
 #else
             base.Take_skip_null_coalesce_operator();
 
@@ -2943,6 +2949,7 @@ ORDER BY [Coalesce]", Sql);
         public override void Select_take_skip_null_coalesce_operator()
         {
 #if SQLCE35
+            //TODO ErikEJ Wait for fix for this to enable client side eval
 #else
             base.Select_take_skip_null_coalesce_operator();
 

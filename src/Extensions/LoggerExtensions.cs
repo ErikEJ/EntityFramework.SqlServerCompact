@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Data.Common;
+using System.Globalization;
 using System.Text;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Framework.Logging;
-using System.Globalization;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
+namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
 {
     internal static class RelationalLoggerExtensions
     {

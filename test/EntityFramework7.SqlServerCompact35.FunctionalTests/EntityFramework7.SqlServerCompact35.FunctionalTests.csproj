@@ -138,28 +138,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\BasicEndToEndScenarioForIdentity.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\BasicEndToEndScenarioForIdentity.cs">
       <Link>BasicEndToEndScenarioForIdentity.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\NorthwindQuerySqlCeFixture.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\NorthwindQuerySqlCeFixture.cs">
       <Link>NorthwindQuerySqlCeFixture.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\QuerySqlCeTest.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\QuerySqlCeTest.cs">
       <Link>QuerySqlCeTest.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeDatabaseCreationTest.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\SqlCeDatabaseCreationTest.cs">
       <Link>SqlCeDatabaseCreationTest.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeDataStoreCreatorTest.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\SqlCeDataStoreCreatorTest.cs">
       <Link>SqlCeDataStoreCreatorTest.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeTestStore.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\SqlCeTestStore.cs">
       <Link>SqlCeTestStore.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\TestModels\SqlCeNorthwindContext.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\TestModels\SqlCeNorthwindContext.cs">
       <Link>TestModels\SqlCeNorthwindContext.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\TestSqlCeModelSource.cs">
+    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\TestSqlCeModelSource.cs">
       <Link>TestSqlCeModelSource.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,18 +169,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EntityFramework.SqlServerCompact.Legacy.csproj">
-      <Project>{d3a4e371-e8f2-4513-b14c-7c738f14ceb0}</Project>
-      <Name>EntityFramework.SqlServerCompact.Legacy</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NorthwindEF735.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EntityFramework7.SqlServerCompact35.csproj">
+      <Project>{d3a4e371-e8f2-4513-b14c-7c738f14ceb0}</Project>
+      <Name>EntityFramework7.SqlServerCompact35</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

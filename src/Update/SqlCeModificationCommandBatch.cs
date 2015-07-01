@@ -4,18 +4,16 @@ using System.Data.Common;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.ChangeTracking.Internal;
 using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.Relational.Metadata;
 using Microsoft.Data.Entity.Relational.Update;
+using Microsoft.Data.Entity.SqlServerCompact.Extensions;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Update
+namespace Microsoft.Data.Entity.SqlServerCompact.Update
 {
     public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
     {

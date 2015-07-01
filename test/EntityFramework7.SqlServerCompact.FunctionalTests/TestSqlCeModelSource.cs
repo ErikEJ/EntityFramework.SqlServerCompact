@@ -5,6 +5,7 @@ using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Builders;
 using Microsoft.Data.Entity.Metadata.ModelConventions;
+using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Framework.DependencyInjection;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>EntityFramework.SqlCe</id>
+    <id>EntityFramework7.SqlServerCompact40</id>
     <version>$version$</version>
-    <title>EntityFramework.SqlCe</title>
+    <title>EntityFramework7.SqlServerCompact40</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>
-    <projectUrl>https://github.com/ErikEJ/EntityFramework.SqlServerCompact</projectUrl>
+    <projectUrl>https://github.com/ErikEJ/EntityFramework7.SqlServerCompact</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</description>
     <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</summary>
@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFramework.SqlServerCompact.dll" target="lib\net45\" />
+    <file src="bin\Release\EntityFramework7.SqlServerCompact40.dll" target="lib\net45\" />
   </files>
 </package>

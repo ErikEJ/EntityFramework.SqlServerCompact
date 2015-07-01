@@ -7,8 +7,8 @@
     <ProjectGuid>{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ErikEJ.Data.Entity.SqlServerCe</RootNamespace>
-    <AssemblyName>EntityFramework.SqlServerCompact</AssemblyName>
+    <RootNamespace>Microsoft.Data.Entity.SqlServerCompact</RootNamespace>
+    <AssemblyName>EntityFramework7.SqlServerCompact40</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -152,7 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="EntityFramework.SqlCe.nuspec" />
+    <None Include="EntityFramework7.SqlServerCompact40.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

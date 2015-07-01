@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Metadata;
 using Microsoft.Data.Entity.Relational.Update;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Update
+namespace Microsoft.Data.Entity.SqlServerCompact.Update
 {
     public class SqlCeModificationCommandBatchFactory : ModificationCommandBatchFactory
     {

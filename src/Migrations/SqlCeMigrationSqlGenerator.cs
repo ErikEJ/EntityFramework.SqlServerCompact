@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
+using Microsoft.Data.Entity.SqlServerCompact.MetaData;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
+namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 {
     public class SqlCeMigrationSqlGenerator : MigrationSqlGenerator
     {

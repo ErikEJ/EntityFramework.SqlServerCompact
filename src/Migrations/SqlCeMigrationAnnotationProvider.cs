@@ -1,11 +1,11 @@
-﻿using ErikEJ.Data.Entity.SqlServerCe.Metadata;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
-using System;
-using System.Collections.Generic;
+using Microsoft.Data.Entity.SqlServerCompact.MetaData;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
+namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 {
     public class SqlCeMigrationAnnotationProvider : MigrationAnnotationProvider
     {        

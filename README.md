@@ -1,4 +1,4 @@
-# EntityFramework.SqlServerCompact
+# EntityFramework7.SqlServerCompact
 This project is the Entity Framework 7 SQL Server Compact provider.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/y7eyabev603qgy7h/branch/master?svg=true)](https://ci.appveyor.com/project/ErikEJ/entityframework-sqlservercompact/branch/master)

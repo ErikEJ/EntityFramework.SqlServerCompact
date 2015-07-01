@@ -6,8 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 using Microsoft.Data.Entity.Relational.FunctionalTests;
+using Microsoft.Data.Entity.SqlServerCompact.Extensions;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {

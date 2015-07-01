@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.DependencyInjection;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeOptionsExtension : RelationalOptionsExtension
     {

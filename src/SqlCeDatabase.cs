@@ -7,12 +7,12 @@ using Microsoft.Data.Entity.Query;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Query;
 using Microsoft.Data.Entity.Relational.Query.Methods;
-using ErikEJ.Data.Entity.SqlServerCe.Query;
+using Microsoft.Data.Entity.Relational.Update;
+using Microsoft.Data.Entity.SqlServerCompact.Query;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
-using Microsoft.Data.Entity.Relational.Update;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeDatabase : RelationalDatabase
     {

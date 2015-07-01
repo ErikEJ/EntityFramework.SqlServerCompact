@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.Text;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
+namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 {
     public class SqlCeHistoryRepository : IHistoryRepository
     {

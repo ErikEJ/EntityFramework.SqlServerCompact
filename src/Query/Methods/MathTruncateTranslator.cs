@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Relational.Query.Expressions;
 using Microsoft.Data.Entity.Relational.Query.Methods;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Query.Methods
+namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
 {
     public class MathTruncateTranslator : IMethodCallTranslator
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ErikEJ.Data.Entity.SqlServerCe.Query.Methods;
 using Microsoft.Data.Entity.Relational.Query;
 using Microsoft.Data.Entity.Relational.Query.Methods;
+using Microsoft.Data.Entity.SqlServerCompact.Query.Methods;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeCompositeMemberTranslator : RelationalCompositeMemberTranslator
     {

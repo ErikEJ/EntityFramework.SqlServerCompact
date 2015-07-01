@@ -9,6 +9,8 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Internal;
 
+// ReSharper disable once CheckNamespace
+
 namespace Microsoft.Data.Entity.Utilities
 {
     [DebuggerStepThrough]

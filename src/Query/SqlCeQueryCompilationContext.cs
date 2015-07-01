@@ -11,7 +11,7 @@ using Microsoft.Data.Entity.Relational.Query.Sql;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Query
+namespace Microsoft.Data.Entity.SqlServerCompact.Query
 {
     public class SqlCeQueryCompilationContext : RelationalQueryCompilationContext
     {

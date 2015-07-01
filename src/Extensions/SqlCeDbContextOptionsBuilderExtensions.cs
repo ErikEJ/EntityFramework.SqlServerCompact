@@ -1,8 +1,8 @@
 ﻿using System.Data.Common;
-using ErikEJ.Data.Entity.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
+using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.Utilities;
 
 // ReSharper disable CheckNamespace

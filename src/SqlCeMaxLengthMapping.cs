@@ -4,7 +4,7 @@ using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Relational;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeMaxLengthMapping : RelationalTypeMapping
     {

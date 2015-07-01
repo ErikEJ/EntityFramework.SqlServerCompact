@@ -7,8 +7,8 @@
     <ProjectGuid>{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ErikEJ.Data.Entity.SqlServerCe</RootNamespace>
-    <AssemblyName>EntityFramework.SqlServerCompact.Legacy</AssemblyName>
+    <RootNamespace>Microsoft.Data.Entity.SqlServerCompact</RootNamespace>
+    <AssemblyName>EntityFramework7.SqlServerCompact35</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -151,7 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="EntityFramework.SqlCe.Legacy.nuspec" />
+    <None Include="EntityFramework7.SqlServerCompact35.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

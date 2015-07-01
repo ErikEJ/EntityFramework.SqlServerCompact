@@ -1,6 +1,6 @@
 using Microsoft.Data.Entity.ValueGeneration;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.ValueGeneration
+namespace Microsoft.Data.Entity.SqlServerCompact.ValueGeneration
 {
     public class SqlCeValueGeneratorCache : ValueGeneratorCache
     {

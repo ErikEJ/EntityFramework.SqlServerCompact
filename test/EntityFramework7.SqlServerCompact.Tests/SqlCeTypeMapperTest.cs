@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.Common;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
+using Microsoft.Data.Entity.SqlServerCompact;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests

@@ -1,8 +1,10 @@
 ﻿using System;
-using ErikEJ.Data.Entity.SqlServerCe.Metadata;
 using ErikEJ.Data.Entity.SqlServerCe.Migrations;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
+using Microsoft.Data.Entity.SqlServerCompact;
+using Microsoft.Data.Entity.SqlServerCompact.MetaData;
+using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations

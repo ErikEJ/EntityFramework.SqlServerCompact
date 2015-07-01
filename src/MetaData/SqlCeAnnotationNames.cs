@@ -1,4 +1,4 @@
-﻿namespace ErikEJ.Data.Entity.SqlServerCe.Metadata
+﻿namespace Microsoft.Data.Entity.SqlServerCompact.MetaData
 {
     public static class SqlCeAnnotationNames
     {

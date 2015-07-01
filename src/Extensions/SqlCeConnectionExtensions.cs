@@ -3,7 +3,7 @@ using System.IO;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Extensions
+namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
 {
     public static class SqlCeConnectionExtensions
     {

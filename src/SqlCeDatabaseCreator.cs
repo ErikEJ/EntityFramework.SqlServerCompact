@@ -1,13 +1,13 @@
 ﻿using System.Data.SqlServerCe;
-using ErikEJ.Data.Entity.SqlServerCe.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
+using Microsoft.Data.Entity.SqlServerCompact.Extensions;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeDatabaseCreator : RelationalDatabaseCreator
     {

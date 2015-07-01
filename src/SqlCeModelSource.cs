@@ -2,7 +2,7 @@
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata.ModelConventions;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeModelSource : ModelSource
     {

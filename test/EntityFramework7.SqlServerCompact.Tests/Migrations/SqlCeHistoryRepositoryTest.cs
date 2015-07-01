@@ -3,6 +3,8 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Migrations.History;
 using Microsoft.Data.Entity.Relational.Migrations.Operations;
+using Microsoft.Data.Entity.SqlServerCompact;
+using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Moq;
 using Xunit;
 

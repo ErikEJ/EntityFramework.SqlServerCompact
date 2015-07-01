@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Data.Entity.Relational;
+using Microsoft.Data.Entity.SqlServerCompact;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests

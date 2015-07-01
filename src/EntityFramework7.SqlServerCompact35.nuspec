@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>EntityFramework.SqlCe.Legacy</id>
+    <id>EntityFramework7.SqlServerCompact35</id>
     <version>$version$</version>
-    <title>EntityFramework.SqlCe.Legacy</title>
+    <title>EntityFramework7.SqlServerCompact35</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>
-    <projectUrl>https://github.com/ErikEJ/EntityFramework.SqlServerCompact</projectUrl>
+    <projectUrl>https://github.com/ErikEJ/EntityFramework7.SqlServerCompact</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7. Requires the SQL Server Compact 3.5 SP2 runtime to be installed</description>
     <summary>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7</summary>
@@ -19,6 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFramework.SqlServerCompact.Legacy.dll" target="lib\net45\" />
+    <file src="bin\Release\EntityFramework7.SqlServerCompact35.dll" target="lib\net45\" />
   </files>
 </package>

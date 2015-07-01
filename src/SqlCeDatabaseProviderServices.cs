@@ -1,11 +1,6 @@
 ﻿using System;
-using ErikEJ.Data.Entity.SqlServerCe.Metadata;
-using ErikEJ.Data.Entity.SqlServerCe.Migrations;
-using ErikEJ.Data.Entity.SqlServerCe.Update;
-using ErikEJ.Data.Entity.SqlServerCe.ValueGeneration;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata.Builders;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Relational.Metadata;
 using Microsoft.Data.Entity.Relational.Migrations.History;
@@ -13,10 +8,14 @@ using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Microsoft.Data.Entity.Relational.Query.Methods;
 using Microsoft.Data.Entity.Relational.Update;
+using Microsoft.Data.Entity.SqlServerCompact.MetaData;
+using Microsoft.Data.Entity.SqlServerCompact.Migrations;
+using Microsoft.Data.Entity.SqlServerCompact.Update;
+using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.ValueGeneration;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeDatabaseProviderServices : RelationalDatabaseProviderServices
     {

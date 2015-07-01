@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.Utilities;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeTypeMapper : RelationalTypeMapper
     {

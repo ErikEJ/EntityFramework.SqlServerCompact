@@ -1,7 +1,6 @@
-﻿using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Storage;
+﻿using Microsoft.Data.Entity.Storage;
 
-namespace ErikEJ.Data.Entity.SqlServerCe
+namespace Microsoft.Data.Entity.SqlServerCompact
 {
     public class SqlCeDatabaseProvider : DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>
     {

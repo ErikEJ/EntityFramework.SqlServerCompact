@@ -20,10 +20,10 @@ namespace Microsoft.Framework.DependencyInjection
             Check.NotNull(services, nameof(services));
 
             ((IAccessor<IServiceCollection>)services.AddRelational()).Service
-                .AddSingleton<IDatabaseProvider, SqlCeDatabaseProvider>()
+                .AddSingleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>()
                 .TryAdd(new ServiceCollection()
                     .AddSingleton<SqlCeValueGeneratorCache>()
-                    .AddSingleton<SqlCeSqlGenerator>()
+                    .AddSingleton<SqlCeUpdateSqlGenerator>()
                     .AddSingleton<SqlCeMetadataExtensionProvider>()
                     .AddSingleton<SqlCeTypeMapper>()
                     .AddSingleton<SqlCeModelSource>()

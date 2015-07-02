@@ -1,12 +1,12 @@
-﻿using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Framework.DependencyInjection;
-using System;
+﻿using System;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Storage;
+using Microsoft.Framework.DependencyInjection;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests

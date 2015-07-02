@@ -9,8 +9,8 @@ using Microsoft.Data.Entity.ChangeTracking.Internal;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Metadata.Internal;
-using Microsoft.Data.Entity.Metadata.ModelConventions;
 using Microsoft.Data.Entity.Query;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.ValueGeneration;
@@ -74,7 +74,6 @@ namespace Microsoft.Data.Entity.Tests
             VerifyScoped<IDatabaseProviderServices>();
             VerifyScoped<IDatabase>();
             VerifyScoped<IQueryContextFactory>();
-            VerifyScoped<IDatabaseConnection>();
             VerifyScoped<IValueGeneratorSelector>();
             VerifyScoped<IDatabaseCreator>();
             VerifyOptionalScoped<IConventionSetBuilder>();

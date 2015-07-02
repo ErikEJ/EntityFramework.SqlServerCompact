@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.Relational.Migrations.Operations;
-using Microsoft.Data.Entity.Relational.Migrations.Sql;
+using Microsoft.Data.Entity.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact.MetaData;
 using Microsoft.Data.Entity.Utilities;
 
@@ -13,10 +12,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 {
     public class SqlCeMigrationSqlGenerator : MigrationSqlGenerator
     {
-        private readonly ISqlGenerator _sql;
+        private readonly IUpdateSqlGenerator _sql;
 
         public SqlCeMigrationSqlGenerator(
-            [NotNull] ISqlGenerator sqlGenerator)
+            [NotNull] IUpdateSqlGenerator sqlGenerator)
             : base(sqlGenerator)
         {
             _sql = sqlGenerator;
@@ -146,7 +145,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                     operation.Type,
                     operation.IsNullable,
                     operation.DefaultValue,
-                    operation.DefaultExpression,
+                    operation.DefaultValueSql,
                     operation,
                     model,
                     builder);

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
+using Microsoft.Data.Entity.FunctionalTests;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {

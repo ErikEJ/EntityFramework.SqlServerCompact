@@ -1,3 +1,12 @@
+//using System;
+//using System.Linq;
+//using System.Reflection;
+//using Microsoft.Data.Entity;
+//using Microsoft.Data.Entity.FunctionalTests;
+//using Microsoft.Data.Entity.Infrastructure;
+//using Microsoft.Data.Entity.Metadata;
+//using Microsoft.Framework.DependencyInjection;
+
 using System;
 using System.Linq;
 using System.Reflection;
@@ -156,6 +165,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override void Dispose() => _testStore.Dispose();
 
         public override bool SupportsBinaryKeys => true;
+
+        public override DateTime DefaultDateTime => new DateTime(1753, 1, 1);
     }
 
     public class MappedDataTypes

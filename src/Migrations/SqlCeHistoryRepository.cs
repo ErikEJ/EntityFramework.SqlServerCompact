@@ -4,10 +4,10 @@ using System.Data.SqlServerCe;
 using System.Text;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.Relational.Migrations.History;
-using Microsoft.Data.Entity.Relational.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.Utilities;
+using Microsoft.Data.Entity.Migrations.History;
+using Microsoft.Data.Entity.Storage;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 {
@@ -18,13 +18,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
         private readonly IRelationalConnection _connection;
         private readonly IRelationalDatabaseCreator _creator;
         private readonly Type _contextType;
-        private readonly ISqlGenerator _sql;
+        private readonly SqlCeUpdateSqlGenerator _sql;
 
         public SqlCeHistoryRepository(
             [NotNull] IRelationalConnection connection,
             [NotNull] IRelationalDatabaseCreator creator,
             [NotNull] DbContext context,
-            [NotNull] ISqlGenerator sqlGenerator)
+            [NotNull] SqlCeUpdateSqlGenerator sqlGenerator)
         {
             Check.NotNull(connection, nameof(connection));
             Check.NotNull(creator, nameof(creator));

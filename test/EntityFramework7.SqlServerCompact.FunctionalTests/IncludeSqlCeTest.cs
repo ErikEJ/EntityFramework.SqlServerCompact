@@ -1,5 +1,4 @@
 using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {

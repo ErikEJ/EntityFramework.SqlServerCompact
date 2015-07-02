@@ -31,52 +31,52 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework.Core, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.Core.7.0.0-beta6-13586\lib\net45\EntityFramework.Core.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.Core.7.0.0-beta6-13659\lib\net45\EntityFramework.Core.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.Relational, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.Relational.7.0.0-beta6-13586\lib\net45\EntityFramework.Relational.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.Relational.7.0.0-beta6-13659\lib\net45\EntityFramework.Relational.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.Caching.Abstractions.1.0.0-beta6-11534\lib\net45\Microsoft.Framework.Caching.Abstractions.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.Caching.Abstractions.1.0.0-beta6-11564\lib\net45\Microsoft.Framework.Caching.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.Caching.Memory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.Caching.Memory.1.0.0-beta6-11534\lib\net45\Microsoft.Framework.Caching.Memory.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.Caching.Memory.1.0.0-beta6-11564\lib\net45\Microsoft.Framework.Caching.Memory.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.Configuration.1.0.0-beta6-11520\lib\net45\Microsoft.Framework.Configuration.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.Configuration.1.0.0-beta6-11547\lib\net45\Microsoft.Framework.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.Configuration.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.Configuration.Abstractions.1.0.0-beta6-11520\lib\net45\Microsoft.Framework.Configuration.Abstractions.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.Configuration.Abstractions.1.0.0-beta6-11547\lib\net45\Microsoft.Framework.Configuration.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.Configuration.Binder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.Configuration.Binder.1.0.0-beta6-11520\lib\net45\Microsoft.Framework.Configuration.Binder.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.Configuration.Binder.1.0.0-beta6-11547\lib\net45\Microsoft.Framework.Configuration.Binder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.DependencyInjection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.DependencyInjection.1.0.0-beta6-11523\lib\net45\Microsoft.Framework.DependencyInjection.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.DependencyInjection.1.0.0-beta6-11550\lib\net45\Microsoft.Framework.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.DependencyInjection.Abstractions.1.0.0-beta6-11523\lib\net45\Microsoft.Framework.DependencyInjection.Abstractions.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.DependencyInjection.Abstractions.1.0.0-beta6-11550\lib\net45\Microsoft.Framework.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.Logging.1.0.0-beta6-11516\lib\net45\Microsoft.Framework.Logging.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.Logging.1.0.0-beta6-11548\lib\net45\Microsoft.Framework.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.Logging.Abstractions.1.0.0-beta6-11516\lib\net45\Microsoft.Framework.Logging.Abstractions.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.Logging.Abstractions.1.0.0-beta6-11548\lib\net45\Microsoft.Framework.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Framework.OptionsModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Framework.OptionsModel.1.0.0-beta6-11492\lib\net45\Microsoft.Framework.OptionsModel.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Framework.OptionsModel.1.0.0-beta6-11519\lib\net45\Microsoft.Framework.OptionsModel.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Linq, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.0.0-alpha-004\lib\net45\Remotion.Linq.dll</HintPath>
@@ -130,6 +130,7 @@
     <Compile Include="SqlCeCompositeMethodCallTranslator.cs" />
     <Compile Include="SqlCeMaxLengthMapping.cs" />
     <Compile Include="SqlCeTypeMapper.cs" />
+    <Compile Include="SqlCeUpdateSqlGenerator.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,10 +141,8 @@
     <Compile Include="SqlCeDatabaseConnection.cs" />
     <Compile Include="SqlCeDatabaseCreator.cs" />
     <Compile Include="SqlCeDatabaseProviderServices.cs" />
-    <Compile Include="SqlCeDatabaseProvider.cs" />
     <Compile Include="SqlCeModelSource.cs" />
     <Compile Include="SqlCeOptionsExtensions.cs" />
-    <Compile Include="SqlCeSqlGenerator.cs" />
     <Compile Include="Update\SqlCeModificationCommandBatch.cs" />
     <Compile Include="Update\SqlCeModificationCommandBatchFactory.cs" />
     <Compile Include="Utilities\Check.cs" />

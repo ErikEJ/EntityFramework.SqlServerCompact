@@ -1,8 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
-using Microsoft.Data.Entity.Storage;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -666,7 +665,7 @@ FROM (
 
         public void Skip_when_no_order_by()
         {
-            Assert.Throws<DatabaseException>(() => AssertQuery<Customer>(cs => cs.Skip(5).Take(10)));
+            Assert.Throws<Exception>(() => AssertQuery<Customer>(cs => cs.Skip(5).Take(10)));
         }
 
         public override void Take_Distinct_Count()

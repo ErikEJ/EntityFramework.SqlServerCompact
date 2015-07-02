@@ -3,7 +3,8 @@
 
 using System;
 using System.Linq;
-using Microsoft.Data.Entity.Relational.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.Sql;
 using Xunit;
 
 namespace Microsoft.Data.Entity.Relational.Migrations.Sql
@@ -41,7 +42,7 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
                     Name = "Birthday",
                     Type = "date",
                     IsNullable = true,
-                    DefaultExpression = "CURRENT_TIMESTAMP"
+                    DefaultValueSql = "CURRENT_TIMESTAMP"
                 });
         }
 

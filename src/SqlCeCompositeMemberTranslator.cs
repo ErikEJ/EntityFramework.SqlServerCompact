@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Data.Entity.Relational.Query;
-using Microsoft.Data.Entity.Relational.Query.Methods;
+using Microsoft.Data.Entity.Query;
+using Microsoft.Data.Entity.Query.Methods;
 using Microsoft.Data.Entity.SqlServerCompact.Query.Methods;
 
 namespace Microsoft.Data.Entity.SqlServerCompact

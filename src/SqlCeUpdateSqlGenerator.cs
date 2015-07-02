@@ -2,13 +2,13 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.Relational.Update;
+using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity.SqlServerCompact
 {
-    public class SqlCeSqlGenerator : SqlGenerator
+    public class SqlCeUpdateSqlGenerator : UpdateSqlGenerator
     {
         protected override void AppendIdentityWhereCondition(StringBuilder builder, ColumnModification columnModification)
         {

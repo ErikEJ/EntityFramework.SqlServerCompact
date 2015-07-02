@@ -59,19 +59,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             }
         }
 
-        //TODO ErikEJ Logged EF7 issue for these two:
-        [Fact]
-        public override void Can_query_using_any_data_type()
-        {
-            //base.Can_query_using_any_data_type();
-        }
-
-        [Fact]
-        public override void Can_query_using_any_nullable_data_type()
-        {
-            //base.Can_query_using_any_nullable_data_type();
-        }
-
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types()
         {

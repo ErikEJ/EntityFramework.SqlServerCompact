@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.Relational.Migrations.History;
-using Microsoft.Data.Entity.Relational.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.History;
+using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
+using Microsoft.Data.Entity.Storage;
 using Moq;
 using Xunit;
 
@@ -82,7 +82,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
                 Mock.Of<IRelationalConnection>(),
                 Mock.Of<IRelationalDatabaseCreator>(),
                 new Context(),
-                new SqlCeSqlGenerator());
+                new SqlCeUpdateSqlGenerator());
         }
 
         private class Context : DbContext

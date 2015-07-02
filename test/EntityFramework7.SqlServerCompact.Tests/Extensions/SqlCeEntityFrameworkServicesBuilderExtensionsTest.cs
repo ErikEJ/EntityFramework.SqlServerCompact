@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using ErikEJ.Data.Entity.SqlServerCe.Migrations;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.Relational.Migrations;
-using Microsoft.Data.Entity.Relational.Migrations.History;
-using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
-using Microsoft.Data.Entity.Relational.Migrations.Sql;
-using Microsoft.Data.Entity.Relational.Tests;
-using Microsoft.Data.Entity.Relational.Update;
+using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Migrations.History;
+using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Microsoft.Data.Entity.SqlServerCompact.Update;
 using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
 using Microsoft.Data.Entity.Tests;
+using Microsoft.Data.Entity.Update;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
 
@@ -31,7 +29,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
 
             // SQL Server Ce dingletones
             VerifySingleton<SqlCeValueGeneratorCache>();
-            VerifySingleton<SqlCeSqlGenerator>();
+            VerifySingleton<SqlCeUpdateSqlGenerator>();
             VerifySingleton<ISqlStatementExecutor>();
             VerifySingleton<SqlCeTypeMapper>();
             
@@ -45,15 +43,14 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
             VerifyScoped<SqlCeMigrationAnnotationProvider>();
             VerifyScoped<SqlCeMigrationSqlGenerator>();
             VerifyScoped<SqlCeDatabaseCreator>();
-            VerifyScoped<SqlCeHistoryRepository>();
 
             // Migrations
             VerifyScoped<IMigrationAssembly>();
-            VerifyScoped<IHistoryRepository>();
+            VerifyScoped<SqlCeHistoryRepository>();
             VerifyScoped<IMigrator>();
             VerifySingleton<IMigrationIdGenerator>();
             VerifyScoped<IModelDiffer>();
-            VerifyScoped<IMigrationSqlGenerator>();
+            VerifyScoped<SqlCeMigrationSqlGenerator>();
         }
 
         protected override IServiceCollection GetServices(IServiceCollection services = null)

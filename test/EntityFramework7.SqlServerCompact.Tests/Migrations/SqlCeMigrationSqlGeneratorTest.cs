@@ -1,6 +1,6 @@
 ﻿using System;
-using ErikEJ.Data.Entity.SqlServerCe.Migrations;
-using Microsoft.Data.Entity.Relational.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.MetaData;
@@ -11,7 +11,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
-        protected override IMigrationSqlGenerator SqlGenerator => new SqlCeMigrationSqlGenerator(new SqlCeSqlGenerator());
+        protected override IMigrationSqlGenerator SqlGenerator => new SqlCeMigrationSqlGenerator(new SqlCeUpdateSqlGenerator());
 
         public override void AlterSequenceOperation_without_minValue_and_maxValue()
         {

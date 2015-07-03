@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations.Infrastructure;
 using Microsoft.Data.Entity.SqlServerCompact.MetaData;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Migrations

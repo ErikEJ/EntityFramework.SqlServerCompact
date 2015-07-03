@@ -3,6 +3,7 @@ using System.Data.Common;
 using System.Globalization;
 using System.Text;
 using JetBrains.Annotations;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Framework.Logging;
 
@@ -11,7 +12,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
     internal static class RelationalLoggerExtensions
     {
         public static void LogSql([NotNull] this ILogger logger, [NotNull] string sql)
-            => logger.LogVerbose(RelationalLoggingEventIds.Sql, sql);
+            => logger.LogVerbose(RelationalLoggingEventIds.ExecutingSql, sql);
 
         public static void LogParameters([NotNull] this ILogger logger, [NotNull] DbParameterCollection parameters)
         {
@@ -27,7 +28,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
                 paramList.AppendLine();
                 paramList.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}", (parameters[i]).ParameterName, (parameters[i]).Value);
             }
-            logger.LogDebug(RelationalLoggingEventIds.Sql, paramList.ToString());
+            logger.LogDebug(RelationalLoggingEventIds.ExecutingSql, paramList.ToString());
         }
 
         public static void LogCommand([NotNull] this ILogger logger, [NotNull] DbCommand command)

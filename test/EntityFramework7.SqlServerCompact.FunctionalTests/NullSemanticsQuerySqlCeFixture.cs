@@ -3,7 +3,6 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.NullSemantics;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.NullSemanticsModel;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 

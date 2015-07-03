@@ -2,7 +2,6 @@
 using System.Data.Common;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
 using Microsoft.Framework.DependencyInjection;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests

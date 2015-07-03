@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests

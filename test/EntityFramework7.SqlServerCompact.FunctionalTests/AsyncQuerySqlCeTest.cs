@@ -1,9 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
-using Microsoft.Data.Entity.Relational.FunctionalTests;
-using Microsoft.Data.Entity.Storage;
 using Xunit;
 
 #pragma warning disable 1998
@@ -49,7 +48,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
         public async Task Skip_when_no_order_by()
         {
-            await Assert.ThrowsAsync<DatabaseException>(async () => await AssertQuery<Customer>(cs => cs.Skip(5).Take(10)));
+            await Assert.ThrowsAsync<Exception>(async () => await AssertQuery<Customer>(cs => cs.Skip(5).Take(10)));
         }
 
         [Fact]

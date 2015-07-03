@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.ChangeTracking.Internal;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.Relational.Update;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.SqlServerCompact.Extensions;
+using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
@@ -18,12 +18,12 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
     public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
     {
         public SqlCeModificationCommandBatch(
-            [NotNull] ISqlGenerator sqlGenerator)
+            [NotNull] IUpdateSqlGenerator sqlGenerator)
             : base(sqlGenerator)
         {
         }
 
-        public override int Execute(
+        public override void Execute(
             IRelationalTransaction transaction,
             IRelationalTypeMapper typeMapper,
             DbContext context,
@@ -83,16 +83,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
                 catch (Exception ex)
                 {
                     throw new DbUpdateException(
-                        Microsoft.Data.Entity.Relational.Strings.UpdateStoreException,
-                        context,
+                        "An error occurred while updating the entries. See the inner exception for details.",
                         ex);
                 }
             }
-
-            return commandIndex;
         }
 
-        public override Task<int> ExecuteAsync(
+        public override Task ExecuteAsync(
             IRelationalTransaction transaction, 
             IRelationalTypeMapper typeMapper, 
             DbContext context, 
@@ -106,7 +103,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Task.FromResult(Execute(transaction, typeMapper, context, logger));
+            return Task.Run(() => Execute(transaction, typeMapper, context, logger));
         }
 
         private Tuple<string, string> SplitCommandText(string commandText)
@@ -125,7 +122,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
                 string.Empty);
         }
 
-        private int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader, DbContext context)
+        protected override int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader, DbContext context)
         {
             const int expectedRowsAffected = 1;
             var rowsAffected = reader.RecordsAffected;
@@ -135,14 +132,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
             if (rowsAffected != expectedRowsAffected)
             {
                 throw new DbUpdateConcurrencyException(
-                    Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-                    context,
+                    Relational.Internal.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
                     AggregateEntries(commandIndex, expectedRowsAffected));
             }
 
             return commandIndex;
         }
-       
+
         private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader, DbContext context)
         {
             const int expectedRowsAffected = 1;
@@ -158,14 +154,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
             if (rowsAffected != expectedRowsAffected)
             {
                 throw new DbUpdateConcurrencyException(
-                    Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-                    context,
+                    Relational.Internal.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
                     AggregateEntries(commandIndex, expectedRowsAffected));
             }
 
             returningReader.Read();
 
-            tableModification.PropagateResults(tableModification.ValueBufferFactory.CreateValueBuffer(returningReader));
+            tableModification.PropagateResults(tableModification.ValueBufferFactory.Create(returningReader));
 
             return commandIndex;
         }

@@ -11,14 +11,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
     {        
         public override IEnumerable<IAnnotation> For(IProperty property)
         {
-            var generateIdentityKey = property.StoreGeneratedPattern == StoreGeneratedPattern.Identity;
-
-            if (generateIdentityKey && !property.ClrType.IsIntegerForIdentity())
-            {
-                throw new ArgumentException(string.Format(
-                    Strings.IdentityBadType,
-                    property.Name, property.EntityType.Name, property.ClrType.Name));
-            }
+            var generateIdentityKey = property.StoreGeneratedPattern == StoreGeneratedPattern.Identity
+                && property.ClrType.IsIntegerForIdentity();
 
             if (generateIdentityKey)
             {

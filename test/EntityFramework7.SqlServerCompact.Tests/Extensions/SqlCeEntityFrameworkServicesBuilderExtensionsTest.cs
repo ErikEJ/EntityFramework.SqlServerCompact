@@ -28,6 +28,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
             VerifySingleton<IComparer<ModificationCommand>>();
 
             // SQL Server Ce dingletones
+            VerifySingleton<SqlCeConventionSetBuilder>();
             VerifySingleton<SqlCeValueGeneratorCache>();
             VerifySingleton<SqlCeUpdateSqlGenerator>();
             VerifySingleton<ISqlStatementExecutor>();

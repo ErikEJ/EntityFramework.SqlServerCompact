@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.MetaData;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
@@ -22,6 +21,7 @@ namespace Microsoft.Framework.DependencyInjection
             ((IAccessor<IServiceCollection>)services.AddRelational()).Service
                 .AddSingleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>()
                 .TryAdd(new ServiceCollection()
+                    .AddSingleton<SqlCeConventionSetBuilder>()
                     .AddSingleton<SqlCeValueGeneratorCache>()
                     .AddSingleton<SqlCeUpdateSqlGenerator>()
                     .AddSingleton<SqlCeMetadataExtensionProvider>()

@@ -34,13 +34,13 @@
       <HintPath>..\packages\EntityFramework.Core.7.0.0-beta6-13675\lib\net45\EntityFramework.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.Relational, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">      
+    <Reference Include="EntityFramework.Relational, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.Relational.7.0.0-beta6-13675\lib\net45\EntityFramework.Relational.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Framework.Caching.Abstractions.1.0.0-beta6-11576\lib\net45\Microsoft.Framework.Caching.Abstractions.dll</HintPath>
-      <Private>True</Private>      
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Caching.Memory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Framework.Caching.Memory.1.0.0-beta6-11576\lib\net45\Microsoft.Framework.Caching.Memory.dll</HintPath>
@@ -128,6 +128,7 @@
     <Compile Include="Query\SqlCeQuerySqlGenerator.cs" />
     <Compile Include="SqlCeCompositeMemberTranslator.cs" />
     <Compile Include="SqlCeCompositeMethodCallTranslator.cs" />
+    <Compile Include="SqlCeConventionSetBuilder.cs" />
     <Compile Include="SqlCeMaxLengthMapping.cs" />
     <Compile Include="SqlCeTypeMapper.cs" />
     <Compile Include="SqlCeUpdateSqlGenerator.cs" />

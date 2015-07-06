@@ -14,6 +14,7 @@ using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.ValueGeneration;
+using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 
 namespace Microsoft.Data.Entity.SqlServerCompact
 {
@@ -25,7 +26,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         }
 
         public override string InvariantName => GetType().GetTypeInfo().Assembly.GetName().Name;
-
         public override IDatabaseCreator Creator => GetService<SqlCeDatabaseCreator>();
         public override IHistoryRepository HistoryRepository => GetService<SqlCeHistoryRepository>();
         public override IMigrationSqlGenerator MigrationSqlGenerator => GetService<SqlCeMigrationSqlGenerator>();
@@ -37,7 +37,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         public override IValueGeneratorCache ValueGeneratorCache => GetService<SqlCeValueGeneratorCache>();
         public override IRelationalTypeMapper TypeMapper => GetService<SqlCeTypeMapper>();
         public override IModificationCommandBatchFactory ModificationCommandBatchFactory => GetService<SqlCeModificationCommandBatchFactory>();
-        public override IRelationalDatabaseCreator RelationalDatabaseCreator => GetService<SqlCeDatabaseCreator>();                
+        public override IRelationalDatabaseCreator RelationalDatabaseCreator => GetService<SqlCeDatabaseCreator>();
+        public override IConventionSetBuilder ConventionSetBuilder => GetService<SqlCeConventionSetBuilder>();
         public override IRelationalMetadataExtensionProvider MetadataExtensionProvider => GetService<SqlCeMetadataExtensionProvider>();
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();

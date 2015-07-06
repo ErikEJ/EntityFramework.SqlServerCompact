@@ -22,6 +22,7 @@ namespace Microsoft.Framework.DependencyInjection
             ((IAccessor<IServiceCollection>)services.AddRelational()).Service
                 .AddSingleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>()
                 .TryAdd(new ServiceCollection()
+                    .AddSingleton<SqlCeConventionSetBuilder>()
                     .AddSingleton<SqlCeValueGeneratorCache>()
                     .AddSingleton<SqlCeUpdateSqlGenerator>()
                     .AddSingleton<SqlCeMetadataExtensionProvider>()

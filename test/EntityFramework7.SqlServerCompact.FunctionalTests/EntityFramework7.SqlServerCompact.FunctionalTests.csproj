@@ -151,6 +151,10 @@
     <Compile Include="ChangeTrackingSqlCeTest.cs" />
     <Compile Include="ComplexNavigationsQuerySqlCeFixture.cs" />
     <Compile Include="ComplexNavigationsQuerySqlCeTest.cs" />
+    <Compile Include="CompositeKeyEndToEndTest.cs" />
+    <Compile Include="DataAnnotationSqlCeFixture.cs" />
+    <Compile Include="DataAnnotationSqlCeTest.cs" />
+    <Compile Include="DefaultValuesTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
     <Compile Include="FromSqlQuerySqlCeTest.cs" />
     <Compile Include="GearsOfWarQuerySqlCeFixture.cs" />
@@ -165,6 +169,7 @@
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
     <Compile Include="MonsterFixUpSqlCeTest.cs" />
+    <Compile Include="NavigationTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />
     <Compile Include="NullKeysSqlCeTest.cs" />
     <Compile Include="NullSemanticsQuerySqlCeFixture.cs" />
@@ -173,12 +178,14 @@
     <Compile Include="OptimisticConcurrencySqlCeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyEntrySqlCeTest.cs" />
+    <Compile Include="QueryLoggingSqlCeTest.cs" />
     <Compile Include="QuerySqlCeTest.cs" />
     <Compile Include="SentinelGraphUpdatesSqlCeTest.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />
     <Compile Include="SqlCeDataStoreCreatorTest.cs" />
     <Compile Include="SqlCeMigrationsTest.cs" />
     <Compile Include="SqlCeTestStore.cs" />
+    <Compile Include="SqlFileLogger.cs" />
     <Compile Include="TestModels\SqlCeNorthwindContext.cs" />
     <Compile Include="TestSqlCeModelSource.cs" />
     <Compile Include="TransactionSqlCeFixture.cs" />

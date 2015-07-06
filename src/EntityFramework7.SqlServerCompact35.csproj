@@ -129,6 +129,7 @@
     <Compile Include="Query\SqlCeQuerySqlGenerator.cs" />
     <Compile Include="SqlCeCompositeMemberTranslator.cs" />
     <Compile Include="SqlCeCompositeMethodCallTranslator.cs" />
+    <Compile Include="SqlCeConventionSetBuilder.cs" />
     <Compile Include="SqlCeDatabase.cs" />
     <Compile Include="SqlCeDatabaseConnection.cs" />
     <Compile Include="SqlCeDatabaseCreator.cs" />

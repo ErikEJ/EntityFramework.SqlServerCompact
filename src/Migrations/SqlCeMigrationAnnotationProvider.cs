@@ -14,13 +14,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             var generateIdentityKey = property.StoreGeneratedPattern == StoreGeneratedPattern.Identity
                 && property.ClrType.IsIntegerForIdentity();
 
-            //if (generateIdentityKey && !property.ClrType.IsIntegerForIdentity())
-            //{
-            //    throw new ArgumentException(string.Format(
-            //        Strings.IdentityBadType,
-            //        property.Name, property.EntityType.Name, property.ClrType.Name));
-            //}
-
             if (generateIdentityKey)
             {
                 yield return new Annotation(

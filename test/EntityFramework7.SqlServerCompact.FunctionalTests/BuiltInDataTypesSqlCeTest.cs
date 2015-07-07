@@ -17,6 +17,208 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         }
 
         [Fact]
+        public virtual void Can_query_using_any_mapped_data_type()
+        {
+            using (var context = CreateContext())
+            {
+                context.Set<MappedNullableDataTypes>().Add(
+                    new MappedNullableDataTypes
+                    {
+                        Int = 999,
+                        Bigint = 78L,
+                        Smallint = 79,
+                        Tinyint = 80,
+                        Bit = true,
+                        Money = 81.1m,
+                        Float = 83.3,
+                        Real = 84.4f,
+                        Datetime = new DateTime(2019, 1, 2, 14, 11, 12),
+                        Nchar = "D",
+                        National_character = "E",
+                        Nvarchar = "F",
+                        National_char_varying = "G",
+                        National_character_varying = "H",
+                        NvarcharMax = "don't",
+                        National_char_varyingMax = "help",
+                        National_character_varyingMax = "anyone!",
+                        Ntext = "Gumball Rules OK!",
+                        Binary = new byte[] { 86 },
+                        Varbinary = new byte[] { 87 },
+                        Image = new byte[] { 97, 98, 99, 100 },
+                        Decimal = 101.7m,
+                        Dec = 102.8m,
+                        Numeric = 103.9m
+                    });
+
+                Assert.Equal(1, context.SaveChanges());
+            }
+
+            using (var context = CreateContext())
+            {
+                var entity = context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999);
+
+                long? param1 = 78L;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Bigint == param1));
+
+                short? param2 = 79;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Smallint == param2));
+
+                byte? param3 = 80;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Tinyint == param3));
+
+                bool? param4 = true;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Bit == param4));
+
+                decimal? param5 = 81.1m;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Money == param5));
+
+                double? param7a = 83.3;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Float == param7a));
+
+                float? param7b = 84.4f;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Real == param7b));
+
+                DateTime? param11 = new DateTime(2019, 1, 2, 14, 11, 12);
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Datetime == param11));
+
+                var param22 = "D";
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Nchar == param22));
+
+                var param23 = "E";
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.National_character == param23));
+
+                var param24 = "F";
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Nvarchar == param24));
+
+                var param25 = "G";
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.National_char_varying == param25));
+
+                var param26 = "H";
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.National_character_varying == param26));
+
+                var param27 = "don't";
+                Assert.Equal(
+                    "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",
+                    Assert.Throws<SqlCeException>(() => context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.NvarcharMax == param27)).Message);
+
+                var param28 = "help";
+                Assert.Equal(
+                    "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",
+                    Assert.Throws<SqlCeException>(() => context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.National_char_varyingMax == param28)).Message);
+
+                var param29 = "anyone!";
+                Assert.Equal(
+                    "The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.",
+                    Assert.Throws<SqlCeException>(() => context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.National_character_varyingMax == param29)).Message);
+
+                var param32 = new byte[] { 86 };
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Binary == param32));
+
+                var param33 = new byte[] { 87 };
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Varbinary == param33));
+
+                decimal? param38 = 102m;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Decimal == param38));
+
+                decimal? param39 = 103m;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Dec == param39));
+
+                decimal? param40 = 104m;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Numeric == param40));
+            }
+        }
+
+        [Fact]
+        public virtual void Can_query_using_any_mapped_data_types_with_nulls()
+        {
+            using (var context = CreateContext())
+            {
+                context.Set<MappedNullableDataTypes>().Add(
+                    new MappedNullableDataTypes
+                    {
+                        Int = 911,
+                    });
+
+                Assert.Equal(1, context.SaveChanges());
+            }
+
+            using (var context = CreateContext())
+            {
+                var entity = context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911);
+
+                long? param1 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Bigint == param1));
+
+                short? param2 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Smallint == param2));
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && ((long?)((int?)e.Smallint)) == param2));
+
+                byte? param3 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Tinyint == param3));
+
+                bool? param4 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Bit == param4));
+
+                decimal? param5 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Money == param5));
+
+                double? param7a = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Float == param7a));
+
+                float? param7b = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Real == param7b));
+
+                DateTime? param11 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Datetime == param11));
+
+                string param22 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Nchar == param22));
+
+                string param23 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.National_character == param23));
+
+                string param24 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Nvarchar == param24));
+
+                string param25 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.National_char_varying == param25));
+
+                string param26 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.National_character_varying == param26));
+
+                string param27 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.NvarcharMax == param27));
+
+                string param28 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.National_char_varyingMax == param28));
+
+                string param29 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.National_character_varyingMax == param29));
+
+                string param31 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Ntext == param31));
+
+                byte[] param32 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Binary == param32));
+
+                byte[] param33 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Varbinary == param33));
+
+                byte[] param37 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Image == param37));
+
+                decimal? param38 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Decimal == param38));
+
+                decimal? param39 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Dec == param39));
+
+                decimal? param40 = null;
+                Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.Numeric == param40));
+            }
+        }
+
+        [Fact]
         public override void Can_perform_query_with_max_length()
         {
             //Copy from base test!
@@ -85,6 +287,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                             National_char_varyingMax = "help",
                             National_character_varyingMax = "anyone!",
                             Ntext = "Gumball Rules!",
+                            Binary = new byte[] { 86 },
+                            Varbinary = new byte[] { 87 },
                             Image = new byte[] { 97, 98, 99, 100 },
                             Decimal = 101.1m,
                             Dec = 102.2m,
@@ -116,6 +320,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 Assert.Equal("help", entity.National_char_varyingMax);
                 Assert.Equal("anyone!", entity.National_character_varyingMax);
                 Assert.Equal("Gumball Rules!", entity.Ntext);
+                Assert.Equal(new byte[] { 86 }, entity.Binary);
+                Assert.Equal(new byte[] { 87 }, entity.Varbinary);
                 Assert.Equal(new byte[] { 97, 98, 99, 100 }, entity.Image);
                 Assert.Equal(101m, entity.Decimal);
                 Assert.Equal(102m, entity.Dec);
@@ -149,6 +355,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                             National_char_varyingMax = "help",
                             National_character_varyingMax = "anyone!",
                             Ntext = "Gumball Rules!",
+                            Binary = new byte[] { 86 },
+                            Varbinary = new byte[] { 87 },
                             Image = new byte[] { 97, 98, 99, 100 },
                             Decimal = 101.1m,
                             Dec = 102.2m,
@@ -180,6 +388,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 Assert.Equal("help", entity.National_char_varyingMax);
                 Assert.Equal("anyone!", entity.National_character_varyingMax);
                 Assert.Equal("Gumball Rules!", entity.Ntext);
+                Assert.Equal(new byte[] { 86 }, entity.Binary);
+                Assert.Equal(new byte[] { 87 }, entity.Varbinary);
                 Assert.Equal(new byte[] { 97, 98, 99, 100 }, entity.Image);
                 Assert.Equal(101m, entity.Decimal);
                 Assert.Equal(102m, entity.Dec);
@@ -222,6 +432,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 Assert.Null(entity.National_char_varyingMax);
                 Assert.Null(entity.National_character_varyingMax);
                 Assert.Null(entity.Ntext);
+                Assert.Null(entity.Binary);
+                Assert.Null(entity.Varbinary);
                 Assert.Null(entity.Image);
                 Assert.Null(entity.Decimal);
                 Assert.Null(entity.Dec);
@@ -232,38 +444,36 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_sized_data_types()
         {
-            //using (var context = CreateContext())
-            //{
-            //    context.Set<MappedSizedDataTypes>().Add(
-            //        new MappedSizedDataTypes
-            //        {
-            //            Id = 77,
-            //            Nchar = "Wont",
-            //            National_character = "Squeeze",
-            //            Nvarchar = "Into",
-            //            National_char_varying = "These",
-            //            National_character_varying = "Columns",
-            //            //Binary = new byte[] { 10, 11, 12, 13 },
-            //            //Varbinary = new byte[] { 11, 12, 13, 14 },
-            //            //Binary_varying = new byte[] { 12, 13, 14, 15 }
-            //        });
+            using (var context = CreateContext())
+            {
+                context.Set<MappedSizedDataTypes>().Add(
+                    new MappedSizedDataTypes
+                    {
+                        Id = 77,
+                        Nchar = "Won",
+                        National_character = "Squ",
+                        Nvarchar = "Int",
+                        National_char_varying = "The",
+                        National_character_varying = "Col",
+                        Binary = new byte[] { 10, 11, 12 },
+                        Varbinary = new byte[] { 11, 12, 13 },
+                    });
 
-            //    Assert.Equal(1, context.SaveChanges());
-            //}
+                Assert.Equal(1, context.SaveChanges());
+            }
 
-            //using (var context = CreateContext())
-            //{
-            //    var entity = context.Set<MappedSizedDataTypes>().Single(e => e.Id == 77);
+            using (var context = CreateContext())
+            {
+                var entity = context.Set<MappedSizedDataTypes>().Single(e => e.Id == 77);
 
-            //    Assert.Equal("Won", entity.Nchar);
-            //    Assert.Equal("Squ", entity.National_character);
-            //    Assert.Equal("Int", entity.Nvarchar);
-            //    Assert.Equal("The", entity.National_char_varying);
-            //    Assert.Equal("Col", entity.National_character_varying);
-            //    //Assert.Equal(new byte[] { 10, 11, 12 }, entity.Binary);
-            //    //Assert.Equal(new byte[] { 11, 12, 13 }, entity.Varbinary);
-            //    //Assert.Equal(new byte[] { 12, 13, 14 }, entity.Binary_varying);
-            //}
+                Assert.Equal("Won", entity.Nchar);
+                Assert.Equal("Squ", entity.National_character);
+                Assert.Equal("Int", entity.Nvarchar);
+                Assert.Equal("The", entity.National_char_varying);
+                Assert.Equal("Col", entity.National_character_varying);
+                Assert.Equal(new byte[] { 10, 11, 12 }, entity.Binary);
+                Assert.Equal(new byte[] { 11, 12, 13 }, entity.Varbinary);
+            }
         }
 
         [Fact]
@@ -483,6 +693,7 @@ BuiltInNullableDataTypes.TestNullableInt64 ---> [nullable bigint] [Precision = 1
 BuiltInNullableDataTypes.TestNullableSingle ---> [nullable real] [Precision = 24]
 BuiltInNullableDataTypes.TestString ---> [nullable nvarchar] [MaxLength = 4000]
 MappedDataTypes.Bigint ---> [bigint] [Precision = 19]
+MappedDataTypes.Binary ---> [binary] [MaxLength = 1]
 MappedDataTypes.Bit ---> [bit] [Precision = 1 Scale = 0]
 MappedDataTypes.Datetime ---> [datetime] [Precision = 23 Scale = 3]
 MappedDataTypes.Dec ---> [numeric] [Precision = 18 Scale = 0]
@@ -504,7 +715,9 @@ MappedDataTypes.NvarcharMax ---> [ntext] [MaxLength = 536870911]
 MappedDataTypes.Real ---> [real] [Precision = 24]
 MappedDataTypes.Smallint ---> [smallint] [Precision = 5]
 MappedDataTypes.Tinyint ---> [tinyint] [Precision = 3]
+MappedDataTypes.Varbinary ---> [varbinary] [MaxLength = 1]
 MappedNullableDataTypes.Bigint ---> [nullable bigint] [Precision = 19]
+MappedNullableDataTypes.Binary ---> [nullable binary] [MaxLength = 1]
 MappedNullableDataTypes.Bit ---> [nullable bit] [Precision = 1 Scale = 0]
 MappedNullableDataTypes.Datetime ---> [nullable datetime] [Precision = 23 Scale = 3]
 MappedNullableDataTypes.Dec ---> [nullable numeric] [Precision = 18 Scale = 0]
@@ -526,6 +739,7 @@ MappedNullableDataTypes.NvarcharMax ---> [nullable ntext] [MaxLength = 536870911
 MappedNullableDataTypes.Real ---> [nullable real] [Precision = 24]
 MappedNullableDataTypes.Smallint ---> [nullable smallint] [Precision = 5]
 MappedNullableDataTypes.Tinyint ---> [nullable tinyint] [Precision = 3]
+MappedNullableDataTypes.Varbinary ---> [nullable varbinary] [MaxLength = 1]
 MappedPrecisionAndScaledDataTypes.Dec ---> [numeric] [Precision = 5 Scale = 2]
 MappedPrecisionAndScaledDataTypes.Decimal ---> [numeric] [Precision = 5 Scale = 2]
 MappedPrecisionAndScaledDataTypes.Id ---> [int] [Precision = 10]

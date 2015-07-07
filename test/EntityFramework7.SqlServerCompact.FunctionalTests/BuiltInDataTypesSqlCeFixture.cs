@@ -184,6 +184,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public decimal Decimal { get; set; }
         public decimal Dec { get; set; }
         public decimal Numeric { get; set; }
+        public byte[] Binary { get; set; }
+        public byte[] Varbinary { get; set; }
     }
 
     public class MappedSizedDataTypes
@@ -238,5 +240,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public decimal? Decimal { get; set; }
         public decimal? Dec { get; set; }
         public decimal? Numeric { get; set; }
+        public byte[] Binary { get; set; }
+        public byte[] Varbinary { get; set; }
+
     }
 }

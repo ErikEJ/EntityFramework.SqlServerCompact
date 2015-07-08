@@ -7,6 +7,8 @@ using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Framework.Logging;
 
+//TODO ErikEJ Use public shared extensions when in daily build 
+
 namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
 {
     internal static class RelationalLoggerExtensions

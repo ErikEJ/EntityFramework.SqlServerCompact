@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>EntityFramework7.SqlServerCompact40.Design</id>
+    <version>$version$</version>
+    <title>EntityFramework7.SqlServerCompact40.Design</title>
+    <authors>ErikEJ</authors>
+    <owners>ErikEJ</owners>
+    <projectUrl>https://github.com/ErikEJ/EntityFramework7.SqlServerCompact</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Design time assemply for the SQL Server Compact 4.0 Entity Framework 7 provider</description>
+    <summary>Design time assemply for the SQL Server Compact 4.0 Entity Framework 7 provider</summary>
+    <releaseNotes>for EF7 beta6</releaseNotes>
+    <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact reveng reverseengineer design</tags>
+    <dependencies>
+        <group targetFramework=".NETFramework4.5">
+            <!--<dependency id="EntityFramework7.SqlServerCompact40" version="[7.0.0-beta6-*]" />-->
+            <dependency id="EntityFramework.Relational.Design" version="[7.0.0-beta6-13675]" />
+         </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\EntityFramework7.SqlServerCompact40.Design.dll" target="lib\net45\" />
+  </files>
+</package>

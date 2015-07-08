@@ -179,7 +179,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EntityFramework7.SqlServerCompact35.csproj">
+    <ProjectReference Include="..\..\src\Provider\EntityFramework7.SqlServerCompact35.csproj">
       <Project>{d3a4e371-e8f2-4513-b14c-7c738f14ceb0}</Project>
       <Name>EntityFramework7.SqlServerCompact35</Name>
     </ProjectReference>

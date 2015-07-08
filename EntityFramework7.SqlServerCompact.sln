@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23012.0
+VisualStudioVersion = 14.0.23023.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact40", "src\EntityFramework7.SqlServerCompact40.csproj", "{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact40", "src\Provider\EntityFramework7.SqlServerCompact40.csproj", "{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact35", "src\EntityFramework7.SqlServerCompact35.csproj", "{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact35", "src\Provider\EntityFramework7.SqlServerCompact35.csproj", "{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact.FunctionalTests", "test\EntityFramework7.SqlServerCompact.FunctionalTests\EntityFramework7.SqlServerCompact.FunctionalTests.csproj", "{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact35.FunctionalTests", "test\EntityFramework7.SqlServerCompact35.FunctionalTests\EntityFramework7.SqlServerCompact35.FunctionalTests.csproj", "{54867677-196E-4C26-832B-3846A937E649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact40.Design", "src\Design\EntityFramework7.SqlServerCompact40.Design.csproj", "{38B6C219-941A-4DCF-A087-673616418E36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,14 @@ Global
 		{54867677-196E-4C26-832B-3846A937E649}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54867677-196E-4C26-832B-3846A937E649}.Release|x86.ActiveCfg = Release|Any CPU
 		{54867677-196E-4C26-832B-3846A937E649}.Release|x86.Build.0 = Release|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Debug|x86.Build.0 = Debug|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Release|x86.ActiveCfg = Release|Any CPU
+		{38B6C219-941A-4DCF-A087-673616418E36}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

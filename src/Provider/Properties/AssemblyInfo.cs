@@ -1,9 +1,13 @@
 ﻿using System.Reflection;
+using Microsoft.Data.Entity.Storage;
 
 #if SQLCE35
 [assembly: AssemblyTitle("EntityFramework7.SqlServerCompact35")]
 [assembly: AssemblyProduct("EntityFramework7.SqlServerCompact35")]
 #else
+[assembly: ProviderDesignTimeServices(
+    typeName: "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeDesignTimeMetadataProviderFactory",
+    assemblyName: "EntityFramework7.SqlServerCompact40.Design")]
 [assembly: AssemblyTitle("EntityFramework7.SqlServerCompact40")]
 [assembly: AssemblyProduct("EntityFramework7.SqlServerCompact40")]
 #endif

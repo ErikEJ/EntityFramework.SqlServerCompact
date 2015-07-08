@@ -63,7 +63,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             modelBuilder.Entity<Team>(b =>
             {
                 b.Property(t => t.Id)
-                    .StoreGeneratedPattern(Microsoft.Data.Entity.Metadata.StoreGeneratedPattern.None);
+                    .ValueGeneratedNever();
             });
         }
     }

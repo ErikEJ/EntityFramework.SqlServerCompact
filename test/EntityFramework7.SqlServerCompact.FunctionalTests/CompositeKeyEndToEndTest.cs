@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
 using Microsoft.Data.Entity;
@@ -204,13 +203,13 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 modelBuilder.Entity<Unicorn>(b =>
                 {
                     b.Key(e => new { e.Id1, e.Id2, e.Id3 });
-                    b.Property(e => e.Id1).StoreGeneratedPattern(Microsoft.Data.Entity.Metadata.StoreGeneratedPattern.Identity);
+                    b.Property(e => e.Id1).ValueGeneratedOnAdd();
                 });
 
                 modelBuilder.Entity<EarthPony>(b =>
                 {
                     b.Key(e => new { e.Id1, e.Id2 });
-                    b.Property(e => e.Id1).StoreGeneratedPattern(Microsoft.Data.Entity.Metadata.StoreGeneratedPattern.Identity);
+                    b.Property(e => e.Id1).ValueGeneratedOnAdd();
                 });
             }
         }

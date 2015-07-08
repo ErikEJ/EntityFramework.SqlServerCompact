@@ -1,8 +1,5 @@
 ﻿using System.Linq;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests.TestModels.ComplexNavigationsModel;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Query;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
@@ -41,7 +38,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 base.OnModelCreating(modelBuilder);
                 modelBuilder.Entity<Blog>()
                     .Property(e => e.Id)
-                    .StoreGeneratedPattern(StoreGeneratedPattern.None);
+                    .ValueGeneratedNever();
             }
         }
 

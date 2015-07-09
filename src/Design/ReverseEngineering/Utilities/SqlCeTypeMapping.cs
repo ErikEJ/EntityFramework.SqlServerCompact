@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Design.Utilities
+namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
 {
     public static class SqlCeTypeMapping
     {
@@ -36,7 +36,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Design.Utilities
                 { "varbinary", typeof(byte[]) },
 
                 //other
-                { "timestamp", typeof(byte[]) },
+                { "rowversion", typeof(byte[]) },
                 { "uniqueidentifier", typeof(Guid) }
             };
     }

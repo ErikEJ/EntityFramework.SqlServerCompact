@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
 
-namespace Microsoft.Data.Entity.SqlServer.Design.Utilities
+namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
 {
     public class SqlServerLiteralUtilities
     {

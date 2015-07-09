@@ -1,8 +1,8 @@
-﻿using System.Data.SqlClient;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
+using System.Data.SqlServerCe;
 
-namespace Microsoft.Data.Entity.SqlServer.Design.ReverseEngineering.Model
+namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
 {
     public class ForeignKeyColumnMapping
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Data.Entity.SqlServer.Design.ReverseEngineering.Model
         public virtual string FromColumnId { get;[param: CanBeNull] set; }
         public virtual string ToColumnId { get;[param: CanBeNull] set; }
 
-        public static ForeignKeyColumnMapping CreateFromReader([NotNull] SqlDataReader reader)
+        public static ForeignKeyColumnMapping CreateFromReader([NotNull] SqlCeDataReader reader)
         {
             Check.NotNull(reader, nameof(reader));
 

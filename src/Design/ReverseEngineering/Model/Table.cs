@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 
-namespace Microsoft.Data.Entity.SqlServer.Design.ReverseEngineering.Model
+namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
 {
     public class Table
     {

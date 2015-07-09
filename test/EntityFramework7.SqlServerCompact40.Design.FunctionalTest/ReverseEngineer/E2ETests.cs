@@ -25,7 +25,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
     public class E2ETests : IClassFixture<E2EFixture>
     {
         public const string E2EConnectionString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=SqlServerReverseEngineerTestE2E;Integrated Security=True;MultipleActiveResultSets=True;Connect Timeout=30";
+            @"Data Source=E2E.sdf";
         private const string TestNamespace = @"E2ETest.Namespace";
         private const string TestOutputDir = @"E2ETest\Output\Dir";
         private static readonly List<string> _E2ETestExpectedWarnings = new List<string>

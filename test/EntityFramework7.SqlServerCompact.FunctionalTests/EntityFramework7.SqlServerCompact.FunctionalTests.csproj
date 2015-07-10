@@ -180,7 +180,6 @@
     <Compile Include="PropertyEntrySqlCeTest.cs" />
     <Compile Include="QueryLoggingSqlCeTest.cs" />
     <Compile Include="QuerySqlCeTest.cs" />
-    <Compile Include="QuerySqlCeTestOld.cs" />
     <Compile Include="SentinelGraphUpdatesSqlCeTest.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />
     <Compile Include="SqlCeDataStoreCreatorTest.cs" />

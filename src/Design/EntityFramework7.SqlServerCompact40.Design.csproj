@@ -39,11 +39,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.Relational.Design, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Relational.Design.7.0.0-beta6-13698\lib\net45\EntityFramework.Relational.Design.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.Relational.Design.7.0.0-beta6-13725\lib\net45\EntityFramework.Relational.Design.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Razor, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.Razor.4.0.0-beta6-11665\lib\net45\Microsoft.AspNet.Razor.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.4.0.0-beta6-11676\lib\net45\Microsoft.AspNet.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -142,7 +142,9 @@
     <Compile Include="ReverseEngineering\Model\Table.cs" />
     <Compile Include="ReverseEngineering\Model\TableColumn.cs" />
     <Compile Include="ReverseEngineering\Model\TableConstraintColumn.cs" />
+    <Compile Include="ReverseEngineering\SqlCeDbContextCodeGeneratorHelper.cs" />
     <Compile Include="ReverseEngineering\SqlCeDesignTimeMetadataProviderFactory.cs" />
+    <Compile Include="ReverseEngineering\SqlCeEntityTypeCodeGenerator.cs" />
     <Compile Include="ReverseEngineering\SqlCeMetaDataModelProvider.cs" />
     <Compile Include="ReverseEngineering\Utilities\SqlCeTypeMapping.cs" />
     <Compile Include="ReverseEngineering\Utilities\SqlServerLiteralUtilities.cs" />

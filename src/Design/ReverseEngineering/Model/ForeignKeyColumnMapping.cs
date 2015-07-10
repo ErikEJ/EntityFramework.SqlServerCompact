@@ -8,11 +8,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
     {
         public const string Query =
             @"SELECT TOP(2147483648)
-           '[' + FC.TABLE_NAME + ']' + '[' + FC.CONSTRAINT_NAME + ']' + '[' + cast(FC.ORDINAL_POSITION as nvarchar(30)) + ']'   [Id]
-       ,   '[' + PC.TABLE_NAME      + ']' + '[' + PC.COLUMN_NAME + ']'                                                          [ToColumnId]
-       ,   '[' + FC.TABLE_NAME      + ']' + '[' + FC.COLUMN_NAME + ']'                                                          [FromColumnId]
+           '[' + FC.CONSTRAINT_NAME + ']' + '[' + FC.TABLE_NAME + ']' + '[' + FC.COLUMN_NAME + ']'  [Id]
        ,   '[' + FC.TABLE_NAME + ']' + '[' + FC.CONSTRAINT_NAME + ']'                                                           [ConstraintId]
-       ,   FC.ORDINAL_POSITION [Ordinal]
+       ,   '[' + FC.TABLE_NAME      + ']' + '[' + FC.COLUMN_NAME + ']'                                                          [FromColumnId]
+       ,   '[' + PC.TABLE_NAME      + ']' + '[' + PC.COLUMN_NAME + ']'                                                          [ToColumnId]
        FROM
        INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS AS RC
        INNER JOIN

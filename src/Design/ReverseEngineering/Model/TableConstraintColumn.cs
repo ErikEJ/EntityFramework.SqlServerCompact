@@ -10,8 +10,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
             @"SELECT TOP(2147483648)
        '[' + tc.CONSTRAINT_NAME      + ']' + '[' + kcu.COLUMN_NAME + ']'    [Id]
        , '[' + tc.TABLE_NAME + ']' + '[' + kcu.COLUMN_NAME + ']'             [ColumnId]
-       , tc.CONSTRAINT_NAME                                               [ConstraintId]
-       , tc.CONSTRAINT_TYPE                                               [ConstraintType]       
+       , '[' + tc.CONSTRAINT_NAME + ']' [ConstraintId]
+       , tc.CONSTRAINT_TYPE [ConstraintType]
        , kcu.ORDINAL_POSITION [Ordinal]
        FROM
        INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc

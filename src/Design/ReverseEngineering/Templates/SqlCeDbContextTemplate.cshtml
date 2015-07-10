@@ -51,7 +51,7 @@ var className = Model.ClassName ?? Model.Helper.ClassName(Model.ConnectionString
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@Model.Helper.VerbatimStringLiteral(Model.ConnectionString));
+            options.UseSqlCe(@Model.Helper.VerbatimStringLiteral(Model.ConnectionString));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

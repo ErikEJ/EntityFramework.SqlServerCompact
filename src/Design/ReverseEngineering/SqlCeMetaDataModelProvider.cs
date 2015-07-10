@@ -33,12 +33,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         public const string SelfReferencingPrincipalEndNavigationNamePattern = "Inverse{0}";
 
         public static readonly string SqlCeDbContextTemplateResourceName =
-            typeof(SqlCeMetadataModelProvider).GetTypeInfo().Assembly.GetName().Name
-            + ".ReverseEngineering.Templates.SqlCeDbContextTemplate.cshtml";
+            "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Templates.SqlCeDbContextTemplate.cshtml";
 
         public static readonly string SqlCeEntityTypeTemplateResourceName =
-            typeof(SqlCeMetadataModelProvider).GetTypeInfo().Assembly.GetName().Name
-            + ".ReverseEngineering.Templates.SqlCeEntityTypeTemplate.cshtml";
+             "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Templates.SqlCeEntityTypeTemplate.cshtml";
 
         private readonly ILogger _logger;
         private readonly ModelUtilities _modelUtilities;
@@ -93,9 +91,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
                     conn, TableConstraintColumn.Query, TableConstraintColumn.CreateFromReader, tcc => tcc.Id);
                 CreatePrimaryForeignKeyAndUniqueMaps(tableConstraintColumns);
             }
-            return null;
-            //TODO ErikEJ (wait for package update!)
-            //return CreateModel();
+            return CreateModel();
         }
 
         public virtual string DbContextTemplate
@@ -110,9 +106,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 
         public virtual DbContextCodeGeneratorHelper DbContextCodeGeneratorHelper(DbContextGeneratorModel model)
         {
-            //TODO ErikEJ Implement after package refresh
-            //return new SqlCeDbContextCodeGeneratorHelper(model);
-            return null;
+            return new SqlCeDbContextCodeGeneratorHelper(model);
         }
 
         public virtual string EntityTypeTemplate
@@ -127,9 +121,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 
         public virtual EntityTypeCodeGeneratorHelper EntityTypeCodeGeneratorHelper(EntityTypeGeneratorModel model)
         {
-            //TODO ErikEJ Implement after package refresh
-            //return new SqlCeEntityTypeCodeGeneratorHelper(model);
-            return null;
+            return new SqlCeEntityTypeCodeGeneratorHelper(model);
         }
 
         public virtual void AddReferencesForTemplates(MetadataReferencesProvider metadataReferencesProvider)
@@ -219,21 +211,21 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             }
         }
 
-        //public virtual IModel CreateModel()
-        //{
-        //    // the relationalModel is an IModel, but not the one that will be returned
-        //    // it's just directly from the database - EntityType = table, Property = column
-        //    // etc with no attempt to hook up foreign key columns or make the
-        //    // names fit CSharp conventions etc.
-        //    var relationalModel = ConstructRelationalModel();
+        public virtual IModel CreateModel()
+        {
+            // the relationalModel is an IModel, but not the one that will be returned
+            // it's just directly from the database - EntityType = table, Property = column
+            // etc with no attempt to hook up foreign key columns or make the
+            // names fit CSharp conventions etc.
+            var relationalModel = ConstructRelationalModel();
 
-        //    var nameMapper = new MetadataModelNameMapper(
-        //        relationalModel,
-        //        entity => _tables[entity.Name].TableName,
-        //        property => _tableColumns[property.Name].ColumnName);
+            var nameMapper = new MetadataModelNameMapper(
+                relationalModel,
+                entity => _tables[entity.Name].TableName,
+                property => _tableColumns[property.Name].ColumnName);
 
-        //    return ConstructCodeGenModel(relationalModel, nameMapper);
-        //}
+            return ConstructCodeGenModel(relationalModel, nameMapper);
+        }
 
         public virtual IModel ConstructRelationalModel()
         {
@@ -276,86 +268,86 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             return relationalModel;
         }
 
-        //public virtual IModel ConstructCodeGenModel(
-        //    [NotNull] IModel relationalModel, [NotNull] MetadataModelNameMapper nameMapper)
-        //{
-        //    Check.NotNull(relationalModel, nameof(relationalModel));
-        //    Check.NotNull(nameMapper, nameof(nameMapper));
+        public virtual IModel ConstructCodeGenModel(
+            [NotNull] IModel relationalModel, [NotNull] MetadataModelNameMapper nameMapper)
+        {
+            Check.NotNull(relationalModel, nameof(relationalModel));
+            Check.NotNull(nameMapper, nameof(nameMapper));
 
-        //    var codeGenModel = new Entity.Metadata.Model();
-        //    foreach (var relationalEntityType in relationalModel.EntityTypes.Cast<EntityType>())
-        //    {
-        //        var codeGenEntityType = codeGenModel
-        //            .AddEntityType(nameMapper.EntityTypeToClassNameMap[relationalEntityType]);
-        //        _relationalEntityTypeToCodeGenEntityTypeMap[relationalEntityType] = codeGenEntityType;
-        //        codeGenEntityType.Relational().Table = _tables[relationalEntityType.Name].TableName;
-        //        codeGenEntityType.Relational().Schema = _tables[relationalEntityType.Name].SchemaName;
+            var codeGenModel = new Entity.Metadata.Model();
+            foreach (var relationalEntityType in relationalModel.EntityTypes.Cast<EntityType>())
+            {
+                var codeGenEntityType = codeGenModel
+                    .AddEntityType(nameMapper.EntityTypeToClassNameMap[relationalEntityType]);
+                _relationalEntityTypeToCodeGenEntityTypeMap[relationalEntityType] = codeGenEntityType;
+                codeGenEntityType.Relational().Table = _tables[relationalEntityType.Name].TableName;
+                codeGenEntityType.Relational().Schema = _tables[relationalEntityType.Name].SchemaName;
 
-        //        // Loop over relational properties constructing a matching property in the 
-        //        // codeGenModel. Also accumulate:
-        //        //    a) primary key properties
-        //        //    b) constraint properties
-        //        var primaryKeyProperties = new List<Property>();
-        //        var constraints = new Dictionary<string, List<Property>>();
-        //        _relationalEntityTypeToForeignKeyConstraintsMap[relationalEntityType] = constraints;
-        //        foreach (var relationalProperty in relationalEntityType.Properties)
-        //        {
-        //            int primaryKeyOrdinal;
-        //            if (_primaryKeyOrdinals.TryGetValue(relationalProperty.Name, out primaryKeyOrdinal))
-        //            {
-        //                // add _relational_ property so we can order on the ordinal later
-        //                primaryKeyProperties.Add(relationalProperty);
-        //            }
+                // Loop over relational properties constructing a matching property in the 
+                // codeGenModel. Also accumulate:
+                //    a) primary key properties
+                //    b) constraint properties
+                var primaryKeyProperties = new List<Property>();
+                var constraints = new Dictionary<string, List<Property>>();
+                _relationalEntityTypeToForeignKeyConstraintsMap[relationalEntityType] = constraints;
+                foreach (var relationalProperty in relationalEntityType.Properties)
+                {
+                    int primaryKeyOrdinal;
+                    if (_primaryKeyOrdinals.TryGetValue(relationalProperty.Name, out primaryKeyOrdinal))
+                    {
+                        // add _relational_ property so we can order on the ordinal later
+                        primaryKeyProperties.Add(relationalProperty);
+                    }
 
-        //            Dictionary<string, int> foreignKeyConstraintIdOrdinalMap;
-        //            if (_foreignKeyOrdinals.TryGetValue(relationalProperty.Name, out foreignKeyConstraintIdOrdinalMap))
-        //            {
-        //                // relationalProperty represents (part of) a foreign key
-        //                foreach (var constraintId in foreignKeyConstraintIdOrdinalMap.Keys)
-        //                {
-        //                    List<Property> constraintProperties;
-        //                    if (!constraints.TryGetValue(constraintId, out constraintProperties))
-        //                    {
-        //                        constraintProperties = new List<Property>();
-        //                        constraints.Add(constraintId, constraintProperties);
-        //                    }
-        //                    constraintProperties.Add(relationalProperty);
-        //                }
-        //            }
+                    Dictionary<string, int> foreignKeyConstraintIdOrdinalMap;
+                    if (_foreignKeyOrdinals.TryGetValue(relationalProperty.Name, out foreignKeyConstraintIdOrdinalMap))
+                    {
+                        // relationalProperty represents (part of) a foreign key
+                        foreach (var constraintId in foreignKeyConstraintIdOrdinalMap.Keys)
+                        {
+                            List<Property> constraintProperties;
+                            if (!constraints.TryGetValue(constraintId, out constraintProperties))
+                            {
+                                constraintProperties = new List<Property>();
+                                constraints.Add(constraintId, constraintProperties);
+                            }
+                            constraintProperties.Add(relationalProperty);
+                        }
+                    }
 
-        //            var codeGenProperty = codeGenEntityType.AddProperty(
-        //                nameMapper.PropertyToPropertyNameMap[relationalProperty],
-        //                relationalProperty.ClrType,
-        //                shadowProperty: true);
-        //            _relationalPropertyToCodeGenPropertyMap[relationalProperty] = codeGenProperty;
-        //            ApplyPropertyProperties(codeGenProperty, _tableColumns[relationalProperty.Name]);
-        //        } // end of loop over all relational properties for given EntityType
+                    var codeGenProperty = codeGenEntityType.AddProperty(
+                        nameMapper.PropertyToPropertyNameMap[relationalProperty],
+                        relationalProperty.ClrType,
+                        shadowProperty: true);
+                    _relationalPropertyToCodeGenPropertyMap[relationalProperty] = codeGenProperty;
+                    ApplyPropertyProperties(codeGenProperty, _tableColumns[relationalProperty.Name]);
+                } // end of loop over all relational properties for given EntityType
 
-        //        if (primaryKeyProperties.Count() > 0)
-        //        {
-        //            // order the relational properties by their primaryKeyOrdinal, then return a list
-        //            // of the codeGen properties mapped to each relational property in that order
-        //            codeGenEntityType.SetPrimaryKey(
-        //                primaryKeyProperties
-        //                    .OrderBy(p => _primaryKeyOrdinals[p.Name]) // note: for relational property p.Name is its columnId
-        //                    .Select(p => _relationalPropertyToCodeGenPropertyMap[p])
-        //                    .ToList());
-        //        }
-        //        else
-        //        {
-        //            var errorMessage = Strings.NoPrimaryKeyColumns(
-        //                codeGenEntityType.Name,
-        //                _tables[relationalEntityType.Name].SchemaName,
-        //                _tables[relationalEntityType.Name].TableName);
-        //            codeGenEntityType.AddAnnotation(AnnotationNameEntityTypeError, errorMessage);
-        //            _logger.LogWarning(Strings.CannotGenerateEntityType(codeGenEntityType.Name, errorMessage));
-        //        }
-        //    } // end of loop over all relational EntityTypes
+                if (primaryKeyProperties.Count() > 0)
+                {
+                    // order the relational properties by their primaryKeyOrdinal, then return a list
+                    // of the codeGen properties mapped to each relational property in that order
+                    codeGenEntityType.SetPrimaryKey(
+                        primaryKeyProperties
+                            .OrderBy(p => _primaryKeyOrdinals[p.Name]) // note: for relational property p.Name is its columnId
+                            .Select(p => _relationalPropertyToCodeGenPropertyMap[p])
+                            .ToList());
+                }
+                else
+                {
+                    var errorMessage = Strings.NoPrimaryKeyColumns(
+                        codeGenEntityType.Name,
+                        _tables[relationalEntityType.Name].SchemaName,
+                        _tables[relationalEntityType.Name].TableName);
+                    codeGenEntityType.AddAnnotation(AnnotationNameEntityTypeError, errorMessage);
+                    _logger.LogWarning(Strings.CannotGenerateEntityType(codeGenEntityType.Name, errorMessage));
+                }
+            } // end of loop over all relational EntityTypes
 
-        //    AddForeignKeysToCodeGenModel(codeGenModel);
+            AddForeignKeysToCodeGenModel(codeGenModel);
 
-        //    return codeGenModel;
-        //}
+            return codeGenModel;
+        }
 
         public virtual void AddForeignKeysToCodeGenModel([NotNull] IModel codeGenModel)
         {
@@ -395,7 +387,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
                                 })
                                 .ToList();
 
-                        // Note: SQL Server allows more than 1 foreign key on the exact same
+                        // Note: SQL Server Compact allows more than 1 foreign key on the exact same
                         // set of properties. Here we just conflate into one foreign key.
                         var codeGenForeignKey = codeGenEntityType
                             .GetOrAddForeignKey(foreignKeyCodeGenProperties, targetPrimaryKey, targetCodeGenEntityType);
@@ -567,15 +559,18 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 
             if (tableColumn.IsIdentity)
             {
-                //TODO ErikEJ Is this generated properly?
-                //property.SqlServer().IdentityStrategy = SqlServerIdentityStrategy.IdentityColumn;
+                if (typeof(byte) == SqlCeTypeMapping._sqlTypeToClrTypeMap[tableColumn.DataType])
+                {
+                    _logger.LogWarning(
+                        Strings.DataTypeDoesNotAllowIdentityStrategy(tableColumn.Id, tableColumn.DataType));
+                }
                 property.ValueGenerated = ValueGenerated.OnAdd;
             }
 
             if (tableColumn.IsStoreGenerated
-                || tableColumn.DataType == "timestamp")
+                || tableColumn.DataType == "rowversion")
             {
-                // timestamp columns should always be treated as store generated
+                // rowversion columns should always be treated as store generated
                 property.ValueGenerated = ValueGenerated.OnAddOrUpdate;
             }
 

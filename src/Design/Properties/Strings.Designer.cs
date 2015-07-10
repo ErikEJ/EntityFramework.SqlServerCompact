@@ -17,7 +17,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string CannotFindForeignKeyMappingForConstraintId([CanBeNull] object constraintId, [CanBeNull] object fromColumnId)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("CannotFindForeignKeyMappingForConstraintId", "constraintId", "fromColumnId"), constraintId, fromColumnId);
+            return string.Format(CultureInfo.CurrentCulture, "Could not find foreignKeyMapping for ConstraintId {0} for FromColumn {1}", constraintId, fromColumnId);
         }
 
         /// <summary>
@@ -102,19 +102,22 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
 
         private static string GetString(string name, params string[] formatterNames)
         {
-            var value = _resourceManager.GetString(name);
+            //TODO Add error messages
+            return name;
 
-            Debug.Assert(value != null);
+            //var value = _resourceManager.GetString(name);
 
-            if (formatterNames != null)
-            {
-                for (var i = 0; i < formatterNames.Length; i++)
-                {
-                    value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
-                }
-            }
+            //Debug.Assert(value != null);
 
-            return value;
+            //if (formatterNames != null)
+            //{
+            //    for (var i = 0; i < formatterNames.Length; i++)
+            //    {
+            //        value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
+            //    }
+            //}
+
+            //return value;
         }
     }
 }

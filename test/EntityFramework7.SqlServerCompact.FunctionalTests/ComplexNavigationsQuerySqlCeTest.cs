@@ -84,12 +84,9 @@ INNER JOIN (
     ) AS [l0] ON [l].[OneToMany_Optional_InverseId] = [l0].[Id0]
     INNER JOIN [Level2] AS [l1] ON [l].[OneToMany_Required_InverseId] = [l1].[Id]
 ) AS [l1] ON [l].[OneToMany_Optional_InverseId] = [l1].[Id1]
-ORDER BY [l1].[Id], [l1].[Id0]", Sql);
+ORDER BY [l1].[Id], [l1].[Id0], [l1].[Id1]", Sql);
         }
 
-        private static string Sql
-        {
-            get { return TestSqlLoggerFactory.Sql; }
-        }
+        private static string Sql => TestSqlLoggerFactory.Sql;
     }
 }

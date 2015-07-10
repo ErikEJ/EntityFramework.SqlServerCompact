@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Resources;
 
 #if SQLCE35
 [assembly: AssemblyTitle("EntityFramework7.SqlServerCompact35.Design")]
@@ -11,3 +12,6 @@
 [assembly: AssemblyVersion("7.0.0.0")]
 [assembly: AssemblyFileVersion("7.0.0.0")]
 [assembly: AssemblyInformationalVersion("7.0.0.0")]
+
+[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: AssemblyMetadata("Serviceable", "True")]

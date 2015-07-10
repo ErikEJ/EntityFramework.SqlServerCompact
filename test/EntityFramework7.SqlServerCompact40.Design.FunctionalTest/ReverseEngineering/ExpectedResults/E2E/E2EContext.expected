@@ -3,11 +3,11 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace E2ETest.Namespace
 {
-    public partial class SqlServerReverseEngineerTestE2EContext : DbContext
+    public partial class E2EContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=SqlServerReverseEngineerTestE2E;Integrated Security=True;MultipleActiveResultSets=True;Connect Timeout=30");
+            options.UseSqlServer(@"Data Source=E2E.sdf");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -18,13 +18,9 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.bitColumn).Required();
 
-                entity.Property(e => e.dateColumn).Required();
-
-                entity.Property(e => e.datetime2Column).HasColumnType("datetime2(7)");
-
                 entity.Property(e => e.decimalColumn)
                     .Required()
-                    .HasColumnType("decimal(18, 0)");
+                    .HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.floatColumn).Required();
 
@@ -37,8 +33,6 @@ namespace E2ETest.Namespace
                     .HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.smallintColumn).Required();
-
-                entity.Property(e => e.smallmoneyColumn).Required();
 
                 entity.Property(e => e.timestampColumn).ValueGeneratedOnAddOrUpdate();
 
@@ -95,11 +89,11 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<PropertyConfiguration>(entity =>
             {
+                entity.Property(e => e.PropertyConfigurationID).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.A).Required();
 
                 entity.Property(e => e.B).Required();
-
-                entity.Property(e => e.SumOfAAndB).ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.TimestampColumn)
                     .Required()
@@ -107,25 +101,17 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.WithDateDefaultExpression)
                     .Required()
-                    .HasColumnType("datetime2(7)")
                     .DefaultValueSql("getdate()");
 
-                entity.Property(e => e.WithDefaultValue)
-                    .Required()
-                    .DefaultValue(-1);
+                entity.Property(e => e.WithDefaultValue).Required();
 
                 entity.Property(e => e.WithGuidDefaultExpression)
                     .Required()
-                    .DefaultValueSql("newsequentialid()");
+                    .DefaultValueSql("NEWID()");
 
                 entity.Property(e => e.WithMoneyDefaultValue)
                     .Required()
                     .DefaultValue(0.00m);
-            });
-
-            modelBuilder.Entity<ReferredToByTableWithUnmappablePrimaryKeyColumn>(entity =>
-            {
-                entity.Property(e => e.AColumn).Required();
             });
 
             modelBuilder.Entity<SelfReferencing>(entity =>
@@ -139,7 +125,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<Test_Spaces_Keywords_Table>(entity =>
             {
-                entity.Table("Test Spaces Keywords Table");
+                entity.ToTable("Test Spaces Keywords Table");
 
                 entity.Property(e => e.Test_Spaces_Keywords_TableID).HasColumnName("Test Spaces Keywords TableID");
 
@@ -185,7 +171,6 @@ namespace E2ETest.Namespace
         public virtual DbSet<OneToOneSeparateFKDependent> OneToOneSeparateFKDependent { get; set; }
         public virtual DbSet<OneToOneSeparateFKPrincipal> OneToOneSeparateFKPrincipal { get; set; }
         public virtual DbSet<PropertyConfiguration> PropertyConfiguration { get; set; }
-        public virtual DbSet<ReferredToByTableWithUnmappablePrimaryKeyColumn> ReferredToByTableWithUnmappablePrimaryKeyColumn { get; set; }
         public virtual DbSet<SelfReferencing> SelfReferencing { get; set; }
         public virtual DbSet<Test_Spaces_Keywords_Table> Test_Spaces_Keywords_Table { get; set; }
     }

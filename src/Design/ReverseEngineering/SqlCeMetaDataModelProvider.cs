@@ -605,12 +605,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             Check.NotNull(assembly, nameof(assembly));
             Check.NotEmpty(resourceName, nameof(resourceName));
 
-            string[] resourceNames = assembly.GetManifestResourceNames();
-            foreach (string resName in resourceNames)
-            {
-                Console.WriteLine(resName);
-            }
-
             using (var resourceStream = assembly.GetManifestResourceStream(resourceName))
             {
                 using (var streamReader = new StreamReader(resourceStream))

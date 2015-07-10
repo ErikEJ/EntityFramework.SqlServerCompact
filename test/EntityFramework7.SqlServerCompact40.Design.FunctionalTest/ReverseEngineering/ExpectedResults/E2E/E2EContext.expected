@@ -7,7 +7,7 @@ namespace E2ETest.Namespace
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Data Source=E2E.sdf");
+            options.UseSqlCe(@"Data Source=E2E.sdf");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -103,7 +103,9 @@ namespace E2ETest.Namespace
                     .Required()
                     .DefaultValueSql("getdate()");
 
-                entity.Property(e => e.WithDefaultValue).Required();
+                entity.Property(e => e.WithDefaultValue)
+                    .Required()
+                    .DefaultValue(-1);
 
                 entity.Property(e => e.WithGuidDefaultExpression)
                     .Required()

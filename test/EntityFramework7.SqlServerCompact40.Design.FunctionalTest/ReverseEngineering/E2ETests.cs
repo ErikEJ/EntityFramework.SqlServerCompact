@@ -102,10 +102,6 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
                 Assert.Equal(expectedFilePath, filePaths[i++]);
             }
 
-            //TODO ErikEJ Investigate why 
-            //entity.Reference(d => d.OneToOneSeparateFKDependentFK).InverseCollection(p => p.OneToOneSeparateFKDependent).ForeignKey(d => new { d.OneToOneSeparateFKDependentFK1, d.OneToOneSeparateFKDependentFK2 });
-            //this is wrong compared to SQL Server expected
-
             //TODO ErikEJ Add defaultvalue (-1) to "withdefaultvalue" column
 
             var listOfFileContents = new List<string>();
@@ -116,25 +112,25 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
                 listOfFileContents.Add(fileContents);
             }
 
-            //// compile generated code
-            //var metadataReferencesProvider =
-            //    (MetadataReferencesProvider)serviceProvider.GetService(typeof(MetadataReferencesProvider));
-            //var metadataReferences = SetupMetadataReferencesForCompilationOfGeneratedCode(metadataReferencesProvider);
-            //var roslynCompilationService = new RoslynCompilationService();
-            //var compilationResult =
-            //    roslynCompilationService.Compile(listOfFileContents, metadataReferences);
+            // compile generated code
+            var metadataReferencesProvider =
+                (MetadataReferencesProvider)serviceProvider.GetService(typeof(MetadataReferencesProvider));
+            var metadataReferences = SetupMetadataReferencesForCompilationOfGeneratedCode(metadataReferencesProvider);
+            var roslynCompilationService = new RoslynCompilationService();
+            var compilationResult =
+                roslynCompilationService.Compile(listOfFileContents, metadataReferences);
 
-            //if (compilationResult.Messages.Any())
-            //{
-            //    _output.WriteLine("Compilation Errors from compiling generated code");
-            //    _output.WriteLine("================================================");
-            //    foreach (var message in compilationResult.Messages)
-            //    {
-            //        _output.WriteLine(message);
-            //    }
-            //    _output.WriteLine("================================================");
-            //    Assert.Equal(string.Empty, "See Compilation Errors in Output.");
-            //}
+            if (compilationResult.Messages.Any())
+            {
+                _output.WriteLine("Compilation Errors from compiling generated code");
+                _output.WriteLine("================================================");
+                foreach (var message in compilationResult.Messages)
+                {
+                    _output.WriteLine(message);
+                }
+                _output.WriteLine("================================================");
+                Assert.Equal(string.Empty, "See Compilation Errors in Output.");
+            }
         }
 
         private ServiceProvider SetupServiceProvider()

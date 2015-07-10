@@ -102,8 +102,6 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
                 Assert.Equal(expectedFilePath, filePaths[i++]);
             }
 
-            //TODO ErikEJ Add defaultvalue (-1) to "withdefaultvalue" column
-
             var listOfFileContents = new List<string>();
             foreach (var fileName in _E2ETestExpectedFileNames)
             {

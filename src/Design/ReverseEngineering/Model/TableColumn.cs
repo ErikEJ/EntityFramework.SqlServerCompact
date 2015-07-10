@@ -1,4 +1,5 @@
-﻿using System.Data.SqlServerCe;
+﻿using System;
+using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 
@@ -19,7 +20,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
        ,   CAST(c.DATETIME_PRECISION as integer) [DateTimePrecision]
        ,   c.NUMERIC_SCALE [Scale]
        ,   CAST(CASE WHEN c.AUTOINC_INCREMENT IS NULL THEN 0 ELSE 1 END AS bit) [IsIdentity]
-       ,   CAST(CASE WHEN c.AUTOINC_INCREMENT IS NULL THEN 0 ELSE 1 END AS bit) [IsStoreGenerated]
+       ,   CAST(CASE WHEN c.DATA_TYPE = 'rowversion' THEN 1 ELSE 0 END AS bit) [IsStoreGenerated]
        ,   c.COLUMN_DEFAULT as [Default]
         FROM
        INFORMATION_SCHEMA.COLUMNS c
@@ -55,9 +56,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
             tableColumn.IsNullable = reader.GetBoolean(4);
             tableColumn.DataType = reader.IsDBNull(5) ? null : reader.GetString(5);
             tableColumn.MaxLength = reader.IsDBNull(6) ? (int?)null : reader.GetInt32(6);
-            tableColumn.NumericPrecision = reader.IsDBNull(7) ? (int?)null : reader.GetInt32(7);
+            tableColumn.NumericPrecision = reader.IsDBNull(7) ? (int?)null : Convert.ToInt32(reader[7]);
             tableColumn.DateTimePrecision = reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8);
-            tableColumn.Scale = reader.IsDBNull(9) ? (int?)null : reader.GetInt32(9);
+            tableColumn.Scale = reader.IsDBNull(9) ? (int?)null : Convert.ToInt32(reader[9]);
             tableColumn.IsIdentity = reader.GetBoolean(10);
             tableColumn.IsStoreGenerated = reader.GetBoolean(11);
             tableColumn.DefaultValue = reader.IsDBNull(12) ? null : reader.GetString(12);

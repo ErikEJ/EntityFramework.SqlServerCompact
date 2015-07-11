@@ -25,7 +25,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string CannotFindRelationalPropertyForColumnId([CanBeNull] object constraintId, [CanBeNull] object toColumnId)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("CannotFindRelationalPropertyForColumnId", "constraintId", "toColumnId"), constraintId, toColumnId);
+            return string.Format(CultureInfo.CurrentCulture, "For foreign key ConstraintId {0}, could not find relational property mapped to ToColumn with ColumnId {1}", constraintId, toColumnId);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string CannotFindTableForColumn([CanBeNull] object columnId, [CanBeNull] object tableId)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("CannotFindTableForColumn", "columnId", "tableId"), columnId, tableId);
+            return string.Format(CultureInfo.CurrentCulture, "For columnId {0}. Could not find table with TableId {1}. Skipping column", "columnId", "tableId", columnId, tableId);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string CannotFindToColumnForConstraintId([CanBeNull] object constraintId, [CanBeNull] object toColumnId)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("CannotFindToColumnForConstraintId", "constraintId", "toColumnId"), constraintId, toColumnId);
+            return string.Format(CultureInfo.CurrentCulture, "For foreign key ConstraintId {0}. Could not find ToColumn with ColumnId {1}", constraintId, toColumnId);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string CannotGenerateEntityType([CanBeNull] object entityTypeName, [CanBeNull] object errorMessage)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("CannotGenerateEntityType", "entityTypeName", "errorMessage"), entityTypeName, errorMessage);
+            return string.Format(CultureInfo.CurrentCulture, "Unable to generate EntityType {0}. Error message: {1}", entityTypeName, errorMessage);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string CannotInterpretSqlServerStringLiteral([CanBeNull] object sqlServerStringLiteral)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("CannotInterpretSqlServerStringLiteral", "sqlServerStringLiteral"), sqlServerStringLiteral);
+            return string.Format(CultureInfo.CurrentCulture, "Unable to interpret the string {0} as a SQLServer string literal", sqlServerStringLiteral);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string NoPrimaryKeyColumns([CanBeNull] object entityTypeName, [CanBeNull] object schemaName, [CanBeNull] object name)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("NoPrimaryKeyColumns", "entityTypeName", "schemaName", "name"), entityTypeName, schemaName, name);
+            return string.Format(CultureInfo.CurrentCulture, "Attempt to generate EntityType {0} failed. Unable to identify any primary key columns in the underlying SQL Server Compact table {1}", entityTypeName, name);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string UnableToAddNavigationProperty([CanBeNull] object referencedEntityTypeName)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("UnableToAddNavigationProperty", "referencedEntityTypeName"), referencedEntityTypeName);
+            return string.Format(CultureInfo.CurrentCulture, "Unable to add a Navigation Property referencing type {0} because of errors generating that EntityType", referencedEntityTypeName);
         }
 
         /// <summary>
@@ -97,27 +97,12 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
         /// </summary>
         public static string UnableToConvertDefaultValue([CanBeNull] object columnId, [CanBeNull] object defaultValue, [CanBeNull] object propertyType, [CanBeNull] object propertyName, [CanBeNull] object entityTypeName)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("UnableToConvertDefaultValue", "columnId", "defaultValue", "propertyType", "propertyName", "entityTypeName"), columnId, defaultValue, propertyType, propertyName, entityTypeName);
+            return string.Format(CultureInfo.CurrentCulture, "For columnId {0} unable to convert default value {1} into type {2}. Will not generate code setting a default value for the property {3} on entity type {4}", columnId, defaultValue, propertyType, propertyName, entityTypeName);
         }
 
         private static string GetString(string name, params string[] formatterNames)
         {
-            //TODO Add error messages
             return name;
-
-            //var value = _resourceManager.GetString(name);
-
-            //Debug.Assert(value != null);
-
-            //if (formatterNames != null)
-            //{
-            //    for (var i = 0; i < formatterNames.Length; i++)
-            //    {
-            //        value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
-            //    }
-            //}
-
-            //return value;
         }
     }
 }

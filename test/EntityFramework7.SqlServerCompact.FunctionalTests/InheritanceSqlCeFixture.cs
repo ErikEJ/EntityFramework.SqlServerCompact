@@ -8,7 +8,7 @@ using Microsoft.Framework.Logging;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class InheritanceSqlCeFixture : InheritanceFixtureBase
+    public class InheritanceSqlCeFixture : InheritanceRelationalFixture
     {
         private readonly DbContextOptions _options;
         private readonly IServiceProvider _serviceProvider;
@@ -64,34 +64,23 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                     REFERENCES[Country]([Id]) 
                     ON DELETE NO ACTION ON UPDATE NO ACTION;");
 
+            testStore.ExecuteNonQuery(@"
+                CREATE TABLE Plant(
+                    Genus int NOT NULL,
+                    Species nvarchar(100) NOT NULL PRIMARY KEY,
+                    Name nvarchar(100) NOT NULL,
+                    HasThorns bit
+                );");
+
             using (var context = CreateContext())
             {
                 SeedData(context);
             }
         }
 
-        public override AnimalContext CreateContext()
+        public override InheritanceContext CreateContext()
         {
-            return new AnimalContext(_serviceProvider, _options);
-        }
-
-        public override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            // TODO: Code First this
-
-            var animal = modelBuilder.Entity<Animal>().Metadata;
-
-            var discriminatorProperty
-                = animal.AddProperty("Discriminator", typeof(string), shadowProperty: true);
-
-            discriminatorProperty.IsNullable = false;
-            //discriminatorProperty.IsReadOnlyBeforeSave = true; // #2132
-            discriminatorProperty.IsReadOnlyAfterSave = true;
-            discriminatorProperty.RequiresValueGenerator = true;
-
-            animal.Relational().DiscriminatorProperty = discriminatorProperty;
+            return new InheritanceContext(_serviceProvider, _options);
         }
     }
 }

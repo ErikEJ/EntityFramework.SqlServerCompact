@@ -165,7 +165,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(4000)", typeMapping.DefaultTypeName);
-            Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
 
         [Fact]
@@ -175,7 +175,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(4000)", typeMapping.DefaultTypeName);
-            Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
 
         [Fact]
@@ -189,7 +189,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
-            Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
 
         [Fact]
@@ -204,7 +204,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
-            Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
 
         [Fact]
@@ -220,7 +220,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.String, typeMapping.StoreType);
             Assert.Equal("nvarchar(256)", typeMapping.DefaultTypeName);
-            Assert.Equal(4000, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
         }
 
         [Fact]
@@ -252,7 +252,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.Binary, typeMapping.StoreType);
             Assert.Equal("varbinary(512)", typeMapping.DefaultTypeName);
-            Assert.Equal(8000, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
         }
 
         [Fact]
@@ -267,7 +267,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.Binary, typeMapping.StoreType);
             Assert.Equal("varbinary(512)", typeMapping.DefaultTypeName);
-            Assert.Equal(8000, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
         }
 
         [Fact]
@@ -283,7 +283,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
             Assert.Equal(DbType.Binary, typeMapping.StoreType);
             Assert.Equal("varbinary(512)", typeMapping.DefaultTypeName);
-            Assert.Equal(8000, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
+            Assert.Equal(0, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
         }
 
         [Fact]

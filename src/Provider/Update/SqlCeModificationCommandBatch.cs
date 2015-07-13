@@ -102,7 +102,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Task.Run(() => Execute(transaction, typeMapper, context, logger));
+            return Task.Run(() => Execute(transaction, typeMapper, context, logger), cancellationToken);
         }
 
         private Tuple<string, string> SplitCommandText(string commandText)

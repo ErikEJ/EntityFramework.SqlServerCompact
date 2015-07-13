@@ -70,46 +70,40 @@ INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
 VALUES (@p0, @p1, @p2);", Sql);
         }
 
-
-        //TODO ErikEJ Investigate if SQL CE provider does not throw on too long values
         public override void MaxLengthAttribute_throws_while_inserting_value_longer_than_max_length()
         {
-            //base.MaxLengthAttribute_throws_while_inserting_value_longer_than_max_length();
+            base.MaxLengthAttribute_throws_while_inserting_value_longer_than_max_length();
 
-//            Assert.Equal(@"@p0: Short
-//@p1: ValidString
-//@p2: 00000000-0000-0000-0000-000000000001
+            Assert.Equal(@"@p0: Short
+@p1: ValidString
+@p2: 00000000-0000-0000-0000-000000000001
 
-//INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-//VALUES (@p0, @p1, @p2);
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
+VALUES (@p0, @p1, @p2);
 
-//@p0: VeryVeryVeryVeryVeryVeryLongString
-//@p1: ValidString
-//@p2: 00000000-0000-0000-0000-000000000002
+@p0: VeryVeryVeryVeryVeryVeryLongString
+@p1: ValidString
+@p2: 00000000-0000-0000-0000-000000000002
 
-//INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-//VALUES (@p0, @p1, @p2);",
-//                Sql);
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
+VALUES (@p0, @p1, @p2);",
+                Sql);
         }
 
         public override void StringLengthAttribute_throws_while_inserting_value_longer_than_max_length()
         {
-//            base.StringLengthAttribute_throws_while_inserting_value_longer_than_max_length();
+            base.StringLengthAttribute_throws_while_inserting_value_longer_than_max_length();
 
-//            Assert.Equal(@"@p0: ValidString
+            Assert.Equal(@"@p0: ValidString
 
-//SET NOCOUNT OFF;
-//INSERT INTO [Two] ([Data])
-//OUTPUT INSERTED.[Id], INSERTED.[Timestamp]
-//VALUES (@p0);
+INSERT INTO [Two] ([Data])
+VALUES (@p0);
 
-//@p0: ValidButLongString
+@p0: ValidButLongString
 
-//SET NOCOUNT OFF;
-//INSERT INTO [Two] ([Data])
-//OUTPUT INSERTED.[Id], INSERTED.[Timestamp]
-//VALUES (@p0);",
-//                Sql);
+INSERT INTO [Two] ([Data])
+VALUES (@p0);",
+                Sql);
         }
 
         public override void TimestampAttribute_throws_if_value_in_database_changed()

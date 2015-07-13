@@ -19,11 +19,15 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
 
         public static bool Exists([NotNull] this SqlCeConnection connection)
         {
+            Check.NotNull(connection, nameof(connection));
+
             return File.Exists(PathFromConnectionString(connection.ConnectionString));
         }
 
         public static void Drop([NotNull] this SqlCeConnection connection, bool throwOnOpen = true)
         {
+            Check.NotNull(connection, nameof(connection));
+
             if (throwOnOpen)
             {
                 connection.Open();
@@ -49,7 +53,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
 
         private static string GetFullConnectionString(string connectionString)
         {
-            using (SqlCeReplication repl = new SqlCeReplication())
+            using (var repl = new SqlCeReplication())
             {
                 repl.SubscriberConnectionString = connectionString;
                 return repl.SubscriberConnectionString;

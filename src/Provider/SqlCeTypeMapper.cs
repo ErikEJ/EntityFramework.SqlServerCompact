@@ -107,34 +107,5 @@ namespace Microsoft.Data.Entity.SqlServerCompact
                         _varbinarymax, _varbinarymax, _varbinary512, _rowversion)
                     : base.GetCustomMapping(property);
         }
-
-        //protected override RelationalTypeMapping TryMapFromName(
-        //    string typeName,
-        //    string typeNamePrefix,
-        //    int? firstQualifier,
-        //    int? secondQualifier)
-        //{
-        //    return TryMapSized(typeName, typeNamePrefix, new[] { "nvarchar", "national char varying", "national character varying" }, firstQualifier)
-        //           ?? TryMapSized(typeName, typeNamePrefix, new[] { "varbinary", "binary varying" }, firstQualifier, DbType.Binary)
-        //           ?? TryMapScaled(typeName, typeNamePrefix, new[] { "decimal", "numeric", "dec" }, firstQualifier, secondQualifier)
-        //           ?? TryMapScaled(typeName, typeNamePrefix, new[] { "float", "double precision" }, firstQualifier, secondQualifier)
-        //           ?? TryMapScaled(typeName, typeNamePrefix, new[] { "datetime" }, firstQualifier, secondQualifier, DbType.DateTime)
-        //           ?? TryMapSized(typeName, typeNamePrefix, new[] { "nchar", "national char", "national character" }, firstQualifier, DbType.StringFixedLength)
-        //           ?? TryMapSized(typeName, typeNamePrefix, new[] { "binary" }, firstQualifier, DbType.Binary)
-        //           ?? base.TryMapFromName(typeName, typeNamePrefix, firstQualifier, secondQualifier);
-        //}
-
-        //protected override RelationalTypeMapping MapCustom(IProperty property)
-        //{
-        //    Check.NotNull(property, nameof(property));
-
-        //    var clrType = property.ClrType.UnwrapEnumType();
-
-        //    return clrType == typeof(string)
-        //        ? MapString(property, "nvarchar", _nvarchar, _nvarchar256)
-        //        : clrType == typeof(byte[])
-        //            ? MapByteArray(property, "varbinary", _varbinarymax, _varbinary512, _rowversion)
-        //            : base.MapCustom(property);
-        //}
     }
 }

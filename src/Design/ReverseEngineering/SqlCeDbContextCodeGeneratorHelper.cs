@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlServerCe;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
@@ -32,14 +33,29 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         {
             Check.NotEmpty(connectionString, nameof(connectionString));
 
-            var builder = new SqlCeConnectionStringBuilder(connectionString);
-            if (builder.DataSource != null)
+            var path = PathFromConnectionString(connectionString);
+            if (File.Exists(path))
             {
                 return CSharpUtilities.Instance.GenerateCSharpIdentifier(
-                    System.IO.Path.GetFileNameWithoutExtension(builder.DataSource) + _dbContextSuffix, null);
+                    Path.GetFileNameWithoutExtension(path) + _dbContextSuffix, null);
             }
 
             return base.ClassName(connectionString);
+        }
+
+        private string PathFromConnectionString(string connectionString)
+        {
+            var conn = new SqlCeConnection(GetFullConnectionString(connectionString));
+            return conn.Database;
+        }
+
+        private string GetFullConnectionString(string connectionString)
+        {
+            using (var repl = new SqlCeReplication())
+            {
+                repl.SubscriberConnectionString = connectionString;
+                return repl.SubscriberConnectionString;
+            }
         }
 
         public override void AddNavigationsConfiguration(EntityConfiguration entityConfiguration)

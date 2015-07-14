@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23103.0
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact40", "src\Provider\EntityFramework7.SqlServerCompact40.csproj", "{0BDB0CBB-C42A-45E5-8518-14E0C31119AD}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact40.Design", "src\Design\EntityFramework7.SqlServerCompact40.Design.csproj", "{38B6C219-941A-4DCF-A087-673616418E36}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact40.Design.FunctionalTest", "test\EntityFramework7.SqlServerCompact40.Design.FunctionalTest\EntityFramework7.SqlServerCompact40.Design.FunctionalTest.csproj", "{543477FB-CF81-446D-AB02-1E41382DED5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework7.SqlServerCompact35.Design", "src\Design\EntityFramework7.SqlServerCompact35.Design.csproj", "{5056E1D2-C5F0-4613-AB74-1E470734D8EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,14 @@ Global
 		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|x86.ActiveCfg = Release|Any CPU
 		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|x86.Build.0 = Release|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Debug|x86.Build.0 = Debug|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Release|x86.ActiveCfg = Release|Any CPU
+		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

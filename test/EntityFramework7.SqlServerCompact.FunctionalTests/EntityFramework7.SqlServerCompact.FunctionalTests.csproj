@@ -196,7 +196,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Provider\EntityFramework7.SqlServerCompact40.csproj">
+    <ProjectReference Include="..\..\src\Provider40\EntityFramework7.SqlServerCompact40.csproj">
       <Project>{0bdb0cbb-c42a-45e5-8518-14e0c31119ad}</Project>
       <Name>EntityFramework.SqlServerCompact</Name>
     </ProjectReference>

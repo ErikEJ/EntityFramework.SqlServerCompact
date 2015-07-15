@@ -31,9 +31,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
             VerifySingleton<SqlCeConventionSetBuilder>();
             VerifySingleton<SqlCeValueGeneratorCache>();
             VerifySingleton<SqlCeUpdateSqlGenerator>();
-            VerifySingleton<ISqlStatementExecutor>();
-            VerifySingleton<SqlCeTypeMapper>();
-            
+            VerifySingleton<SqlCeTypeMapper>();            
             VerifySingleton<SqlCeModelSource>();
 
             // SQL Server Ce scoped

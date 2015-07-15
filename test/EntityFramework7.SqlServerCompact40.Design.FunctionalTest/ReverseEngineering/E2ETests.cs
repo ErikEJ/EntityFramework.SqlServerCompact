@@ -25,8 +25,18 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
     {
         public const string E2EConnectionString =
             @"Data Source=E2E.sdf";
-        private const string TestNamespace = @"E2ETest.Namespace";
+
+        private const string ProviderAssembyName = "EntityFramework7.SqlServerCompact40.Design";
+        private const string ProviderFullClassPath =
+            "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeMetadataModelProvider";
+        private const string ProviderDbContextTemplateName =
+            ProviderAssembyName + "." + ReverseEngineeringGenerator.DbContextTemplateFileName;
+        private const string ProviderEntityTypeTemplateName =
+            ProviderAssembyName + "." + ReverseEngineeringGenerator.EntityTypeTemplateFileName;
+        private const string TestNamespace = "E2ETest.Namespace";
         private const string TestOutputDir = @"E2ETest\Output\Dir";
+        private const string CustomizedTemplateDir = @"E2ETest\CustomizedTemplate\Dir";
+
         private static readonly List<string> _E2ETestExpectedWarnings = new List<string>();
         private static readonly List<string> _E2ETestExpectedFileNames = new List<string>
             {
@@ -43,6 +53,17 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
                 @"Test_Spaces_Keywords_Table.cs",
             };
 
+        private const string CustomDbContextTemplateContents =
+            "This is the output from a customized DbContextTemplate";
+        private const string CustomEntityTypeTemplateContents =
+            "This is the output from a customized EntityTypeTemplate";
+        private static readonly List<string> _CustomizedTemplatesTestExpectedInfos =
+            new List<string>
+            {
+                "Using custom template " + CustomizedTemplateDir + @"\" + ProviderDbContextTemplateName,
+                "Using custom template " + CustomizedTemplateDir + @"\" + ProviderEntityTypeTemplateName,
+            };
+
         private readonly ITestOutputHelper _output;
 
         public E2ETests(ITestOutputHelper output)
@@ -53,11 +74,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
         [Fact]
         public void E2ETest()
         {
-            // set current cultures to English because expected results for error messages
-            // (both those output to the Logger and those put in comments in the .cs files)
-            // are in English
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+            SetCurrentCulture();
 
             var serviceProvider = SetupServiceProvider();
             var logger = new InMemoryCommandLogger("E2ETest");
@@ -65,10 +82,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
             var fileService = new InMemoryFileService();
             serviceProvider.AddService(typeof(IFileService), fileService);
 
-            var designTimeAssembly = Assembly.Load(new AssemblyName("EntityFramework7.SqlServerCompact40.Design"));
-            var type = designTimeAssembly.GetExportedTypes()
-                .First(t => t.FullName == "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeMetadataModelProvider");
-            var provider = (IDatabaseMetadataModelProvider)Activator.CreateInstance(type, serviceProvider);
+            var provider = GetMetadataModelProvider(serviceProvider);
 
             var configuration = new ReverseEngineeringConfiguration
             {
@@ -131,6 +145,107 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
             }
         }
 
+        [Fact]
+        public void Code_generation_will_use_customized_templates_if_present()
+        {
+            SetCurrentCulture();
+
+            var serviceProvider = SetupServiceProvider();
+            var logger = new InMemoryCommandLogger("E2ETest");
+            serviceProvider.AddService(typeof(ILogger), logger);
+            var fileService = new InMemoryFileService();
+            serviceProvider.AddService(typeof(IFileService), fileService);
+            InitializeCustomizedTemplates(fileService);
+
+            var provider = GetMetadataModelProvider(serviceProvider);
+
+            var configuration = new ReverseEngineeringConfiguration
+            {
+                Provider = provider,
+                ConnectionString = E2EConnectionString,
+                Namespace = TestNamespace,
+                CustomTemplatePath = CustomizedTemplateDir,
+                OutputPath = TestOutputDir
+            };
+
+            var generator = new ReverseEngineeringGenerator(serviceProvider);
+            var filePaths = generator.GenerateAsync(configuration).Result;
+
+            Assert.Equal(_E2ETestExpectedWarnings.Count, logger.WarningMessages.Count);
+            // loop over warnings instead of using the collection form of Assert.Equal()
+            // to give better error messages if it does fail. Similarly for file paths below.
+            var i = 0;
+            foreach (var expectedWarning in _E2ETestExpectedWarnings)
+            {
+                Assert.Equal(expectedWarning, logger.WarningMessages[i++]);
+            }
+
+            Assert.Equal(_CustomizedTemplatesTestExpectedInfos.Count, logger.InformationMessages.Count);
+            i = 0;
+            foreach (var expectedInfo in _CustomizedTemplatesTestExpectedInfos)
+            {
+                Assert.Equal(expectedInfo, logger.InformationMessages[i++]);
+            }
+
+            Assert.Equal(0, logger.VerboseMessages.Count);
+
+            var expectedFilePaths = _E2ETestExpectedFileNames.Select(name => TestOutputDir + @"\" + name);
+            Assert.Equal(expectedFilePaths.Count(), filePaths.Count);
+            i = 0;
+            foreach (var expectedFilePath in expectedFilePaths)
+            {
+                Assert.Equal(expectedFilePath, filePaths[i++]);
+            }
+
+            var listOfFileContents = new List<string>();
+            foreach (var fileName in _E2ETestExpectedFileNames)
+            {
+                var fileContents = fileService.RetrieveFileContents(TestOutputDir, fileName);
+                if ("E2EContext.cs" == fileName)
+                {
+                    Assert.Equal(CustomDbContextTemplateContents, fileContents);
+                }
+                else
+                {
+                    Assert.Equal(CustomEntityTypeTemplateContents, fileContents);
+                }
+            }
+        }
+
+        [Fact]
+        public void Can_output_templates_to_be_customized()
+        {
+            var serviceProvider = SetupServiceProvider();
+            var logger = new InMemoryCommandLogger("E2ETest");
+            serviceProvider.AddService(typeof(ILogger), logger);
+            var fileService = new InMemoryFileService();
+            serviceProvider.AddService(typeof(IFileService), fileService);
+
+            var designTimeAssembly = Assembly.Load(new AssemblyName(ProviderAssembyName));
+            var type = designTimeAssembly.GetExportedTypes()
+                .First(t => t.FullName == ProviderFullClassPath);
+            var provider = (IDatabaseMetadataModelProvider)
+                Activator.CreateInstance(type, serviceProvider);
+
+            var generator = new ReverseEngineeringGenerator(serviceProvider);
+            var filePaths = generator.Customize(provider, TestOutputDir);
+
+            Assert.Equal(0, logger.WarningMessages.Count);
+            Assert.Equal(0, logger.InformationMessages.Count);
+            Assert.Equal(0, logger.VerboseMessages.Count);
+            Assert.Equal(2, filePaths.Count);
+            Assert.Equal(TestOutputDir + @"\" + ProviderDbContextTemplateName, filePaths[0]);
+            Assert.Equal(TestOutputDir + @"\" + ProviderEntityTypeTemplateName, filePaths[1]);
+
+            var dbContextTemplateContents = fileService.RetrieveFileContents(
+                TestOutputDir, ProviderDbContextTemplateName);
+            Assert.Equal(provider.DbContextTemplate, dbContextTemplateContents);
+
+            var entityTypeTemplateContents = fileService.RetrieveFileContents(
+                TestOutputDir, ProviderEntityTypeTemplateName);
+            Assert.Equal(provider.EntityTypeTemplate, entityTypeTemplateContents);
+        }
+
         private ServiceProvider SetupServiceProvider()
         {
             var serviceProvider = new ServiceProvider(null);
@@ -156,11 +271,17 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
             return expectedContents;
         }
 
+        private void InitializeCustomizedTemplates(InMemoryFileService fileService)
+        {
+            fileService.OutputFile(CustomizedTemplateDir, ProviderDbContextTemplateName, CustomDbContextTemplateContents);
+            fileService.OutputFile(CustomizedTemplateDir, ProviderEntityTypeTemplateName, CustomEntityTypeTemplateContents);
+        }
+
         private List<MetadataReference> SetupMetadataReferencesForCompilationOfGeneratedCode(
             MetadataReferencesProvider metadataReferencesProvider)
         {
-            metadataReferencesProvider.AddReferenceFromName("EntityFramework.Core");
-            metadataReferencesProvider.AddReferenceFromName("EntityFramework.Relational");
+            metadataReferencesProvider.AddReferenceFromName("EntityFramework7.Core");
+            metadataReferencesProvider.AddReferenceFromName("EntityFramework7.Relational");
             metadataReferencesProvider.AddReferenceFromName("EntityFramework7.SqlServerCompact40");
 
             var metadataReferences = metadataReferencesProvider.GetApplicationReferences();
@@ -169,6 +290,28 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
                     "System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")).Location));
 
             return metadataReferences;
+        }
+
+        private IDatabaseMetadataModelProvider GetMetadataModelProvider(IServiceProvider serviceProvider)
+        {
+            var designTimeAssembly = Assembly.Load(new AssemblyName(ProviderAssembyName));
+            var type = designTimeAssembly.GetType(ProviderFullClassPath);
+            return (IDatabaseMetadataModelProvider)
+                Activator.CreateInstance(type, serviceProvider);
+        }
+
+        private void SetCurrentCulture()
+        {
+            // set current cultures to English because expected results for error messages
+            // (both those output to the Logger and those put in comments in the .cs files)
+            // are in English
+#if DNXCORE50
+            CultureInfo.CurrentCulture = new CultureInfo("en-US");
+            CultureInfo.CurrentUICulture = new CultureInfo("en-US");
+#else
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+#endif
         }
 
     }

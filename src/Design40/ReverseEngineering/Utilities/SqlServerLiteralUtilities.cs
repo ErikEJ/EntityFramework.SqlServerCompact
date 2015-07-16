@@ -95,6 +95,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
             Check.NotNull(propertyType, nameof(propertyType));
             Check.NotEmpty(sqlServerDefaultValue, nameof(sqlServerDefaultValue));
 
+            //TODO ErikEJ Handle 0\r\n\r\n as defauilt value!
+            sqlServerDefaultValue = sqlServerDefaultValue.Trim();
+
             if (sqlServerDefaultValue.Length < 2)
             {
                 return null;

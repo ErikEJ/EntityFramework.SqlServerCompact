@@ -1,12 +1,11 @@
 ﻿using System;
-using ErikEJ.Data.Entity.SqlServerCe.FunctionalTests;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.GearsOfWarModel;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 
-namespace ErikEJ.Data.Entity.SqlCe.FunctionalTests
+namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class GearsOfWarQuerySqlCeFixture : GearsOfWarQueryRelationalFixture<SqlCeTestStore>
     {

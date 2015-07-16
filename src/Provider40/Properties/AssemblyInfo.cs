@@ -4,6 +4,9 @@ using Microsoft.Data.Entity.Storage;
 #if SQLCE35
 [assembly: AssemblyTitle("EntityFramework7.SqlServerCompact35")]
 [assembly: AssemblyProduct("EntityFramework7.SqlServerCompact35")]
+[assembly: ProviderDesignTimeServices(
+    typeName: "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeDesignTimeMetadataProviderFactory",
+    assemblyName: "EntityFramework7.SqlServerCompact35.Design")]
 #else
 [assembly: ProviderDesignTimeServices(
     typeName: "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeDesignTimeMetadataProviderFactory",

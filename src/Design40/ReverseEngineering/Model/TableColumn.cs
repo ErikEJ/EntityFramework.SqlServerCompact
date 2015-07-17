@@ -61,7 +61,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
             tableColumn.Scale = reader.IsDBNull(9) ? (int?)null : Convert.ToInt32(reader[9]);
             tableColumn.IsIdentity = reader.GetBoolean(10);
             tableColumn.IsStoreGenerated = reader.GetBoolean(11);
-            tableColumn.DefaultValue = reader.IsDBNull(12) ? null : reader.GetString(12);
+            tableColumn.DefaultValue = reader.IsDBNull(12) ? null : reader.GetString(12).Trim();
 
             return tableColumn;
         }

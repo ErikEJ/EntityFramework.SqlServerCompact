@@ -23,16 +23,16 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 @"SELECT [t].[Id], [t].[GearNickName], [t].[GearSquadId], [t].[Note], [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
 FROM [CogTag] AS [t]
 LEFT JOIN [Gear] AS [g] ON ([t].[GearNickName] = [g].[Nickname] AND [t].[GearSquadId] = [g].[SquadId])
-ORDER BY [g].[Nickname], [g].[SquadId]
+ORDER BY [g].[FullName]
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerNickname], [w].[OwnerSquadId], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 INNER JOIN (
-    SELECT DISTINCT [g].[Nickname], [g].[SquadId]
+    SELECT DISTINCT [g].[FullName]
     FROM [CogTag] AS [t]
     LEFT JOIN [Gear] AS [g] ON ([t].[GearNickName] = [g].[Nickname] AND [t].[GearSquadId] = [g].[SquadId])
-) AS [g] ON ([w].[OwnerNickname] = [g].[Nickname] AND [w].[OwnerSquadId] = [g].[SquadId])
-ORDER BY [g].[Nickname], [g].[SquadId]",
+) AS [g] ON [w].[OwnerFullName] = [g].[FullName]
+ORDER BY [g].[FullName]",
                 Sql);
         }
 
@@ -134,6 +134,27 @@ ORDER BY [c].[Name]",
                 Sql);
         }
 
+        public override void Include_using_alternate_key()
+        {
+            base.Include_using_alternate_key();
+
+            Assert.Equal(
+                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Gear] AS [g]
+WHERE [g].[Nickname] = 'Marcus'
+ORDER BY [g].[FullName]
+
+SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+FROM [Weapon] AS [w]
+INNER JOIN (
+    SELECT DISTINCT [g].[FullName]
+    FROM [Gear] AS [g]
+    WHERE [g].[Nickname] = 'Marcus'
+) AS [g] ON [w].[OwnerFullName] = [g].[FullName]
+ORDER BY [g].[FullName]",
+                Sql);
+        }
+
         public override void Include_multiple_include_then_include()
         {
             base.Include_multiple_include_then_include();
@@ -211,7 +232,7 @@ WHERE [g].[Rank] = 2",
             base.Where_nullable_enum_with_constant();
 
             Assert.Equal(
-                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerNickname], [w].[OwnerSquadId], [w].[SynergyWithId]
+                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] = 1",
                 Sql);
@@ -222,7 +243,7 @@ WHERE [w].[AmmunitionType] = 1",
             base.Where_nullable_enum_with_null_constant();
 
             Assert.Equal(
-                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerNickname], [w].[OwnerSquadId], [w].[SynergyWithId]
+                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] IS NULL",
                 Sql);
@@ -235,7 +256,7 @@ WHERE [w].[AmmunitionType] IS NULL",
             Assert.Equal(
                 @"@__p_0: 1
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerNickname], [w].[OwnerSquadId], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] = @__p_0",
                 Sql);
@@ -248,11 +269,11 @@ WHERE [w].[AmmunitionType] = @__p_0",
             Assert.Equal(
                 @"@__p_0: 1
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerNickname], [w].[OwnerSquadId], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] = @__p_0
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerNickname], [w].[OwnerSquadId], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] IS NULL",
                 Sql);

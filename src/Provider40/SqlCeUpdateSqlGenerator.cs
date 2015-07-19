@@ -65,7 +65,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         }
 
         public override string GenerateLiteral(bool literal) => literal ? "1" : "0";
-        public override string GenerateLiteral(DateTime literal) => "'" + literal.ToString(@"yyyy-MM-dd HH\:mm\:ss.fffffff") + "'";
+        public override string GenerateLiteral(DateTime literal) => "'" + literal.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + "'";
         public virtual string GenerateLiteral(Guid literal) => "'" + literal + "'";
     }
 }

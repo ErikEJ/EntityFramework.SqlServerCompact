@@ -28,7 +28,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
         public const string E2EConnectionString =
             @"Data Source=E2E.sdf";
 
-        private const string ProviderAssembyName = "EntityFramework7.SqlServerCompact40.Design";
+        private const string ProviderAssembyName = "EntityFramework.SqlServerCompact40.Design";
         private const string ProviderFullClassPath =
             "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeMetadataModelProvider";
         private const string ProviderDbContextTemplateName =
@@ -282,9 +282,9 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
         private List<MetadataReference> SetupMetadataReferencesForCompilationOfGeneratedCode(
             MetadataReferencesProvider metadataReferencesProvider)
         {
-            metadataReferencesProvider.AddReferenceFromName("EntityFramework7.Core");
-            metadataReferencesProvider.AddReferenceFromName("EntityFramework7.Relational");
-            metadataReferencesProvider.AddReferenceFromName("EntityFramework7.SqlServerCompact40");
+            metadataReferencesProvider.AddReferenceFromName("EntityFramework.Core");
+            metadataReferencesProvider.AddReferenceFromName("EntityFramework.Relational");
+            metadataReferencesProvider.AddReferenceFromName("EntityFramework.SqlServerCompact40");
 
             var metadataReferences = metadataReferencesProvider.GetApplicationReferences();
             metadataReferences.Add(MetadataReference.CreateFromFile(

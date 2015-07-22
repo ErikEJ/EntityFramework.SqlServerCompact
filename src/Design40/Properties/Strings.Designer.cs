@@ -10,7 +10,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design
     public static class Strings
     {
         //private static readonly ResourceManager _resourceManager
-        //    = new ResourceManager("EntityFramework7.SqlServerCompact40.Design.Strings", typeof(Strings).GetTypeInfo().Assembly);
+        //    = new ResourceManager("EntityFramework.SqlServerCompact40.Design.Strings", typeof(Strings).GetTypeInfo().Assembly);
 
         /// <summary>
         /// Could not find foreignKeyMapping for ConstraintId {constraintId} for FromColumn {fromColumnId}.

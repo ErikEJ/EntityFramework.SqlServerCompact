@@ -64,7 +64,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Logging.1.0.0-beta6-11607\lib\net45\Microsoft.Framework.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Logging.1.0.0-beta6-11609\lib\net45\Microsoft.Framework.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

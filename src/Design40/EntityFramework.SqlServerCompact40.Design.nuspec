@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>EntityFramework7.SqlServerCompact40.Design</id>
+    <id>EntityFramework.SqlServerCompact40.Design</id>
     <version>$version$</version>
-    <title>EntityFramework7.SqlServerCompact40.Design</title>
+    <title>EntityFramework.SqlServerCompact40.Design</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>
     <projectUrl>https://github.com/ErikEJ/EntityFramework7.SqlServerCompact</projectUrl>
@@ -19,6 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFramework7.SqlServerCompact40.Design.dll" target="lib\net45\" />
+    <file src="bin\Release\EntityFramework.SqlServerCompact40.Design.dll" target="lib\net45\" />
   </files>
 </package>

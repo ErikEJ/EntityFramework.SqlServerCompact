@@ -1,24 +1,25 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>EntityFramework7.SqlServerCompact35</id>
+    <id>EntityFramework.SqlServerCompact40</id>
     <version>$version$</version>
-    <title>EntityFramework7.SqlServerCompact35</title>
+    <title>EntityFramework.SqlServerCompact40</title>
     <authors>ErikEJ</authors>
     <owners>ErikEJ</owners>
     <projectUrl>https://github.com/ErikEJ/EntityFramework7.SqlServerCompact</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7. Requires the SQL Server Compact 3.5 SP2 runtime to be installed</description>
-    <summary>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework 7</summary>
+    <description>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</description>
+    <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</summary>
     <releaseNotes>for EF7 beta6</releaseNotes>
-    <tags>EntityFramework EF sqlce sqlservercompact entity framework provider sql server compact</tags>
+    <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact</tags>
     <dependencies>
         <group targetFramework=".NETFramework4.5">
             <dependency id="EntityFramework7.Relational" version="[7.0.0-beta6-13801]" />
+            <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFramework7.SqlServerCompact35.dll" target="lib\net45\" />
+    <file src="bin\Release\EntityFramework.SqlServerCompact40.dll" target="lib\net45\" />
   </files>
 </package>

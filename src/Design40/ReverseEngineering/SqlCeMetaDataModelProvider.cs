@@ -127,9 +127,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         public virtual void AddReferencesForTemplates(MetadataReferencesProvider metadataReferencesProvider)
         {
 #if SQLCE35
-            metadataReferencesProvider.AddReferenceFromName("EntityFramework7.SqlServerCompact35.Design");
+            metadataReferencesProvider.AddReferenceFromName("EntityFramework.SqlServerCompact35.Design");
 #else
-            metadataReferencesProvider.AddReferenceFromName("EntityFramework7.SqlServerCompact40.Design");
+            metadataReferencesProvider.AddReferenceFromName("EntityFramework.SqlServerCompact40.Design");
 #endif
         }
 
@@ -587,7 +587,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
                 if (defaultExpressionOrValue != null
                     && defaultExpressionOrValue.DefaultExpression != null)
                 {
-                    property.Relational().DefaultValueSql = defaultExpressionOrValue.DefaultExpression;
+                    property.Relational().GeneratedValueSql = defaultExpressionOrValue.DefaultExpression;
                 }
                 else if (defaultExpressionOrValue != null
                          && defaultExpressionOrValue.DefaultValue != null)

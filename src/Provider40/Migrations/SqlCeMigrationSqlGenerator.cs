@@ -146,6 +146,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                     operation.IsNullable,
                     operation.DefaultValue,
                     operation.DefaultValueSql,
+                    operation.ComputedColumnSql,
                     operation,
                     model,
                     builder);
@@ -157,7 +158,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             string type,
             bool nullable,
             object defaultValue,
-            string defaultExpression,
+            string defaultValueSql,
+            string computedColumnSql,
             IAnnotatable annotatable,
             IModel model,
             SqlBatchBuilder builder)
@@ -174,7 +176,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                 type,
                 nullable,
                 defaultValue,
-                defaultExpression,
+                defaultValueSql,
+                computedColumnSql,
                 annotatable,
                 model,
                 builder);

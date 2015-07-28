@@ -69,8 +69,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 modelBuilder.Entity<KettleChips>()
                     .Property(e => e.BestBuyDate)
                     .ValueGeneratedOnAdd()
-                    //.DefaultValue(new DateTime(2035, 9, 25));
-                    .DefaultValueSql("'2035-09-25 00:00'");
+                    .DefaultValue(new DateTime(2035, 9, 25));
             }
         }
 

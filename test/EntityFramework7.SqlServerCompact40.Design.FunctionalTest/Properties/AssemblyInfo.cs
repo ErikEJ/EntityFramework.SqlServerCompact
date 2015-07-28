@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EntityFramework7.SqlServerCompact40.Design.FunctionalTest")]
+[assembly: AssemblyTitle("EntityFramework.SqlServerCompact40.Design.FunctionalTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EntityFramework7.SqlServerCompact40.Design.FunctionalTest")]
+[assembly: AssemblyProduct("EntityFramework.SqlServerCompact40.Design.FunctionalTest")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

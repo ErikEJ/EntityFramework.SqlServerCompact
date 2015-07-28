@@ -44,7 +44,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var value = new DateTime(2015, 3, 12, 13, 36, 37, 371);
             var literal = CreateSqlGenerator().GenerateLiteral(value);
-            Assert.Equal("'2015-03-12 13:36:37.3710000'", literal);
+            Assert.Equal("'2015-03-12 13:36:37.371'", literal);
         }
 
         [Fact]

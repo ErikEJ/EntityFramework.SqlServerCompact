@@ -2,17 +2,17 @@
 using Microsoft.Data.Entity.Storage;
 
 #if SQLCE35
-[assembly: AssemblyTitle("EntityFramework7.SqlServerCompact35")]
-[assembly: AssemblyProduct("EntityFramework7.SqlServerCompact35")]
+[assembly: AssemblyTitle("EntityFramework.SqlServerCompact35")]
+[assembly: AssemblyProduct("EntityFramework.SqlServerCompact35")]
 [assembly: ProviderDesignTimeServices(
     typeName: "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeDesignTimeMetadataProviderFactory",
-    assemblyName: "EntityFramework7.SqlServerCompact35.Design")]
+    assemblyName: "EntityFramework.SqlServerCompact35.Design")]
 #else
 [assembly: ProviderDesignTimeServices(
     typeName: "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeDesignTimeMetadataProviderFactory",
-    assemblyName: "EntityFramework7.SqlServerCompact40.Design")]
-[assembly: AssemblyTitle("EntityFramework7.SqlServerCompact40")]
-[assembly: AssemblyProduct("EntityFramework7.SqlServerCompact40")]
+    assemblyName: "EntityFramework.SqlServerCompact40.Design")]
+[assembly: AssemblyTitle("EntityFramework.SqlServerCompact40")]
+[assembly: AssemblyProduct("EntityFramework.SqlServerCompact40")]
 #endif
 [assembly: AssemblyVersion("7.0.0.0")]
 [assembly: AssemblyFileVersion("7.0.0.0")]

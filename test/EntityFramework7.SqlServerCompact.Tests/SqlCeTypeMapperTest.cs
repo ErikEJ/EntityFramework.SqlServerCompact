@@ -291,6 +291,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]), shadowProperty: true);
             property.IsConcurrencyToken = true;
+            property.ValueGenerated = ValueGenerated.OnAddOrUpdate;
 
             var typeMapping = new SqlCeTypeMapper().MapPropertyType(property);
 
@@ -303,6 +304,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]), shadowProperty: true);
             property.IsConcurrencyToken = true;
+            property.ValueGenerated = ValueGenerated.OnAddOrUpdate;
             property.IsNullable = false;
 
             var typeMapping = new SqlCeTypeMapper().MapPropertyType(property);

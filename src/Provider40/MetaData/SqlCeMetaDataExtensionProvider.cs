@@ -4,11 +4,12 @@ namespace Microsoft.Data.Entity.SqlServerCompact.MetaData
 {
     public class SqlCeMetadataExtensionProvider : IRelationalMetadataExtensionProvider
     {
-        public virtual IRelationalEntityTypeAnnotations Extensions(IEntityType entityType) => entityType.Relational();
-        public virtual IRelationalForeignKeyAnnotations Extensions(IForeignKey foreignKey) => foreignKey.Relational();
-        public virtual IRelationalIndexAnnotations Extensions(IIndex index) => index.Relational();
-        public virtual IRelationalKeyAnnotations Extensions(IKey key) => key.Relational();
-        public virtual IRelationalModelAnnotations Extensions(IModel model) => model.Relational();
-        public virtual IRelationalPropertyAnnotations Extensions(IProperty property) => property.Relational();
+        //TODO ErikEJ Implement Metadata
+        public virtual IRelationalEntityTypeAnnotations For(IEntityType entityType) => null;
+        public virtual IRelationalForeignKeyAnnotations For(IForeignKey foreignKey) => null;
+        public virtual IRelationalIndexAnnotations For(IIndex index) => null;
+        public virtual IRelationalKeyAnnotations For(IKey key) => null;
+        public virtual IRelationalModelAnnotations For(IModel model) => null;
+        public virtual IRelationalPropertyAnnotations For(IProperty property) => null;
     }
 }

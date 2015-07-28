@@ -27,7 +27,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
                 .Append(")");
         }
 
-        public override void AppendSelectAffectedCountCommand(StringBuilder builder, string tableName, string schemaName)
+        protected override void AppendSelectAffectedCountCommand(StringBuilder builder, string tableName, string schemaName)
         {
         }
 
@@ -44,7 +44,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         public override string DelimitIdentifier(string identifier)
             => "[" + EscapeIdentifier(Check.NotEmpty(identifier, nameof(identifier))) + "]";
 
-        public override string EscapeIdentifier(string identifier)
+        protected override string EscapeIdentifier(string identifier)
             => Check.NotEmpty(identifier, nameof(identifier)).Replace("]", "]]");
 
         public override string GenerateLiteral(byte[] literal)

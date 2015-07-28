@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.SqlServerCompact;
+using Microsoft.Data.Entity.Update;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests

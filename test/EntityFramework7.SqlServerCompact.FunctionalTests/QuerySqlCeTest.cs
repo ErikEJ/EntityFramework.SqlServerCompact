@@ -49,6 +49,45 @@ ORDER BY [e].[EmployeeID]",
                  Sql);
         }
 
+        public override void Where_query_composition_is_null()
+        {
+            base.Where_query_composition_is_null();
+
+            Assert.StartsWith(
+                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+FROM [Employees] AS [e1]
+
+SELECT [e2].[EmployeeID], [e2].[City], [e2].[Country], [e2].[FirstName], [e2].[ReportsTo], [e2].[Title]
+FROM [Employees] AS [e2]",
+                 Sql);
+        }
+
+        public override void Where_query_composition_is_not_null()
+        {
+            base.Where_query_composition_is_null();
+
+            Assert.StartsWith(
+                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+FROM [Employees] AS [e1]
+
+SELECT [e2].[EmployeeID], [e2].[City], [e2].[Country], [e2].[FirstName], [e2].[ReportsTo], [e2].[Title]
+FROM [Employees] AS [e2]",
+                 Sql);
+        }
+
+        public override void Where_query_composition_entity_equality()
+        {
+            base.Where_query_composition_entity_equality();
+
+            Assert.StartsWith(
+                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+FROM [Employees] AS [e1]
+
+SELECT [e2].[EmployeeID], [e2].[City], [e2].[Country], [e2].[FirstName], [e2].[ReportsTo], [e2].[Title]
+FROM [Employees] AS [e2]",
+                 Sql);
+        }
+
         public override void Where_shadow_subquery_first()
         {
             ////TODO ErikEJ Broken by recent query update in core
@@ -63,6 +102,22 @@ ORDER BY [e].[EmployeeID]",
 //    ORDER BY [e2].[Title]
 //))",
 //                 Sql);
+        }
+
+        public override void Select_Where_Subquery_Deep()
+        {
+            base.Select_Where_Subquery_Deep();
+
+            Assert.StartsWith(
+                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+FROM [Order Details] AS [od]
+
+SELECT [o].[OrderID], [o].[CustomerID]
+FROM [Orders] AS [o]
+
+SELECT [c].[CustomerID], [c].[City]
+FROM [Customers] AS [c]",
+                 Sql);
         }
 
         public override void Where_subquery_anon()

@@ -10,25 +10,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
         }
 
-        public override void RequiredAttribute_throws_while_inserting_null_value()
-        {
-            base.RequiredAttribute_throws_while_inserting_null_value();
-
-            Assert.Equal(@"@p0: 
-@p1: ValidString
-@p2: 00000000-0000-0000-0000-000000000001
-
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
-
-@p0: 
-@p1: 
-@p2: 00000000-0000-0000-0000-000000000002
-
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);", Sql);
-        }
-
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();

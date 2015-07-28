@@ -12,7 +12,7 @@ namespace Microsoft.Data.Entity.Tests
 
         public new static SqlCeTestHelpers Instance { get; } = new SqlCeTestHelpers();
 
-        protected override EntityFrameworkServicesBuilder AddProviderServices(EntityFrameworkServicesBuilder builder)
+        public override EntityFrameworkServicesBuilder AddProviderServices(EntityFrameworkServicesBuilder builder)
         {
             return builder.AddSqlCe();
         }

@@ -26,7 +26,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query
             [NotNull] IMethodCallTranslator compositeMethodCallTranslator,
             [NotNull] IMemberTranslator compositeMemberTranslator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
-            [NotNull] IRelationalTypeMapper typeMapper)
+            [NotNull] IRelationalTypeMapper typeMapper,
+            [NotNull] IRelationalMetadataExtensionProvider relationalExtensions)
             : base(
                 model,
                 logger,
@@ -39,7 +40,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query
                 compositeMethodCallTranslator,
                 compositeMemberTranslator,
                 valueBufferFactoryFactory,
-                typeMapper)
+                typeMapper,
+                relationalExtensions)
         {
         }
 

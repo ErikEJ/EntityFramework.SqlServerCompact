@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Migrations.History;
-using Microsoft.Data.Entity.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations.Infrastructure;
 using Microsoft.Data.Entity.SqlServerCompact;
+using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Microsoft.Data.Entity.Storage;
 using Moq;
@@ -14,78 +17,92 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
     {
         private static string EOL => Environment.NewLine;
 
+        [Fact]
+        public void GetCreateScript_works()
+        {
+            var sql = CreateHistoryRepository().GetCreateScript();
 
-        //TODO ErikEJ Make Histrepo work again!
+            Assert.Equal(
+                "CREATE TABLE [__MigrationHistory] (" + EOL +
+                "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
+                "    [ProductVersion] nvarchar(32)," + EOL +
+                "    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])" + EOL +
+                ")",
+                sql);
+        }
 
-        //[Fact]
-        //public void GetCreateOperation_works_when_ifNotExists_false()
-        //{
-        //    var sql = CreateHistoryRepository().Create(ifNotExists: false);
+        [Fact]
+        public void GetCreateIfNotExistsScript_works()
+        {
+            Assert.Throws<NotSupportedException>(() => CreateHistoryRepository().GetCreateIfNotExistsScript());
+        }
 
-        //    Assert.Equal(
-        //        "CREATE TABLE [__MigrationHistory] (" + EOL +
-        //        "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
-        //        "    [ContextKey] nvarchar(300) NOT NULL," + EOL +
-        //        "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
-        //        "    CONSTRAINT [PK_MigrationHistory] PRIMARY KEY ([MigrationId], [ContextKey])" + EOL +
-        //        ");",
-        //        sql);
-        //}
+        [Fact]
+        public void GetDeleteScript_works()
+        {
+            var sql = CreateHistoryRepository().GetDeleteScript("Migration1");
 
-        //[Fact]
-        //public void GetDeleteOperation_works()
-        //{
-        //    var sqlOperation = (SqlOperation)CreateHistoryRepository().GetDeleteOperation("Migration1");
+            Assert.Equal(
+                "DELETE FROM [__MigrationHistory]" + EOL +
+                "WHERE [MigrationId] = 'Migration1';",
+                sql);
+        }
 
-        //    Assert.Equal(
-        //        "DELETE FROM [__MigrationHistory]" + EOL +
-        //        "WHERE [MigrationId] = 'Migration1' AND [ContextKey] = '" + typeof(Context).FullName + "';" + EOL,
-        //        sqlOperation.Sql);
-        //}
+        [Fact]
+        public void GetInsertScript_works()
+        {
+            var sql = CreateHistoryRepository().GetInsertScript(
+                new HistoryRow("Migration1", "7.0.0"));
 
-        //[Fact]
-        //public void GetInsertOperation_works()
-        //{
-        //    var sqlOperation = (SqlOperation)CreateHistoryRepository().GetInsertOperation(
-        //        new HistoryRow("Migration1", "7.0.0"));
+            Assert.Equal(
+                "INSERT INTO [__MigrationHistory] ([MigrationId], [ProductVersion])" + EOL +
+                "VALUES ('Migration1', '7.0.0');",
+                sql);
+        }
 
-        //    Assert.Equal(
-        //        "INSERT INTO [__MigrationHistory] ([MigrationId], [ContextKey], [ProductVersion])" + EOL +
-        //        "VALUES ('Migration1', '" + typeof(Context).FullName + "', '7.0.0');" + EOL,
-        //        sqlOperation.Sql);
-        //}
+        [Fact]
+        public void GetBeginIfNotExistsScript_works()
+        {
+            Assert.Throws<NotSupportedException>(() => CreateHistoryRepository().GetBeginIfNotExistsScript("Migration1"));
+        }
 
-        //[Fact]
-        //public void BeginIfNotExists_works()
-        //{
-        //    var sql = CreateHistoryRepository().BeginIfNotExists("Migration1");
+        [Fact]
+        public void GetBeginIfExistsScript_works()
+        {
+            Assert.Throws<NotSupportedException>(() => CreateHistoryRepository().GetBeginIfExistsScript("Migration1"));
+        }
 
-        //    Assert.Equal(string.Empty, sql);
-        //}
-
-        //[Fact]
-        //public void BeginIfExists_works()
-        //{
-        //    var sql = CreateHistoryRepository().BeginIfExists("Migration1");
-
-        //    Assert.Equal(string.Empty, sql);
-        //}
-
-        //[Fact]
-        //public void EndIf_works()
-        //{
-        //    var sql = CreateHistoryRepository().EndIf();
-
-        //    Assert.Equal(string.Empty, sql);
-        //}
+        [Fact]
+        public void GetEndIfScript_works()
+        {
+            Assert.Throws<NotSupportedException>(() => CreateHistoryRepository().GetEndIfScript());
+        }
 
         private static IHistoryRepository CreateHistoryRepository()
         {
+            var annotationsProvider = new SqlCeMetadataExtensionProvider();
+            var updateSqlGenerator = new SqlCeUpdateSqlGenerator();
+
             return new SqlCeHistoryRepository(
-                Mock.Of<IRelationalConnection>(),
                 Mock.Of<IRelationalDatabaseCreator>(),
-                new Context(),
-                new SqlCeUpdateSqlGenerator());
+                Mock.Of<ISqlStatementExecutor>(),
+                Mock.Of<IRelationalConnection>(),
+                new MigrationModelFactory(),
+                new DbContextOptions<DbContext>(
+                    new Dictionary<Type, IDbContextOptionsExtension>
+                    {
+                        { typeof(SqlCeOptionsExtension), new SqlCeOptionsExtension() }
+                    }),
+                new ModelDiffer(
+                    annotationsProvider,
+                    new SqlCeMigrationAnnotationProvider()),
+                new SqlCeMigrationSqlGenerator(
+                    updateSqlGenerator,
+                    new SqlCeTypeMapper(),
+                    annotationsProvider),
+                annotationsProvider,
+                updateSqlGenerator,
+                Mock.Of<IServiceProvider>());
         }
 
         private class Context : DbContext

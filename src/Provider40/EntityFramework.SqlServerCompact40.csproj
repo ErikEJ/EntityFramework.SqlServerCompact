@@ -140,7 +140,7 @@
     <Compile Include="SqlCeConventionSetBuilder.cs" />
     <Compile Include="SqlCeMaxLengthMapping.cs" />
     <Compile Include="SqlCeTypeMapper.cs" />
-    <Compile Include="SqlCeUpdateSqlGenerator.cs" />
+    <Compile Include="Update\SqlCeUpdateSqlGenerator.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
 
@@ -67,5 +66,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         public override string GenerateLiteral(bool literal) => literal ? "1" : "0";
         public override string GenerateLiteral(DateTime literal) => "'" + literal.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + "'";
         public virtual string GenerateLiteral(Guid literal) => "'" + literal + "'";
+
+        public override string GenerateNextSequenceValueOperation(string name, string schema)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

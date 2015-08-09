@@ -15,12 +15,57 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
     {
         private readonly IUpdateSqlGenerator _sql;
 
-        //TODO ErikEJ Fix constuctor
         public SqlCeMigrationSqlGenerator(
-            [NotNull] IUpdateSqlGenerator sqlGenerator)
-            : base(sqlGenerator, null, null)
+            [NotNull] SqlCeUpdateSqlGenerator sqlGenerator,
+            [NotNull] SqlCeTypeMapper typeMapper,
+            [NotNull] SqlCeMetadataExtensionProvider annotations)
+            : base(sqlGenerator, typeMapper, annotations)
         {
             _sql = sqlGenerator;
+        }
+
+        public override void Generate(
+            [NotNull] AlterColumnOperation operation,
+            [CanBeNull] IModel model,
+            [NotNull] SqlBatchBuilder builder)
+        {
+            Check.NotNull(operation, nameof(operation));
+            Check.NotNull(builder, nameof(builder));
+
+            //TODO ErikEJ Implement? If so, change to use null in coldef call below
+            //DropDefaultConstraint(operation.Schema, operation.Table, operation.Name, builder);
+
+            builder
+                .Append("ALTER TABLE ")
+                .Append(_sql.DelimitIdentifier(operation.Table))
+                .Append(" ALTER COLUMN ");
+            ColumnDefinition(
+                    null,
+                    operation.Table,
+                    operation.Name,
+                    operation.ClrType,
+                    operation.ColumnType,
+                    operation.IsNullable,
+                    operation.DefaultValue,
+                    operation.DefaultValueSql,
+                    operation.ComputedColumnSql,
+                    operation,
+                    model,
+                    builder);
+
+            //TODO ErikEJ Implement?
+            //if (operation.DefaultValue != null || operation.DefaultValueSql != null)
+            //{
+            //    builder
+            //        .AppendLine(";")
+            //        .Append("ALTER TABLE ")
+            //        .Append(_sql.DelimitIdentifier(operation.Table, operation.Schema))
+            //        .Append(" ADD");
+            //    DefaultValue(operation.DefaultValue, operation.DefaultValueSql, builder);
+            //    builder
+            //        .Append(" FOR ")
+            //        .Append(_sql.DelimitIdentifier(operation.Name));
+            //}
         }
 
         public override void Generate(DropIndexOperation operation, IModel model, SqlBatchBuilder builder)
@@ -34,6 +79,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                 .Append(_sql.DelimitIdentifier(operation.Name));
         }
 
+        #region Invalid schema operations
+
         public override void Generate(CreateSchemaOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
@@ -42,6 +89,15 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
         public override void Generate(DropSchemaOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
+        }
+
+        #endregion
+
+        #region Sequences not supported
+
+        public override void Generate(RestartSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        {
+            throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
         public override void Generate(CreateSequenceOperation operation, IModel model, SqlBatchBuilder builder)
@@ -63,6 +119,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
+
+        #endregion 
 
         public override void Generate(RenameColumnOperation operation, IModel model, SqlBatchBuilder builder)
         {
@@ -104,92 +162,88 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             return builder.SqlBatches;
         }
 
-        public override void Generate(
-            [NotNull] AddColumnOperation operation,
-            [CanBeNull] IModel model,
-            [NotNull] SqlBatchBuilder builder)
+        public override void ColumnDefinition(
+            string schema,
+            string table,
+            string name,
+            Type clrType,
+            string type,
+            bool nullable,
+            object defaultValue,
+            string defaultValueSql,
+            string computedColumnSql,
+            IAnnotatable annotatable,
+            IModel model,
+            SqlBatchBuilder builder)
         {
-            Check.NotNull(operation, nameof(operation));
+            Check.NotEmpty(name, nameof(name));
+            Check.NotNull(clrType, nameof(clrType));
+            Check.NotNull(annotatable, nameof(annotatable));
             Check.NotNull(builder, nameof(builder));
 
-            builder
-                .EndBatch()
-                .Append("ALTER TABLE ")
-                .Append(_sql.DelimitIdentifier(operation.Table))
-                .Append(" ADD ");
-            ColumnDefinition(operation, model, builder);
+            base.ColumnDefinition(
+                schema,
+                table,
+                name,
+                clrType,
+                type,
+                nullable,
+                defaultValue,
+                defaultValueSql,
+                computedColumnSql,
+                annotatable,
+                model,
+                builder);
+
+            var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
+            if (valueGeneration == SqlCeAnnotationNames.Identity)
+            {
+                builder.Append(" IDENTITY");
+            }
         }
 
-        public override void Generate(
-            [NotNull] AlterColumnOperation operation,
-            [CanBeNull] IModel model,
-            [NotNull] SqlBatchBuilder builder)
-        {
-            Check.NotNull(operation, nameof(operation));
-            Check.NotNull(builder, nameof(builder));
+    //    protected virtual void DropDefaultConstraint(
+    //[CanBeNull] string schema,
+    //[NotNull] string tableName,
+    //[NotNull] string columnName,
+    //[NotNull] SqlBatchBuilder builder)
+    //    {
+    //        Check.NotEmpty(tableName, nameof(tableName));
+    //        Check.NotEmpty(columnName, nameof(columnName));
+    //        Check.NotNull(builder, nameof(builder));
 
-            builder
-                .EndBatch()
-                .Append("ALTER TABLE ")
-                .Append(_sql.DelimitIdentifier(operation.Table))
-                .Append(" ALTER COLUMN ");                            
-            //ColumnDefinition(operation, model, builder);
-        }
-        //TODO ErikEJ Make histrepor work again
+    //        var variable = "@var" + _variableCounter++;
 
-        //public virtual void ColumnDefinition(
-        //    [NotNull] AlterColumnOperation operation,
-        //    [CanBeNull] IModel model,
-        //    [NotNull] SqlBatchBuilder builder) =>
-        //        ColumnDefinition(
-        //            operation.Schema,
-        //            operation.Table,
-        //            operation.Name,
-        //            operation.Type,
-        //            operation.IsNullable,
-        //            operation.DefaultValue,
-        //            operation.DefaultValueSql,
-        //            operation.ComputedColumnSql,
-        //            operation,
-        //            model,
-        //            builder);
+    //        builder
+    //            .Append("DECLARE ")
+    //            .Append(variable)
+    //            .AppendLine(" sysname;")
+    //            .Append("SELECT ")
+    //            .Append(variable)
+    //            .AppendLine(" = [d].[name]")
+    //            .AppendLine("FROM [sys].[default_constraints] [d]")
+    //            .AppendLine("INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id]")
+    //            .Append("WHERE ([d].[parent_object_id] = OBJECT_ID(N'");
 
-        //public override void ColumnDefinition(
-        //    string schema,
-        //    string table,
-        //    string name,
-        //    string type,
-        //    bool nullable,
-        //    object defaultValue,
-        //    string defaultValueSql,
-        //    string computedColumnSql,
-        //    IAnnotatable annotatable,
-        //    IModel model,
-        //    SqlBatchBuilder builder)
-        //{
-        //    Check.NotEmpty(name, nameof(name));
-        //    Check.NotEmpty(type, nameof(type));
-        //    Check.NotNull(annotatable, nameof(annotatable));
-        //    Check.NotNull(builder, nameof(builder));
+    //        if (schema != null)
+    //        {
+    //            builder
+    //                .Append(_sql.EscapeLiteral(schema))
+    //                .Append(".");
+    //        }
 
-        //    base.ColumnDefinition(
-        //        schema,
-        //        table,
-        //        name,
-        //        type,
-        //        nullable,
-        //        defaultValue,
-        //        defaultValueSql,
-        //        computedColumnSql,
-        //        annotatable,
-        //        model,
-        //        builder);
-
-        //    var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
-        //    if (valueGeneration == SqlCeAnnotationNames.Identity)
-        //    {
-        //        builder.Append(" IDENTITY");
-        //    }
-        //}
+    //        builder
+    //            .Append(_sql.EscapeLiteral(tableName))
+    //            .Append("') AND [c].[name] = N'")
+    //            .Append(_sql.EscapeLiteral(columnName))
+    //            .AppendLine("');")
+    //            .Append("IF ")
+    //            .Append(variable)
+    //            .Append(" IS NOT NULL EXEC(N'ALTER TABLE ")
+    //            .Append(_sql.DelimitIdentifier(tableName, schema))
+    //            .Append(" DROP CONSTRAINT [' + ")
+    //            .Append(variable)
+    //            .AppendLine(" + ']');");
+    //    }
     }
 }

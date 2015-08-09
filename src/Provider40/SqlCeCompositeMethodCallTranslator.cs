@@ -23,6 +23,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
             new StringReplaceTranslator(),
             new StringToLowerTranslator(),
             new StringToUpperTranslator(),
+            new ConvertTranslator(),
         };
 
         public SqlCeCompositeMethodCallTranslator([NotNull] ILoggerFactory loggerFactory)

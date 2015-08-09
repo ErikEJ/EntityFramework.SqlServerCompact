@@ -18,26 +18,30 @@ namespace Microsoft.Framework.DependencyInjection
         {
             Check.NotNull(services, nameof(services));
 
-            ((IAccessor<IServiceCollection>)services.AddRelational()).Service
-                .AddSingleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>()
-                .TryAdd(new ServiceCollection()
-                    .AddSingleton<SqlCeConventionSetBuilder>()
-                    .AddSingleton<SqlCeValueGeneratorCache>()
-                    .AddSingleton<SqlCeUpdateSqlGenerator>()
-                    .AddSingleton<SqlCeMetadataExtensionProvider>()
-                    .AddSingleton<SqlCeTypeMapper>()
-                    .AddSingleton<SqlCeModelSource>()
-                    .AddSingleton<SqlCeMigrationAnnotationProvider>()
-                    .AddScoped<SqlCeModificationCommandBatchFactory>()
-                    .AddScoped<SqlCeDatabaseProviderServices>()
-                    .AddScoped<SqlCeDatabase>()
-                    .AddScoped<SqlCeDatabaseConnection>()
-                    .AddScoped<SqlCeMigrationSqlGenerator>()
-                    .AddScoped<SqlCeDatabaseCreator>()
-                    .AddScoped<SqlCeHistoryRepository>()
-                    .AddScoped<SqlCeCompositeMethodCallTranslator>()
-                    .AddScoped<SqlCeCompositeMemberTranslator>()
-                    );
+            var service = services.AddRelational().GetService();
+
+            service.TryAddEnumerable(ServiceDescriptor
+                .Singleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>());
+
+
+            service.TryAdd(new ServiceCollection()
+                .AddSingleton<SqlCeValueGeneratorCache>()
+                .AddSingleton<SqlCeUpdateSqlGenerator>()
+                .AddSingleton<SqlCeMetadataExtensionProvider>()
+                .AddSingleton<SqlCeTypeMapper>()
+                .AddSingleton<SqlCeModelSource>()
+                .AddSingleton<SqlCeMigrationAnnotationProvider>()
+                .AddSingleton<SqlCeConventionSetBuilder>()
+                .AddScoped<SqlCeModificationCommandBatchFactory>()
+                .AddScoped<SqlCeDatabaseProviderServices>()
+                .AddScoped<SqlCeDatabase>()
+                .AddScoped<SqlCeDatabaseConnection>()
+                .AddScoped<SqlCeMigrationSqlGenerator>()
+                .AddScoped<SqlCeDatabaseCreator>()
+                .AddScoped<SqlCeHistoryRepository>()
+                .AddScoped<SqlCeCompositeMethodCallTranslator>()
+                .AddScoped<SqlCeCompositeMemberTranslator>()
+                );
 
             return services;
         }

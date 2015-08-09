@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -10,10 +11,11 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
 {
     public class MathTruncateTranslator : IMethodCallTranslator
     {
+        private static readonly IEnumerable<MethodInfo> _methodInfos = typeof(Math).GetTypeInfo().GetDeclaredMethods("Truncate");
+
         public virtual Expression Translate([NotNull] MethodCallExpression methodCallExpression)
         {
-            var methodInfos = typeof(Math).GetTypeInfo().GetDeclaredMethods("Truncate");
-            if (methodInfos.Contains(methodCallExpression.Method))
+            if (_methodInfos.Contains(methodCallExpression.Method))
             {
                 var arguments = new[] { methodCallExpression.Arguments[0], Expression.Constant(0), Expression.Constant(1) };
                 return new SqlFunctionExpression("ROUND", arguments, methodCallExpression.Type);

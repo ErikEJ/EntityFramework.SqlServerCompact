@@ -155,6 +155,9 @@
     <Compile Include="..\Provider40\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Query\Methods\ConvertTranslator.cs">
+      <Link>Query\Methods\ConvertTranslator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Query\Methods\DateTimeNowTranslator.cs">
       <Link>Query\Methods\DateTimeNowTranslator.cs</Link>
     </Compile>

@@ -38,11 +38,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.Core.FunctionalTests, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Core.FunctionalTests.7.0.0-beta7-13844\lib\net46\EntityFramework.Core.FunctionalTests.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.Core.FunctionalTests.7.0.0-beta7-13922\lib\net46\EntityFramework.Core.FunctionalTests.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.InMemory, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.InMemory.7.0.0-beta7-13844\lib\net45\EntityFramework.InMemory.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.InMemory.7.0.0-beta7-13922\lib\net45\EntityFramework.InMemory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.Relational, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -50,7 +50,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.Relational.FunctionalTests, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Relational.FunctionalTests.7.0.0-beta7-13844\lib\net46\EntityFramework.Relational.FunctionalTests.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.Relational.FunctionalTests.7.0.0-beta7-13922\lib\net46\EntityFramework.Relational.FunctionalTests.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

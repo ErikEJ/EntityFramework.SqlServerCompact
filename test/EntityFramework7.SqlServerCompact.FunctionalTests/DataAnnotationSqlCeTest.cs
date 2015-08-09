@@ -71,6 +71,43 @@ VALUES (@p0, @p1, @p2);",
                 Sql);
         }
 
+        public override void RequiredAttribute_for_navigation_throws_while_inserting_null_value()
+        {
+            base.RequiredAttribute_for_navigation_throws_while_inserting_null_value();
+
+            Assert.Equal(@"@p0: Book1
+
+INSERT INTO [BookDetail] ([BookId])
+VALUES (@p0);
+
+@p0:
+
+INSERT INTO [BookDetail] ([BookId])
+VALUES (@p0);",
+                Sql);
+        }
+
+        public override void RequiredAttribute_for_property_throws_while_inserting_null_value()
+        {
+            base.RequiredAttribute_for_property_throws_while_inserting_null_value();
+
+            Assert.Equal(@"@p0: 
+@p1: ValidString
+@p2: 00000000-0000-0000-0000-000000000001
+
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
+VALUES (@p0, @p1, @p2);
+
+@p0: 
+@p1: 
+@p2: 00000000-0000-0000-0000-000000000002
+
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
+VALUES (@p0, @p1, @p2);",
+                Sql);
+        }
+
+
         public override void StringLengthAttribute_throws_while_inserting_value_longer_than_max_length()
         {
             base.StringLengthAttribute_throws_while_inserting_value_longer_than_max_length();

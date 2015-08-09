@@ -10,7 +10,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
-        protected override IMigrationSqlGenerator SqlGenerator => new SqlCeMigrationSqlGenerator(new SqlCeUpdateSqlGenerator());
+        protected override IMigrationSqlGenerator SqlGenerator
+           => new SqlCeMigrationSqlGenerator(
+               new SqlCeUpdateSqlGenerator(),
+               new SqlCeTypeMapper(),
+               new SqlCeMetadataExtensionProvider());
 
         public override void AlterSequenceOperation_without_minValue_and_maxValue()
         {
@@ -30,6 +34,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
         public override void CreateSequenceOperation_with_minValue_and_maxValue()
         {
             Assert.Throws<NotSupportedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue());
+        }
+
+        public override void CreateSequenceOperation_with_minValue_and_maxValue_not_long()
+        {
+            Assert.Throws<NotSupportedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue_not_long());
         }
 
         public override void DropSequenceOperation()
@@ -69,6 +78,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 {
                     Table = "People",
                     Name = "Id",
+                    ClrType = typeof(int),
                     ColumnType = "int",
                     IsNullable = false,
                     [SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration] =

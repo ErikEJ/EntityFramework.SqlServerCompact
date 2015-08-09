@@ -233,9 +233,6 @@
     <Compile Include="..\Provider40\SqlCeTypeMapper.cs">
       <Link>SqlCeTypeMapper.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\SqlCeUpdateSqlGenerator.cs">
-      <Link>SqlCeUpdateSqlGenerator.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Strings.Designer.cs">
       <Link>Strings.Designer.cs</Link>
       <AutoGen>True</AutoGen>
@@ -247,6 +244,9 @@
     </Compile>
     <Compile Include="..\Provider40\Update\SqlCeModificationCommandBatchFactory.cs">
       <Link>Update\SqlCeModificationCommandBatchFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Update\SqlCeUpdateSqlGenerator.cs">
+      <Link>Update\SqlCeUpdateSqlGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Utilities\Check.cs">
       <Link>Utilities\Check.cs</Link>

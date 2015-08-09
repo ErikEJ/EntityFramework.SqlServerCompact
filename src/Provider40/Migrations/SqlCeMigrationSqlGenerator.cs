@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.Migrations.Sql;
-using Microsoft.Data.Entity.SqlServerCompact.MetaData;
+using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
 

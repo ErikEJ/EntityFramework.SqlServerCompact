@@ -113,11 +113,35 @@
     <Compile Include="..\Provider40\Extensions\SqlCeEntityServicesBuilderExtensions.cs">
       <Link>Extensions\SqlCeEntityServicesBuilderExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\MetaData\Builders\SqlCeEntityTypeBuilderExtensions.cs">
+      <Link>MetaData\Builders\SqlCeEntityTypeBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\MetaData\Builders\SqlCeIndexBuilderExtensions.cs">
+      <Link>MetaData\Builders\SqlCeIndexBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\MetaData\Builders\SqlCeKeyBuilderExtensions.cs">
+      <Link>MetaData\Builders\SqlCeKeyBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\MetaData\Builders\SqlCePropertyBuilderExtensions.cs">
+      <Link>MetaData\Builders\SqlCePropertyBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\MetaData\Builders\SqlCeReferenceCollectionBuilderExtensions.cs">
+      <Link>MetaData\Builders\SqlCeReferenceCollectionBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\MetaData\Builders\SqlCeReferenceReferenceBuilderExtensions.cs">
+      <Link>MetaData\Builders\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs">
+      <Link>MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\MetaData\SqlCeAnnotationNames.cs">
       <Link>MetaData\SqlCeAnnotationNames.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\MetaData\SqlCeMetaDataExtensionProvider.cs">
       <Link>MetaData\SqlCeMetaDataExtensionProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\MetaData\SqlCeMetaDataExtensions.cs">
+      <Link>MetaData\SqlCeMetaDataExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Migrations\SqlCeHistoryRepository.cs">
       <Link>Migrations\SqlCeHistoryRepository.cs</Link>

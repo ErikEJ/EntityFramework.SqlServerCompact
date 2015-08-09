@@ -7,7 +7,7 @@ using Microsoft.Data.Entity.Migrations.History;
 using Microsoft.Data.Entity.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.Query.Methods;
-using Microsoft.Data.Entity.SqlServerCompact.MetaData;
+using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Microsoft.Data.Entity.SqlServerCompact.Update;
 using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;

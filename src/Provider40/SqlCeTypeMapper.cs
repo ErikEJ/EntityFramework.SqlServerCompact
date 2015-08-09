@@ -73,8 +73,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
                     };
         }
 
-        //TODO ErikEJ Implement metadata
-        protected override string GetColumnType(IProperty property) => null;
+        protected override string GetColumnType(IProperty property) => property.SqlCe().ColumnType;
 
         protected override IReadOnlyDictionary<Type, RelationalTypeMapping> SimpleMappings
             => _simpleMappings;

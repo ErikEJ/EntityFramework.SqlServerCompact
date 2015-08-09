@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.Migrations.Sql;
-using Microsoft.Data.Entity.Relational.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.MetaData;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
@@ -70,7 +69,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 {
                     Table = "People",
                     Name = "Id",
-                    Type = "int",
+                    ColumnType = "int",
                     IsNullable = false,
                     [SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration] =
                         SqlCeAnnotationNames.Identity

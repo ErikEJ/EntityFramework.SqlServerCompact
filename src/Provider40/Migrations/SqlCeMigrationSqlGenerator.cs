@@ -15,9 +15,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
     {
         private readonly IUpdateSqlGenerator _sql;
 
+        //TODO ErikEJ Fix constuctor
         public SqlCeMigrationSqlGenerator(
             [NotNull] IUpdateSqlGenerator sqlGenerator)
-            : base(sqlGenerator)
+            : base(sqlGenerator, null, null)
         {
             _sql = sqlGenerator;
         }
@@ -132,62 +133,63 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                 .Append("ALTER TABLE ")
                 .Append(_sql.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ");                            
-            ColumnDefinition(operation, model, builder);
+            //ColumnDefinition(operation, model, builder);
         }
+        //TODO ErikEJ Make histrepor work again
 
-        public virtual void ColumnDefinition(
-            [NotNull] AlterColumnOperation operation,
-            [CanBeNull] IModel model,
-            [NotNull] SqlBatchBuilder builder) =>
-                ColumnDefinition(
-                    operation.Schema,
-                    operation.Table,
-                    operation.Name,
-                    operation.Type,
-                    operation.IsNullable,
-                    operation.DefaultValue,
-                    operation.DefaultValueSql,
-                    operation.ComputedColumnSql,
-                    operation,
-                    model,
-                    builder);
+        //public virtual void ColumnDefinition(
+        //    [NotNull] AlterColumnOperation operation,
+        //    [CanBeNull] IModel model,
+        //    [NotNull] SqlBatchBuilder builder) =>
+        //        ColumnDefinition(
+        //            operation.Schema,
+        //            operation.Table,
+        //            operation.Name,
+        //            operation.Type,
+        //            operation.IsNullable,
+        //            operation.DefaultValue,
+        //            operation.DefaultValueSql,
+        //            operation.ComputedColumnSql,
+        //            operation,
+        //            model,
+        //            builder);
 
-        public override void ColumnDefinition(
-            string schema,
-            string table,
-            string name,
-            string type,
-            bool nullable,
-            object defaultValue,
-            string defaultValueSql,
-            string computedColumnSql,
-            IAnnotatable annotatable,
-            IModel model,
-            SqlBatchBuilder builder)
-        {
-            Check.NotEmpty(name, nameof(name));
-            Check.NotEmpty(type, nameof(type));
-            Check.NotNull(annotatable, nameof(annotatable));
-            Check.NotNull(builder, nameof(builder));
+        //public override void ColumnDefinition(
+        //    string schema,
+        //    string table,
+        //    string name,
+        //    string type,
+        //    bool nullable,
+        //    object defaultValue,
+        //    string defaultValueSql,
+        //    string computedColumnSql,
+        //    IAnnotatable annotatable,
+        //    IModel model,
+        //    SqlBatchBuilder builder)
+        //{
+        //    Check.NotEmpty(name, nameof(name));
+        //    Check.NotEmpty(type, nameof(type));
+        //    Check.NotNull(annotatable, nameof(annotatable));
+        //    Check.NotNull(builder, nameof(builder));
 
-            base.ColumnDefinition(
-                schema,
-                table,
-                name,
-                type,
-                nullable,
-                defaultValue,
-                defaultValueSql,
-                computedColumnSql,
-                annotatable,
-                model,
-                builder);
+        //    base.ColumnDefinition(
+        //        schema,
+        //        table,
+        //        name,
+        //        type,
+        //        nullable,
+        //        defaultValue,
+        //        defaultValueSql,
+        //        computedColumnSql,
+        //        annotatable,
+        //        model,
+        //        builder);
 
-            var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
-            if (valueGeneration == SqlCeAnnotationNames.Identity)
-            {
-                builder.Append(" IDENTITY");
-            }
-        }
+        //    var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
+        //    if (valueGeneration == SqlCeAnnotationNames.Identity)
+        //    {
+        //        builder.Append(" IDENTITY");
+        //    }
+        //}
     }
 }

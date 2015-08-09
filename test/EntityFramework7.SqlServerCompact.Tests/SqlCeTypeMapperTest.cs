@@ -181,7 +181,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_key_SQL_Server_string_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(string), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(string));
             property.DeclaringEntityType.SetPrimaryKey(property);
             property.IsNullable = false;
 
@@ -195,8 +195,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_foreign_key_SQL_Server_string_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(string), shadowProperty: true);
-            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(string), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(string));
+            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(string));
             var pk = property.DeclaringEntityType.SetPrimaryKey(property);
             property.DeclaringEntityType.AddForeignKey(fkProperty, pk, property.DeclaringEntityType);
 
@@ -210,8 +210,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_required_foreign_key_SQL_Server_string_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(string), shadowProperty: true);
-            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(string), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(string));
+            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(string));
             var pk = property.DeclaringEntityType.SetPrimaryKey(property);
             property.DeclaringEntityType.AddForeignKey(fkProperty, pk, property.DeclaringEntityType);
             fkProperty.IsNullable = false;
@@ -244,7 +244,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_key_SQL_Server_binary_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]));
             property.DeclaringEntityType.SetPrimaryKey(property);
             property.IsNullable = false;
 
@@ -258,8 +258,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_foreign_key_SQL_Server_binary_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]), shadowProperty: true);
-            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(byte[]), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]));
+            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(byte[]));
             var pk = property.DeclaringEntityType.SetPrimaryKey(property);
             property.DeclaringEntityType.AddForeignKey(fkProperty, pk, property.DeclaringEntityType);
 
@@ -273,8 +273,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_required_foreign_key_SQL_Server_binary_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]), shadowProperty: true);
-            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(byte[]), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]));
+            var fkProperty = property.DeclaringEntityType.AddProperty("FK", typeof(byte[]));
             var pk = property.DeclaringEntityType.SetPrimaryKey(property);
             property.DeclaringEntityType.AddForeignKey(fkProperty, pk, property.DeclaringEntityType);
             fkProperty.IsNullable = false;
@@ -289,7 +289,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_non_key_SQL_Server_rowversion_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]));
             property.IsConcurrencyToken = true;
             property.ValueGenerated = ValueGenerated.OnAddOrUpdate;
 
@@ -302,7 +302,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Does_non_key_SQL_Server_required_rowversion_mapping()
         {
-            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]), shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]));
             property.IsConcurrencyToken = true;
             property.ValueGenerated = ValueGenerated.OnAddOrUpdate;
             property.IsNullable = false;
@@ -315,7 +315,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 
         private static RelationalTypeMapping GetTypeMapping(Type propertyType, bool? isNullable = null)
         {
-            var property = CreateEntityType().AddProperty("MyProp", propertyType, shadowProperty: true);
+            var property = CreateEntityType().AddProperty("MyProp", propertyType);
 
             if (isNullable.HasValue)
             {

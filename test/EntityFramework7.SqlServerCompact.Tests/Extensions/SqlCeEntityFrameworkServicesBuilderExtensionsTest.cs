@@ -17,7 +17,7 @@ using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
 {
-    public class SqlCeEntityFrameworkServicesBuilderExtensionsTest : RelationalEntityServicesBuilderExtensionsTest
+    public class SqlCeEntityFrameworkServicesBuilderExtensionsTest : RelationalEntityFrameworkServicesBuilderExtensionsTest
     {
         [Fact]
         public override void Services_wire_up_correctly()
@@ -52,17 +52,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
             VerifyScoped<SqlCeMigrationSqlGenerator>();
         }
 
-        protected override IServiceCollection GetServices(IServiceCollection services = null)
+        public SqlCeEntityFrameworkServicesBuilderExtensionsTest()
+            : base(SqlCeTestHelpers.Instance)
         {
-            return (services ?? new ServiceCollection())
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection();
-        }
-
-        protected override DbContext CreateContext(IServiceProvider serviceProvider)
-        {
-            return SqlCeTestHelpers.Instance.CreateContext(serviceProvider);
         }
     }
 }

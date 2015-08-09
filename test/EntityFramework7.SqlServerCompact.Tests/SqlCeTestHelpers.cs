@@ -4,7 +4,7 @@ using Microsoft.Framework.DependencyInjection;
 
 namespace Microsoft.Data.Entity.Tests
 {
-    public class SqlCeTestHelpers : TestHelpers
+    public class SqlCeTestHelpers : RelationalTestHelpers
     {
         protected SqlCeTestHelpers()
         {

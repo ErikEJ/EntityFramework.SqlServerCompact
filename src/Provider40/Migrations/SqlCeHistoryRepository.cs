@@ -64,7 +64,7 @@ WHERE TABLE_NAME = '" + MigrationHistoryTableName + "' AND TABLE_TYPE <> N'SYSTE
             return exists;
         }
 
-        public virtual IReadOnlyList<IHistoryRow> GetAppliedMigrations()
+        public virtual IReadOnlyList<HistoryRow> GetAppliedMigrations()
         {
             var rows = new List<HistoryRow>();
 
@@ -133,7 +133,7 @@ WHERE [ContextKey] = @ContextKey ORDER BY [MigrationId]";
             };
         }
 
-        public virtual MigrationOperation GetInsertOperation(IHistoryRow row)
+        public virtual MigrationOperation GetInsertOperation(HistoryRow row)
         {
             Check.NotNull(row, nameof(row));
 
@@ -161,6 +161,46 @@ WHERE [ContextKey] = @ContextKey ORDER BY [MigrationId]";
         public virtual string EndIf()
         {
             return string.Empty;
+        }
+
+        IReadOnlyList<HistoryRow> IHistoryRepository.GetAppliedMigrations()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetCreateScript()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetCreateIfNotExistsScript()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetInsertScript(HistoryRow row)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDeleteScript(string migrationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetBeginIfNotExistsScript(string migrationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetBeginIfExistsScript(string migrationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetEndIfScript()
+        {
+            throw new NotImplementedException();
         }
     }
 }

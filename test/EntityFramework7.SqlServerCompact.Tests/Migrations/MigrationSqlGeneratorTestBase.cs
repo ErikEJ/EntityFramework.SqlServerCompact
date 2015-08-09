@@ -4,10 +4,9 @@
 using System;
 using System.Linq;
 using Microsoft.Data.Entity.Migrations.Operations;
-using Microsoft.Data.Entity.Migrations.Sql;
 using Xunit;
 
-namespace Microsoft.Data.Entity.Relational.Migrations.Sql
+namespace Microsoft.Data.Entity.Migrations.Sql
 {
     public abstract class MigrationSqlGeneratorTestBase
     {
@@ -26,7 +25,8 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
                     Table = "People",
                     Schema = "dbo",
                     Name = "Name",
-                    Type = "varchar(30)",
+                    ClrType = typeof(string),
+                    ColumnType = "varchar(30)",
                     IsNullable = false,
                     DefaultValue = "John Doe"
                 });
@@ -40,9 +40,37 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
                 {
                     Table = "People",
                     Name = "Birthday",
-                    Type = "date",
+                    ClrType = typeof(DateTime),
+                    ColumnType = "date",
                     IsNullable = true,
                     DefaultValueSql = "CURRENT_TIMESTAMP"
+                });
+        }
+
+        [Fact]
+        public virtual void AddColumnOperation_with_computed_column_SQL()
+        {
+            Generate(
+                new AddColumnOperation
+                {
+                    Table = "People",
+                    Name = "Birthday",
+                    ClrType = typeof(DateTime),
+                    ColumnType = "date",
+                    IsNullable = true,
+                    ComputedColumnSql = "CURRENT_TIMESTAMP"
+                });
+        }
+
+        [Fact]
+        public virtual void AddColumnOperation_without_column_type()
+        {
+            Generate(
+                new AddColumnOperation
+                {
+                    Table = "People",
+                    Name = "Alias",
+                    ClrType = typeof(string)
                 });
         }
 
@@ -133,9 +161,22 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
                     Table = "People",
                     Schema = "dbo",
                     Name = "LuckyNumber",
-                    Type = "int",
+                    ClrType = typeof(int),
+                    ColumnType = "int",
                     IsNullable = false,
                     DefaultValue = 7
+                });
+        }
+
+        [Fact]
+        public virtual void AlterColumnOperation_without_column_type()
+        {
+            Generate(
+                new AlterColumnOperation
+                {
+                    Table = "People",
+                    Name = "LuckyNumber",
+                    ClrType = typeof(int)
                 });
         }
 
@@ -166,13 +207,15 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
         }
 
         [Fact]
-        public virtual void AlterTableOperation()
+        public virtual void RenameTableOperation_within_schema()
         {
             Generate(
                 new RenameTableOperation
                 {
                     Name = "People",
-                    Schema = "dbo"
+                    Schema = "dbo",
+                    NewName = "Personas",
+                    NewSchema = "dbo"
                 });
         }
 
@@ -215,7 +258,24 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
                     IncrementBy = 1,
                     MinValue = 2,
                     MaxValue = 816,
-                    Type = "bigint",
+                    ClrType = typeof(long),
+                    Cycle = true
+                });
+        }
+
+        [Fact]
+        public virtual void CreateSequenceOperation_with_minValue_and_maxValue_not_long()
+        {
+            Generate(
+                new CreateSequenceOperation
+                {
+                    Name = "DefaultSequence",
+                    Schema = "dbo",
+                    StartWith = 3,
+                    IncrementBy = 1,
+                    MinValue = 2,
+                    MaxValue = 816,
+                    ClrType = typeof(int),
                     Cycle = true
                 });
         }
@@ -227,6 +287,7 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
                 new CreateSequenceOperation
                 {
                     Name = "DefaultSequence",
+                    ClrType = typeof(long),
                     StartWith = 3,
                     IncrementBy = 1
                 });
@@ -245,19 +306,20 @@ namespace Microsoft.Data.Entity.Relational.Migrations.Sql
                         new AddColumnOperation
                         {
                             Name = "Id",
-                            Type = "int",
+                            ClrType = typeof(int),
                             IsNullable = false
                         },
                         new AddColumnOperation
                         {
                             Name = "EmployerId",
-                            Type = "int",
+                            ClrType = typeof(int),
                             IsNullable = true
                         },
                          new AddColumnOperation
                         {
                             Name = "SSN",
-                            Type = "char(11)",
+                            ClrType = typeof(string),
+                            ColumnType = "char(11)",
                             IsNullable = true
                         }
                     },

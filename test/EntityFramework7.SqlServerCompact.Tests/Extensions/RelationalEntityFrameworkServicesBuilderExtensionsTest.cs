@@ -14,13 +14,11 @@ using Microsoft.Data.Entity.Query.Methods;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.ValueGeneration;
-using Xunit;
 
 namespace Microsoft.Data.Entity.Tests
 {
-    public abstract class RelationalEntityServicesBuilderExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
+    public abstract class RelationalEntityFrameworkServicesBuilderExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
     {
-        [Fact]
         public override void Services_wire_up_correctly()
         {
             base.Services_wire_up_correctly();
@@ -31,7 +29,6 @@ namespace Microsoft.Data.Entity.Tests
             VerifySingleton<UntypedValueBufferFactoryFactory>();
             VerifySingleton<TypedValueBufferFactoryFactory>();
             VerifySingleton<IMigrationModelFactory>();
-            VerifySingleton<RelationalModelValidator>();
 
             VerifyScoped<IMigrator>();
             VerifyScoped<IMigrationAssembly>();
@@ -39,7 +36,10 @@ namespace Microsoft.Data.Entity.Tests
             VerifyScoped<BatchExecutor>();
             VerifyScoped<ModelDiffer>();
             VerifyScoped<RelationalValueGeneratorSelector>();
+            VerifyScoped<RelationalSqlExecutor>();
+            VerifyScoped<SqlStatementExecutor>();
             VerifyScoped<CommandBatchPreparer>();
+            VerifyScoped<RelationalModelValidator>();
 
             VerifyScoped<ISqlStatementExecutor>();
             VerifyScoped<IMethodCallTranslator>();
@@ -55,6 +55,11 @@ namespace Microsoft.Data.Entity.Tests
             VerifyScoped<IRelationalDatabaseCreator>();
             VerifyScoped<IUpdateSqlGenerator>();
             VerifyScoped<IRelationalMetadataExtensionProvider>();
+        }
+
+        protected RelationalEntityFrameworkServicesBuilderExtensionsTest(RelationalTestHelpers testHelpers)
+            : base(testHelpers)
+        {
         }
     }
 }

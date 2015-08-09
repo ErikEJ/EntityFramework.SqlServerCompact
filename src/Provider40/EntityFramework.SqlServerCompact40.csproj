@@ -106,8 +106,16 @@
     <Compile Include="Extensions\SqlCeDbContextOptionsBuilder.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Extensions\SqlCeEntityServicesBuilderExtensions.cs" />
+    <Compile Include="MetaData\Builders\SqlCeEntityTypeBuilderExtensions.cs" />
+    <Compile Include="MetaData\Builders\SqlCeIndexBuilderExtensions.cs" />
+    <Compile Include="MetaData\Builders\SqlCeKeyBuilderExtensions.cs" />
+    <Compile Include="MetaData\Builders\SqlCePropertyBuilderExtensions.cs" />
+    <Compile Include="MetaData\Builders\SqlCeReferenceCollectionBuilderExtensions.cs" />
+    <Compile Include="MetaData\Builders\SqlCeReferenceReferenceBuilderExtensions.cs" />
+    <Compile Include="MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs" />
     <Compile Include="MetaData\SqlCeAnnotationNames.cs" />
     <Compile Include="MetaData\SqlCeMetaDataExtensionProvider.cs" />
+    <Compile Include="MetaData\SqlCeMetaDataExtensions.cs" />
     <Compile Include="Migrations\SqlCeHistoryRepository.cs" />
     <Compile Include="Migrations\SqlCeMigrationAnnotationProvider.cs" />
     <Compile Include="Migrations\SqlCeMigrationSqlGenerator.cs" />
@@ -162,6 +170,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

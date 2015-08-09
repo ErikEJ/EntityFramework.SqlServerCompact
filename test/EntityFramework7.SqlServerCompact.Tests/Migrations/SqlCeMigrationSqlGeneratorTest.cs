@@ -2,7 +2,7 @@
 using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact;
-using Microsoft.Data.Entity.SqlServerCompact.MetaData;
+using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Xunit;
 

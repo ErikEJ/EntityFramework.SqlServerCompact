@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.IO;
-using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Relational.Design.CodeGeneration;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Configuration;
-using Microsoft.Data.Entity.SqlServerCompact.MetaData;
 using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
@@ -15,21 +14,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
     public class SqlCeDbContextCodeGeneratorHelper : DbContextCodeGeneratorHelper
     {
         private const string _dbContextSuffix = "Context";
+        private KeyConvention _keyConvention = new KeyConvention();
 
         public SqlCeDbContextCodeGeneratorHelper(
-            [NotNull] DbContextGeneratorModel generatorModel)
-            : base(generatorModel)
+            [NotNull] DbContextGeneratorModel generatorModel,
+            [NotNull] IRelationalMetadataExtensionProvider extensionsProvider)
+            : base(generatorModel, extensionsProvider)
         {
-        }
-
-        protected override IRelationalMetadataExtensionProvider RelationalExtensions => new SqlCeMetadataExtensionProvider();
-
-        public override IEnumerable<IEntityType> OrderedEntityTypes()
-        {
-            // do not configure EntityTypes for which we had an error when generating
-            return GeneratorModel.MetadataModel.EntityTypes.OrderBy(e => e.Name)
-                .Where(e => ((EntityType)e).FindAnnotation(
-                    SqlCeMetadataModelProvider.AnnotationNameEntityTypeError) == null);
         }
 
         public override string ClassName([NotNull] string connectionString)
@@ -46,6 +37,32 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             return base.ClassName(connectionString);
         }
 
+        public override void AddPropertyFacetsConfiguration([NotNull] PropertyConfiguration propertyConfiguration)
+        {
+            Check.NotNull(propertyConfiguration, nameof(propertyConfiguration));
+
+            base.AddPropertyFacetsConfiguration(propertyConfiguration);
+
+            AddValueGeneratedNeverFacetConfiguration(propertyConfiguration);
+        }
+
+        public virtual void AddValueGeneratedNeverFacetConfiguration(
+            [NotNull] PropertyConfiguration propertyConfiguration)
+        {
+            Check.NotNull(propertyConfiguration, nameof(propertyConfiguration));
+
+            // If the EntityType has a single integer key KeyConvention assumes ValueGeneratedOnAdd().
+            // If the underlying column does not have Identity set then we need to set to
+            // ValueGeneratedNever() to override this behavior.
+            if (_keyConvention.ValueGeneratedOnAddProperty(
+                new List<Property> { (Property)propertyConfiguration.Property },
+                (EntityType)propertyConfiguration.EntityConfiguration.EntityType) != null)
+            {
+                propertyConfiguration.AddFacetConfiguration(
+                    new FacetConfiguration("ValueGeneratedNever()"));
+            }
+        }
+
         private string PathFromConnectionString(string connectionString)
         {
             var conn = new SqlCeConnection(GetFullConnectionString(connectionString));
@@ -58,23 +75,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             {
                 repl.SubscriberConnectionString = connectionString;
                 return repl.SubscriberConnectionString;
-            }
-        }
-
-        public override void AddNavigationsConfiguration(EntityConfiguration entityConfiguration)
-        {
-            Check.NotNull(entityConfiguration, nameof(entityConfiguration));
-
-            foreach (var foreignKey in entityConfiguration.EntityType.GetForeignKeys())
-            {
-                var dependentEndNavigationPropertyName =
-                    (string)foreignKey[SqlCeMetadataModelProvider.AnnotationNameDependentEndNavPropName];
-                var principalEndNavigationPropertyName =
-                    (string)foreignKey[SqlCeMetadataModelProvider.AnnotationNamePrincipalEndNavPropName];
-
-                entityConfiguration.RelationshipConfigurations.Add(
-                    new RelationshipConfiguration(entityConfiguration, foreignKey,
-                        dependentEndNavigationPropertyName, principalEndNavigationPropertyName));
             }
         }
     }

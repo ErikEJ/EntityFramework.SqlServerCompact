@@ -32,10 +32,17 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
 
-            //TODO ErikEJ Implement? If so, change to use null in coldef call below
-            //DropDefaultConstraint(operation.Schema, operation.Table, operation.Name, builder);
 
             builder
+                .EndBatch()
+                .Append("ALTER TABLE ")
+                .Append(_sql.DelimitIdentifier(operation.Table))
+                .Append(" ALTER COLUMN ")
+                .Append(_sql.DelimitIdentifier(operation.Name))
+                .Append(" DROP DEFAULT;");
+
+            builder
+                .EndBatch()
                 .Append("ALTER TABLE ")
                 .Append(_sql.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ");
@@ -46,26 +53,25 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                     operation.ClrType,
                     operation.ColumnType,
                     operation.IsNullable,
-                    operation.DefaultValue,
-                    operation.DefaultValueSql,
+                    null /*operation.DefaultValue */,
+                    null /*operation.DefaultValueSql */,
                     operation.ComputedColumnSql,
                     operation,
                     model,
                     builder);
 
-            //TODO ErikEJ Implement?
-            //if (operation.DefaultValue != null || operation.DefaultValueSql != null)
-            //{
-            //    builder
-            //        .AppendLine(";")
-            //        .Append("ALTER TABLE ")
-            //        .Append(_sql.DelimitIdentifier(operation.Table, operation.Schema))
-            //        .Append(" ADD");
-            //    DefaultValue(operation.DefaultValue, operation.DefaultValueSql, builder);
-            //    builder
-            //        .Append(" FOR ")
-            //        .Append(_sql.DelimitIdentifier(operation.Name));
-            //}
+            if (operation.DefaultValue != null || operation.DefaultValueSql != null)
+            {
+                builder
+                    .EndBatch()
+                    .AppendLine(";")
+                    .Append("ALTER TABLE ")
+                    .Append(_sql.DelimitIdentifier(operation.Table))
+                    .Append(" ALTER COLUMN ")
+                    .Append(_sql.DelimitIdentifier(operation.Name))
+                    .Append(" SET ");
+                DefaultValue(operation.DefaultValue, operation.DefaultValueSql, builder);
+            }
         }
 
         public override void Generate(DropIndexOperation operation, IModel model, SqlBatchBuilder builder)

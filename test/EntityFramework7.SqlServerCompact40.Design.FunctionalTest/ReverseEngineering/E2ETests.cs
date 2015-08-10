@@ -51,6 +51,12 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             "This is the output from a customized DbContextTemplate";
         private const string CustomEntityTypeTemplateContents =
             "This is the output from a customized EntityTypeTemplate";
+        private static readonly List<string> _CustomizedTemplatesTestExpectedInfos =
+            new List<string>
+            {
+                "Using custom template " + Path.Combine(CustomizedTemplateDir, ProviderDbContextTemplateName),
+                "Using custom template " + Path.Combine(CustomizedTemplateDir, ProviderEntityTypeTemplateName),
+            };
 
         private readonly ITestOutputHelper _output;
 
@@ -98,7 +104,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             Assert.Equal(0, logger.InformationMessages.Count);
             Assert.Equal(0, logger.VerboseMessages.Count);
 
-            var expectedFilePaths = _E2ETestExpectedFileNames.Select(name => TestOutputDir + @"\" + name);
+            var expectedFilePaths = _E2ETestExpectedFileNames.Select(name => Path.Combine(TestOutputDir, name));
             Assert.Equal(expectedFilePaths.Count(), filePaths.Count);
             var i = 0;
             foreach (var expectedFilePath in expectedFilePaths)
@@ -146,6 +152,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             serviceCollection.AddScoped(typeof(ILogger), sp => logger);
             var fileService = new InMemoryFileService();
             serviceCollection.AddScoped(typeof(IFileService), sp => fileService);
+            InitializeCustomizedTemplates(fileService);
 
             var provider = GetMetadataModelProvider(serviceCollection);
 
@@ -154,11 +161,9 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
                 Provider = provider,
                 ConnectionString = E2EConnectionString,
                 Namespace = TestNamespace,
-                CustomTemplatePath = null, // not used for this test
+                CustomTemplatePath = CustomizedTemplateDir,
                 OutputPath = TestOutputDir
             };
-
-            var expectedFileContents = InitializeE2EExpectedFileContents();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
             var generator = serviceProvider.GetRequiredService<ReverseEngineeringGenerator>();
@@ -173,7 +178,6 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
                 Assert.Equal(expectedWarning, logger.WarningMessages[i++]);
             }
 
-            //TODO ErikEJ Why is this failing?
             //Assert.Equal(_CustomizedTemplatesTestExpectedInfos.Count, logger.InformationMessages.Count);
             //i = 0;
             //foreach (var expectedInfo in _CustomizedTemplatesTestExpectedInfos)
@@ -183,7 +187,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
 
             Assert.Equal(0, logger.VerboseMessages.Count);
 
-            var expectedFilePaths = _E2ETestExpectedFileNames.Select(name => TestOutputDir + @"\" + name);
+            var expectedFilePaths = _E2ETestExpectedFileNames.Select(name => Path.Combine(TestOutputDir, name));
             Assert.Equal(expectedFilePaths.Count(), filePaths.Count);
             i = 0;
             foreach (var expectedFilePath in expectedFilePaths)
@@ -191,28 +195,23 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
                 Assert.Equal(expectedFilePath, filePaths[i++]);
             }
 
-            var listOfFileContents = new List<string>();
-
-            //TODO ErikEJ Why is this failing?
-            //foreach (var fileName in _E2ETestExpectedFileNames)
-            //{
-            //    var fileContents = fileService.RetrieveFileContents(TestOutputDir, fileName);
-            //    if ("E2EContext.cs" == fileName)
-            //    {
-            //        Assert.Equal(CustomDbContextTemplateContents, fileContents);
-            //    }
-            //    else
-            //    {
-            //        Assert.Equal(CustomEntityTypeTemplateContents, fileContents);
-            //    }
-            //}
+            foreach (var fileName in _E2ETestExpectedFileNames)
+            {
+                var fileContents = fileService.RetrieveFileContents(TestOutputDir, fileName);
+                if ("E2EContext.cs" == fileName)
+                {
+                    Assert.Equal(CustomDbContextTemplateContents, fileContents);
+                }
+                else
+                {
+                    Assert.Equal(CustomEntityTypeTemplateContents, fileContents);
+                }
+            }
         }
 
         [Fact]
         public void Can_output_templates_to_be_customized()
         {
-            SetCurrentCulture();
-
             var serviceCollection = SetupInitialServices();
             var logger = new InMemoryCommandLogger("E2ETest");
             serviceCollection.AddScoped(typeof(ILogger), sp => logger);
@@ -220,7 +219,6 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             serviceCollection.AddScoped(typeof(IFileService), sp => fileService);
 
             var provider = GetMetadataModelProvider(serviceCollection);
-            var expectedFileContents = InitializeE2EExpectedFileContents();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
             var generator = serviceProvider.GetRequiredService<ReverseEngineeringGenerator>();
@@ -230,8 +228,8 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             Assert.Equal(0, logger.InformationMessages.Count);
             Assert.Equal(0, logger.VerboseMessages.Count);
             Assert.Equal(2, filePaths.Count);
-            Assert.Equal(TestOutputDir + @"\" + ProviderDbContextTemplateName, filePaths[0]);
-            Assert.Equal(TestOutputDir + @"\" + ProviderEntityTypeTemplateName, filePaths[1]);
+            Assert.Equal(Path.Combine(TestOutputDir, ProviderDbContextTemplateName), filePaths[0]);
+            Assert.Equal(Path.Combine(TestOutputDir, ProviderEntityTypeTemplateName), filePaths[1]);
 
             var dbContextTemplateContents = fileService.RetrieveFileContents(
                 TestOutputDir, ProviderDbContextTemplateName);
@@ -304,6 +302,5 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 #endif
         }
-
     }
 }

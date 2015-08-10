@@ -109,8 +109,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
         {
             base.AlterColumnOperation();
 
-            Assert.Equal(
-                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] int NOT NULL DEFAULT 7",
+            Assert.StartsWith(
+                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] DROP DEFAULT;",
                 Sql);
         }
 

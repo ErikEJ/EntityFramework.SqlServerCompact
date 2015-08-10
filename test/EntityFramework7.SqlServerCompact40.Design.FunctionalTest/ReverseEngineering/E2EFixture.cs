@@ -1,6 +1,6 @@
 ﻿using ErikEJ.Data.Entity.SqlServerCe.FunctionalTests;
 
-namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest
+namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {
     public class E2EFixture
     {

@@ -7,13 +7,15 @@ namespace E2ETest.Namespace
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlCe(@"Data Source=E2E.sdf");
+            options.UseSqlServer(@"Data Source=E2E.sdf");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AllDataTypes>(entity =>
             {
+                entity.Property(e => e.AllDataTypesID).ValueGeneratedNever();
+
                 entity.Property(e => e.bigintColumn).Required();
 
                 entity.Property(e => e.bitColumn).Required();
@@ -89,7 +91,9 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<PropertyConfiguration>(entity =>
             {
-                entity.Property(e => e.PropertyConfigurationID).ValueGeneratedOnAdd();
+                entity.Property(e => e.PropertyConfigurationID)
+                    .ValueGeneratedOnAdd()
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.A).Required();
 
@@ -101,23 +105,25 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.WithDateDefaultExpression)
                     .Required()
-                    .DefaultValueSql("getdate()");
+                    .HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.WithDefaultValue)
                     .Required()
-                    .DefaultValue(-1);
+                    .HasDefaultValue(-1);
 
                 entity.Property(e => e.WithGuidDefaultExpression)
                     .Required()
-                    .DefaultValueSql("NEWID()");
+                    .HasDefaultValueSql("NEWID()");
 
                 entity.Property(e => e.WithMoneyDefaultValue)
                     .Required()
-                    .DefaultValue(0.00m);
+                    .HasDefaultValue(0.00m);
             });
 
             modelBuilder.Entity<SelfReferencing>(entity =>
             {
+                entity.Property(e => e.SelfReferencingID).ValueGeneratedNever();
+
                 entity.Property(e => e.Description).Required();
 
                 entity.Property(e => e.Name).Required();
@@ -129,7 +135,9 @@ namespace E2ETest.Namespace
             {
                 entity.ToTable("Test Spaces Keywords Table");
 
-                entity.Property(e => e.Test_Spaces_Keywords_TableID).HasColumnName("Test Spaces Keywords TableID");
+                entity.Property(e => e.Test_Spaces_Keywords_TableID)
+                    .HasColumnName("Test Spaces Keywords TableID")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.@Multiple_At_Symbols_In_Column)
                     .Required()

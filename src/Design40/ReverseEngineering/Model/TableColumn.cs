@@ -21,7 +21,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
        ,   c.NUMERIC_SCALE [Scale]
        ,   CAST(CASE WHEN c.AUTOINC_INCREMENT IS NULL THEN 0 ELSE 1 END AS bit) [IsIdentity]
        ,   CAST(CASE WHEN c.DATA_TYPE = 'rowversion' THEN 1 ELSE 0 END AS bit) [IsStoreGenerated]
-       ,   c.COLUMN_DEFAULT as [Default]
+       ,   RTRIM(LTRIM(c.COLUMN_DEFAULT)) as [Default]
         FROM
        INFORMATION_SCHEMA.COLUMNS c
        INNER JOIN

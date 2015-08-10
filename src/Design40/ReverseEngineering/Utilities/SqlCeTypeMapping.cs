@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
+namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Utilities
 {
     public static class SqlCeTypeMapping
     {
@@ -19,8 +19,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
                 { "tinyint", typeof(byte) },
 
                 // approximate numerics
-                { "float", typeof(float) },
-                { "real", typeof(double) },
+                { "real", typeof(float) },
+                { "float", typeof(double) },
 
                 // date and time
                 { "datetime", typeof(DateTime) },

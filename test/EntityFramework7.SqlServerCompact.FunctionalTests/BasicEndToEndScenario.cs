@@ -13,6 +13,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var db = new BloggingContext())
             {
+                db.LogToConsole();
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
                 db.Blogs.Add(new Blog { BlogId = Guid.NewGuid(), Url = "http://erikej.blogspot.com" });

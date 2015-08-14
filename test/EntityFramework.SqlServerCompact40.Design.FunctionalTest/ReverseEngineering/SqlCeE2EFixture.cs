@@ -2,9 +2,9 @@
 
 namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {
-    public class E2EFixture
+    public class SqlCeE2EFixture
     {
-        public E2EFixture()
+        public SqlCeE2EFixture()
         {
             SqlCeTestStore.GetOrCreateShared("E2E", () => { });
         }

@@ -21,7 +21,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
         {
             Check.NotNull(connection, nameof(connection));
 
-            return File.Exists(PathFromConnectionString(connection.ConnectionString));
+            return File.Exists(SqlCeHelper.PathFromConnectionString(connection.ConnectionString));
         }
 
         public static void Drop([NotNull] this SqlCeConnection connection, bool throwOnOpen = true)
@@ -33,31 +33,12 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
                 connection.Open();
             }
             connection.Close();
-            var path = PathFromConnectionString(connection.ConnectionString);
+            var path = SqlCeHelper.PathFromConnectionString(connection.ConnectionString);
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
         }
 
-        private static string PathFromConnectionString(string connectionString)
-        {
-#if SQLCE35
-            var conn = new SqlCeConnection(GetFullConnectionString(connectionString));
-            return conn.Database;
-#else
-            var sb = new SqlCeConnectionStringBuilder(GetFullConnectionString(connectionString));
-            return sb.DataSource;
-#endif
-        }
-
-        private static string GetFullConnectionString(string connectionString)
-        {
-            using (var repl = new SqlCeReplication())
-            {
-                repl.SubscriberConnectionString = connectionString;
-                return repl.SubscriberConnectionString;
-            }
-        }
     }
 }

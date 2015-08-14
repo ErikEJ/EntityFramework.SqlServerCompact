@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Data.Entity.SqlServerCompact.Extensions.Logging;
 using Microsoft.Framework.Logging;
 
@@ -22,6 +23,10 @@ namespace Microsoft.Data.Entity
             }
 
             return NullLogger.Instance;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

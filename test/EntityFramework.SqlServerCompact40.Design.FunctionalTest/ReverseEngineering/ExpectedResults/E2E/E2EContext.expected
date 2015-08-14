@@ -7,7 +7,7 @@ namespace E2ETest.Namespace
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Data Source=E2E.sdf");
+            options.UseSqlCe(@"Data Source=E2E.sdf");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -91,10 +91,6 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<PropertyConfiguration>(entity =>
             {
-                entity.Property(e => e.PropertyConfigurationID)
-                    .ValueGeneratedOnAdd()
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.A).Required();
 
                 entity.Property(e => e.B).Required();
@@ -118,6 +114,17 @@ namespace E2ETest.Namespace
                 entity.Property(e => e.WithMoneyDefaultValue)
                     .Required()
                     .HasDefaultValue(0.00m);
+            });
+
+            modelBuilder.Entity<ReferredToByTableWithUnmappablePrimaryKeyColumn>(entity =>
+            {
+                entity.Property(e => e.ReferredToByTableWithUnmappablePrimaryKeyColumnID).ValueGeneratedNever();
+
+                entity.Property(e => e.AColumn).Required();
+
+                entity.Property(e => e.ValueGeneratedOnAddColumn)
+                    .Required()
+                    .ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<SelfReferencing>(entity =>
@@ -181,6 +188,7 @@ namespace E2ETest.Namespace
         public virtual DbSet<OneToOneSeparateFKDependent> OneToOneSeparateFKDependent { get; set; }
         public virtual DbSet<OneToOneSeparateFKPrincipal> OneToOneSeparateFKPrincipal { get; set; }
         public virtual DbSet<PropertyConfiguration> PropertyConfiguration { get; set; }
+        public virtual DbSet<ReferredToByTableWithUnmappablePrimaryKeyColumn> ReferredToByTableWithUnmappablePrimaryKeyColumn { get; set; }
         public virtual DbSet<SelfReferencing> SelfReferencing { get; set; }
         public virtual DbSet<Test_Spaces_Keywords_Table> Test_Spaces_Keywords_Table { get; set; }
     }

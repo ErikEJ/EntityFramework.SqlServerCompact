@@ -138,25 +138,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\BasicEndToEndScenarioForIdentity.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\BasicEndToEndScenarioForIdentity.cs">
       <Link>BasicEndToEndScenarioForIdentity.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\NorthwindQuerySqlCeFixture.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\NorthwindQuerySqlCeFixture.cs">
       <Link>NorthwindQuerySqlCeFixture.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\SqlCeDatabaseCreationTest.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeDatabaseCreationTest.cs">
       <Link>SqlCeDatabaseCreationTest.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\SqlCeDataStoreCreatorTest.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeDataStoreCreatorTest.cs">
       <Link>SqlCeDataStoreCreatorTest.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\SqlCeTestStore.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeTestStore.cs">
       <Link>SqlCeTestStore.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\TestModels\SqlCeNorthwindContext.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\TestModels\SqlCeNorthwindContext.cs">
       <Link>TestModels\SqlCeNorthwindContext.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\TestSqlCeModelSource.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\TestSqlCeModelSource.cs">
       <Link>TestSqlCeModelSource.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

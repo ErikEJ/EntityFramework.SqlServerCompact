@@ -102,7 +102,11 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Logging\DbConsoleLogger.cs" />
+    <Compile Include="Extensions\Logging\DbLoggerProvider.cs" />
+    <Compile Include="Extensions\Logging\NullLogger.cs" />
     <Compile Include="Extensions\SqlCeConnectionExtensions.cs" />
+    <Compile Include="Extensions\SqlCeDbContextExtensions.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsBuilder.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsBuilderExtensions.cs" />
     <Compile Include="Extensions\SqlCeEntityServicesBuilderExtensions.cs" />

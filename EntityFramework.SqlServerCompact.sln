@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.Tests", "test\EntityFramework7.SqlServerCompact.Tests\EntityFramework.SqlServerCompact.Tests.csproj", "{C38B58D7-F346-40A2-9849-D12CB9EC5C69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.Tests", "test\EntityFramework.SqlServerCompact.Tests\EntityFramework.SqlServerCompact.Tests.csproj", "{C38B58D7-F346-40A2-9849-D12CB9EC5C69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.FunctionalTests", "test\EntityFramework7.SqlServerCompact.FunctionalTests\EntityFramework.SqlServerCompact.FunctionalTests.csproj", "{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.FunctionalTests", "test\EntityFramework.SqlServerCompact.FunctionalTests\EntityFramework.SqlServerCompact.FunctionalTests.csproj", "{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact35.FunctionalTests", "test\EntityFramework7.SqlServerCompact35.FunctionalTests\EntityFramework.SqlServerCompact35.FunctionalTests.csproj", "{54867677-196E-4C26-832B-3846A937E649}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact35.FunctionalTests", "test\EntityFramework.SqlServerCompact35.FunctionalTests\EntityFramework.SqlServerCompact35.FunctionalTests.csproj", "{54867677-196E-4C26-832B-3846A937E649}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "design", "design", "{0F224063-E959-433C-88BD-B2414CF74B96}"
 EndProject
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact35.Design", "src\Design35\EntityFramework.SqlServerCompact35.Design.csproj", "{5056E1D2-C5F0-4613-AB74-1E470734D8EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact40.Design.FunctionalTest", "test\EntityFramework7.SqlServerCompact40.Design.FunctionalTest\EntityFramework.SqlServerCompact40.Design.FunctionalTest.csproj", "{543477FB-CF81-446D-AB02-1E41382DED5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact40.Design.FunctionalTest", "test\EntityFramework.SqlServerCompact40.Design.FunctionalTest\EntityFramework.SqlServerCompact40.Design.FunctionalTest.csproj", "{543477FB-CF81-446D-AB02-1E41382DED5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

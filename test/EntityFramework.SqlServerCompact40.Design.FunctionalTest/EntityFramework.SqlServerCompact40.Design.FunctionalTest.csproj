@@ -226,7 +226,7 @@
       <Project>{0bdb0cbb-c42a-45e5-8518-14e0c31119ad}</Project>
       <Name>EntityFramework.SqlServerCompact40</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFramework7.SqlServerCompact.FunctionalTests\EntityFramework.SqlServerCompact.FunctionalTests.csproj">
+    <ProjectReference Include="..\EntityFramework.SqlServerCompact.FunctionalTests\EntityFramework.SqlServerCompact.FunctionalTests.csproj">
       <Project>{3c88d49a-7ef2-42ba-a8d7-9df7d358fd24}</Project>
       <Name>EntityFramework.SqlServerCompact.FunctionalTests</Name>
     </ProjectReference>

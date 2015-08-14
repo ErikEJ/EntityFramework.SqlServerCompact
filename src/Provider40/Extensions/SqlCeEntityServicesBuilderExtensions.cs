@@ -7,6 +7,7 @@ using Microsoft.Data.Entity.SqlServerCompact.Update;
 using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
+using Microsoft.Framework.DependencyInjection.Extensions;
 
 // ReSharper disable CheckNamespace
 
@@ -22,7 +23,6 @@ namespace Microsoft.Framework.DependencyInjection
 
             service.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>());
-
 
             service.TryAdd(new ServiceCollection()
                 .AddSingleton<SqlCeValueGeneratorCache>()

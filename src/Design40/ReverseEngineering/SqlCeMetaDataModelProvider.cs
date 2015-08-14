@@ -14,6 +14,7 @@ using System.Data.SqlServerCe;
 using System.Linq;
 using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
+using Microsoft.Data.Entity.Infrastructure;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 {
@@ -370,6 +371,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             if (tableColumn.IsIdentity)
             {
                 property.ValueGenerated = ValueGenerated.OnAdd;
+                property.AddAnnotation(SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration,
+                    SqlCeAnnotationNames.Identity);
             }
 
             if (tableColumn.IsStoreGenerated

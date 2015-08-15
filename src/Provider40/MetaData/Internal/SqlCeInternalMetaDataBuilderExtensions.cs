@@ -1,40 +1,39 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Internal;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Metadata.Internal
 {
     public static class SqlCeInternalMetadataBuilderExtensions
     {
-        public static RelationalModelAnnotations SqlCe(
+        public static RelationalModelBuilderAnnotations SqlCe(
             [NotNull] this InternalModelBuilder builder,
             ConfigurationSource configurationSource)
-            => new RelationalModelAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
+            => new RelationalModelBuilderAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
 
-        public static RelationalPropertyAnnotations SqlCe(
+        public static RelationalPropertyBuilderAnnotations SqlCe(
             [NotNull] this InternalPropertyBuilder builder,
             ConfigurationSource configurationSource)
-            => new RelationalPropertyAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
+            => new RelationalPropertyBuilderAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
 
-        public static RelationalEntityTypeAnnotations SqlCe(
+        public static RelationalEntityTypeBuilderAnnotations SqlCe(
             [NotNull] this InternalEntityTypeBuilder builder,
             ConfigurationSource configurationSource)
-            => new RelationalEntityTypeAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
+            => new RelationalEntityTypeBuilderAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
 
-        public static RelationalKeyAnnotations SqlCe(
+        public static RelationalKeyBuilderAnnotations SqlCe(
             [NotNull] this InternalKeyBuilder builder,
             ConfigurationSource configurationSource)
-            => new RelationalKeyAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
+            => new RelationalKeyBuilderAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
 
-        public static RelationalIndexAnnotations SqlCe(
+        public static RelationalIndexBuilderAnnotations SqlCe(
             [NotNull] this InternalIndexBuilder builder,
             ConfigurationSource configurationSource)
-            => new RelationalIndexAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
+            => new RelationalIndexBuilderAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
 
-        public static RelationalForeignKeyAnnotations SqlCe(
+        public static RelationalForeignKeyBuilderAnnotations SqlCe(
             [NotNull] this InternalRelationshipBuilder builder,
             ConfigurationSource configurationSource)
-            => new RelationalForeignKeyAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
+            => new RelationalForeignKeyBuilderAnnotations(builder, configurationSource, SqlCeAnnotationNames.Prefix);
     }
 }

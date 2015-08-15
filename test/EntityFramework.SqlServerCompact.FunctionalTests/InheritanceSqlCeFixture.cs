@@ -51,14 +51,14 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 );");
 
             testStore.ExecuteNonQuery(@"
-                ALTER TABLE[Animal]
+                ALTER TABLE [Animal]
                     ADD CONSTRAINT[EagleId_FK]
                     FOREIGN KEY ([EagleId])
                     REFERENCES[Animal]([Species]) 
                     ON DELETE NO ACTION ON UPDATE NO ACTION;");
 
             testStore.ExecuteNonQuery(@"
-                ALTER TABLE[Animal]
+                ALTER TABLE [Animal]
                     ADD CONSTRAINT[CountryId_FK]
                     FOREIGN KEY ([CountryId])
                     REFERENCES[Country]([Id]) 
@@ -69,8 +69,16 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                     Genus int NOT NULL,
                     Species nvarchar(100) NOT NULL PRIMARY KEY,
                     Name nvarchar(100) NOT NULL,
+                    CountryId int NULL,
                     HasThorns bit
                 );");
+
+            testStore.ExecuteNonQuery(@"
+                ALTER TABLE [Plant]
+                    ADD CONSTRAINT[PlantCountryId_FK]
+                    FOREIGN KEY ([CountryId])
+                    REFERENCES[Country]([Id]) 
+                    ON DELETE NO ACTION ON UPDATE NO ACTION;");
 
             using (var context = CreateContext())
             {
@@ -78,9 +86,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             }
         }
 
-        public override InheritanceContext CreateContext()
-        {
-            return new InheritanceContext(_serviceProvider, _options);
-        }
+        public override InheritanceContext CreateContext() => new InheritanceContext(_serviceProvider, _options);
     }
 }

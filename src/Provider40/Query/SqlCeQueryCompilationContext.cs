@@ -47,5 +47,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query
 
         public override ISqlQueryGenerator CreateSqlQueryGenerator(SelectExpression selectExpression)
             => new SqlCeQuerySqlGenerator(Check.NotNull(selectExpression, nameof(selectExpression)), TypeMapper);
+        public override bool IsCrossApplySupported => true;
     }
 }

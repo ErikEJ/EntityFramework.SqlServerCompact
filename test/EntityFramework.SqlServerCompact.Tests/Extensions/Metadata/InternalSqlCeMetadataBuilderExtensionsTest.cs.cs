@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Conventions;
 using Microsoft.Data.Entity.Metadata.Internal;
+using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata.Internal;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
+namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions.Metadata
 {
     public class InternalSqlCeMetadataBuilderExtensionsTest
     {
@@ -31,13 +33,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
         {
             var typeBuilder = CreateBuilder().Entity(typeof(Splot), ConfigurationSource.Convention);
 
-            typeBuilder.SqlCe(ConfigurationSource.Convention).TableName = "Splew";
+            Assert.True(typeBuilder.SqlCe(ConfigurationSource.Convention).ToTable("Splew"));
             Assert.Equal("Splew", typeBuilder.Metadata.SqlCe().TableName);
 
-            typeBuilder.SqlCe(ConfigurationSource.DataAnnotation).TableName = "Splow";
+            Assert.True(typeBuilder.SqlCe(ConfigurationSource.DataAnnotation).ToTable("Splow"));
             Assert.Equal("Splow", typeBuilder.Metadata.SqlCe().TableName);
 
-            typeBuilder.SqlCe(ConfigurationSource.Convention).TableName = "Splod";
+            Assert.False(typeBuilder.SqlCe(ConfigurationSource.Convention).ToTable("Splod"));
             Assert.Equal("Splow", typeBuilder.Metadata.SqlCe().TableName);
 
             Assert.Equal(1, typeBuilder.Metadata.Annotations.Count(
@@ -51,13 +53,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
                 .Entity(typeof(Splot), ConfigurationSource.Convention)
                 .Property("Id", typeof(int), ConfigurationSource.Convention);
 
-            propertyBuilder.SqlCe(ConfigurationSource.Convention).ColumnName = "Splew";
+            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.Convention).ColumnName("Splew"));
             Assert.Equal("Splew", propertyBuilder.Metadata.SqlCe().ColumnName);
 
-            propertyBuilder.SqlCe(ConfigurationSource.DataAnnotation).ColumnName = "Splow";
+            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.DataAnnotation).ColumnName("Splow"));
             Assert.Equal("Splow", propertyBuilder.Metadata.SqlCe().ColumnName);
 
-            propertyBuilder.SqlCe(ConfigurationSource.Convention).ColumnName = "Splod";
+            Assert.False(propertyBuilder.SqlCe(ConfigurationSource.Convention).ColumnName("Splod"));
             Assert.Equal("Splow", propertyBuilder.Metadata.SqlCe().ColumnName);
 
             Assert.Equal(1, propertyBuilder.Metadata.Annotations.Count(
@@ -72,13 +74,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
             var property = entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention).Metadata;
             var keyBuilder = entityTypeBuilder.Key(new[] { property }, ConfigurationSource.Convention);
 
-            keyBuilder.SqlCe(ConfigurationSource.Convention).Name = "Splew";
+            Assert.True(keyBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew"));
             Assert.Equal("Splew", keyBuilder.Metadata.SqlCe().Name);
 
-            keyBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name = "Splow";
+            Assert.True(keyBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name("Splow"));
             Assert.Equal("Splow", keyBuilder.Metadata.SqlCe().Name);
 
-            keyBuilder.SqlCe(ConfigurationSource.Convention).Name = "Splod";
+            Assert.False(keyBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod"));
             Assert.Equal("Splow", keyBuilder.Metadata.SqlCe().Name);
 
             Assert.Equal(1, keyBuilder.Metadata.Annotations.Count(
@@ -93,13 +95,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
             entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention);
             var indexBuilder = entityTypeBuilder.Index(new[] { "Id" }, ConfigurationSource.Convention);
 
-            indexBuilder.SqlCe(ConfigurationSource.Convention).Name = "Splew";
+            indexBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew");
             Assert.Equal("Splew", indexBuilder.Metadata.SqlCe().Name);
 
-            indexBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name = "Splow";
+            indexBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name("Splow");
             Assert.Equal("Splow", indexBuilder.Metadata.SqlCe().Name);
 
-            indexBuilder.SqlCe(ConfigurationSource.Convention).Name = "Splod";
+            indexBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod");
             Assert.Equal("Splow", indexBuilder.Metadata.SqlCe().Name);
 
             Assert.Equal(1, indexBuilder.Metadata.Annotations.Count(
@@ -114,13 +116,13 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
             entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention);
             var relationshipBuilder = entityTypeBuilder.ForeignKey("Splot", new[] { "Id" }, ConfigurationSource.Convention);
 
-            relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name = "Splew";
+            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew"));
             Assert.Equal("Splew", relationshipBuilder.Metadata.SqlCe().Name);
 
-            relationshipBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name = "Splow";
+            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name("Splow"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
 
-            relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name = "Splod";
+            Assert.False(relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
 
             Assert.Equal(1, relationshipBuilder.Metadata.Annotations.Count(

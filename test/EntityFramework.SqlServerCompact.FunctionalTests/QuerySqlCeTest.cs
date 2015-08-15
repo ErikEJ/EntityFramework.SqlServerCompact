@@ -275,17 +275,17 @@ WHERE [e].[ReportsTo] IS NULL",
             base.Where_new_instance_field_access_closure_via_query_cache();
 
             Assert.Equal(
-                @"@__p_InstanceFieldValue_0: London
+                @"@__InstanceFieldValue_0: London
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[City] = @__p_InstanceFieldValue_0
+WHERE [c].[City] = @__InstanceFieldValue_0
 
-@__p_InstanceFieldValue_0: Seattle
+@__InstanceFieldValue_0: Seattle
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[City] = @__p_InstanceFieldValue_0",
+WHERE [c].[City] = @__InstanceFieldValue_0",
                 Sql);
         }
 
@@ -2182,6 +2182,21 @@ FROM [Orders] AS [o]",
                 Sql);
         }
 
+        public override void SelectMany_Joined_Take()
+        {
+            base.SelectMany_Joined_Take();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [c].[ContactName]
+FROM [Customers] AS [c]
+CROSS APPLY (
+    SELECT TOP(1000) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+    FROM [Orders] AS [o]
+    WHERE [o].[CustomerID] = [c].[CustomerID]
+) AS [t0]",
+                Sql);
+        }
+
         public override void Take_with_single()
         {
             base.Take_with_single();
@@ -3516,7 +3531,11 @@ WHERE [c].[CustomerID] IN (
             Assert.Equal(
     @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
+WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')
+
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE [c].[CustomerID] IN ('ABCDE')",
                 Sql);
         }
 

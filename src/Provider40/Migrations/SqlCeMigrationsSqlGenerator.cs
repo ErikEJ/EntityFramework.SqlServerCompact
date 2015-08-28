@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Operations;
-using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
+using Microsoft.Data.Entity.Storage.Commands;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 {
-    public class SqlCeMigrationSqlGenerator : MigrationSqlGenerator
+    public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {
         private readonly IUpdateSqlGenerator _sql;
 
-        public SqlCeMigrationSqlGenerator(
+        public SqlCeMigrationsSqlGenerator(
             [NotNull] SqlCeUpdateSqlGenerator sqlGenerator,
             [NotNull] SqlCeTypeMapper typeMapper,
             [NotNull] SqlCeMetadataExtensionProvider annotations)
@@ -24,7 +25,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             _sql = sqlGenerator;
         }
 
-        public override void Generate(
+        protected override void Generate(
             [NotNull] AlterColumnOperation operation,
             [CanBeNull] IModel model,
             [NotNull] SqlBatchBuilder builder)
@@ -74,7 +75,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             }
         }
 
-        public override void Generate(DropIndexOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(DropIndexOperation operation, IModel model, SqlBatchBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
@@ -87,12 +88,12 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 
         #region Invalid schema operations
 
-        public override void Generate(CreateSchemaOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(EnsureSchemaOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
 
-        public override void Generate(DropSchemaOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(DropSchemaOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
@@ -101,44 +102,44 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 
         #region Sequences not supported
 
-        public override void Generate(RestartSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RestartSequenceOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        public override void Generate(CreateSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(CreateSequenceOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        public override void Generate(AlterSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(AlterSequenceOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        public override void Generate(DropSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(DropSequenceOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        public override void Generate(RenameSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameSequenceOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
         #endregion 
 
-        public override void Generate(RenameColumnOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameColumnOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support column renames.");
         }
 
-        public override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support index renames.");
         }
 
-        public override void Generate(RenameTableOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameTableOperation operation, IModel model, SqlBatchBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
@@ -154,21 +155,24 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             }
         }
 
-        public override IReadOnlyList<SqlBatch> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
+        //TODO ErikEJ - may not be required any longer (pending bug fix)
+        public override IReadOnlyList<RelationalCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
         {
             Check.NotNull(operations, nameof(operations));
 
             var builder = new SqlBatchBuilder();
             foreach (var operation in operations)
             {
-                // TODO: Too magic? (Wait for changes in EF7 code base)
-                ((dynamic)this).Generate((dynamic)operation, model, builder);
-                builder.EndBatch();
+                Generate(operation, model, builder);
+                builder
+                    .AppendLine()
+                            .EndBatch();
             }
-            return builder.SqlBatches;
+
+            return builder.RelationalCommands;
         }
 
-        public override void ColumnDefinition(
+        protected override void ColumnDefinition(
             string schema,
             string table,
             string name,

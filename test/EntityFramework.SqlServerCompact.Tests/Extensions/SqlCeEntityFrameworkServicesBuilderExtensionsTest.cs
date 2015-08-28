@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
+﻿using System.Collections.Generic;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Migrations.History;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
-using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Microsoft.Data.Entity.SqlServerCompact.Update;
 using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
 using Microsoft.Data.Entity.Tests;
 using Microsoft.Data.Entity.Update;
-using Microsoft.Framework.DependencyInjection;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
@@ -39,17 +32,17 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
             VerifyScoped<SqlCeDatabaseProviderServices>();
             VerifyScoped<SqlCeDatabase>();
             VerifyScoped<SqlCeDatabaseConnection>();
-            VerifyScoped<SqlCeMigrationAnnotationProvider>();
-            VerifyScoped<SqlCeMigrationSqlGenerator>();
+            VerifyScoped<SqlCeMigrationsAnnotationProvider>();
+            VerifyScoped<SqlCeMigrationsSqlGenerator>();
             VerifyScoped<SqlCeDatabaseCreator>();
 
             // Migrations
-            VerifyScoped<IMigrationAssembly>();
+            VerifyScoped<IMigrationsAssembly>();
             VerifyScoped<SqlCeHistoryRepository>();
             VerifyScoped<IMigrator>();
-            VerifySingleton<IMigrationIdGenerator>();
-            VerifyScoped<IModelDiffer>();
-            VerifyScoped<SqlCeMigrationSqlGenerator>();
+            VerifySingleton<IMigrationsIdGenerator>();
+            VerifyScoped<IMigrationsModelDiffer>();
+            VerifyScoped<SqlCeMigrationsSqlGenerator>();
         }
 
         public SqlCeEntityFrameworkServicesBuilderExtensionsTest()

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Migrations.History;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
@@ -25,9 +25,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
             Assert.Equal(
                 "CREATE TABLE [__MigrationHistory] (" + EOL +
                 "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
-                "    [ProductVersion] nvarchar(32)," + EOL +
+                "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
                 "    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])" + EOL +
-                ")",
+                ")"+ EOL,
                 sql);
         }
 
@@ -87,22 +87,20 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
                 Mock.Of<IRelationalDatabaseCreator>(),
                 Mock.Of<ISqlStatementExecutor>(),
                 Mock.Of<IRelationalConnection>(),
-                new MigrationModelFactory(),
                 new DbContextOptions<DbContext>(
                     new Dictionary<Type, IDbContextOptionsExtension>
                     {
                         { typeof(SqlCeOptionsExtension), new SqlCeOptionsExtension() }
                     }),
-                new ModelDiffer(
+                new MigrationsModelDiffer(
                     annotationsProvider,
-                    new SqlCeMigrationAnnotationProvider()),
-                new SqlCeMigrationSqlGenerator(
+                    new SqlCeMigrationsAnnotationProvider()),
+                new SqlCeMigrationsSqlGenerator(
                     updateSqlGenerator,
                     new SqlCeTypeMapper(),
                     annotationsProvider),
                 annotationsProvider,
-                updateSqlGenerator,
-                Mock.Of<IServiceProvider>());
+                updateSqlGenerator);
         }
 
         private class Context : DbContext

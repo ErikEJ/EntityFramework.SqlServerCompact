@@ -3,6 +3,7 @@ using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
+using Microsoft.Data.Entity.SqlServerCompact.Query.ExpressionTranslators;
 using Microsoft.Data.Entity.SqlServerCompact.Update;
 using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
 using Microsoft.Data.Entity.Storage;
@@ -30,17 +31,18 @@ namespace Microsoft.Framework.DependencyInjection
                 .AddSingleton<SqlCeMetadataExtensionProvider>()
                 .AddSingleton<SqlCeTypeMapper>()
                 .AddSingleton<SqlCeModelSource>()
-                .AddSingleton<SqlCeMigrationAnnotationProvider>()
+                .AddSingleton<SqlCeMigrationsAnnotationProvider>()
                 .AddSingleton<SqlCeConventionSetBuilder>()
                 .AddScoped<SqlCeModificationCommandBatchFactory>()
                 .AddScoped<SqlCeDatabaseProviderServices>()
                 .AddScoped<SqlCeDatabase>()
                 .AddScoped<SqlCeDatabaseConnection>()
-                .AddScoped<SqlCeMigrationSqlGenerator>()
+                .AddScoped<SqlCeMigrationsSqlGenerator>()
                 .AddScoped<SqlCeDatabaseCreator>()
                 .AddScoped<SqlCeHistoryRepository>()
                 .AddScoped<SqlCeCompositeMethodCallTranslator>()
                 .AddScoped<SqlCeCompositeMemberTranslator>()
+                .AddScoped<SqlCeCompositeExpressionFragmentTranslator>()
                 );
 
             return services;

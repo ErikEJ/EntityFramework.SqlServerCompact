@@ -6,11 +6,9 @@ using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Migrations.History;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
-using Microsoft.Data.Entity.Migrations.Sql;
+using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Query;
-using Microsoft.Data.Entity.Query.Methods;
+using Microsoft.Data.Entity.Query.ExpressionTranslators;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.ValueGeneration;
@@ -25,16 +23,15 @@ namespace Microsoft.Data.Entity.Tests
 
             VerifySingleton<IParameterNameGeneratorFactory>();
             VerifySingleton<IComparer<ModificationCommand>>();
-            VerifySingleton<IMigrationIdGenerator>();
+            VerifySingleton<IMigrationsIdGenerator>();
             VerifySingleton<UntypedValueBufferFactoryFactory>();
             VerifySingleton<TypedValueBufferFactoryFactory>();
-            VerifySingleton<IMigrationModelFactory>();
 
             VerifyScoped<IMigrator>();
-            VerifyScoped<IMigrationAssembly>();
+            VerifyScoped<IMigrationsAssembly>();
             VerifyScoped<RelationalQueryContextFactory>();
             VerifyScoped<BatchExecutor>();
-            VerifyScoped<ModelDiffer>();
+            VerifyScoped<MigrationsModelDiffer>();
             VerifyScoped<RelationalValueGeneratorSelector>();
             VerifyScoped<RelationalSqlExecutor>();
             VerifyScoped<SqlStatementExecutor>();
@@ -44,9 +41,10 @@ namespace Microsoft.Data.Entity.Tests
             VerifyScoped<ISqlStatementExecutor>();
             VerifyScoped<IMethodCallTranslator>();
             VerifyScoped<IMemberTranslator>();
-            VerifyScoped<IModelDiffer>();
+            VerifyScoped<IExpressionFragmentTranslator>();
+            VerifyScoped<IMigrationsModelDiffer>();
             VerifyScoped<IHistoryRepository>();
-            VerifyScoped<IMigrationSqlGenerator>();
+            VerifyScoped<IMigrationsSqlGenerator>();
             VerifyScoped<IRelationalConnection>();
             VerifyScoped<IRelationalTypeMapper>();
             VerifyScoped<IModificationCommandBatchFactory>();

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 {
-    public class SqlCeMigrationAnnotationProvider : MigrationAnnotationProvider
+    public class SqlCeMigrationsAnnotationProvider : MigrationsAnnotationProvider
     {        
         public override IEnumerable<IAnnotation> For(IProperty property)
         {

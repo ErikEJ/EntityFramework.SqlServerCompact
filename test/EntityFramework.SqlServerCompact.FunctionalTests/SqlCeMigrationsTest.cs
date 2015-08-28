@@ -3,8 +3,6 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Migrations.Builders;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
@@ -21,7 +19,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 
                 using (var context = CreateContext(testDatabase))
                 {
-                    context.Database.ApplyMigrations();
+                    context.Database.Migrate();
 
                     Assert.True(context.GetService<IRelationalDatabaseCreator>().Exists());
                 }
@@ -59,28 +57,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             }
         }
 
-        [ContextType(typeof(BloggingContext))]
+        [DbContext(typeof(BloggingContext))]
+        [Migration("00000000000000_Empty")]
         public class EmptyMigration : Migration
         {
-            public override void Up(MigrationBuilder migrationBuilder)
-            {
-            }
-
-            public override void Down(MigrationBuilder migrationBuilder)
-            {
-            }
-
-            public override string Id
-            {
-                get { return "Empty"; }
-            }
-
-            public override string ProductVersion
-            {
-                get { return "EF7"; }
-            }
-
-            public override void BuildTargetModel(ModelBuilder modelBuilder)
+            protected override void Up(MigrationBuilder migrationBuilder)
             {
             }
         }

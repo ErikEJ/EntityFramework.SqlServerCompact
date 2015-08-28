@@ -7,9 +7,9 @@ using Microsoft.Data.Entity.Query;
 using Microsoft.Data.Entity.SqlServerCompact.Query;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
-using Microsoft.Data.Entity.Query.Methods;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.Query.ExpressionTranslators;
 
 namespace Microsoft.Data.Entity.SqlServerCompact
 {
@@ -28,6 +28,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
             [NotNull] IMethodCallTranslator compositeMethodCallTranslator,
             [NotNull] IMemberTranslator compositeMemberTranslator,
+            [NotNull] IExpressionFragmentTranslator compositeExpressionFragmentTranslator,
             [NotNull] IRelationalTypeMapper typeMapper,
             [NotNull] IRelationalMetadataExtensionProvider relationalExtensions)
              : base(
@@ -43,6 +44,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
                 valueBufferFactoryFactory,
                 compositeMethodCallTranslator,
                 compositeMemberTranslator,
+                compositeExpressionFragmentTranslator,
                 typeMapper,
                 relationalExtensions)
         {
@@ -53,12 +55,14 @@ namespace Microsoft.Data.Entity.SqlServerCompact
             IResultOperatorHandler resultOperatorHandler,
             IQueryMethodProvider enumerableMethodProvider,
             IMethodCallTranslator compositeMethodCallTranslator,
-            IMemberTranslator compositeMemberTranslator)
+            IMemberTranslator compositeMemberTranslator,
+            IExpressionFragmentTranslator compositeExpressionFragmentTranslator)
         {
             Check.NotNull(linqOperatorProvider, nameof(linqOperatorProvider));
             Check.NotNull(resultOperatorHandler, nameof(resultOperatorHandler));
             Check.NotNull(enumerableMethodProvider, nameof(enumerableMethodProvider));
             Check.NotNull(compositeMethodCallTranslator, nameof(compositeMethodCallTranslator));
+            Check.NotNull(compositeExpressionFragmentTranslator, nameof(compositeExpressionFragmentTranslator));
 
             return new SqlCeQueryCompilationContext(
                 Model,
@@ -71,6 +75,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
                 enumerableMethodProvider,
                 compositeMethodCallTranslator,
                 compositeMemberTranslator,
+                compositeExpressionFragmentTranslator,
                 ValueBufferFactoryFactory,
                 TypeMapper,
                 RelationalExtensions);

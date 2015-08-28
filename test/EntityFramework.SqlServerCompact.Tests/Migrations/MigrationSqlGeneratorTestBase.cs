@@ -12,7 +12,7 @@ namespace Microsoft.Data.Entity.Migrations.Sql
     {
         protected static string EOL => Environment.NewLine;
 
-        protected abstract IMigrationSqlGenerator SqlGenerator { get; }
+        protected abstract IMigrationsSqlGenerator SqlGenerator { get; }
 
         protected virtual string Sql { get; set; }
 
@@ -84,9 +84,9 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                     Schema = "dbo",
                     Name = "FK_People_Companies",
                     Columns = new[] { "EmployerId1", "EmployerId2" },
-                    ReferencedTable = "Companies",
-                    ReferencedSchema = "hr",
-                    ReferencedColumns = new[] { "Id1", "Id2" },
+                    PrincipalTable = "Companies",
+                    PrincipalSchema = "hr",
+                    PrincipalColumns = new[] { "Id1", "Id2" },
                     OnDelete = ReferentialAction.Cascade
                 });
         }
@@ -99,8 +99,8 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                 {
                     Table = "People",
                     Columns = new[] { "SpouseId" },
-                    ReferencedTable = "People",
-                    ReferencedColumns = new[] { "Id" }
+                    PrincipalTable = "People",
+                    PrincipalColumns = new[] { "Id" }
                 });
         }
 
@@ -191,7 +191,7 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                     IncrementBy = 1,
                     MinValue = 2,
                     MaxValue = 816,
-                    Cycle = true
+                    IsCyclic = true
                 });
         }
 
@@ -254,12 +254,12 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                 {
                     Name = "DefaultSequence",
                     Schema = "dbo",
-                    StartWith = 3,
+                    StartValue = 3,
                     IncrementBy = 1,
                     MinValue = 2,
                     MaxValue = 816,
                     ClrType = typeof(long),
-                    Cycle = true
+                    IsCyclic = true
                 });
         }
 
@@ -271,12 +271,12 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                 {
                     Name = "DefaultSequence",
                     Schema = "dbo",
-                    StartWith = 3,
+                    StartValue = 3,
                     IncrementBy = 1,
                     MinValue = 2,
                     MaxValue = 816,
                     ClrType = typeof(int),
-                    Cycle = true
+                    IsCyclic = true
                 });
         }
 
@@ -288,7 +288,7 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                 {
                     Name = "DefaultSequence",
                     ClrType = typeof(long),
-                    StartWith = 3,
+                    StartValue = 3,
                     IncrementBy = 1
                 });
         }
@@ -339,7 +339,8 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                         new AddForeignKeyOperation
                         {
                             Columns = new[] { "EmployerId" },
-                            ReferencedTable = "Companies"
+                            PrincipalTable = "Companies",
+                            PrincipalColumns = new[] { "Id" }
                         }
                     }
                 });
@@ -437,13 +438,13 @@ namespace Microsoft.Data.Entity.Migrations.Sql
                 });
         }
 
-        protected virtual void Generate(MigrationOperation operation)
+        protected virtual void Generate(params MigrationOperation[] operation)
         {
-            var batch = SqlGenerator.Generate(new[] { operation });
+            var batch = SqlGenerator.Generate(operation);
 
             Sql = string.Join(
-                EOL + "GO" + EOL + EOL,
-                batch.Select(b => b.Sql));
+                "GO" + EOL + EOL,
+                batch.Select(b => b.CommandText));
         }
     }
 }

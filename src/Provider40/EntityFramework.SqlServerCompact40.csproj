@@ -108,7 +108,7 @@
     <Compile Include="Extensions\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlCeDbContextExtensions.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsBuilder.cs" />
-    <Compile Include="Extensions\SqlCeDbContextOptionsBuilderExtensions.cs" />
+    <Compile Include="Extensions\SqlCeDbContextOptionsExtensions.cs" />
     <Compile Include="Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs" />
     <Compile Include="MetaData\Builders\SqlCeEntityTypeBuilderExtensions.cs" />
     <Compile Include="MetaData\Builders\SqlCeIndexBuilderExtensions.cs" />

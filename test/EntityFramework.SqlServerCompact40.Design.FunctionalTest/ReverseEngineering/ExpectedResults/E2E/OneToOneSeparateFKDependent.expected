@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 
-namespace E2ETest.Namespace
+namespace E2ETest.Namespace.SubDir
 {
     public class OneToOneSeparateFKDependent
     {

@@ -9,7 +9,7 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity
 {
-    public static class SqlCeDbContextOptionsBuilderExtensions
+    public static class SqlCeDbContextOptionsExtensions
     {
         public static SqlCeDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder options, [NotNull] string connectionString)
         {

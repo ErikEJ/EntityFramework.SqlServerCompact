@@ -119,8 +119,8 @@
     <Compile Include="..\Provider40\Extensions\SqlCeDbContextOptionsBuilder.cs">
       <Link>Extensions\SqlCeDbContextOptionsBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeDbContextOptionsBuilderExtensions.cs">
-      <Link>Extensions\SqlCeDbContextOptionsBuilderExtensions.cs</Link>
+    <Compile Include="..\Provider40\Extensions\SqlCeDbContextOptionsExtensions.cs">
+      <Link>Extensions\SqlCeDbContextOptionsExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs">
       <Link>Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs</Link>

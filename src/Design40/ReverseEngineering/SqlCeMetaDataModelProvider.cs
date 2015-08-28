@@ -18,7 +18,7 @@ using Microsoft.Data.Entity.Infrastructure;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 {
-    public class SqlCeMetadataModelProvider : ReverseEngineeringMetadataModelProvider
+    public class SqlCeMetadataModelProvider : RelationalMetadataModelProvider
     {
         private static readonly List<string> DataTypesForNumericPrecisionAndScale = new List<string> { "decimal", "numeric" };
 
@@ -46,11 +46,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         }
 
         protected override IRelationalMetadataExtensionProvider ExtensionsProvider => new SqlCeMetadataExtensionProvider();
-
-        public override DbContextCodeGeneratorHelper DbContextCodeGeneratorHelper(DbContextGeneratorModel model)
-        {
-            return new SqlCeDbContextCodeGeneratorHelper(model, ExtensionsProvider);
-        }
 
         public override IModel ConstructRelationalModel([NotNull] string connectionString)
         {

@@ -3,9 +3,11 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Relational.Design.CodeGeneration;
+using Microsoft.Data.Entity.Metadata.Builders;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Configuration;
+using Microsoft.Data.Entity.Relational.Design.Templating;
+using Microsoft.Data.Entity.Relational.Design.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.Utilities;
 
@@ -17,8 +19,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 
         public SqlCeDbContextCodeGeneratorHelper(
             [NotNull] DbContextGeneratorModel generatorModel,
-            [NotNull] IRelationalMetadataExtensionProvider extensionsProvider)
-            : base(generatorModel, extensionsProvider)
+            [NotNull] IRelationalMetadataExtensionProvider extensionsProvider,
+            [NotNull] ModelUtilities modelUtilities)
+            : base(generatorModel, extensionsProvider, modelUtilities)
         {
         }
 
@@ -36,7 +39,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             return base.ClassName(connectionString);
         }
 
-        public override string UseMethodName => "UseSqlCe";
+        public override string UseMethodName => nameof(SqlCeDbContextOptionsExtensions.UseSqlCe);
 
         public override void AddValueGeneratedFacetConfiguration(
             [NotNull] PropertyConfiguration propertyConfiguration)
@@ -57,7 +60,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
                     (EntityType)propertyConfiguration.EntityConfiguration.EntityType) != null)
             {
                 propertyConfiguration.AddFacetConfiguration(
-                    new FacetConfiguration("ValueGeneratedNever()"));
+                    new FacetConfiguration(nameof(PropertyBuilder.ValueGeneratedNever) + "()"));
             }
             else
             {

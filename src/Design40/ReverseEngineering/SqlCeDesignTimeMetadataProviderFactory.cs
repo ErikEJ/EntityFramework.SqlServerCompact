@@ -1,6 +1,9 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
-using Microsoft.Framework.DependencyInjection;  
+using Microsoft.Data.Entity.SqlServerCompact.Design.Utilities;
+using Microsoft.Data.Entity.SqlServerCompact.Metadata;
+using Microsoft.Framework.DependencyInjection;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 {
@@ -9,7 +12,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         public override void AddMetadataProviderServices([NotNull] IServiceCollection serviceCollection)
         {
             base.AddMetadataProviderServices(serviceCollection);
-            serviceCollection.AddScoped<IDatabaseMetadataModelProvider, SqlCeMetadataModelProvider>();
+            serviceCollection.AddScoped<IDatabaseMetadataModelProvider, SqlCeMetadataModelProvider>()
+                .AddScoped<IRelationalMetadataExtensionProvider, SqlCeMetadataExtensionProvider>()
+                .AddScoped<SqlServerLiteralUtilities>()
+                .AddScoped<CodeGeneratorHelperFactory, SqlCeCodeGeneratorHelperFactory>();
         }
     }
 }

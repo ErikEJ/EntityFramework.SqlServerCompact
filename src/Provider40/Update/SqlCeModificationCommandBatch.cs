@@ -39,7 +39,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
             Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
 
             var commandIndex = 0;
-            using (var storeCommand = CreateStoreCommand(commandText.Item1, transaction.DbTransaction, typeMapper, transaction.Connection?.CommandTimeout))
+            using (var storeCommand = CreateStoreCommand(commandText.Item1, transaction.Connection, typeMapper, transaction.Connection?.CommandTimeout))
             {
                 if (logger.IsEnabled(LogLevel.Verbose))
                 {
@@ -56,7 +56,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Update
                         {
                             if (commandText.Item2.Length > 0)
                             {
-                                returningCommand = CreateStoreCommand(commandText.Item2, transaction.DbTransaction, typeMapper, transaction.Connection?.CommandTimeout);
+                                returningCommand = CreateStoreCommand(commandText.Item2, transaction.Connection, typeMapper, transaction.Connection?.CommandTimeout);
                                 returningReader = returningCommand.ExecuteReader();
                             }
                             commandIndex = ModificationCommands[commandIndex].RequiresResultPropagation

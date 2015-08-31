@@ -16,7 +16,9 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
         protected override string ProviderName => "EntityFramework.SqlServerCompact40.Design";
         protected override IDesignTimeMetadataProviderFactory GetFactory() => new SqlCeDesignTimeMetadataProviderFactory();
         public virtual string TestNamespace => "E2ETest.Namespace";
-        public virtual string TestOutputDir => "E2ETest/Output/Dir";
+        public virtual string TestProjectDir => Path.Combine("E2ETest", "Output");
+        public virtual string TestSubDir => "SubDir";
+
         public virtual string CustomizedTemplateDir => "E2ETest/CustomizedTemplate/Dir";
 
         public virtual string ProviderDbContextTemplateName
@@ -70,16 +72,16 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
         {
             var configuration = new ReverseEngineeringConfiguration
             {
-                Provider = MetadataModelProvider,
                 ConnectionString = _connectionString,
-                Namespace = TestNamespace,
                 CustomTemplatePath = null, // not used for this test
-                OutputPath = TestOutputDir
+                ProjectPath = TestProjectDir,
+                ProjectRootNamespace = TestNamespace,
+                RelativeOutputPath = TestSubDir
             };
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
 
-            var actualFileSet = new FileSet(InMemoryFiles, TestOutputDir)
+            var actualFileSet = new FileSet(InMemoryFiles, Path.Combine(TestProjectDir, TestSubDir))
             {
                 Files = filePaths.Select(Path.GetFileName).ToList()
             };
@@ -107,11 +109,11 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
         {
             var configuration = new ReverseEngineeringConfiguration
             {
-                Provider = MetadataModelProvider,
                 ConnectionString = _connectionString,
-                Namespace = TestNamespace,
                 CustomTemplatePath = CustomizedTemplateDir,
-                OutputPath = TestOutputDir
+                ProjectPath = TestProjectDir,
+                ProjectRootNamespace = TestNamespace,
+                RelativeOutputPath = null // tests outputting to top-level directory
             };
             InMemoryFiles.OutputFile(CustomizedTemplateDir, ProviderDbContextTemplateName, "DbContext template");
             InMemoryFiles.OutputFile(CustomizedTemplateDir, ProviderEntityTypeTemplateName, "EntityType template");
@@ -129,7 +131,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
 
             foreach (var fileName in filePaths.Select(Path.GetFileName))
             {
-                var fileContents = InMemoryFiles.RetrieveFileContents(TestOutputDir, fileName);
+                var fileContents = InMemoryFiles.RetrieveFileContents(TestProjectDir, fileName);
                 var contents = "E2EContext.cs" == fileName ? "DbContext template" : "EntityType template";
                 Assert.Contains(fileName.Replace(".cs", ".expected"), _expectedFiles);
                 Assert.Equal(contents, fileContents);
@@ -139,20 +141,20 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
         [Fact]
         public void Can_output_templates_to_be_customized()
         {
-            var filePaths = Generator.Customize(MetadataModelProvider, TestOutputDir);
+            var filePaths = Generator.Customize(TestProjectDir);
 
             AssertLog(new LoggerMessages());
 
             Assert.Collection(filePaths,
-                file1 => Assert.Equal(file1, Path.Combine(TestOutputDir, ProviderDbContextTemplateName)),
-                file2 => Assert.Equal(file2, Path.Combine(TestOutputDir, ProviderEntityTypeTemplateName)));
+                file1 => Assert.Equal(file1, Path.Combine(TestProjectDir, ProviderDbContextTemplateName)),
+                file2 => Assert.Equal(file2, Path.Combine(TestProjectDir, ProviderEntityTypeTemplateName)));
 
             var dbContextTemplateContents = InMemoryFiles.RetrieveFileContents(
-                TestOutputDir, ProviderDbContextTemplateName);
+                TestProjectDir, ProviderDbContextTemplateName);
             Assert.Equal(MetadataModelProvider.DbContextTemplate, dbContextTemplateContents);
 
             var entityTypeTemplateContents = InMemoryFiles.RetrieveFileContents(
-                TestOutputDir, ProviderEntityTypeTemplateName);
+                TestProjectDir, ProviderEntityTypeTemplateName);
             Assert.Equal(MetadataModelProvider.EntityTypeTemplate, entityTypeTemplateContents);
         }
     }

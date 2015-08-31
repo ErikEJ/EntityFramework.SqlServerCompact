@@ -3,10 +3,6 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.History;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
-using Microsoft.Data.Entity.Migrations.Sql;
-using Microsoft.Data.Entity.Query.Methods;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Microsoft.Data.Entity.SqlServerCompact.Update;
@@ -15,6 +11,9 @@ using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.ValueGeneration;
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;
+using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Query.ExpressionTranslators;
+using Microsoft.Data.Entity.SqlServerCompact.Query.ExpressionTranslators;
 
 namespace Microsoft.Data.Entity.SqlServerCompact
 {
@@ -28,8 +27,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         public override string InvariantName => GetType().GetTypeInfo().Assembly.GetName().Name;
         public override IDatabaseCreator Creator => GetService<SqlCeDatabaseCreator>();
         public override IHistoryRepository HistoryRepository => GetService<SqlCeHistoryRepository>();
-        public override IMigrationSqlGenerator MigrationSqlGenerator => GetService<SqlCeMigrationSqlGenerator>();
-        public override IMigrationAnnotationProvider MigrationAnnotationProvider => GetService<SqlCeMigrationAnnotationProvider>();
+        public override IMigrationsSqlGenerator MigrationsSqlGenerator => GetService<SqlCeMigrationsSqlGenerator>();
+        public override IMigrationsAnnotationProvider MigrationsAnnotationProvider => GetService<SqlCeMigrationsAnnotationProvider>();
         public override IModelSource ModelSource => GetService<SqlCeModelSource>();
         public override IRelationalConnection RelationalConnection => GetService<SqlCeDatabaseConnection>();
         public override IUpdateSqlGenerator UpdateSqlGenerator => GetService<SqlCeUpdateSqlGenerator>();
@@ -42,5 +41,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         public override IRelationalMetadataExtensionProvider MetadataExtensionProvider => GetService<SqlCeMetadataExtensionProvider>();
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
+        public override IExpressionFragmentTranslator CompositeExpressionFragmentTranslator => GetService<SqlCeCompositeExpressionFragmentTranslator>();
     }
 }

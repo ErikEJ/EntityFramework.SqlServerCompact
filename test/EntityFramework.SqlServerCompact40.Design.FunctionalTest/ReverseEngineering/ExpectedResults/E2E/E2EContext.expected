@@ -1,7 +1,7 @@
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 
-namespace E2ETest.Namespace
+namespace E2ETest.Namespace.SubDir
 {
     public partial class E2EContext : DbContext
     {

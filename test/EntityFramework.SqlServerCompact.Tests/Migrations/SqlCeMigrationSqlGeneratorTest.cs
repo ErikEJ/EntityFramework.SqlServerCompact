@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.Migrations.Sql;
 using Microsoft.Data.Entity.SqlServerCompact;
@@ -10,8 +11,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
-        protected override IMigrationSqlGenerator SqlGenerator
-           => new SqlCeMigrationSqlGenerator(
+        protected override IMigrationsSqlGenerator SqlGenerator
+           => new SqlCeMigrationsSqlGenerator(
                new SqlCeUpdateSqlGenerator(),
                new SqlCeTypeMapper(),
                new SqlCeMetadataExtensionProvider());
@@ -51,7 +52,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
             base.DropIndexOperation();
 
             Assert.Equal(
-                "DROP INDEX [IX_People_Name]",
+                "DROP INDEX [IX_People_Name]" + EOL,
                 Sql);
         }
 
@@ -66,7 +67,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "sp_rename 'People', 'Person'",
+                "sp_rename 'People', 'Person'" + EOL,
                 Sql);
         }
 
@@ -86,7 +87,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY",
+                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY" + EOL,
                 Sql);
         }
 
@@ -101,7 +102,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD PRIMARY KEY ([Id])",
+                "ALTER TABLE [People] ADD PRIMARY KEY ([Id])" + EOL,
                 Sql);
         }
 
@@ -110,7 +111,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
             base.AlterColumnOperation();
 
             Assert.StartsWith(
-                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] DROP DEFAULT;",
+                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] DROP DEFAULT",
                 Sql);
         }
 
@@ -126,7 +127,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "CREATE INDEX [IX_People_Name] ON [People] ([Name])",
+                "CREATE INDEX [IX_People_Name] ON [People] ([Name])" + EOL,
                 Sql);
         }
     }

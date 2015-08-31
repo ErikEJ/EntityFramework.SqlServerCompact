@@ -38,7 +38,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact
                 .Append("1 = 1");
         }
 
-        public override string BatchSeparator => "GO";
+        public override string BatchSeparator => "GO" + Environment.NewLine;
 
         public override string DelimitIdentifier(string identifier)
             => "[" + EscapeIdentifier(Check.NotEmpty(identifier, nameof(identifier))) + "]";

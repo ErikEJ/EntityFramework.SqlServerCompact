@@ -15,7 +15,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void BatchSeparator_returns_seperator()
         {
-            Assert.Equal("GO", CreateSqlGenerator().BatchSeparator);
+            Assert.Equal("GO" + Environment.NewLine, CreateSqlGenerator().BatchSeparator);
         }
 
         [Fact]

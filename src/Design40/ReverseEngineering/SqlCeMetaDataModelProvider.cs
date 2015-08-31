@@ -39,13 +39,21 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         private readonly Dictionary<string, EntityType> _tableIdToEntityType = new Dictionary<string, EntityType>();
         private readonly Dictionary<string, Property> _columnIdToProperty = new Dictionary<string, Property>();
 
-        public SqlCeMetadataModelProvider([NotNull] ILogger logger, [NotNull] ModelUtilities modelUtilities)
+        public SqlCeMetadataModelProvider(
+             [NotNull] ILogger logger,
+             [NotNull] ModelUtilities modelUtilities,
+             [NotNull] IRelationalMetadataExtensionProvider extensionsProvider,
+             [NotNull] SqlServerLiteralUtilities sqlServerLiteralUtilities)
             : base(logger, modelUtilities)
         {
-            _sqlServerLiteralUtilities = new SqlServerLiteralUtilities(logger);
+            Check.NotNull(extensionsProvider, nameof(extensionsProvider));
+            Check.NotNull(sqlServerLiteralUtilities, nameof(sqlServerLiteralUtilities));
+
+            ExtensionsProvider = extensionsProvider;
+            _sqlServerLiteralUtilities = sqlServerLiteralUtilities;
         }
 
-        protected override IRelationalMetadataExtensionProvider ExtensionsProvider => new SqlCeMetadataExtensionProvider();
+        protected override IRelationalMetadataExtensionProvider ExtensionsProvider { get; }
 
         public override IModel ConstructRelationalModel([NotNull] string connectionString)
         {

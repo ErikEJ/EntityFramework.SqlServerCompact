@@ -33,7 +33,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
 
-
             builder
                 .EndBatch()
                 .Append("ALTER TABLE ")
@@ -186,10 +185,53 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             IModel model,
             SqlBatchBuilder builder)
         {
+            var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
+
+            ColumnDefinition(
+                schema,
+                table,
+                name,
+                clrType,
+                type,
+                nullable,
+                defaultValue,
+                defaultValueSql,
+                computedColumnSql,
+                valueGeneration == SqlCeAnnotationNames.Identity,
+                annotatable,
+                model,
+                builder);
+        }
+
+        protected virtual void ColumnDefinition(
+            string schema,
+            string table,
+            string name,
+            Type clrType,
+            string type,
+            bool nullable,
+            object defaultValue,
+            string defaultValueSql,
+            string computedColumnSql,
+            bool identity,
+            IAnnotatable annotatable,
+            IModel model,
+            SqlBatchBuilder builder)
+        {
             Check.NotEmpty(name, nameof(name));
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(annotatable, nameof(annotatable));
             Check.NotNull(builder, nameof(builder));
+
+            if (computedColumnSql != null)
+            {
+                builder
+                    .Append(Sql.DelimitIdentifier(name))
+                    .Append(" AS ")
+                    .Append(computedColumnSql);
+
+                return;
+            }
 
             base.ColumnDefinition(
                 schema,
@@ -205,55 +247,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                 model,
                 builder);
 
-            var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
-            if (valueGeneration == SqlCeAnnotationNames.Identity)
+            if (identity)
             {
                 builder.Append(" IDENTITY");
             }
         }
-
-    //    protected virtual void DropDefaultConstraint(
-    //[CanBeNull] string schema,
-    //[NotNull] string tableName,
-    //[NotNull] string columnName,
-    //[NotNull] SqlBatchBuilder builder)
-    //    {
-    //        Check.NotEmpty(tableName, nameof(tableName));
-    //        Check.NotEmpty(columnName, nameof(columnName));
-    //        Check.NotNull(builder, nameof(builder));
-
-    //        var variable = "@var" + _variableCounter++;
-
-    //        builder
-    //            .Append("DECLARE ")
-    //            .Append(variable)
-    //            .AppendLine(" sysname;")
-    //            .Append("SELECT ")
-    //            .Append(variable)
-    //            .AppendLine(" = [d].[name]")
-    //            .AppendLine("FROM [sys].[default_constraints] [d]")
-    //            .AppendLine("INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id]")
-    //            .Append("WHERE ([d].[parent_object_id] = OBJECT_ID(N'");
-
-    //        if (schema != null)
-    //        {
-    //            builder
-    //                .Append(_sql.EscapeLiteral(schema))
-    //                .Append(".");
-    //        }
-
-    //        builder
-    //            .Append(_sql.EscapeLiteral(tableName))
-    //            .Append("') AND [c].[name] = N'")
-    //            .Append(_sql.EscapeLiteral(columnName))
-    //            .AppendLine("');")
-    //            .Append("IF ")
-    //            .Append(variable)
-    //            .Append(" IS NOT NULL EXEC(N'ALTER TABLE ")
-    //            .Append(_sql.DelimitIdentifier(tableName, schema))
-    //            .Append(" DROP CONSTRAINT [' + ")
-    //            .Append(variable)
-    //            .AppendLine(" + ']');");
-    //    }
     }
 }

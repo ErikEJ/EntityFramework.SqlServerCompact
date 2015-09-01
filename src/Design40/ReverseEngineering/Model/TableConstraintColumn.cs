@@ -8,7 +8,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
     {
         public const string Query =
             @"SELECT TOP(2147483648)
-       '[' + tc.CONSTRAINT_NAME      + ']' + '[' + kcu.COLUMN_NAME + ']'    [Id]
+       '[' + tc.TABLE_NAME + ']' + '[' + tc.CONSTRAINT_NAME      + ']' + '[' + kcu.COLUMN_NAME + ']'    [Id]
        , '[' + tc.TABLE_NAME + ']' + '[' + kcu.COLUMN_NAME + ']'             [ColumnId]
        , '[' + tc.CONSTRAINT_NAME + ']' [ConstraintId]
        , tc.CONSTRAINT_TYPE [ConstraintType]

@@ -94,7 +94,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             //int i = 0;
             //foreach (var fileName in actualFileSet.Files)
             //{
-            //    var actualContent = InMemoryFiles.RetrieveFileContents(TestOutputDir, fileName);
+            //    var actualContent = InMemoryFiles.RetrieveFileContents(Path.Combine(TestProjectDir, TestSubDir), fileName);
             //    var expectedContent = expectedFileSet.Contents(i);
             //    Assert.Equal(expectedContent, actualContent);
             //    i++;

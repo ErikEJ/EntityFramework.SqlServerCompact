@@ -15,7 +15,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model
              INFORMATION_SCHEMA.TABLES
        WHERE
              TABLE_TYPE = 'TABLE'
-       AND TABLE_NAME <> '__ExtendedProperties'";
+       AND (SUBSTRING(TABLE_NAME, 1,2) <> '__')";
 
         public virtual string Id { get;[param: CanBeNull] set; }
         public virtual string SchemaName { get;[param: CanBeNull] set; }

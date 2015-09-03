@@ -10,7 +10,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             base.From_sql_queryable_simple();
 
             Assert.Equal(
-                @"SELECT * FROM Customers WHERE Customers.ContactName LIKE '%z%'",
+                @"SELECT * FROM Customers WHERE ContactName LIKE '%z%'",
                 Sql);
         }
 
@@ -19,7 +19,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             base.From_sql_queryable_simple_columns_out_of_order();
 
             Assert.Equal(
-                @"SELECT [Region], [PostalCode], [Phone], [Fax], [CustomerID], [Country], [ContactTitle], [ContactName], [CompanyName], [City], [Address] FROM Customers",
+                @"SELECT Region, PostalCode, Phone, Fax, CustomerID, Country, ContactTitle, ContactName, CompanyName, City, Address FROM Customers",
                 Sql);
         }
 
@@ -28,7 +28,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             base.From_sql_queryable_simple_columns_out_of_order_and_extra_columns();
 
             Assert.Equal(
-                @"SELECT [Region], [PostalCode], [PostalCode] AS Foo, [Phone], [Fax], [CustomerID], [Country], [ContactTitle], [ContactName], [CompanyName], [City], [Address] FROM Customers",
+                @"SELECT Region, PostalCode, PostalCode AS Foo, Phone, Fax, CustomerID, Country, ContactTitle, ContactName, CompanyName, City, Address FROM Customers",
                 Sql);
         }
 
@@ -107,7 +107,7 @@ WHERE [c].[CustomerID] = [o].[CustomerID]",
             Assert.Equal(
                 @"SELECT *
 FROM Customers
-WHERE Customers.City = 'London'",
+WHERE City = 'London'",
                 Sql);
         }
 
@@ -158,9 +158,9 @@ WHERE [c].[ContactTitle] = @__contactTitle_0",
             base.From_sql_queryable_simple_cache_key_includes_query_string();
 
             Assert.Equal(
-                @"SELECT * FROM Customers WHERE Customers.City = 'London'
+                @"SELECT * FROM Customers WHERE City = 'London'
 
-SELECT * FROM Customers WHERE Customers.City = 'Seattle'",
+SELECT * FROM Customers WHERE City = 'Seattle'",
                 Sql);
         }
 
@@ -248,7 +248,7 @@ ORDER BY [c].[CustomerID]",
             base.From_sql_annotations_do_not_affect_successive_calls();
 
             Assert.Equal(
-                @"SELECT * FROM Customers WHERE Customers.ContactName LIKE '%z%'
+                @"SELECT * FROM Customers WHERE ContactName LIKE '%z%'
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]",

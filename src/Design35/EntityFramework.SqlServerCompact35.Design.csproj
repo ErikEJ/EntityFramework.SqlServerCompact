@@ -31,19 +31,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework.Core, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Core.7.0.0-beta8-15538\lib\net45\EntityFramework.Core.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.Core.7.0.0-beta8-15574\lib\net45\EntityFramework.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.Relational, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Relational.7.0.0-beta8-15538\lib\net45\EntityFramework.Relational.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.Relational.7.0.0-beta8-15574\lib\net45\EntityFramework.Relational.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.Relational.Design, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.Relational.Design.7.0.0-beta8-15538\lib\net45\EntityFramework.Relational.Design.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.Relational.Design.7.0.0-beta8-15574\lib\net45\EntityFramework.Relational.Design.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Razor, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.Razor.4.0.0-beta8-15515\lib\net45\Microsoft.AspNet.Razor.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.4.0.0-beta8-15538\lib\net45\Microsoft.AspNet.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -55,43 +55,43 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Caching.Abstractions.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.Caching.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Caching.Abstractions.1.0.0-beta8-15532\lib\net45\Microsoft.Framework.Caching.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Caching.Memory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Caching.Memory.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.Caching.Memory.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Caching.Memory.1.0.0-beta8-15532\lib\net45\Microsoft.Framework.Caching.Memory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Configuration.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.Configuration.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Configuration.1.0.0-beta8-15530\lib\net45\Microsoft.Framework.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Configuration.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Configuration.Abstractions.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.Configuration.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Configuration.Abstractions.1.0.0-beta8-15530\lib\net45\Microsoft.Framework.Configuration.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Configuration.Binder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Configuration.Binder.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.Configuration.Binder.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Configuration.Binder.1.0.0-beta8-15530\lib\net45\Microsoft.Framework.Configuration.Binder.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.DependencyInjection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.DependencyInjection.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.DependencyInjection.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.DependencyInjection.1.0.0-beta8-15531\lib\net45\Microsoft.Framework.DependencyInjection.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.DependencyInjection.Abstractions.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.DependencyInjection.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.DependencyInjection.Abstractions.1.0.0-beta8-15531\lib\net45\Microsoft.Framework.DependencyInjection.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Logging.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Logging.1.0.0-beta8-15530\lib\net45\Microsoft.Framework.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.Logging.Abstractions.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.Logging.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.Logging.Abstractions.1.0.0-beta8-15530\lib\net45\Microsoft.Framework.Logging.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Framework.OptionsModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Framework.OptionsModel.1.0.0-beta8-15514\lib\net45\Microsoft.Framework.OptionsModel.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Framework.OptionsModel.1.0.0-beta8-15530\lib\net45\Microsoft.Framework.OptionsModel.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Remotion.Linq, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
@@ -99,9 +99,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\System.Collections.Immutable.1.1.36\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.1.37-beta-23109\lib\dotnet\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -125,6 +125,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Design40\ReverseEngineering\Configuration\SqlCeModelConfiguration.cs">
+      <Link>ReverseEngineering\Configuration\SqlCeModelConfiguration.cs</Link>
+    </Compile>
     <Compile Include="..\Design40\ReverseEngineering\Model\ForeignKeyColumnMapping.cs">
       <Link>ReverseEngineering\Model\ForeignKeyColumnMapping.cs</Link>
     </Compile>
@@ -137,17 +140,14 @@
     <Compile Include="..\Design40\ReverseEngineering\Model\TableConstraintColumn.cs">
       <Link>ReverseEngineering\Model\TableConstraintColumn.cs</Link>
     </Compile>
-    <Compile Include="..\Design40\ReverseEngineering\SqlCeCodeGeneratorHelperFactory.cs">
-      <Link>ReverseEngineering\SqlCeCodeGeneratorHelperFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\Design40\ReverseEngineering\SqlCeDbContextCodeGeneratorHelper.cs">
-      <Link>ReverseEngineering\SqlCeDbContextCodeGeneratorHelper.cs</Link>
-    </Compile>
     <Compile Include="..\Design40\ReverseEngineering\SqlCeDesignTimeMetadataProviderFactory.cs">
       <Link>ReverseEngineering\SqlCeDesignTimeMetadataProviderFactory.cs</Link>
     </Compile>
     <Compile Include="..\Design40\ReverseEngineering\SqlCeMetaDataModelProvider.cs">
       <Link>ReverseEngineering\SqlCeMetaDataModelProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Design40\ReverseEngineering\SqlCeModelConfigurationFactory.cs">
+      <Link>ReverseEngineering\SqlCeModelConfigurationFactory.cs</Link>
     </Compile>
     <Compile Include="..\Design40\ReverseEngineering\Utilities\SqlCeTypeMapping.cs">
       <Link>ReverseEngineering\Utilities\SqlCeTypeMapping.cs</Link>
@@ -176,6 +176,7 @@
     <Compile Include="..\Design40\Properties\Strings.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="EntityFramework.SqlServerCompact35.Design.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

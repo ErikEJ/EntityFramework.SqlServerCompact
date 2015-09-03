@@ -1,7 +1,7 @@
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 
-namespace E2ETest.Namespace.SubDir
+namespace E2ETest.Namespace
 {
     public partial class E2EContext : DbContext
     {
@@ -16,29 +16,11 @@ namespace E2ETest.Namespace.SubDir
             {
                 entity.Property(e => e.AllDataTypesID).ValueGeneratedNever();
 
-                entity.Property(e => e.bigintColumn).Required();
+                entity.Property(e => e.decimalColumn).HasColumnType("numeric(18, 0)");
 
-                entity.Property(e => e.bitColumn).Required();
-
-                entity.Property(e => e.decimalColumn)
-                    .Required()
-                    .HasColumnType("numeric(18, 0)");
-
-                entity.Property(e => e.floatColumn).Required();
-
-                entity.Property(e => e.intColumn).Required();
-
-                entity.Property(e => e.moneyColumn).Required();
-
-                entity.Property(e => e.numericColumn)
-                    .Required()
-                    .HasColumnType("numeric(18, 0)");
-
-                entity.Property(e => e.smallintColumn).Required();
+                entity.Property(e => e.numericColumn).HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.timestampColumn).ValueGeneratedOnAddOrUpdate();
-
-                entity.Property(e => e.tinyintColumn).Required();
             });
 
             modelBuilder.Entity<OneToManyDependent>(entity =>
@@ -91,29 +73,17 @@ namespace E2ETest.Namespace.SubDir
 
             modelBuilder.Entity<PropertyConfiguration>(entity =>
             {
-                entity.Property(e => e.A).Required();
-
-                entity.Property(e => e.B).Required();
-
                 entity.Property(e => e.TimestampColumn)
                     .Required()
                     .ValueGeneratedOnAddOrUpdate();
 
-                entity.Property(e => e.WithDateDefaultExpression)
-                    .Required()
-                    .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.WithDateDefaultExpression).HasDefaultValueSql("getdate()");
 
-                entity.Property(e => e.WithDefaultValue)
-                    .Required()
-                    .HasDefaultValue(-1);
+                entity.Property(e => e.WithDefaultValue).HasDefaultValue(-1);
 
-                entity.Property(e => e.WithGuidDefaultExpression)
-                    .Required()
-                    .HasDefaultValueSql("NEWID()");
+                entity.Property(e => e.WithGuidDefaultExpression).HasDefaultValueSql("NEWID()");
 
-                entity.Property(e => e.WithMoneyDefaultValue)
-                    .Required()
-                    .HasDefaultValue(0.00m);
+                entity.Property(e => e.WithMoneyDefaultValue).HasDefaultValue(0.00m);
             });
 
             modelBuilder.Entity<ReferredToByTableWithUnmappablePrimaryKeyColumn>(entity =>
@@ -122,9 +92,7 @@ namespace E2ETest.Namespace.SubDir
 
                 entity.Property(e => e.AColumn).Required();
 
-                entity.Property(e => e.ValueGeneratedOnAddColumn)
-                    .Required()
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.ValueGeneratedOnAddColumn).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<SelfReferencing>(entity =>
@@ -146,37 +114,27 @@ namespace E2ETest.Namespace.SubDir
                     .HasColumnName("Test Spaces Keywords TableID")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.@Multiple_At_Symbols_In_Column)
-                    .Required()
-                    .HasColumnName("@Multiple@At@Symbols@In@Column");
+                entity.Property(e => e.@Multiple_At_Symbols_In_Column).HasColumnName("@Multiple@At@Symbols@In@Column");
 
-                entity.Property(e => e._abstract)
-                    .Required()
-                    .HasColumnName("abstract");
+                entity.Property(e => e._abstract).HasColumnName("abstract");
 
                 entity.Property(e => e._Backslashes_In_Column).HasColumnName("\\Backslashes\\In\\Column");
 
                 entity.Property(e => e._class).HasColumnName("class");
 
-                entity.Property(e => e._Dollar_Sign_Column)
-                    .Required()
-                    .HasColumnName("$Dollar$Sign$Column");
+                entity.Property(e => e._Dollar_Sign_Column).HasColumnName("$Dollar$Sign$Column");
 
                 entity.Property(e => e._Double_Quotes_Column).HasColumnName("\"Double\"Quotes\"Column");
 
                 entity.Property(e => e._Exclamation_Mark_Column).HasColumnName("!Exclamation!Mark!Column");
 
-                entity.Property(e => e._volatile)
-                    .Required()
-                    .HasColumnName("volatile");
+                entity.Property(e => e._volatile).HasColumnName("volatile");
 
                 entity.Property(e => e.Commas_In_Column).HasColumnName("Commas,In,Column");
 
                 entity.Property(e => e.Spaces_In_Column).HasColumnName("Spaces In Column");
 
-                entity.Property(e => e.Tabs_In_Column)
-                    .Required()
-                    .HasColumnName("Tabs\tIn\tColumn");
+                entity.Property(e => e.Tabs_In_Column).HasColumnName("Tabs\tIn\tColumn");
             });
         }
 

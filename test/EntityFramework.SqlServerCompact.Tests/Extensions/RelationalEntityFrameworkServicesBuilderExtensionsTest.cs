@@ -24,8 +24,8 @@ namespace Microsoft.Data.Entity.Tests
             VerifySingleton<IParameterNameGeneratorFactory>();
             VerifySingleton<IComparer<ModificationCommand>>();
             VerifySingleton<IMigrationsIdGenerator>();
-            VerifySingleton<UntypedValueBufferFactoryFactory>();
-            VerifySingleton<TypedValueBufferFactoryFactory>();
+            VerifySingleton<UntypedRelationalValueBufferFactoryFactory>();
+            VerifySingleton<TypedRelationalValueBufferFactoryFactory>();
 
             VerifyScoped<IMigrator>();
             VerifyScoped<IMigrationsAssembly>();

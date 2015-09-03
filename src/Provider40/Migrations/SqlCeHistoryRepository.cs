@@ -35,7 +35,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
                 Sql.EscapeLiteral(TableName) + 
                 "' AND TABLE_TYPE<> N'SYSTEM TABLE'";
 
-        protected override bool Exists(object value) => (long)value != 0L;
+        protected override bool InterpretExistsResult(object value) => value != DBNull.Value;
 
         public override string GetCreateIfNotExistsScript()
         {

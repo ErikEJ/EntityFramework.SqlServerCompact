@@ -23,7 +23,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
             var sql = CreateHistoryRepository().GetCreateScript();
 
             Assert.Equal(
-                "CREATE TABLE [__MigrationHistory] (" + EOL +
+                "CREATE TABLE [__EFMigrationsHistory] (" + EOL +
                 "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
                 "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
                 "    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])" + EOL +
@@ -43,7 +43,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
             var sql = CreateHistoryRepository().GetDeleteScript("Migration1");
 
             Assert.Equal(
-                "DELETE FROM [__MigrationHistory]" + EOL +
+                "DELETE FROM [__EFMigrationsHistory]" + EOL +
                 "WHERE [MigrationId] = 'Migration1';",
                 sql);
         }
@@ -55,7 +55,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
                 new HistoryRow("Migration1", "7.0.0"));
 
             Assert.Equal(
-                "INSERT INTO [__MigrationHistory] ([MigrationId], [ProductVersion])" + EOL +
+                "INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])" + EOL +
                 "VALUES ('Migration1', '7.0.0');",
                 sql);
         }

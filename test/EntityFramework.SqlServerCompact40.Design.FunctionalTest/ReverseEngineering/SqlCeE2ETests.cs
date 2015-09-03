@@ -21,12 +21,6 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
 
         public virtual string CustomizedTemplateDir => "E2ETest/CustomizedTemplate/Dir";
 
-        public virtual string ProviderDbContextTemplateName
-            => ProviderName + "." + ReverseEngineeringGenerator.DbContextTemplateFileName;
-
-        public virtual string ProviderEntityTypeTemplateName
-            => ProviderName + "." + ReverseEngineeringGenerator.EntityTypeTemplateFileName;
-
         private static readonly List<string> _expectedFiles = new List<string>
             {
                 @"E2EContext.expected",
@@ -66,27 +60,65 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
                     }
         };
 
+        //[Fact]
+        //public void E2ETest_UseAttributesInsteadOfFluentApi()
+        //{
+        //    var configuration = new ReverseEngineeringConfiguration
+        //    {
+        //        ConnectionString = _connectionString,
+        //        CustomTemplatePath = null, // not used for this test
+        //        ProjectPath = TestProjectDir,
+        //        ProjectRootNamespace = TestNamespace,
+        //        RelativeOutputPath = TestSubDir
+        //    };
+
+        //    var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
+
+        //    var actualFileSet = new FileSet(InMemoryFiles, Path.Combine(TestProjectDir, TestSubDir))
+        //    {
+        //        Files = filePaths.Select(Path.GetFileName).ToList()
+        //    };
+
+        //    var expectedFileSet = new FileSet(new FileSystemFileService(),
+        //        Path.Combine("ReverseEngineering", "ExpectedResults", "E2E_UseAttributesInsteadOfFluentApi"),
+        //        contents => contents.Replace("namespace " + TestNamespace, "namespace " + TestNamespace + "." + TestSubDir))
+        //    {
+        //        Files = _expectedFiles
+        //    };
+
+        //    AssertEqualFileContents(expectedFileSet, actualFileSet);
+        //    AssertCompile(actualFileSet);
+        //}
 
         [Fact]
-        public void E2ETest()
+        public void E2ETest_AllFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration
             {
                 ConnectionString = _connectionString,
-                CustomTemplatePath = null, // not used for this test
+                CustomTemplatePath = "AllFluentApiTemplatesDir",
                 ProjectPath = TestProjectDir,
                 ProjectRootNamespace = TestNamespace,
-                RelativeOutputPath = TestSubDir
+                RelativeOutputPath = null // not used for this test
             };
+
+            // use templates where the flag to use attributes instead of fluent API has been turned off
+            var dbContextTemplate = MetadataModelProvider.DbContextTemplate
+                .Replace("useAttributesOverFluentApi = true", "useAttributesOverFluentApi = false");
+            var entityTypeTemplate = MetadataModelProvider.EntityTypeTemplate
+                .Replace("useAttributesOverFluentApi = true", "useAttributesOverFluentApi = false");
+            InMemoryFiles.OutputFile("AllFluentApiTemplatesDir", ProviderDbContextTemplateName, dbContextTemplate);
+            InMemoryFiles.OutputFile("AllFluentApiTemplatesDir", ProviderEntityTypeTemplateName, entityTypeTemplate);
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
 
-            var actualFileSet = new FileSet(InMemoryFiles, Path.Combine(TestProjectDir, TestSubDir))
+            var actualFileSet = new FileSet(InMemoryFiles, TestProjectDir)
             {
                 Files = filePaths.Select(Path.GetFileName).ToList()
             };
 
-            var expectedFileSet = new FileSet(new FileSystemFileService(), Path.Combine("ReverseEngineering", "ExpectedResults", "E2E"))
+            var expectedFileSet = new FileSet(new FileSystemFileService(),
+                Path.Combine("ReverseEngineering", "ExpectedResults", "E2E_AllFluentApi"))
             {
                 Files = _expectedFiles
             };
@@ -100,6 +132,14 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             //    i++;
             //}
 
+            AssertLog(new LoggerMessages
+            {
+                Info =
+                        {
+                            "Using custom template " + Path.Combine("AllFluentApiTemplatesDir", ProviderDbContextTemplateName),
+                            "Using custom template " + Path.Combine("AllFluentApiTemplatesDir", ProviderEntityTypeTemplateName)
+                        }
+            });
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }

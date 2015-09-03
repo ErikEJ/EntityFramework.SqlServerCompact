@@ -15,7 +15,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             serviceCollection.AddScoped<IDatabaseMetadataModelProvider, SqlCeMetadataModelProvider>()
                 .AddScoped<IRelationalMetadataExtensionProvider, SqlCeMetadataExtensionProvider>()
                 .AddScoped<SqlServerLiteralUtilities>()
-                .AddScoped<CodeGeneratorHelperFactory, SqlCeCodeGeneratorHelperFactory>();
+                .AddScoped<ModelConfigurationFactory, SqlCeModelConfigurationFactory>();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 
-namespace E2ETest.Namespace.SubDir
+namespace E2ETest.Namespace
 {
     public class Test_Spaces_Keywords_Table
     {

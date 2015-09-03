@@ -176,7 +176,6 @@
     <Compile Include="..\Design40\Properties\Strings.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="EntityFramework.SqlServerCompact35.Design.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

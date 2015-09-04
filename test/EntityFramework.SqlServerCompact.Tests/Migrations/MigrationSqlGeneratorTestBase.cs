@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.Data.Entity.Migrations.Operations;
 using Xunit;
 
-namespace Microsoft.Data.Entity.Migrations.Sql
+namespace Microsoft.Data.Entity.Migrations
 {
     public abstract class MigrationSqlGeneratorTestBase
     {

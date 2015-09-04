@@ -36,8 +36,8 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query
 
         protected override void GenerateLimitOffset(SelectExpression selectExpression)
         {
-#if SQLCE35
             //TODO ErikEJ Wait for fix for this to enable client side eval
+#if SQLCE35
             if (selectExpression.Offset != null)
             {
                 throw new NotSupportedException("SKIP clause is not supported by SQL Server Compact 3.5");

@@ -1,20 +1,18 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlServerCe;
+using System.Linq;
+using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.Relational.Design.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model;
+using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Design.Utilities;
+using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.SqlServerCe;
-using System.Linq;
-using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Utilities;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
-using Microsoft.Data.Entity.Infrastructure;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 {
@@ -96,7 +94,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
                         {
                             conn.Close();
                         }
-                        catch (SqlException)
+                        catch (SqlCeException)
                         {
                             // do nothing if attempt to close connection fails
                         }

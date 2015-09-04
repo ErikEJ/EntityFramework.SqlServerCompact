@@ -56,39 +56,42 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
                     {
                         MetadataReference.CreateFromFile(
                             Assembly.Load(new AssemblyName(
-                                "System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")).Location)
+                                "System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")).Location),
+                        MetadataReference.CreateFromFile(
+                            Assembly.Load(new AssemblyName(
+                                "System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")).Location),
                     }
         };
 
-        //[Fact]
-        //public void E2ETest_UseAttributesInsteadOfFluentApi()
-        //{
-        //    var configuration = new ReverseEngineeringConfiguration
-        //    {
-        //        ConnectionString = _connectionString,
-        //        CustomTemplatePath = null, // not used for this test
-        //        ProjectPath = TestProjectDir,
-        //        ProjectRootNamespace = TestNamespace,
-        //        RelativeOutputPath = TestSubDir
-        //    };
+        [Fact]
+        public void E2ETest_UseAttributesInsteadOfFluentApi()
+        {
+            var configuration = new ReverseEngineeringConfiguration
+            {
+                ConnectionString = _connectionString,
+                CustomTemplatePath = null, // not used for this test
+                ProjectPath = TestProjectDir,
+                ProjectRootNamespace = TestNamespace,
+                RelativeOutputPath = TestSubDir
+            };
 
-        //    var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
+            var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
 
-        //    var actualFileSet = new FileSet(InMemoryFiles, Path.Combine(TestProjectDir, TestSubDir))
-        //    {
-        //        Files = filePaths.Select(Path.GetFileName).ToList()
-        //    };
+            var actualFileSet = new FileSet(InMemoryFiles, Path.Combine(TestProjectDir, TestSubDir))
+            {
+                Files = filePaths.Select(Path.GetFileName).ToList()
+            };
 
-        //    var expectedFileSet = new FileSet(new FileSystemFileService(),
-        //        Path.Combine("ReverseEngineering", "ExpectedResults", "E2E_UseAttributesInsteadOfFluentApi"),
-        //        contents => contents.Replace("namespace " + TestNamespace, "namespace " + TestNamespace + "." + TestSubDir))
-        //    {
-        //        Files = _expectedFiles
-        //    };
+            var expectedFileSet = new FileSet(new FileSystemFileService(),
+                Path.Combine("ReverseEngineering", "ExpectedResults", "E2E_UseAttributesInsteadOfFluentApi"),
+                contents => contents.Replace("namespace " + TestNamespace, "namespace " + TestNamespace + "." + TestSubDir))
+            {
+                Files = _expectedFiles
+            };
 
-        //    AssertEqualFileContents(expectedFileSet, actualFileSet);
-        //    AssertCompile(actualFileSet);
-        //}
+            AssertEqualFileContents(expectedFileSet, actualFileSet);
+            AssertCompile(actualFileSet);
+        }
 
         [Fact]
         public void E2ETest_AllFluentApi()

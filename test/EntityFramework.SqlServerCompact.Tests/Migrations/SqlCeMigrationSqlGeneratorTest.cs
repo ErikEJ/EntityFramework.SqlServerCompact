@@ -66,7 +66,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "sp_rename 'People', 'Person'" + EOL,
+                "sp_rename N'People', N'Person'" + EOL,
                 Sql);
         }
 

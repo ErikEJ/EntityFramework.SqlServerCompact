@@ -146,9 +146,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             {
                 builder
                     .EndBatch()
-                    .Append("sp_rename '")
+                    .Append("sp_rename N'")
                     .Append(operation.Name)
-                    .Append("', '")
+                    .Append("', N'")
                     .Append(operation.NewName)
                     .Append("'");
             }

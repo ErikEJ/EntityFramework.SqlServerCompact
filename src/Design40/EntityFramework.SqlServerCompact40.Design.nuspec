@@ -10,11 +10,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Design-time Entity Framework Functionality for SQL Server Compact data store</description>
     <summary>Design-time Entity Framework Functionality for SQL Server Compact data store</summary>
-    <releaseNotes>for EF7 beta 7</releaseNotes>
+    <releaseNotes>for EF7 beta 8</releaseNotes>
     <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact reveng reverseengineer design</tags>
     <dependencies>
         <group targetFramework=".NETFramework4.5">
-            <dependency id="EntityFramework.Relational.Design" version="[7.0.0-beta8-15574]" />
+            <dependency id="EntityFramework.Relational.Design" version="[7.0.0-beta8-15623]" />
          </group>
     </dependencies>
   </metadata>

@@ -30,7 +30,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         public void Returns_appropriate_name()
         {
             Assert.Equal(
-                typeof(SqlCeDatabase).GetTypeInfo().Assembly.GetName().Name,
+                typeof(SqlCeDatabaseConnection).GetTypeInfo().Assembly.GetName().Name,
                 new SqlCeDatabaseProviderServices(SqlCeTestHelpers.Instance.CreateServiceProvider()).InvariantName);
         }
     }

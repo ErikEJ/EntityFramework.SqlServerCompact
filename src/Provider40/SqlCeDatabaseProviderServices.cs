@@ -14,6 +14,7 @@ using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Query.ExpressionTranslators;
 using Microsoft.Data.Entity.SqlServerCompact.Query.ExpressionTranslators;
+using Microsoft.Data.Entity.Query.Sql;
 
 namespace Microsoft.Data.Entity.SqlServerCompact
 {
@@ -32,7 +33,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         public override IModelSource ModelSource => GetService<SqlCeModelSource>();
         public override IRelationalConnection RelationalConnection => GetService<SqlCeDatabaseConnection>();
         public override IUpdateSqlGenerator UpdateSqlGenerator => GetService<SqlCeUpdateSqlGenerator>();
-        public override IDatabase Database => GetService<SqlCeDatabase>();
         public override IValueGeneratorCache ValueGeneratorCache => GetService<SqlCeValueGeneratorCache>();
         public override IRelationalTypeMapper TypeMapper => GetService<SqlCeTypeMapper>();
         public override IModificationCommandBatchFactory ModificationCommandBatchFactory => GetService<SqlCeModificationCommandBatchFactory>();
@@ -42,5 +42,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
         public override IExpressionFragmentTranslator CompositeExpressionFragmentTranslator => GetService<SqlCeCompositeExpressionFragmentTranslator>();
+        public override ISqlQueryGeneratorFactory SqlQueryGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
     }
 }

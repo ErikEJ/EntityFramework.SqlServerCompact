@@ -6,7 +6,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
     public class MathAbsTranslator : MultipleOverloadStaticMethodCallTranslator
     {
         public MathAbsTranslator()
-            : base(typeof(Math), "Abs", "abs")
+            : base(typeof(Math), "Abs", "ABS")
         {
         }
     }

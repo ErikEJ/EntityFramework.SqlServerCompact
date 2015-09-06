@@ -7,14 +7,14 @@ using Microsoft.Data.Entity.Query.Sql;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Query
+namespace Microsoft.Data.Entity.Query
 {
     public class SqlCeQuerySqlGenerator : DefaultQuerySqlGenerator
     {
         public SqlCeQuerySqlGenerator(
-            [NotNull] SelectExpression selectExpression,
-            [NotNull] IRelationalTypeMapper typeMapper)
-            : base(selectExpression, typeMapper)
+            [NotNull] IParameterNameGeneratorFactory parameterNameGeneratorFactory,
+            [NotNull] SelectExpression selectExpression)
+            : base(parameterNameGeneratorFactory, selectExpression)
         {
         }
 

@@ -58,12 +58,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override async Task String_Contains_MethodCall()
         {
             await AssertQuery<Customer>(
-                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
-                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())
-                                    || c.ContactName.Contains(LocalMethod2())), // case-sensitive
-                entryCount: 34);
+                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())),
+                entryCount: 19);
         }
-       
 
         [Fact]
         public async Task Single_Predicate_Cancellation()

@@ -1,5 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Query;
+using Microsoft.Data.Entity.Query.Sql;
 using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.SqlServerCompact.Migrations;
@@ -35,17 +37,24 @@ namespace Microsoft.Framework.DependencyInjection
                 .AddSingleton<SqlCeConventionSetBuilder>()
                 .AddScoped<SqlCeModificationCommandBatchFactory>()
                 .AddScoped<SqlCeDatabaseProviderServices>()
-                .AddScoped<SqlCeDatabase>()
                 .AddScoped<SqlCeDatabaseConnection>()
                 .AddScoped<SqlCeMigrationsSqlGenerator>()
                 .AddScoped<SqlCeDatabaseCreator>()
                 .AddScoped<SqlCeHistoryRepository>()
-                .AddScoped<SqlCeCompositeMethodCallTranslator>()
-                .AddScoped<SqlCeCompositeMemberTranslator>()
-                .AddScoped<SqlCeCompositeExpressionFragmentTranslator>()
+                .AddQuery()
                 );
 
             return services;
+        }
+
+        private static IServiceCollection AddQuery(this IServiceCollection serviceCollection)
+        {
+            return serviceCollection
+                .AddScoped<SqlCeQueryCompilationContextFactory>()
+                .AddScoped<SqlCeCompositeExpressionFragmentTranslator>()
+                .AddScoped<SqlCeCompositeMemberTranslator>()
+                .AddScoped<SqlCeCompositeMethodCallTranslator>()
+                .AddScoped<SqlCeQuerySqlGeneratorFactory>();
         }
     }
 }

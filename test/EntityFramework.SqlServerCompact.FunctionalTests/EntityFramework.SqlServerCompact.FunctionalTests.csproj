@@ -166,6 +166,8 @@
     <Compile Include="InheritanceSqlCeTest.cs" />
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
+    <Compile Include="MigrationsSqlCeFixture.cs" />
+    <Compile Include="MigrationsSqlCeTest.cs" />
     <Compile Include="MonsterFixUpSqlCeTest.cs" />
     <Compile Include="NavigationTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />

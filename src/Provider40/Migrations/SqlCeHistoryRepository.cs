@@ -31,9 +31,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
         }
 
         protected override string ExistsSql
-            => "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = " +
+
+            => "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" +
                 Sql.EscapeLiteral(TableName) + 
-                "' AND TABLE_TYPE<> N'SYSTEM TABLE'";
+                "' AND TABLE_TYPE <> N'SYSTEM TABLE'";
 
         protected override bool InterpretExistsResult(object value) => value != DBNull.Value;
 

@@ -14,7 +14,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact
     {
         private readonly IRelationalConnection _connection;
         private readonly IMigrationsSqlGenerator _sqlGenerator;
-        private readonly ISqlStatementExecutor _executor;
 
         public SqlCeDatabaseCreator(
             [NotNull] IRelationalConnection connection,

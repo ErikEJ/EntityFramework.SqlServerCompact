@@ -27,14 +27,22 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
                 "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
                 "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
                 "    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])" + EOL +
-                ")"+ EOL,
+                ");"+ EOL,
                 sql);
         }
 
         [Fact]
         public void GetCreateIfNotExistsScript_works()
         {
-            Assert.Throws<NotSupportedException>(() => CreateHistoryRepository().GetCreateIfNotExistsScript());
+            var sql = CreateHistoryRepository().GetCreateIfNotExistsScript();
+
+            Assert.Equal(
+                "CREATE TABLE [__EFMigrationsHistory] (" + EOL +
+                "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
+                "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
+                "    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])" + EOL +
+                ");" + EOL,
+                sql);
         }
 
         [Fact]

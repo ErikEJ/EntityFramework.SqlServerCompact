@@ -154,25 +154,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
             }
         }
 
-        //    //TODO ErikEJ - may not be required any longer(pending bug fix)
-        public override IReadOnlyList<RelationalCommand> Generate(
-    IReadOnlyList<MigrationOperation> operations,
-    IModel model = null)
-        {
-            Check.NotNull(operations, nameof(operations));
-
-            var builder = new SqlBatchBuilder();
-            foreach (var operation in operations)
-            {
-                Generate(operation, model, builder);
-                builder
-                    //.AppendLine(Sql.BatchCommandSeparator)
-                    .AppendLine()
-                    .EndBatch();
-            }
-            return builder.RelationalCommands;
-        }
-
         protected override void ColumnDefinition(
             string schema,
             string table,

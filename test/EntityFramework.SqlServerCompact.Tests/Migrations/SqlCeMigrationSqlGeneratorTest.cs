@@ -51,7 +51,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
             base.DropIndexOperation();
 
             Assert.Equal(
-                "DROP INDEX [IX_People_Name]" + EOL,
+                "DROP INDEX [IX_People_Name];" + EOL,
                 Sql);
         }
 
@@ -66,7 +66,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "sp_rename N'People', N'Person'" + EOL,
+                "sp_rename N'People', N'Person';" + EOL,
                 Sql);
         }
 
@@ -86,7 +86,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY" + EOL,
+                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY;" + EOL,
                 Sql);
         }
 
@@ -101,7 +101,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD PRIMARY KEY ([Id])" + EOL,
+                "ALTER TABLE [People] ADD PRIMARY KEY ([Id]);" + EOL,
                 Sql);
         }
 
@@ -126,7 +126,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 });
 
             Assert.Equal(
-                "CREATE INDEX [IX_People_Name] ON [People] ([Name])" + EOL,
+                "CREATE INDEX [IX_People_Name] ON [People] ([Name]);" + EOL,
                 Sql);
         }
     }

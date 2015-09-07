@@ -24,14 +24,7 @@ namespace Microsoft.Data.Entity
 
             return new SqlCeDbContextOptionsBuilder(options);
         }
- //TODO ErikEJ
-//#if SQLCE35
-//#else
-//        public static SqlCeDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder options, [NotNull] SqlCeConnectionStringBuilder connectionStringBuilder)
-//        {
-//            return UseSqlCe(options, connectionStringBuilder.ConnectionString);
-//        }
-//#endif
+ 
         public static SqlCeDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder options, [NotNull] DbConnection connection)
         {
             Check.NotNull(options, nameof(options));

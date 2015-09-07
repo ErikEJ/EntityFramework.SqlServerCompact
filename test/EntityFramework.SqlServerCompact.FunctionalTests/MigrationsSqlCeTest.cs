@@ -16,42 +16,40 @@ namespace Microsoft.Data.Entity.SqlCe.FunctionalTests
 
         public override void Can_generate_up_scripts()
         {
-            //TODO ErikEJ Why does this fail?
-//            base.Can_generate_up_scripts();
+            base.Can_generate_up_scripts();
 
-//            Assert.Equal(
-//                @"IF OBJECT_ID(N'__EFMigrationsHistory') IS NULL
-//    CREATE TABLE [__EFMigrationsHistory] (
-//        [MigrationId] nvarchar(150) NOT NULL,
-//        [ProductVersion] nvarchar(32) NOT NULL,
-//        CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])
-//    );
+            Assert.Equal(
+                @"CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])
+);
 
-//GO
+GO
 
-//CREATE TABLE [Table1] (
-//    [Id] int NOT NULL,
-//    CONSTRAINT [PK_Table1] PRIMARY KEY ([Id])
-//);
+CREATE TABLE [Table1] (
+    [Id] int NOT NULL,
+    CONSTRAINT [PK_Table1] PRIMARY KEY ([Id])
+);
 
-//GO
+GO
 
-//INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-//VALUES (N'00000000000001_Migration1', N'7.0.0-test');
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES ('00000000000001_Migration1', '7.0.0-test');
 
-//GO
+GO
 
-//EXEC sp_rename N'Table1', N'Table2';
+sp_rename N'Table1', N'Table2';
 
-//GO
+GO
 
-//INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-//VALUES (N'00000000000002_Migration2', N'7.0.0-test');
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES ('00000000000002_Migration2', '7.0.0-test');
 
-//GO
+GO
 
-//",
-//                Sql);
+",
+                Sql);
         }
 
         public override void Can_generate_idempotent_up_scripts()
@@ -64,7 +62,7 @@ namespace Microsoft.Data.Entity.SqlCe.FunctionalTests
             base.Can_generate_down_scripts();
 
             Assert.Equal(
-                @"sp_rename N'Table2', N'Table1'
+                @"sp_rename N'Table2', N'Table1';
 
 GO
 
@@ -73,7 +71,7 @@ WHERE [MigrationId] = '00000000000002_Migration2';
 
 GO
 
-DROP TABLE [Table1]
+DROP TABLE [Table1];
 
 GO
 
@@ -98,8 +96,8 @@ GO
                 @"
 CreatedTable
     Id int NOT NULL
-    ColumnWithDefaultToDrop int NULL DEFAULT ((0))
-    ColumnWithDefaultToAlter int NULL DEFAULT ((1))
+    ColumnWithDefaultToDrop int NULL DEFAULT 0
+    ColumnWithDefaultToAlter int NULL DEFAULT 1
 ",
                 sql);
         }
@@ -116,29 +114,21 @@ CreatedTable
                 sql);
         }
 
-        public override async Task Can_execute_operations()
-        {
-            //TODO ErikEJ Implement!
-            //return base.Can_execute_operations();
-        }
-
         private async Task<string> GetDatabaseSchemaAsync(DbConnection connection)
         {
             var builder = new IndentedStringBuilder();
 
             var command = connection.CreateCommand();
-            command.CommandText = @"
-                SELECT
-                    t.name,
-                    c.Name,
-                    TYPE_NAME(c.user_type_id),
-                    c.is_nullable,
-                    d.Definition
-                FROM sys.objects t
-                LEFT JOIN sys.columns c ON c.object_id = t.object_id
-                LEFT JOIN sys.default_constraints d ON d.parent_column_id = c.column_id
-                WHERE t.type = 'U'
-                ORDER BY t.name, c.column_id;";
+            command.CommandText = @"SELECT 
+TABLE_NAME, 
+COLUMN_NAME, 
+DATA_TYPE, 
+CASE WHEN IS_NULLABLE = 'YES'
+	THEN CAST(1 as bit)
+	ELSE CAST (0 AS bit)
+END, 
+COLUMN_DEFAULT
+FROM INFORMATION_SCHEMA.COLUMNS;";
 
             using (var reader = await command.ExecuteReaderAsync())
             {

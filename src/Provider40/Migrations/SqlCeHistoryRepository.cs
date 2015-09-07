@@ -40,7 +40,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
 
         public override string GetCreateIfNotExistsScript()
         {
-            throw new NotSupportedException("Generating idempotent scripts for migration is not currently supported by SQL Server Compact");
+            return GetCreateScript();
         }
 
         public override string GetBeginIfNotExistsScript(string migrationId)

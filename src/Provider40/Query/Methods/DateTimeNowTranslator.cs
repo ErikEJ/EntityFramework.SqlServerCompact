@@ -13,9 +13,9 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
         {
             if (memberExpression.Expression == null
                 && memberExpression.Member.DeclaringType == typeof(DateTime)
-                && memberExpression.Member.Name == "Now")
+                && memberExpression.Member.Name == nameof(DateTime.Now))
             {
-                return new SqlFunctionExpression("GETDATE", Enumerable.Empty<Expression>(), memberExpression.Type);
+                return new SqlFunctionExpression("GETDATE", memberExpression.Type);
             }
 
             return null;

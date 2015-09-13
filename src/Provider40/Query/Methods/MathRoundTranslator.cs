@@ -23,7 +23,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
                     ? new[] { methodCallExpression.Arguments[0], Expression.Constant(0) }
                     : new[] { methodCallExpression.Arguments[1], methodCallExpression.Arguments[1] };
 
-                return new SqlFunctionExpression("ROUND", arguments, methodCallExpression.Type);
+                return new SqlFunctionExpression("ROUND", methodCallExpression.Type, arguments);
             }
 
             return null;

@@ -52,7 +52,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
             {
                 var arguments = new[] { Expression.Constant(_typeMapping[methodCallExpression.Method.Name]), methodCallExpression.Arguments[0] };
 
-                return new SqlFunctionExpression("CONVERT", arguments, methodCallExpression.Type);
+                return new SqlFunctionExpression("CONVERT", methodCallExpression.Type, arguments);
             }
 
             return null;

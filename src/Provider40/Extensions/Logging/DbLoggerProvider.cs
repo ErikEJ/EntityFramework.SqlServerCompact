@@ -11,7 +11,7 @@ namespace Microsoft.Data.Entity
     {
         private static readonly string[] Whitelist = new string[]
         {
-                typeof(Update.BatchExecutor).FullName,
+                typeof(Update.Internal.BatchExecutor).FullName,
                 typeof(Query.QueryContextFactory).FullName
         };
 

@@ -18,7 +18,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
             if (methodInfo == methodCallExpression.Method)
             {
                 var sqlArguments = new[] { methodCallExpression.Object }.Concat(methodCallExpression.Arguments);
-                return new SqlFunctionExpression("REPLACE", sqlArguments, methodCallExpression.Type);
+                return new SqlFunctionExpression("REPLACE",  methodCallExpression.Type, sqlArguments);
             }
 
             return null;

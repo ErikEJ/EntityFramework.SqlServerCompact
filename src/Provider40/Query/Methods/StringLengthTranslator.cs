@@ -13,7 +13,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
                 && memberExpression.Expression.Type == typeof(string)
                 && memberExpression.Member.Name == "Length")
             {
-                return new SqlFunctionExpression("LEN", new[] { memberExpression.Expression }, memberExpression.Type);
+                return new SqlFunctionExpression("LEN", memberExpression.Type, new[] { memberExpression.Expression });
             }
 
             return null;

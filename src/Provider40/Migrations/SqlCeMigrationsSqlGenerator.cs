@@ -22,16 +22,13 @@ namespace Microsoft.Data.Entity.Migrations
             _sql = sqlGenerator;
         }
 
-        protected override void Generate(
-            [NotNull] AlterColumnOperation operation,
-            [CanBeNull] IModel model,
-            [NotNull] SqlBatchBuilder builder)
+        protected override void Generate(AlterColumnOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
 
             builder
-                .EndBatch()
+                .EndCommand()
                 .Append("ALTER TABLE ")
                 .Append(_sql.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ")
@@ -39,7 +36,7 @@ namespace Microsoft.Data.Entity.Migrations
                 .Append(" DROP DEFAULT;");
 
             builder
-                .EndBatch()
+                .EndCommand()
                 .Append("ALTER TABLE ")
                 .Append(_sql.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ");
@@ -60,7 +57,7 @@ namespace Microsoft.Data.Entity.Migrations
             if (operation.DefaultValue != null || operation.DefaultValueSql != null)
             {
                 builder
-                    .EndBatch()
+                    .EndCommand()
                     .AppendLine(";")
                     .Append("ALTER TABLE ")
                     .Append(_sql.DelimitIdentifier(operation.Table))
@@ -71,25 +68,25 @@ namespace Microsoft.Data.Entity.Migrations
             }
         }
 
-        protected override void Generate(DropIndexOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(DropIndexOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
 
             builder
-                .EndBatch()
+                .EndCommand()
                 .Append("DROP INDEX ")
                 .Append(_sql.DelimitIdentifier(operation.Name));
         }
 
         #region Invalid schema operations
 
-        protected override void Generate(EnsureSchemaOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(EnsureSchemaOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
 
-        protected override void Generate(DropSchemaOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(DropSchemaOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
@@ -98,51 +95,51 @@ namespace Microsoft.Data.Entity.Migrations
 
         #region Sequences not supported
 
-        protected override void Generate(RestartSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RestartSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(CreateSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(CreateSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(AlterSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(AlterSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(DropSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(DropSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(RenameSequenceOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
         #endregion 
 
-        protected override void Generate(RenameColumnOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameColumnOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support column renames.");
         }
 
-        protected override void Generate(RenameIndexOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameIndexOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support index renames.");
         }
 
-        protected override void Generate(RenameTableOperation operation, IModel model, SqlBatchBuilder builder)
+        protected override void Generate(RenameTableOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
             if (operation.NewName != null)
             {
                 builder
-                    .EndBatch()
+                    .EndCommand()
                     .Append("sp_rename N'")
                     .Append(operation.Name)
                     .Append("', N'")
@@ -163,7 +160,7 @@ namespace Microsoft.Data.Entity.Migrations
             string computedColumnSql,
             IAnnotatable annotatable,
             IModel model,
-            SqlBatchBuilder builder)
+            RelationalCommandListBuilder builder)
         {
             var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
 
@@ -184,19 +181,19 @@ namespace Microsoft.Data.Entity.Migrations
         }
 
         protected virtual void ColumnDefinition(
-            string schema,
-            string table,
-            string name,
-            Type clrType,
-            string type,
+            [CanBeNull] string schema,
+            [CanBeNull] string table,
+            [NotNull] string name,
+            [NotNull] Type clrType,
+            [CanBeNull] string type,
             bool nullable,
-            object defaultValue,
-            string defaultValueSql,
-            string computedColumnSql,
+            [CanBeNull] object defaultValue,
+            [CanBeNull] string defaultValueSql,
+            [CanBeNull] string computedColumnSql,
             bool identity,
-            IAnnotatable annotatable,
-            IModel model,
-            SqlBatchBuilder builder)
+            [NotNull] IAnnotatable annotatable,
+            [CanBeNull] IModel model,
+            [NotNull] RelationalCommandListBuilder builder)
         {
             Check.NotEmpty(name, nameof(name));
             Check.NotNull(clrType, nameof(clrType));

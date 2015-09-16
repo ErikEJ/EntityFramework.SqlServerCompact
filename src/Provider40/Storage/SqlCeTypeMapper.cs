@@ -80,7 +80,7 @@ namespace Microsoft.Data.Entity.Storage
         protected override IReadOnlyDictionary<string, RelationalTypeMapping> SimpleNameMappings
             => _simpleNameMappings;
 
-        public override RelationalTypeMapping GetDefaultMapping(Type clrType)
+        public override RelationalTypeMapping GetMapping(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
 
@@ -88,7 +88,7 @@ namespace Microsoft.Data.Entity.Storage
                 ? _nvarchar
                 : (clrType == typeof(byte[])
                     ? _varbinarymax
-                    : base.GetDefaultMapping(clrType));
+                    : base.GetMapping(clrType));
         }
 
         protected override RelationalTypeMapping GetCustomMapping(IProperty property)
@@ -98,12 +98,12 @@ namespace Microsoft.Data.Entity.Storage
             var clrType = property.ClrType.UnwrapEnumType();
 
             return clrType == typeof(string)
-                ? MapString(
+                ? GetStringMapping(
                     property, 4000,
                     maxLength => new SqlCeMaxLengthMapping("nvarchar(" + maxLength + ")"),
                     _nvarcharmax, _nvarchar, _nvarchar256)
                 : clrType == typeof(byte[])
-                    ? MapByteArray(property, 8000,
+                    ? GetByteArrayMapping(property, 8000,
                         maxLength => new SqlCeMaxLengthMapping("varbinary(" + maxLength + ")", DbType.Binary),
                         _varbinarymax, _varbinarymax, _varbinary512, _rowversion)
                     : base.GetCustomMapping(property);

@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Builders;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Configuration;
-using Microsoft.Data.Entity.Relational.Design.Templating;
 using Microsoft.Data.Entity.Relational.Design.Utilities;
 using Microsoft.Data.Entity.Utilities;
 
@@ -60,7 +59,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Confi
             // not have Identity set then we need to set to ValueGeneratedNever() to
             // override this behavior.
             if (annotation == null
-                && _keyConvention.ValueGeneratedOnAddProperty(
+                && _keyConvention.FindValueGeneratedOnAddProperty(
                     new List<Property> { (Property)propertyConfiguration.Property },
                     (EntityType)propertyConfiguration.EntityConfiguration.EntityType) != null)
             {

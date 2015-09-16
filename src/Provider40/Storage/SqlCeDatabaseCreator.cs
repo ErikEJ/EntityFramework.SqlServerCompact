@@ -10,11 +10,11 @@ namespace Microsoft.Data.Entity.Storage
 {
     public class SqlCeDatabaseCreator : RelationalDatabaseCreator
     {
-        private readonly IRelationalConnection _connection;
+        private readonly ISqlCeDatabaseConnection _connection;
         private readonly IMigrationsSqlGenerator _sqlGenerator;
 
         public SqlCeDatabaseCreator(
-            [NotNull] IRelationalConnection connection,
+            [NotNull] ISqlCeDatabaseConnection connection,
             [NotNull] IMigrationsModelDiffer modelDiffer,
             [NotNull] IMigrationsSqlGenerator sqlGenerator,
             [NotNull] ISqlStatementExecutor statementExecutor,
@@ -38,10 +38,10 @@ namespace Microsoft.Data.Entity.Storage
             return connection != null && connection.Exists();
         }
 
-        public override bool HasTables()
+        protected override bool HasTables()
            => (int)SqlStatementExecutor.ExecuteScalar(_connection, CreateHasTablesCommand()) > 0;
 
-        public override async Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
             => (int)(await SqlStatementExecutor
                 .ExecuteScalarAsync(_connection, CreateHasTablesCommand(), cancellationToken)) > 0;
 

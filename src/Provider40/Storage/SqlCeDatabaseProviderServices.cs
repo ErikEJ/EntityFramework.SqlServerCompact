@@ -26,7 +26,7 @@ namespace Microsoft.Data.Entity.Storage
         public override IMigrationsSqlGenerator MigrationsSqlGenerator => GetService<SqlCeMigrationsSqlGenerator>();
         public override IMigrationsAnnotationProvider MigrationsAnnotationProvider => GetService<SqlCeMigrationsAnnotationProvider>();
         public override IModelSource ModelSource => GetService<SqlCeModelSource>();
-        public override IRelationalConnection RelationalConnection => GetService<SqlCeDatabaseConnection>();
+        public override IRelationalConnection RelationalConnection => GetService<ISqlCeDatabaseConnection>();
         public override IUpdateSqlGenerator UpdateSqlGenerator => GetService<SqlCeUpdateSqlGenerator>();
         public override IValueGeneratorCache ValueGeneratorCache => GetService<SqlCeValueGeneratorCache>();
         public override IRelationalTypeMapper TypeMapper => GetService<SqlCeTypeMapper>();

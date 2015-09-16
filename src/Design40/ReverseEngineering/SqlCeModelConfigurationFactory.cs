@@ -2,7 +2,6 @@
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Configuration;
-using Microsoft.Data.Entity.Relational.Design.Templating;
 using Microsoft.Data.Entity.Relational.Design.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Configuration;
 
@@ -19,7 +18,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         }
 
         public override ModelConfiguration CreateModelConfiguration(
-            [NotNull] IModel model, [NotNull] CustomConfiguration customConfiguration)
+            IModel model, CustomConfiguration customConfiguration)
         {
             return new SqlCeModelConfiguration(
                 model, customConfiguration, ExtensionsProvider, CSharpUtilities, ModelUtilities);

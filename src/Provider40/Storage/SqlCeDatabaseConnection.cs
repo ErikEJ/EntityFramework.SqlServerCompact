@@ -6,7 +6,7 @@ using Microsoft.Framework.Logging;
 
 namespace Microsoft.Data.Entity.Storage
 {
-    public class SqlCeDatabaseConnection : RelationalConnection
+    public class SqlCeDatabaseConnection : RelationalConnection, ISqlCeDatabaseConnection
     { 
         public SqlCeDatabaseConnection([NotNull] IDbContextOptions options, [NotNull] ILoggerFactory loggerFactory)
             : base(options, loggerFactory)

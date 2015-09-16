@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using Microsoft.Data.Entity.SqlServerCompact.Extensions.Logging;
+﻿using System.Linq;
+using Microsoft.Data.Entity.Extensions.Logging;
 using Microsoft.Framework.Logging;
 
 // ReSharper disable once CheckNamespace
-
 namespace Microsoft.Data.Entity
 {
     public class DbLoggerProvider : ILoggerProvider

@@ -2,7 +2,6 @@
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.SqlServerCompact.Design.Utilities;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Framework.DependencyInjection;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering

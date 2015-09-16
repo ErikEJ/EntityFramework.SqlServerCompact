@@ -2,10 +2,10 @@
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
-using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.Metadata;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
+namespace Microsoft.Data.Entity.Migrations
 {
     public class SqlCeHistoryRepository : HistoryRepository
     {

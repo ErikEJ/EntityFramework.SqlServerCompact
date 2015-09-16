@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Framework.Logging;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Extensions.Logging
+namespace Microsoft.Data.Entity.Extensions.Logging
 {
     public class DbConsoleLogger : ILogger
     {

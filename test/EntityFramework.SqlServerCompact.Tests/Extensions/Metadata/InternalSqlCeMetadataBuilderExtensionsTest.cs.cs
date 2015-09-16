@@ -4,8 +4,6 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Conventions;
 using Microsoft.Data.Entity.Metadata.Internal;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata.Internal;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions.Metadata

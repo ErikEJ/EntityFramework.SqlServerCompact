@@ -1,7 +1,6 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Data.Entity.Infrastructure;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
+namespace Microsoft.Data.Entity.Infrastructure
 {
     public class SqlCeDbContextOptionsBuilder : RelationalDbContextOptionsBuilder<SqlCeDbContextOptionsBuilder, SqlCeOptionsExtension>
     {

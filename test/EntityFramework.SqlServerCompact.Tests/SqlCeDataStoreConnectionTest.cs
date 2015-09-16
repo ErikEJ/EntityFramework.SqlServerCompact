@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlServerCe;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.SqlServerCompact;
+using Microsoft.Data.Entity.Storage;
 using Microsoft.Framework.Logging;
 using Xunit;
 

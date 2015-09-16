@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.Data.Entity.Query.ExpressionTranslators;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators
 {
     public class MathCeilingTranslator : MultipleOverloadStaticMethodCallTranslator
     {
         public MathCeilingTranslator()
-            : base(typeof(Math), "Ceiling", "CEILING")
+            : base(typeof(Math), nameof(Math.Ceiling), "CEILING")
         {
         }
     }

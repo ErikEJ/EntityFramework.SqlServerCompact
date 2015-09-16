@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.Data.Entity.Query.ExpressionTranslators;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators
 {
     public class MathPowerTranslator : SingleOverloadStaticMethodCallTranslator
     {
         public MathPowerTranslator()
-            : base(typeof(Math), "Pow", "POWER")
+            : base(typeof(Math), nameof(Math.Pow), "POWER")
         {
         }
     }

@@ -10,7 +10,6 @@ using Microsoft.Data.Entity.Relational.Design.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model;
 using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Design.Utilities;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
 
@@ -234,7 +233,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             }
         }
 
-        public virtual void AddKeysToModel([NotNull] Entity.Metadata.Model relationalModel)
+        public virtual void AddKeysToModel([NotNull] Metadata.Model relationalModel)
         {
             Check.NotNull(relationalModel, nameof(relationalModel));
 
@@ -290,7 +289,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             AddForeignKeysToModel(relationalModel, entityTypeToForeignKeyConstraintsMap);
         }
 
-        public virtual void AddForeignKeysToModel([NotNull] Entity.Metadata.Model relationalModel,
+        public virtual void AddForeignKeysToModel([NotNull] Metadata.Model relationalModel,
             [NotNull] Dictionary<EntityType, Dictionary<string, List<Property>>> entityTypeToForeignKeyConstraintsMap)
         {
             Check.NotNull(relationalModel, nameof(relationalModel));

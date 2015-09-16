@@ -4,11 +4,9 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.SqlServerCompact.Extensions;
-using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 
-namespace Microsoft.Data.Entity.SqlServerCompact
+namespace Microsoft.Data.Entity.Storage
 {
     public class SqlCeDatabaseCreator : RelationalDatabaseCreator
     {

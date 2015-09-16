@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.MetaData.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.SqlServerCompact;
-using Microsoft.Data.Entity.SqlServerCompact.Migrations;
-using Microsoft.Data.Entity.SqlServerCompact.Update;
-using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
+using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Tests;
 using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.ValueGeneration;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions

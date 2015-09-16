@@ -5,9 +5,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
-using Microsoft.Data.Entity.Query.ExpressionTranslators;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators
 {
     public class MathTruncateTranslator : IMethodCallTranslator
     {

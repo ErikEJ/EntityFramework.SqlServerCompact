@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Configuration;
 using Microsoft.Data.Entity.Relational.Design.Templating;
 using Microsoft.Data.Entity.Relational.Design.Utilities;
-using Microsoft.Data.Entity.SqlServer.Design.ReverseEngineering.Configuration;
+using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Configuration;
 
 namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 {

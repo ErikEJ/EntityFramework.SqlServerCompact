@@ -23,9 +23,9 @@ namespace Microsoft.Data.Entity.Query.Sql
                 Check.NotNull(selectExpression, nameof(selectExpression)));
 
         public virtual ISqlQueryGenerator CreateRawCommandGenerator(
-            [NotNull] SelectExpression selectExpression,
-            [NotNull] string sql,
-            [NotNull] object[] parameters)
+            SelectExpression selectExpression,
+            string sql,
+            object[] parameters)
             => new RawSqlQueryGenerator(
                 _parameterNameGeneratorFactory,
                 Check.NotNull(selectExpression, nameof(selectExpression)),

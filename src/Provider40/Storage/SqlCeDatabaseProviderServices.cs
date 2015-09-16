@@ -3,20 +3,15 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
-using Microsoft.Data.Entity.SqlServerCompact.Migrations;
-using Microsoft.Data.Entity.SqlServerCompact.Update;
-using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
-using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.ValueGeneration;
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;
+using Microsoft.Data.Entity.MetaData.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Query.ExpressionTranslators;
-using Microsoft.Data.Entity.SqlServerCompact.Query.ExpressionTranslators;
 using Microsoft.Data.Entity.Query.Sql;
 
-namespace Microsoft.Data.Entity.SqlServerCompact
+namespace Microsoft.Data.Entity.Storage
 {
     public class SqlCeDatabaseProviderServices : RelationalDatabaseProviderServices
     {

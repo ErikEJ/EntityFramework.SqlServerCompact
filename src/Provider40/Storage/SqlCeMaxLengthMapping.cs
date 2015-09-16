@@ -2,9 +2,8 @@
 using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.Storage;
 
-namespace Microsoft.Data.Entity.SqlServerCompact
+namespace Microsoft.Data.Entity.Storage
 {
     public class SqlCeMaxLengthMapping : RelationalTypeMapping
     {

@@ -18,31 +18,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
         public virtual string TestNamespace => "E2ETest.Namespace";
         public virtual string TestProjectDir => Path.Combine("E2ETest", "Output");
         public virtual string TestSubDir => "SubDir";
-
         public virtual string CustomizedTemplateDir => "E2ETest/CustomizedTemplate/Dir";
-
-        private static readonly List<string> _expectedFiles = new List<string>
-            {
-                @"E2EContext.expected",
-                @"AllDataTypes.expected",
-                @"OneToManyDependent.expected",
-                @"OneToManyPrincipal.expected",
-                @"OneToOneDependent.expected",
-                @"OneToOnePrincipal.expected",
-                @"OneToOneSeparateFKDependent.expected",
-                @"OneToOneSeparateFKPrincipal.expected",
-                @"PropertyConfiguration.expected",
-                @"ReferredToByTableWithUnmappablePrimaryKeyColumn.expected",
-                @"SelfReferencing.expected",
-                @"Test_Spaces_Keywords_Table.expected",
-            };
-
-        private const string _connectionString = @"Data Source=E2E.sdf";
-
-        public SqlCeE2ETests(SqlCeE2EFixture fixture, ITestOutputHelper output)
-            : base(output)
-        {
-        }
 
         protected override E2ECompiler GetCompiler() => new E2ECompiler
         {
@@ -63,6 +39,29 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
                     }
         };
 
+        private const string _connectionString = @"Data Source=E2E.sdf";
+
+        private static readonly List<string> _expectedFiles = new List<string>
+            {
+                @"E2EContext.expected",
+                @"AllDataTypes.expected",
+                @"OneToManyDependent.expected",
+                @"OneToManyPrincipal.expected",
+                @"OneToOneDependent.expected",
+                @"OneToOnePrincipal.expected",
+                @"OneToOneSeparateFKDependent.expected",
+                @"OneToOneSeparateFKPrincipal.expected",
+                @"PropertyConfiguration.expected",
+                @"ReferredToByTableWithUnmappablePrimaryKeyColumn.expected",
+                @"SelfReferencing.expected",
+                @"Test_Spaces_Keywords_Table.expected",
+            };
+
+        public SqlCeE2ETests(SqlCeE2EFixture fixture, ITestOutputHelper output)
+            : base(output)
+        {
+        }
+
         [Fact]
         public void E2ETest_UseAttributesInsteadOfFluentApi()
         {
@@ -79,7 +78,7 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
 
             var actualFileSet = new FileSet(InMemoryFiles, Path.Combine(TestProjectDir, TestSubDir))
             {
-                Files = filePaths.Select(Path.GetFileName).ToList()
+                Files = Enumerable.Repeat(filePaths.ContextFile, 1).Concat(filePaths.EntityTypeFiles).Select(Path.GetFileName).ToList()
             };
 
             var expectedFileSet = new FileSet(new FileSystemFileService(),
@@ -99,25 +98,17 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             var configuration = new ReverseEngineeringConfiguration
             {
                 ConnectionString = _connectionString,
-                CustomTemplatePath = "AllFluentApiTemplatesDir",
                 ProjectPath = TestProjectDir,
                 ProjectRootNamespace = TestNamespace,
-                RelativeOutputPath = null // not used for this test
+                RelativeOutputPath = null, // not used for this test
+                UseFluentApiOnly = true
             };
-
-            // use templates where the flag to use attributes instead of fluent API has been turned off
-            var dbContextTemplate = MetadataModelProvider.DbContextTemplate
-                .Replace("useAttributesOverFluentApi = true", "useAttributesOverFluentApi = false");
-            var entityTypeTemplate = MetadataModelProvider.EntityTypeTemplate
-                .Replace("useAttributesOverFluentApi = true", "useAttributesOverFluentApi = false");
-            InMemoryFiles.OutputFile("AllFluentApiTemplatesDir", ProviderDbContextTemplateName, dbContextTemplate);
-            InMemoryFiles.OutputFile("AllFluentApiTemplatesDir", ProviderEntityTypeTemplateName, entityTypeTemplate);
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
 
             var actualFileSet = new FileSet(InMemoryFiles, TestProjectDir)
             {
-                Files = filePaths.Select(Path.GetFileName).ToList()
+                Files = Enumerable.Repeat(filePaths.ContextFile, 1).Concat(filePaths.EntityTypeFiles).Select(Path.GetFileName).ToList()
             };
 
             var expectedFileSet = new FileSet(new FileSystemFileService(),
@@ -135,70 +126,8 @@ namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngin
             //    i++;
             //}
 
-            AssertLog(new LoggerMessages
-            {
-                Info =
-                        {
-                            "Using custom template " + Path.Combine("AllFluentApiTemplatesDir", ProviderDbContextTemplateName),
-                            "Using custom template " + Path.Combine("AllFluentApiTemplatesDir", ProviderEntityTypeTemplateName)
-                        }
-            });
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
-        }
-
-        [Fact]
-        public void Code_generation_will_use_customized_templates_if_present()
-        {
-            var configuration = new ReverseEngineeringConfiguration
-            {
-                ConnectionString = _connectionString,
-                CustomTemplatePath = CustomizedTemplateDir,
-                ProjectPath = TestProjectDir,
-                ProjectRootNamespace = TestNamespace,
-                RelativeOutputPath = null // tests outputting to top-level directory
-            };
-            InMemoryFiles.OutputFile(CustomizedTemplateDir, ProviderDbContextTemplateName, "DbContext template");
-            InMemoryFiles.OutputFile(CustomizedTemplateDir, ProviderEntityTypeTemplateName, "EntityType template");
-
-            var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
-
-            AssertLog(new LoggerMessages
-            {
-                Info =
-                        {
-                            "Using custom template " + Path.Combine(CustomizedTemplateDir, ProviderDbContextTemplateName),
-                            "Using custom template " + Path.Combine(CustomizedTemplateDir, ProviderEntityTypeTemplateName)
-                        }
-            });
-
-            foreach (var fileName in filePaths.Select(Path.GetFileName))
-            {
-                var fileContents = InMemoryFiles.RetrieveFileContents(TestProjectDir, fileName);
-                var contents = "E2EContext.cs" == fileName ? "DbContext template" : "EntityType template";
-                Assert.Contains(fileName.Replace(".cs", ".expected"), _expectedFiles);
-                Assert.Equal(contents, fileContents);
-            }
-        }
-
-        [Fact]
-        public void Can_output_templates_to_be_customized()
-        {
-            var filePaths = Generator.Customize(TestProjectDir);
-
-            AssertLog(new LoggerMessages());
-
-            Assert.Collection(filePaths,
-                file1 => Assert.Equal(file1, Path.Combine(TestProjectDir, ProviderDbContextTemplateName)),
-                file2 => Assert.Equal(file2, Path.Combine(TestProjectDir, ProviderEntityTypeTemplateName)));
-
-            var dbContextTemplateContents = InMemoryFiles.RetrieveFileContents(
-                TestProjectDir, ProviderDbContextTemplateName);
-            Assert.Equal(MetadataModelProvider.DbContextTemplate, dbContextTemplateContents);
-
-            var entityTypeTemplateContents = InMemoryFiles.RetrieveFileContents(
-                TestProjectDir, ProviderEntityTypeTemplateName);
-            Assert.Equal(MetadataModelProvider.EntityTypeTemplate, entityTypeTemplateContents);
         }
     }
 }

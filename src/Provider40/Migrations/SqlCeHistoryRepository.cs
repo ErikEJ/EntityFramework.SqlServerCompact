@@ -12,7 +12,7 @@ namespace Microsoft.Data.Entity.Migrations
         public SqlCeHistoryRepository(
             [NotNull] IDatabaseCreator databaseCreator,
             [NotNull] ISqlStatementExecutor executor,
-            [NotNull] IRelationalConnection connection,
+            [NotNull] ISqlCeDatabaseConnection connection,
             [NotNull] IDbContextOptions options,
             [NotNull] IMigrationsModelDiffer modelDiffer,
             [NotNull] SqlCeMigrationsSqlGenerator migrationSqlGenerator,

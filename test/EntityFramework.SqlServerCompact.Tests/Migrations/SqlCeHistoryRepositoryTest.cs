@@ -93,7 +93,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
             return new SqlCeHistoryRepository(
                 Mock.Of<IRelationalDatabaseCreator>(),
                 Mock.Of<ISqlStatementExecutor>(),
-                Mock.Of<IRelationalConnection>(),
+                Mock.Of<ISqlCeDatabaseConnection>(),
                 new DbContextOptions<DbContext>(
                     new Dictionary<Type, IDbContextOptionsExtension>
                     {

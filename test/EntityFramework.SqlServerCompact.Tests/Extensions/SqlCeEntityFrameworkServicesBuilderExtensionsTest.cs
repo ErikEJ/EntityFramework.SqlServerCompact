@@ -30,7 +30,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
             // SQL Server Ce scoped
             VerifyScoped<SqlCeModificationCommandBatchFactory>();
             VerifyScoped<SqlCeDatabaseProviderServices>();
-            VerifyScoped<SqlCeDatabaseConnection>();
+            VerifyScoped<ISqlCeDatabaseConnection>();
             VerifyScoped<SqlCeMigrationsAnnotationProvider>();
             VerifyScoped<SqlCeMigrationsSqlGenerator>();
             VerifyScoped<SqlCeDatabaseCreator>();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Relational;
+using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;
@@ -32,7 +32,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: false))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 Assert.False(async ? await creator.ExistsAsync() : creator.Exists());
             }
@@ -54,7 +54,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: true))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 Assert.True(async ? await creator.ExistsAsync() : creator.Exists());
             }
@@ -76,11 +76,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: false))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 var errorNumber = async
-                    ? (await Assert.ThrowsAsync<SqlCeException>(() => creator.HasTablesAsync())).NativeError
-                    : Assert.Throws<SqlCeException>(() => creator.HasTables()).NativeError;
+                    ? (await Assert.ThrowsAsync<SqlCeException>(() => ((TestDatabaseCreator)creator).HasTablesAsync())).NativeError
+                    : Assert.Throws<SqlCeException>(() => ((TestDatabaseCreator)creator).HasTables()).NativeError;
 
                 Assert.Equal(
                     25046, // The database file cannot be found. Check the path to the database.
@@ -104,9 +104,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: true))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
-                Assert.False(async ? await creator.HasTablesAsync() : creator.HasTables());
+                Assert.False(async ? await ((TestDatabaseCreator)creator).HasTablesAsync() : ((TestDatabaseCreator)creator).HasTables());
             }
         }
 
@@ -128,9 +128,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             {
                 testDatabase.ExecuteNonQuery("CREATE TABLE SomeTable (Id uniqueidentifier)");
 
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
-                Assert.True(async ? await creator.HasTablesAsync() : creator.HasTables());
+                Assert.True(async ? await ((TestDatabaseCreator)creator).HasTablesAsync() : ((TestDatabaseCreator)creator).HasTables());
             }
         }
 
@@ -152,7 +152,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             {
                 testDatabase.Connection.Close();
 
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 Assert.True(async ? await creator.ExistsAsync() : creator.Exists());
 
@@ -185,7 +185,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: false))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 if (async)
                 {
@@ -272,7 +272,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: false))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 var errorNumber
                     = async
@@ -301,7 +301,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: false))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 Assert.False(creator.Exists());
 
@@ -343,7 +343,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: true))
             {
-                var creator = GetDataStoreCreator(testDatabase);
+                var creator = GetDatabaseCreator(testDatabase);
 
                 var errorNumber =
                         async
@@ -363,6 +363,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .AddEntityFramework()
                 .AddSqlCe();
 
+            serviceCollection.AddScoped<SqlCeDatabaseCreator, TestDatabaseCreator>();
+
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
 
@@ -372,10 +374,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .Service;
         }
 
-        private static SqlCeDatabaseCreator GetDataStoreCreator(SqlCeTestStore testStore)
-        {
-            return CreateContextServices(testStore).GetService<SqlCeDatabaseCreator>();
-        }
+        private static IRelationalDatabaseCreator GetDatabaseCreator(SqlCeTestStore testStore)
+           => CreateContextServices(testStore).GetRequiredService<IRelationalDatabaseCreator>();
 
         private class BloggingContext : DbContext
         {
@@ -391,6 +391,24 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 public int Id { get; set; }
                 public string Name { get; set; }
             }
+        }
+
+        public class TestDatabaseCreator : SqlCeDatabaseCreator
+        {
+            public TestDatabaseCreator(
+                ISqlCeDatabaseConnection connection,
+                IMigrationsModelDiffer modelDiffer,
+                IMigrationsSqlGenerator sqlGenerator,
+                ISqlStatementExecutor statementExecutor,
+                IModel model)
+                : base(connection, modelDiffer, sqlGenerator, statementExecutor, model)
+            {
+            }
+
+            public new bool HasTables() => base.HasTables();
+
+            public new Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
+                => base.HasTablesAsync(cancellationToken);
         }
     }
 }

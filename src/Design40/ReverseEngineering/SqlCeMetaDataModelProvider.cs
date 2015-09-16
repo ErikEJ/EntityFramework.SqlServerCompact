@@ -39,9 +39,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         public SqlCeMetadataModelProvider(
              [NotNull] ILogger logger,
              [NotNull] ModelUtilities modelUtilities,
+             [NotNull] CSharpUtilities cSharpUtilities,
              [NotNull] IRelationalMetadataExtensionProvider extensionsProvider,
              [NotNull] SqlServerLiteralUtilities sqlServerLiteralUtilities)
-            : base(logger, modelUtilities)
+            : base(logger, modelUtilities, cSharpUtilities)
         {
             Check.NotNull(extensionsProvider, nameof(extensionsProvider));
             Check.NotNull(sqlServerLiteralUtilities, nameof(sqlServerLiteralUtilities));

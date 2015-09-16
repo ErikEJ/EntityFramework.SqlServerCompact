@@ -37,6 +37,7 @@ namespace Microsoft.Framework.DependencyInjection
                 .AddSingleton<SqlCeConventionSetBuilder>()
                 .AddScoped<SqlCeModificationCommandBatchFactory>()
                 .AddScoped<SqlCeDatabaseProviderServices>()
+                .AddScoped<ISqlCeDatabaseConnection, SqlCeDatabaseConnection>()
                 .AddScoped<SqlCeDatabaseConnection>()
                 .AddScoped<SqlCeMigrationsSqlGenerator>()
                 .AddScoped<SqlCeDatabaseCreator>()

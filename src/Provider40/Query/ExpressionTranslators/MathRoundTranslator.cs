@@ -5,13 +5,12 @@ using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
-using Microsoft.Data.Entity.Query.ExpressionTranslators;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators
 {
     public class MathRoundTranslator : IMethodCallTranslator
     {
-        private static IEnumerable<MethodInfo> _methodInfos = typeof(Math).GetTypeInfo().GetDeclaredMethods("Round").Where(m =>
+        private static readonly IEnumerable<MethodInfo> _methodInfos = typeof(Math).GetTypeInfo().GetDeclaredMethods("Round").Where(m =>
                 m.GetParameters().Count() == 1
                 || (m.GetParameters().Count() == 2 && m.GetParameters()[1].ParameterType == typeof(int)));
 

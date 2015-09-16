@@ -8,7 +8,6 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.SqlServerCompact;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Framework.DependencyInjection;
 using Xunit;

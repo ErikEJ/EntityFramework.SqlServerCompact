@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.Entity.Metadata;
-
-namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
+﻿namespace Microsoft.Data.Entity.Metadata
 {
     public class SqlCeMetadataExtensionProvider : IRelationalMetadataExtensionProvider
     {

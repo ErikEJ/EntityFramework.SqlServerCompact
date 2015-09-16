@@ -1,9 +1,8 @@
 ﻿using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
-using Microsoft.Data.Entity.Query.ExpressionTranslators;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators
 {
     public class StringLengthTranslator : IMemberTranslator
     {
@@ -11,7 +10,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Query.Methods
         {
             if (memberExpression.Expression != null
                 && memberExpression.Expression.Type == typeof(string)
-                && memberExpression.Member.Name == "Length")
+                && memberExpression.Member.Name == nameof(string.Length))
             {
                 return new SqlFunctionExpression("LEN", memberExpression.Type, new[] { memberExpression.Expression });
             }

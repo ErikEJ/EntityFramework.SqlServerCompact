@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
-using Microsoft.Data.Entity.SqlServerCompact;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
-using Microsoft.Data.Entity.SqlServerCompact.Migrations;
 using Microsoft.Data.Entity.Storage;
+using Microsoft.Data.Entity.Update;
 using Moq;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Migrations
+namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 {
     public class SqlCeHistoryRepositoryTest
     {

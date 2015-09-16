@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Migrations
+namespace Microsoft.Data.Entity.Migrations
 {
     public class SqlCeMigrationsAnnotationProvider : MigrationsAnnotationProvider
     {        

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 
-namespace Microsoft.Data.Entity.SqlServerCompact
-{
+namespace Microsoft.Data.Entity.Storage
+{ 
     public class SqlCeTypeMapper : RelationalTypeMapper
     {
         private readonly SqlCeMaxLengthMapping _nvarcharmax = new SqlCeMaxLengthMapping("ntext", DbType.String);

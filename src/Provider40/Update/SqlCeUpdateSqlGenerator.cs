@@ -2,10 +2,9 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
 
-namespace Microsoft.Data.Entity.SqlServerCompact
+namespace Microsoft.Data.Entity.Update
 {
     public class SqlCeUpdateSqlGenerator : UpdateSqlGenerator
     {

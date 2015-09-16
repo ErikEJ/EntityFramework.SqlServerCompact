@@ -1,8 +1,6 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Metadata.Internal;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Metadata.Internal
+namespace Microsoft.Data.Entity.Metadata.Internal
 {
     public static class SqlCeInternalMetadataBuilderExtensions
     {

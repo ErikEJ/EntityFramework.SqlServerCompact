@@ -3,12 +3,15 @@ using System.IO;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
+// ReSharper disable once CheckNamespace
+
+namespace Microsoft.Data.Entity
 {
     public static class SqlCeConnectionExtensions
     {
         public static void CreateEmptyDatabase([NotNull] this SqlCeConnection connection)
         {
+            //TODO ErikEJ Make this more robust
             Check.NotNull(connection, nameof(connection));
 
             using (var engine = new SqlCeEngine(connection.ConnectionString))
@@ -20,7 +23,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
         public static bool Exists([NotNull] this SqlCeConnection connection)
         {
             Check.NotNull(connection, nameof(connection));
-
+            //TODO ErikEJ Make this more robust
             return File.Exists(SqlCeHelper.PathFromConnectionString(connection.ConnectionString));
         }
 
@@ -39,6 +42,5 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Extensions
                 File.Delete(path);
             }
         }
-
     }
 }

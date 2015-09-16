@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlServerCe;
 using System.Linq;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.SqlServerCompact;
+using Microsoft.Data.Entity.Infrastructure;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions

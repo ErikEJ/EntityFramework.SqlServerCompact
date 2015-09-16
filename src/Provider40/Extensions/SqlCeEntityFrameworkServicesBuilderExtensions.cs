@@ -1,15 +1,15 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.MetaData.Conventions.Internal;
+using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Query;
+using Microsoft.Data.Entity.Query.ExpressionTranslators;
 using Microsoft.Data.Entity.Query.Sql;
-using Microsoft.Data.Entity.SqlServerCompact;
-using Microsoft.Data.Entity.SqlServerCompact.Metadata;
-using Microsoft.Data.Entity.SqlServerCompact.Migrations;
-using Microsoft.Data.Entity.SqlServerCompact.Query.ExpressionTranslators;
-using Microsoft.Data.Entity.SqlServerCompact.Update;
-using Microsoft.Data.Entity.SqlServerCompact.ValueGeneration;
 using Microsoft.Data.Entity.Storage;
+using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Utilities;
+using Microsoft.Data.Entity.ValueGeneration;
 using Microsoft.Framework.DependencyInjection.Extensions;
 
 // ReSharper disable CheckNamespace

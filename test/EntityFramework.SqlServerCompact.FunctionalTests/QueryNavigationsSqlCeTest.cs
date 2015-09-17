@@ -315,8 +315,9 @@ FROM [Orders] AS [o]",
         {
             //base.Collection_where_nav_prop_sum();
         }
-        public override async Task Collection_where_nav_prop_sum_async()
+        public override Task Collection_where_nav_prop_sum_async()
         {
+            return Task.FromResult(0);
             //return base.Collection_where_nav_prop_sum_async();
         }
 

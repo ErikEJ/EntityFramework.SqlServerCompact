@@ -11,7 +11,6 @@ namespace Microsoft.Data.Entity
     {
         public static void CreateEmptyDatabase([NotNull] this SqlCeConnection connection)
         {
-            //TODO ErikEJ Make this more robust
             Check.NotNull(connection, nameof(connection));
 
             using (var engine = new SqlCeEngine(connection.ConnectionString))
@@ -23,7 +22,6 @@ namespace Microsoft.Data.Entity
         public static bool Exists([NotNull] this SqlCeConnection connection)
         {
             Check.NotNull(connection, nameof(connection));
-            //TODO ErikEJ Make this more robust
             return File.Exists(SqlCeHelper.PathFromConnectionString(connection.ConnectionString));
         }
 

@@ -9,7 +9,7 @@ using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFramework7.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
+namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {
     public class SqlCeE2ETests : E2ETestBase, IClassFixture<SqlCeE2EFixture>
     {

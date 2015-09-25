@@ -48,10 +48,15 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             });
         }
 
-        public override NullSemanticsContext CreateContext(SqlCeTestStore testStore)
+        public override NullSemanticsContext CreateContext(SqlCeTestStore testStore, bool useRelationalNulls)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection);
+            var sqlCeOptions = optionsBuilder.UseSqlCe(testStore.Connection);
+
+            if (useRelationalNulls)
+            {
+                sqlCeOptions.UseRelationalNulls();
+            }
 
             var context = new NullSemanticsContext(_serviceProvider, optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);

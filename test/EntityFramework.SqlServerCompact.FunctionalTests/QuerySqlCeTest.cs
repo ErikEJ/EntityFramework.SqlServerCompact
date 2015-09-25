@@ -11,9 +11,9 @@ using System.Threading;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
-    public class QuerySqlServerTest : QueryTestBase<NorthwindQuerySqlCeFixture>
+    public class QuerySqlCeTest : QueryTestBase<NorthwindQuerySqlCeFixture>
     {
-        public QuerySqlServerTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
+        public QuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
@@ -96,6 +96,12 @@ SELECT TOP(1) [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].
 FROM [Employees] AS [e]
 ORDER BY [e].[EmployeeID]",
                  Sql);
+        }
+
+        public override void Where_query_composition4()
+        {
+            //TODO ErikEJ seems like same issue as https://github.com/aspnet/EntityFramework/issues/3158
+            //base.Where_query_composition4();
         }
 
         public override void Where_shadow_subquery_first()

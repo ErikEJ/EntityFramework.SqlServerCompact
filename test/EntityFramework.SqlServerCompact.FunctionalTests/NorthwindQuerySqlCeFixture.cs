@@ -35,7 +35,18 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .MinimumLevel = LogLevel.Debug;
         }
 
-        public override NorthwindContext CreateContext() => new SqlCeNorthwindContext(_serviceProvider, _options);
+        public override NorthwindContext CreateContext() => CreateContext(useRelationalNulls: false);
+
+        public override NorthwindContext CreateContext(bool useRelationalNulls)
+        {
+            RelationalOptionsExtension.Extract(_options).UseRelationalNulls = useRelationalNulls;
+
+            var context = new SqlCeNorthwindContext(_serviceProvider, _options);
+
+            context.ChangeTracker.AutoDetectChangesEnabled = false;
+
+            return context;
+        }
 
         public void Dispose() => _testStore.Dispose();
     }

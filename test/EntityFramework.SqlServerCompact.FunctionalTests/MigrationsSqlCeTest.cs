@@ -89,6 +89,13 @@ GO
             Assert.Throws<NotSupportedException>(() => base.Can_generate_idempotent_down_scripts());
         }
 
+        public override void Can_get_active_provider()
+        {
+            base.Can_get_active_provider();
+
+            Assert.Equal("EntityFramework.SqlServerCompact40", ActiveProvider);
+        }
+
         protected override async Task AssertFirstMigrationAsync(DbConnection connection)
         {
             var sql = await GetDatabaseSchemaAsync(connection);

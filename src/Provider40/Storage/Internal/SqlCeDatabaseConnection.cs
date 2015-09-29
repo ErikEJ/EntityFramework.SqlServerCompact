@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Framework.Logging;
 
-namespace Microsoft.Data.Entity.Storage
+namespace Microsoft.Data.Entity.Storage.Internal
 {
     public class SqlCeDatabaseConnection : RelationalConnection, ISqlCeDatabaseConnection
     { 

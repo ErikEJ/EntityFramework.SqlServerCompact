@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Internal;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Internal.Templating;
@@ -19,7 +20,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
                 .AddScoped<ICompilationService, RoslynCompilationService>()
                 .AddScoped<RazorTemplating>()
                 .AddScoped<IDatabaseMetadataModelProvider, SqlCeMetadataModelProvider>()
-                .AddScoped<IRelationalMetadataExtensionProvider, SqlCeMetadataExtensionProvider>()
+                .AddScoped<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
                 .AddScoped<SqlServerLiteralUtilities>()
                 .AddScoped<ModelConfigurationFactory, SqlCeModelConfigurationFactory>()
                 .AddScoped<CodeWriter, RazorTemplateCodeWriter>();

@@ -14,14 +14,15 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
         public static readonly Regex _defaultValueIsExpression =
             new Regex(@"^[@\$\w]+\(.*\)$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(1000.0));
 
-        public SqlServerLiteralUtilities([NotNull] ILogger logger)
+        public SqlServerLiteralUtilities([NotNull] ILoggerFactory loggerFactory)
         {
-            Check.NotNull(logger, nameof(logger));
+            Check.NotNull(loggerFactory, nameof(loggerFactory));
 
-            Logger = logger;
+            Logger = loggerFactory.CreateCommandsLogger();
         }
 
         public virtual ILogger Logger { get; }
+
 
         /// <summary>
         ///     Converts a string of the form 'There''s a double single quote in here'

@@ -1,6 +1,6 @@
-﻿namespace Microsoft.Data.Entity.Metadata
+﻿namespace Microsoft.Data.Entity.Metadata.Internal
 {
-    public class SqlCeMetadataExtensionProvider : IRelationalMetadataExtensionProvider
+    public class SqlCeAnnotationProvider : IRelationalAnnotationProvider
     {
         public virtual IRelationalEntityTypeAnnotations For(IEntityType entityType) => entityType.SqlCe();
         public virtual IRelationalForeignKeyAnnotations For(IForeignKey foreignKey) => foreignKey.SqlCe();

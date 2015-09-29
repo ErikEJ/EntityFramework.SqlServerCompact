@@ -17,7 +17,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Confi
         public SqlCeModelConfiguration(
             [NotNull] IModel model,
             [NotNull] CustomConfiguration customConfiguration,
-            [NotNull] IRelationalMetadataExtensionProvider extensionsProvider,
+            [NotNull] IRelationalAnnotationProvider extensionsProvider,
             [NotNull] CSharpUtilities cSharpUtilities,
             [NotNull] ModelUtilities modelUtilities)
             : base(model, customConfiguration, extensionsProvider, cSharpUtilities, modelUtilities)

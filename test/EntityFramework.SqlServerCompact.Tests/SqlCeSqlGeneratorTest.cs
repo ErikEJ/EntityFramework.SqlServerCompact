@@ -1,17 +1,12 @@
 ﻿using System;
-using Microsoft.Data.Entity.SqlServerCompact;
-using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.Storage;
+using Microsoft.Data.Entity.Storage.Internal;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests
 {
     public class SqlCeSqlGeneratorTest
     {
-        protected IUpdateSqlGenerator CreateSqlGenerator()
-        {
-            return new SqlCeUpdateSqlGenerator();
-        }
-
         [Fact]
         public void BatchSeparator_returns_seperator()
         {
@@ -52,7 +47,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         {
             var value = new Guid("c6f43a9e-91e1-45ef-a320-832ea23b7292");
             var literal = CreateSqlGenerator().GenerateLiteral(value);
-            Assert.Equal("c6f43a9e-91e1-45ef-a320-832ea23b7292", literal);
+            Assert.Equal("'c6f43a9e-91e1-45ef-a320-832ea23b7292'", literal);
         }
+
+        protected ISqlGenerator CreateSqlGenerator()
+            => new SqlCeSqlGenerator();
     }
 }

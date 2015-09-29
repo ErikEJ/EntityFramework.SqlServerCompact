@@ -71,7 +71,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 CustomTemplatePath = null, // not used for this test
                 ProjectPath = TestProjectDir,
                 ProjectRootNamespace = TestNamespace,
-                RelativeOutputPath = TestSubDir
+                OutputPath = TestSubDir
             };
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
@@ -100,7 +100,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 ConnectionString = _connectionString,
                 ProjectPath = TestProjectDir,
                 ProjectRootNamespace = TestNamespace,
-                RelativeOutputPath = null, // not used for this test
+                OutputPath = null, // not used for this test
                 UseFluentApiOnly = true
             };
 

@@ -2,9 +2,12 @@
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.MetaData.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Storage;
+using Microsoft.Data.Entity.Storage.Internal;
 using Microsoft.Data.Entity.Tests;
 using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.Update.Internal;
 using Microsoft.Data.Entity.ValueGeneration;
 using Xunit;
 
@@ -23,11 +26,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
             // SQL Server Ce dingletones
             VerifySingleton<SqlCeConventionSetBuilder>();
             VerifySingleton<SqlCeValueGeneratorCache>();
-            VerifySingleton<SqlCeUpdateSqlGenerator>();
+            
             VerifySingleton<SqlCeTypeMapper>();            
             VerifySingleton<SqlCeModelSource>();
 
             // SQL Server Ce scoped
+            VerifyScoped<ISqlCeUpdateSqlGenerator>();
             VerifyScoped<SqlCeModificationCommandBatchFactory>();
             VerifyScoped<SqlCeDatabaseProviderServices>();
             VerifyScoped<ISqlCeDatabaseConnection>();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.TestModels;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.FunctionalTests;
@@ -13,34 +14,44 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly DbContextOptions _options;
-        private readonly SqlCeTestStore _testStore;
+
+        private readonly SqlCeTestStore _testStore = SqlCeNorthwindContext.GetSharedStore();
+        private readonly TestSqlLoggerFactory _testSqlLoggerFactory = new TestSqlLoggerFactory();
 
         public NorthwindQuerySqlCeFixture()
         {
-            _testStore = SqlCeNorthwindContext.GetSharedStore();
+            _serviceProvider
+                = new ServiceCollection()
+                    .AddEntityFramework()
+                    .AddSqlCe()
+                    .ServiceCollection()
+                    .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                    .AddInstance<ILoggerFactory>(_testSqlLoggerFactory)
+                    .BuildServiceProvider();
 
-            _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
-                .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
-                .AddInstance<ILoggerFactory>(new TestSqlLoggerFactory())
-                .BuildServiceProvider();
+            _options = BuildOptions();
 
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
-            _options = optionsBuilder.Options;
-
-            _serviceProvider.GetRequiredService<ILoggerFactory>()
-                .MinimumLevel = LogLevel.Debug;
+            _serviceProvider.GetRequiredService<ILoggerFactory>().MinimumLevel = LogLevel.Debug;
         }
 
-        public override NorthwindContext CreateContext() => CreateContext(useRelationalNulls: false);
-
-        public override NorthwindContext CreateContext(bool useRelationalNulls)
+        protected DbContextOptions BuildOptions()
         {
-            RelationalOptionsExtension.Extract(_options).UseRelationalNulls = useRelationalNulls;
+            var optionsBuilder = new DbContextOptionsBuilder();
 
+            var sqlServerDbContextOptionsBuilder
+                = optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
+
+            ConfigureOptions(sqlServerDbContextOptionsBuilder);
+
+            return optionsBuilder.Options;
+        }
+
+        protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlCeDbContextOptionsBuilder)
+        {
+        }
+
+        public override NorthwindContext CreateContext()
+        {
             var context = new SqlCeNorthwindContext(_serviceProvider, _options);
 
             context.ChangeTracker.AutoDetectChangesEnabled = false;
@@ -49,5 +60,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         }
 
         public void Dispose() => _testStore.Dispose();
+
+        public override CancellationToken CancelQuery() => _testSqlLoggerFactory.CancelQuery();
     }
 }

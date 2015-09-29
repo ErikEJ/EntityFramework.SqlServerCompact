@@ -198,17 +198,17 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
-                modelBuilder.Entity<Pegasus>().Key(e => new { e.Id1, e.Id2 });
+                modelBuilder.Entity<Pegasus>().HasKey(e => new { e.Id1, e.Id2 });
 
                 modelBuilder.Entity<Unicorn>(b =>
                 {
-                    b.Key(e => new { e.Id1, e.Id2, e.Id3 });
+                    b.HasKey(e => new { e.Id1, e.Id2, e.Id3 });
                     b.Property(e => e.Id1).ValueGeneratedOnAdd();
                 });
 
                 modelBuilder.Entity<EarthPony>(b =>
                 {
-                    b.Key(e => new { e.Id1, e.Id2 });
+                    b.HasKey(e => new { e.Id1, e.Id2 });
                     b.Property(e => e.Id1).ValueGeneratedOnAdd();
                 });
             }

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Storage;
-using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.Storage.Internal;
 using Moq;
 using Xunit;
 
@@ -87,8 +87,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 
         private static IHistoryRepository CreateHistoryRepository()
         {
-            var annotationsProvider = new SqlCeMetadataExtensionProvider();
-            var updateSqlGenerator = new SqlCeUpdateSqlGenerator();
+            var annotationsProvider = new SqlCeAnnotationProvider();
+            var sqlGenerator = new SqlCeSqlGenerator();
+            var typeMapper = new SqlCeTypeMapper();
+
+            var commandBuilderFactory = new RelationalCommandBuilderFactory(
+                typeMapper);
 
             return new SqlCeHistoryRepository(
                 Mock.Of<IRelationalDatabaseCreator>(),
@@ -103,11 +107,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                     annotationsProvider,
                     new SqlCeMigrationsAnnotationProvider()),
                 new SqlCeMigrationsSqlGenerator(
-                    updateSqlGenerator,
-                    new SqlCeTypeMapper(),
+                    commandBuilderFactory,
+                    new SqlCeSqlGenerator(),
+                    typeMapper,
                     annotationsProvider),
                 annotationsProvider,
-                updateSqlGenerator);
+                sqlGenerator);
         }
 
         private class Context : DbContext

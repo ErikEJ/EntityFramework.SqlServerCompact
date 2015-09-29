@@ -10,13 +10,14 @@ using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
 
-namespace Microsoft.Data.Entity.Update
+namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
     {
         public SqlCeModificationCommandBatch(
+            [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
             [NotNull] IUpdateSqlGenerator sqlGenerator)
-            : base(sqlGenerator)
+            : base(commandBuilderFactory, sqlGenerator)
         {
         }
 

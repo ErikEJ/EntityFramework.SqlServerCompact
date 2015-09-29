@@ -37,12 +37,12 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         private readonly Dictionary<string, Property> _columnIdToProperty = new Dictionary<string, Property>();
 
         public SqlCeMetadataModelProvider(
-             [NotNull] ILogger logger,
+             [NotNull] ILoggerFactory loggerFactory,
              [NotNull] ModelUtilities modelUtilities,
              [NotNull] CSharpUtilities cSharpUtilities,
-             [NotNull] IRelationalMetadataExtensionProvider extensionsProvider,
+             [NotNull] IRelationalAnnotationProvider extensionsProvider,
              [NotNull] SqlServerLiteralUtilities sqlServerLiteralUtilities)
-            : base(logger, modelUtilities, cSharpUtilities)
+            : base(loggerFactory, modelUtilities, cSharpUtilities)
         {
             Check.NotNull(extensionsProvider, nameof(extensionsProvider));
             Check.NotNull(sqlServerLiteralUtilities, nameof(sqlServerLiteralUtilities));
@@ -51,7 +51,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
             _sqlServerLiteralUtilities = sqlServerLiteralUtilities;
         }
 
-        protected override IRelationalMetadataExtensionProvider ExtensionsProvider { get; }
+        protected override IRelationalAnnotationProvider ExtensionsProvider { get; }
 
         public override IModel ConstructRelationalModel([NotNull] string connectionString)
         {

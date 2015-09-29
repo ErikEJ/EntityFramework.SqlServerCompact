@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.Storage;
-using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.Storage.Internal;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
@@ -11,10 +12,18 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
         protected override IMigrationsSqlGenerator SqlGenerator
-           => new SqlCeMigrationsSqlGenerator(
-               new SqlCeUpdateSqlGenerator(),
-               new SqlCeTypeMapper(),
-               new SqlCeMetadataExtensionProvider());
+        {
+            get
+            {
+                var typeMapper = new SqlCeTypeMapper();
+
+                return new SqlCeMigrationsSqlGenerator(
+                    new RelationalCommandBuilderFactory(typeMapper),
+                    new SqlCeSqlGenerator(),
+                    typeMapper,
+                    new SqlCeAnnotationProvider());
+            }
+        }
 
         public override void AlterSequenceOperation_without_minValue_and_maxValue()
         {

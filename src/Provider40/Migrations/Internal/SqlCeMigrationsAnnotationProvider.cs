@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 
-namespace Microsoft.Data.Entity.Migrations
+namespace Microsoft.Data.Entity.Migrations.Internal
 {
     public class SqlCeMigrationsAnnotationProvider : MigrationsAnnotationProvider
     {        

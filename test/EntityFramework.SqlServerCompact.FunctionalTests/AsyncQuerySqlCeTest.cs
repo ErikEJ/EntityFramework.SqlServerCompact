@@ -66,7 +66,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public async Task Single_Predicate_Cancellation()
         {
             await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                await Single_Predicate_Cancellation(TestSqlLoggerFactory.CancelQuery()));
+                await Single_Predicate_Cancellation(Fixture.CancelQuery()));
         }
 
         public AsyncQuerySqlServerTest(NorthwindQuerySqlCeFixture fixture)

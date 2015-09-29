@@ -10,7 +10,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
     public class SqlCeModelConfigurationFactory : ModelConfigurationFactory
     {
         public SqlCeModelConfigurationFactory(
-            [NotNull] IRelationalMetadataExtensionProvider extensionsProvider,
+            [NotNull] IRelationalAnnotationProvider extensionsProvider,
             [NotNull] CSharpUtilities cSharpUtilities,
             [NotNull] ModelUtilities modelUtilities)
             : base(extensionsProvider, cSharpUtilities, modelUtilities)

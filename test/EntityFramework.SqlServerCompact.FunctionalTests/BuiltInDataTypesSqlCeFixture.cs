@@ -74,14 +74,14 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 
             modelBuilder.Entity<MappedDataTypes>(b =>
             {
-                b.Key(e => e.Int);
+                b.HasKey(e => e.Int);
                 b.Property(e => e.Int)
                 .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<MappedNullableDataTypes>(b =>
             {
-                b.Key(e => e.Int);
+                b.HasKey(e => e.Int);
                 b.Property(e => e.Int)
                 .ValueGeneratedNever();
             });
@@ -98,8 +98,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 .Property(e => e.Id)
                 .ValueGeneratedNever();
 
-            modelBuilder.Entity<MappedDataTypes>().Key(e => e.Int);
-            modelBuilder.Entity<MappedNullableDataTypes>().Key(e => e.Int);
+            modelBuilder.Entity<MappedDataTypes>().HasKey(e => e.Int);
+            modelBuilder.Entity<MappedNullableDataTypes>().HasKey(e => e.Int);
 
             MapColumnTypes<MappedDataTypes>(modelBuilder);
             MapColumnTypes<MappedNullableDataTypes>(modelBuilder);

@@ -39,8 +39,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             protected override void OnModelCreating(ModelBuilder builder)
             {
                 builder.Entity<Blog>()
-                    .Collection(b => b.Posts)
-                    .InverseReference(p => p.Blog)
+                    .HasMany(b => b.Posts)
+                    .WithOne(p => p.Blog)
                     .ForeignKey(p => p.BlogId);
             }
         }

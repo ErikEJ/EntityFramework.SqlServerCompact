@@ -4,7 +4,7 @@ using System.Data;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Utilities;
 
-namespace Microsoft.Data.Entity.Storage
+namespace Microsoft.Data.Entity.Storage.Internal
 { 
     public class SqlCeTypeMapper : RelationalTypeMapper
     {

@@ -2,10 +2,10 @@
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Update;
-using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Internal;
+using Microsoft.Data.Entity.Storage.Internal;
 
-namespace Microsoft.Data.Entity.Migrations
+namespace Microsoft.Data.Entity.Migrations.Internal
 {
     public class SqlCeHistoryRepository : HistoryRepository
     {
@@ -16,8 +16,8 @@ namespace Microsoft.Data.Entity.Migrations
             [NotNull] IDbContextOptions options,
             [NotNull] IMigrationsModelDiffer modelDiffer,
             [NotNull] SqlCeMigrationsSqlGenerator migrationSqlGenerator,
-            [NotNull] SqlCeMetadataExtensionProvider annotations,
-            [NotNull] SqlCeUpdateSqlGenerator sql)
+            [NotNull] SqlCeAnnotationProvider annotations,
+            [NotNull] ISqlGenerator sql)
             : base(
                   databaseCreator,
                   executor,
@@ -33,7 +33,7 @@ namespace Microsoft.Data.Entity.Migrations
         protected override string ExistsSql
 
             => "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" +
-                Sql.EscapeLiteral(TableName) + 
+                SqlGenerator.EscapeLiteral(TableName) + 
                 "' AND TABLE_TYPE <> N'SYSTEM TABLE'";
 
         protected override bool InterpretExistsResult(object value) => value != DBNull.Value;

@@ -30,6 +30,7 @@ namespace Microsoft.Data.Entity.Tests
 
             VerifyScoped<IMigrator>();
             VerifyScoped<IMigrationsAssembly>();
+            VerifyScoped<RelationalDatabase>();
             VerifyScoped<RelationalQueryContextFactory>();
             VerifyScoped<BatchExecutor>();
             VerifyScoped<MigrationsModelDiffer>();
@@ -53,7 +54,8 @@ namespace Microsoft.Data.Entity.Tests
             VerifyScoped<IRelationalValueBufferFactoryFactory>();
             VerifyScoped<IRelationalDatabaseCreator>();
             VerifyScoped<IUpdateSqlGenerator>();
-            VerifyScoped<IRelationalMetadataExtensionProvider>();
+            VerifyScoped<IRelationalAnnotationProvider>();
+            VerifyScoped<MigrationsSqlGenerator>();
         }
 
         protected RelationalEntityFrameworkServicesBuilderExtensionsTest(RelationalTestHelpers testHelpers)

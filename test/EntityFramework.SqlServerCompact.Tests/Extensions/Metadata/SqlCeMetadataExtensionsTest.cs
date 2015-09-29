@@ -146,7 +146,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
 
             var key = modelBuilder
                 .Entity<Customer>()
-                .Key(e => e.Id)
+                .HasKey(e => e.Id)
                 .Metadata;
 
             Assert.Equal("PK_Customer", key.SqlCe().Name);
@@ -175,30 +175,34 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata
 
             modelBuilder
                 .Entity<Customer>()
-                .Key(e => e.Id);
+                .HasKey(e => e.Id);
 
             var foreignKey = modelBuilder
                 .Entity<Order>()
-                .Reference<Customer>()
-                .InverseReference()
+                .HasOne<Customer>()
+                .WithOne()
                 .ForeignKey<Order>(e => e.CustomerId)
                 .Metadata;
 
+            Assert.Equal("FK_Order_Customer_CustomerId", foreignKey.Relational().Name);
             Assert.Equal("FK_Order_Customer_CustomerId", foreignKey.SqlCe().Name);
             Assert.Equal("FK_Order_Customer_CustomerId", ((IForeignKey)foreignKey).SqlCe().Name);
 
             foreignKey.Relational().Name = "FK";
 
+            Assert.Equal("FK", foreignKey.Relational().Name);
             Assert.Equal("FK", foreignKey.SqlCe().Name);
             Assert.Equal("FK", ((IForeignKey)foreignKey).SqlCe().Name);
 
             foreignKey.SqlCe().Name = "KFC";
 
+            Assert.Equal("FK", foreignKey.Relational().Name);
             Assert.Equal("KFC", foreignKey.SqlCe().Name);
             Assert.Equal("KFC", ((IForeignKey)foreignKey).SqlCe().Name);
 
             foreignKey.SqlCe().Name = null;
 
+            Assert.Equal("FK", foreignKey.Relational().Name);
             Assert.Equal("FK", foreignKey.SqlCe().Name);
             Assert.Equal("FK", ((IForeignKey)foreignKey).SqlCe().Name);
         }

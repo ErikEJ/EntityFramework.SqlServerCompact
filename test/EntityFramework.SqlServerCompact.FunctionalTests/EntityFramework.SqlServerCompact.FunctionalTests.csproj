@@ -185,6 +185,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyEntrySqlCeTest.cs" />
     <Compile Include="QueryNavigationsSqlCeTest.cs" />
+    <Compile Include="QueryNoClientEvalSqlCeFixture.cs" />
+    <Compile Include="QueryNoClientEvalSqlCeTest.cs" />
     <Compile Include="QuerySqlCeTest.cs" />
     <Compile Include="SentinelGraphUpdatesSqlCeTest.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />

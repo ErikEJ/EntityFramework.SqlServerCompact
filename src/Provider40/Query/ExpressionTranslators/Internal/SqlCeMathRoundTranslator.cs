@@ -6,9 +6,9 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
-    public class MathRoundTranslator : IMethodCallTranslator
+    public class SqlCeMathRoundTranslator : IMethodCallTranslator
     {
         private static readonly IEnumerable<MethodInfo> _methodInfos = typeof(Math).GetTypeInfo().GetDeclaredMethods("Round").Where(m =>
                 m.GetParameters().Count() == 1

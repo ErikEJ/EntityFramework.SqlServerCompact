@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Internal;
+using Microsoft.Data.Entity.MetaData;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Internal;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Internal.Templating;
@@ -16,14 +17,14 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
         {
             base.AddMetadataProviderServices(serviceCollection);
             serviceCollection
-                .AddScoped<MetadataReferencesProvider>()
-                .AddScoped<ICompilationService, RoslynCompilationService>()
-                .AddScoped<RazorTemplating>()
-                .AddScoped<IDatabaseMetadataModelProvider, SqlCeMetadataModelProvider>()
-                .AddScoped<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
-                .AddScoped<SqlServerLiteralUtilities>()
-                .AddScoped<ModelConfigurationFactory, SqlCeModelConfigurationFactory>()
-                .AddScoped<CodeWriter, RazorTemplateCodeWriter>();
+                .AddSingleton<MetadataReferencesProvider>()
+                .AddSingleton<ICompilationService, RoslynCompilationService>()
+                .AddSingleton<RazorTemplating>()
+                .AddSingleton<IDatabaseMetadataModelProvider, SqlCeMetadataModelProvider>()
+                .AddSingleton<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
+                .AddSingleton<SqlServerLiteralUtilities>()
+                .AddSingleton<ModelConfigurationFactory, SqlCeModelConfigurationFactory>()
+                .AddSingleton<CodeWriter, RazorTemplateCodeWriter>();
         }
     }
 }

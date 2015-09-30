@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.Data.Entity.Internal;
 
 namespace Microsoft.Data.Entity.Infrastructure
 {

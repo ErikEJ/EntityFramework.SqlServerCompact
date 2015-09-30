@@ -34,7 +34,6 @@ namespace Microsoft.Data.Entity.Query.Sql.Internal
 
         protected override void GenerateLimitOffset(SelectExpression selectExpression)
         {
-            //TODO ErikEJ Wait for fix for this to enable client side eval
 #if SQLCE35
             if (selectExpression.Offset != null)
             {

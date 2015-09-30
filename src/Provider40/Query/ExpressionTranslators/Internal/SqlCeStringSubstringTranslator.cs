@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Data.Entity.Query.Expressions;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
-    public class StringSubstringTranslator : IMethodCallTranslator
+    public class SqlCeStringSubstringTranslator : IMethodCallTranslator
     {
         private static readonly MethodInfo _methodInfo = typeof(string).GetTypeInfo()
             .GetDeclaredMethods(nameof(string.Substring))

@@ -2,9 +2,9 @@
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
-    public class StringLengthTranslator : IMemberTranslator
+    public class SqlCeStringLengthTranslator : IMemberTranslator
     {
         public virtual Expression Translate([NotNull] MemberExpression memberExpression)
         {

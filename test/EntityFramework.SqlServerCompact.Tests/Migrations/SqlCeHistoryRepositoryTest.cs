@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata.Internal;
+using Microsoft.Data.Entity.MetaData;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Storage;

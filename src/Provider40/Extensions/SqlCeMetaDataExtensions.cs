@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.MetaData.Internal;
 using Microsoft.Data.Entity.Utilities;
 
 // ReSharper disable once CheckNamespace

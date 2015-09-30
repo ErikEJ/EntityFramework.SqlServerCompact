@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Builders;
+using Microsoft.Data.Entity.MetaData.Internal;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Configuration;
 using Microsoft.Data.Entity.Relational.Design.Utilities;
 using Microsoft.Data.Entity.Utilities;
@@ -12,8 +13,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Confi
 {
     public class SqlCeModelConfiguration : ModelConfiguration
     {
-        private const string _dbContextSuffix = "Context";
-
         public SqlCeModelConfiguration(
             [NotNull] IModel model,
             [NotNull] CustomConfiguration customConfiguration,
@@ -29,16 +28,11 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Confi
 
         public override string ClassName()
         {
-            if (CustomConfiguration.ContextClassName != null)
-            {
-                return CustomConfiguration.ContextClassName;
-            }
-
             var path = SqlCeHelper.PathFromConnectionString(CustomConfiguration.ConnectionString);
             if (File.Exists(path))
             {
                 return CSharpUtilities.Instance.GenerateCSharpIdentifier(
-                    Path.GetFileNameWithoutExtension(path) + _dbContextSuffix, null);
+                    Path.GetFileNameWithoutExtension(path) + DbContextSuffix, null);
             }
 
             return base.ClassName();

@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.MetaData.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
-using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Storage.Internal;
 using Microsoft.Data.Entity.Tests;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Update.Internal;
 using Microsoft.Data.Entity.ValueGeneration;
+using Microsoft.Data.Entity.ValueGeneration.Internal;
 using Xunit;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions

@@ -167,7 +167,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
 
     public class DefaultExpressionOrValue
     {
-        public virtual string DefaultExpression { get; [param: NotNull] set; }
-        public virtual object DefaultValue { get; [param: NotNull] set; }
+        public virtual string DefaultExpression { get;[param: NotNull] set; }
+        public virtual object DefaultValue { get;[param: NotNull] set; }
     }
 }

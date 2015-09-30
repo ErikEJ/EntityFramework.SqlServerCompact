@@ -1,4 +1,4 @@
-namespace Microsoft.Data.Entity.ValueGeneration
+namespace Microsoft.Data.Entity.ValueGeneration.Internal
 {
     public class SqlCeValueGeneratorCache : ValueGeneratorCache
     {

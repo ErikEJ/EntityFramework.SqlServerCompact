@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Internal;
+using Microsoft.Data.Entity.MetaData;
+using Microsoft.Data.Entity.MetaData.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Operations;
 using Microsoft.Data.Entity.Storage;

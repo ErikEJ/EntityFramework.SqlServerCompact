@@ -7,9 +7,9 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
-    public class ConvertTranslator : IMethodCallTranslator
+    public class SqlCeConvertTranslator : IMethodCallTranslator
     {
         private static readonly Dictionary<string, DbType> _typeMapping = new Dictionary<string, DbType>
         {
@@ -37,7 +37,7 @@ namespace Microsoft.Data.Entity.Query.ExpressionTranslators
 
         private static readonly IEnumerable<MethodInfo> _supportedMethods;
 
-        static ConvertTranslator()
+        static SqlCeConvertTranslator()
         {
             _supportedMethods = _typeMapping.Keys
                 .SelectMany(t => typeof(Convert).GetTypeInfo().GetDeclaredMethods(t)

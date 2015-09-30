@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Data.Entity.Metadata
+﻿namespace Microsoft.Data.Entity.MetaData.Internal
 {
     public static class SqlCeAnnotationNames
     {

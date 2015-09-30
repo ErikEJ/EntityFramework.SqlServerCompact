@@ -126,47 +126,47 @@
     <Compile Include="..\Provider40\Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs">
       <Link>Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCeEntityTypeBuilderExtensions.cs">
+      <Link>Extensions\SqlCeEntityTypeBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCeIndexBuilderExtensions.cs">
+      <Link>Extensions\SqlCeIndexBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCeKeyBuilderExtensions.cs">
+      <Link>Extensions\SqlCeKeyBuilderExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeMetaDataExtensions.cs">
       <Link>Extensions\SqlCeMetaDataExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCePropertyBuilderExtensions.cs">
+      <Link>Extensions\SqlCePropertyBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCeReferenceCollectionBuilderExtensions.cs">
+      <Link>Extensions\SqlCeReferenceCollectionBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCeReferenceReferenceBuilderExtensions.cs">
+      <Link>Extensions\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Infrastructure\SqlCeDbContextOptionsBuilder.cs">
       <Link>Infrastructure\SqlCeDbContextOptionsBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Infrastructure\SqlCeModelSource.cs">
-      <Link>Infrastructure\SqlCeModelSource.cs</Link>
+    <Compile Include="..\Provider40\Internal\SqlCeModelSource.cs">
+      <Link>Internal\SqlCeModelSource.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Infrastructure\SqlCeOptionsExtensions.cs">
-      <Link>Infrastructure\SqlCeOptionsExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\MetaData\Builders\SqlCeEntityTypeBuilderExtensions.cs">
-      <Link>MetaData\Builders\SqlCeEntityTypeBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\MetaData\Builders\SqlCeIndexBuilderExtensions.cs">
-      <Link>MetaData\Builders\SqlCeIndexBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\MetaData\Builders\SqlCeKeyBuilderExtensions.cs">
-      <Link>MetaData\Builders\SqlCeKeyBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\MetaData\Builders\SqlCePropertyBuilderExtensions.cs">
-      <Link>MetaData\Builders\SqlCePropertyBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\MetaData\Builders\SqlCeReferenceCollectionBuilderExtensions.cs">
-      <Link>MetaData\Builders\SqlCeReferenceCollectionBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\MetaData\Builders\SqlCeReferenceReferenceBuilderExtensions.cs">
-      <Link>MetaData\Builders\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
+    <Compile Include="..\Provider40\Internal\SqlCeOptionsExtensions.cs">
+      <Link>Internal\SqlCeOptionsExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs">
       <Link>MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\MetaData\Internal\SqlCeAnnotationProvider.cs">
-      <Link>MetaData\Internal\SqlCeAnnotationProvider.cs</Link>
+    <Compile Include="..\Provider40\MetaData\Internal\SqlCeAnnotationNames.cs">
+      <Link>MetaData\Internal\SqlCeAnnotationNames.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs">
       <Link>MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\MetaData\SqlCeAnnotationNames.cs">
-      <Link>MetaData\SqlCeAnnotationNames.cs</Link>
+    <Compile Include="..\Provider40\MetaData\SqlCeAnnotationProvider.cs">
+      <Link>MetaData\SqlCeAnnotationProvider.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Migrations\Internal\SqlCeHistoryRepository.cs">
       <Link>Migrations\Internal\SqlCeHistoryRepository.cs</Link>
@@ -180,56 +180,56 @@
     <Compile Include="..\Provider40\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\ConvertTranslator.cs">
-      <Link>Query\ExpressionTranslators\ConvertTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeCompositeExpressionFragmentTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeCompositeExpressionFragmentTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\DateTimeNowTranslator.cs">
-      <Link>Query\ExpressionTranslators\DateTimeNowTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeCompositeMemberTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeCompositeMemberTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\MathAbsTranslator.cs">
-      <Link>Query\ExpressionTranslators\MathAbsTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeCompositeMethodCallTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeCompositeMethodCallTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\MathCeilingTranslator.cs">
-      <Link>Query\ExpressionTranslators\MathCeilingTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\MathFloorTranslator.cs">
-      <Link>Query\ExpressionTranslators\MathFloorTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeNowTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeNowTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\MathPowerTranslator.cs">
-      <Link>Query\ExpressionTranslators\MathPowerTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathAbsTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeMathAbsTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\MathRoundTranslator.cs">
-      <Link>Query\ExpressionTranslators\MathRoundTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathCeilingTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeMathCeilingTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\MathTruncateTranslator.cs">
-      <Link>Query\ExpressionTranslators\MathTruncateTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathFloorTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeMathFloorTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\NewGuidTranslator.cs">
-      <Link>Query\ExpressionTranslators\NewGuidTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathPowerTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeMathPowerTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\SqlCeCompositeExpressionFragmentTranslator.cs">
-      <Link>Query\ExpressionTranslators\SqlCeCompositeExpressionFragmentTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathRoundTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeMathRoundTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\SqlCeCompositeMemberTranslator.cs">
-      <Link>Query\ExpressionTranslators\SqlCeCompositeMemberTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathTruncateTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeMathTruncateTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\SqlCeCompositeMethodCallTranslator.cs">
-      <Link>Query\ExpressionTranslators\SqlCeCompositeMethodCallTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\StringLengthTranslator.cs">
-      <Link>Query\ExpressionTranslators\StringLengthTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringLengthTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringLengthTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\StringReplaceTranslator.cs">
-      <Link>Query\ExpressionTranslators\StringReplaceTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringReplaceTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringReplaceTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\StringSubstringTranslator.cs">
-      <Link>Query\ExpressionTranslators\StringSubstringTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringSubstringTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringSubstringTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\StringToLowerTranslator.cs">
-      <Link>Query\ExpressionTranslators\StringToLowerTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringToLowerTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringToLowerTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\StringToUpperTranslator.cs">
-      <Link>Query\ExpressionTranslators\StringToUpperTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringToUpperTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringToUpperTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\Internal\SqlCeQueryCompilationContext.cs">
       <Link>Query\Internal\SqlCeQueryCompilationContext.cs</Link>
@@ -294,8 +294,8 @@
     <Compile Include="..\Provider40\Utilities\SqlCeHelper.cs">
       <Link>Utilities\SqlCeHelper.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\ValueGeneration\SqlCeValueGeneratorCache.cs">
-      <Link>ValueGeneration\SqlCeValueGeneratorCache.cs</Link>
+    <Compile Include="..\Provider40\ValueGeneration\Internal\SqlCeValueGeneratorCache.cs">
+      <Link>ValueGeneration\Internal\SqlCeValueGeneratorCache.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

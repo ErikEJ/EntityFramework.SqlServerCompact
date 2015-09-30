@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators
+namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
-    public class DateTimeNowTranslator : IMemberTranslator
+    public class SqlCeDateTimeNowTranslator : IMemberTranslator
     {
         public virtual Expression Translate([NotNull] MemberExpression memberExpression)
         {

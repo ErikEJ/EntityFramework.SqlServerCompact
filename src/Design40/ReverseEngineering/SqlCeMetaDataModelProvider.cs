@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.MetaData.Internal;
 using Microsoft.Data.Entity.Relational.Design.ReverseEngineering;
+using Microsoft.Data.Entity.Relational.Design.ReverseEngineering.Internal;
 using Microsoft.Data.Entity.Relational.Design.Utilities;
 using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Model;
 using Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.Utilities;
@@ -192,11 +193,10 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 
             foreach (var table in _tables.Values)
             {
-                //TODO ErikEJ Await Rev Eng fix
-                //if (!_tableSelectionSet.Allows(table.SchemaName, table.TableName))
-                //{
-                //    continue;
-                //}
+                if (!_tableSelectionSet.Allows(TableSelection.Any, table.TableName))
+                {
+                    continue;
+                }
                 var entityType = relationalModel.AddEntityType(table.Id);
                 _tableIdToEntityType.Add(table.Id, entityType);
                 entityType.Relational().TableName = _tables[table.Id].TableName;
@@ -210,12 +210,11 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
 
             foreach (var tc in _tableColumns.Values)
             {
-                //TODO ErikEJ Await Rev Eng fix
-                //var table = _tables[tc.TableId];
-                //if (!_tableSelectionSet.Allows(table.SchemaName, table.TableName))
-                //{
-                //    continue;
-                //}
+                var table = _tables[tc.TableId];
+                if (!_tableSelectionSet.Allows(TableSelection.Any, table.TableName))
+                {
+                    continue;
+                }
                 EntityType entityType;
                 if (!_tableIdToEntityType.TryGetValue(tc.TableId, out entityType))
                 {
@@ -435,13 +434,12 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering
                 return null;
             }
 
-            //TODO ErikEJ Await Rev Eng fix
-            //var toTable = _tables[_tableColumns[foreignKeyColumnMapping.ToColumnId].TableId];
-            //if (!_tableSelectionSet.Allows(toTable.SchemaName, toTable.TableName))
-            //{
-            //    // target property belongs to a table which was excluded by the TableSelectionSet  
-            //    return null;
-            //}
+            var toTable = _tables[_tableColumns[foreignKeyColumnMapping.ToColumnId].TableId];
+            if (!_tableSelectionSet.Allows(TableSelection.Any, toTable.TableName))
+            {
+                // target property belongs to a table which was excluded by the TableSelectionSet  
+                return null;
+            }
 
             Property toColumnRelationalProperty;
             if (!_columnIdToProperty.TryGetValue(

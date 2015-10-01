@@ -30,7 +30,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                     new TableSelection()
                     {
                         Table = "FilteredOut",
-                        Exclude = true
+                        Exclude = true,
+                        Schema = TableSelection.Any                        
                     }
                 });
 
@@ -90,8 +91,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 ProjectPath = TestProjectDir,
                 ProjectRootNamespace = TestNamespace,
                 OutputPath = TestSubDir,
-                //TODO ErikEJ Await fix for issue https://github.com/aspnet/EntityFramework/issues/3272
-                //TableSelectionSet = Filter                
+                TableSelectionSet = Filter                
             };
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
@@ -108,8 +108,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 Files = _expectedFiles
             };
 
-            //TODO ErikEJ Await Rev Eng fix
-            //AssertEqualFileContents(expectedFileSet, actualFileSet);
+            AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }
 
@@ -123,8 +122,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 ProjectRootNamespace = TestNamespace,
                 OutputPath = null, // not used for this test
                 UseFluentApiOnly = true,
-                //TODO ErikEJ Await fix for issue https://github.com/aspnet/EntityFramework/issues/3272
-                //TableSelectionSet = Filter
+                TableSelectionSet = Filter
             };
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
@@ -149,8 +147,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             //    i++;
             //}
 
-            //TODO ErikEJ Await Rev Eng fix
-            //AssertEqualFileContents(expectedFileSet, actualFileSet);
+            AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }
     }

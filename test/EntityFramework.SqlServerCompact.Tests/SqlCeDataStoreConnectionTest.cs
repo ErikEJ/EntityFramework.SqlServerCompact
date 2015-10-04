@@ -12,7 +12,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests
         [Fact]
         public void Creates_SQL_ServerCe_connection_string()
         {
-            using (var connection = new SqlCeDatabaseConnection(CreateOptions(), new LoggerFactory()))
+            using (var connection = new SqlCeDatabaseConnection(CreateOptions(), new Logger<SqlCeDatabaseConnection>(new LoggerFactory())))
             {
                 Assert.IsType<SqlCeConnection>(connection.DbConnection);
             }

@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Microsoft.Framework.Logging;
 
 namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
     public class SqlCeCompositeMethodCallTranslator : RelationalCompositeMethodCallTranslator
     {
-        public SqlCeCompositeMethodCallTranslator([NotNull] ILoggerFactory loggerFactory)
-            : base(loggerFactory)
+        private static readonly IMethodCallTranslator[] _methodCallTranslators =
         {
-            var sqlCeTranslators = new List<IMethodCallTranslator>
-            {
                 new SqlCeNewGuidTranslator(),
                 new SqlCeStringSubstringTranslator(),
                 new SqlCeMathAbsTranslator(),
@@ -23,9 +19,13 @@ namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
                 new SqlCeStringToLowerTranslator(),
                 new SqlCeStringToUpperTranslator(),
                 new SqlCeConvertTranslator(),
-            };
+        };
 
-            AddTranslators(sqlCeTranslators);
+        public SqlCeCompositeMethodCallTranslator([NotNull] ILogger logger)
+            : base(logger)
+        {
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
+            AddTranslators(_methodCallTranslators);
         }
     }
 }

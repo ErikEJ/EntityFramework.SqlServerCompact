@@ -8,8 +8,10 @@ namespace Microsoft.Data.Entity.Storage.Internal
 {
     public class SqlCeDatabaseConnection : RelationalConnection, ISqlCeDatabaseConnection
     { 
-        public SqlCeDatabaseConnection([NotNull] IDbContextOptions options, [NotNull] ILoggerFactory loggerFactory)
-            : base(options, loggerFactory)
+        public SqlCeDatabaseConnection([NotNull] IDbContextOptions options,
+            // ReSharper disable once SuggestBaseTypeForParameter
+            [NotNull] ILogger<SqlCeDatabaseConnection> logger)
+            : base(options, logger)
         {
         }
 

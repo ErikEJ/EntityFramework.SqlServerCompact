@@ -21,7 +21,7 @@ namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
                 new SqlCeConvertTranslator(),
         };
 
-        public SqlCeCompositeMethodCallTranslator([NotNull] ILogger logger)
+        public SqlCeCompositeMethodCallTranslator([NotNull] ILogger<SqlCeCompositeMethodCallTranslator> logger)
             : base(logger)
         {
             // ReSharper disable once DoNotCallOverridableMethodsInConstructor

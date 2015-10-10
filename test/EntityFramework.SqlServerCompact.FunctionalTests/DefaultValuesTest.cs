@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class DefaultValuesTest : IDisposable
     {

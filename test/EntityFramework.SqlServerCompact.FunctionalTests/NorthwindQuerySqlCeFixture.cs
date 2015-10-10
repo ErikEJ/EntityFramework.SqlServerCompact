@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Threading;
-using ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.TestModels;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
+using Microsoft.Data.Entity.FunctionalTests.TestModels;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class NorthwindQuerySqlCeFixture : NorthwindQueryRelationalFixture, IDisposable
     {
@@ -38,10 +36,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             var optionsBuilder = new DbContextOptionsBuilder();
 
-            var sqlServerDbContextOptionsBuilder
+            var sqlCeDbContextOptionsBuilder
                 = optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
 
-            ConfigureOptions(sqlServerDbContextOptionsBuilder);
+            sqlCeDbContextOptionsBuilder.LogSqlParameterValues();
+
+            ConfigureOptions(sqlCeDbContextOptionsBuilder);
 
             return optionsBuilder.Options;
         }

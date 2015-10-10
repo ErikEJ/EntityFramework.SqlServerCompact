@@ -1,10 +1,8 @@
 ﻿using System;
-using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using Microsoft.Data.Entity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class DataAnnotationSqlCeFixture : DataAnnotationFixtureBase<SqlCeTestStore>
     {
@@ -49,7 +47,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override DataAnnotationContext CreateContext(SqlCeTestStore testStore)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection);
+            optionsBuilder.UseSqlCe(testStore.Connection).LogSqlParameterValues();
 
             var context = new DataAnnotationContext(_serviceProvider, optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);

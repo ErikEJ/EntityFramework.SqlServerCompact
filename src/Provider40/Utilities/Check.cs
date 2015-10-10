@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Microsoft.Data.Entity.Internal;
 
 // ReSharper disable once CheckNamespace
 
@@ -39,7 +40,7 @@ namespace Microsoft.Data.Entity.Utilities
                 NotEmpty(parameterName, nameof(parameterName));
                 NotEmpty(propertyName, nameof(propertyName));
 
-                throw new ArgumentException(Internal.Strings.ArgumentPropertyNull(propertyName, parameterName));
+                throw new ArgumentException(CoreStrings.ArgumentPropertyNull(propertyName, parameterName));
             }
 
             return value;
@@ -54,7 +55,7 @@ namespace Microsoft.Data.Entity.Utilities
             {
                 NotEmpty(parameterName, nameof(parameterName));
 
-                throw new ArgumentException(Internal.Strings.CollectionArgumentIsEmpty(parameterName));
+                throw new ArgumentException(CoreStrings.CollectionArgumentIsEmpty(parameterName));
             }
 
             return value;
@@ -70,7 +71,7 @@ namespace Microsoft.Data.Entity.Utilities
             }
             else if (value.Trim().Length == 0)
             {
-                e = new ArgumentException(Internal.Strings.ArgumentIsEmpty(parameterName));
+                e = new ArgumentException(CoreStrings.ArgumentIsEmpty(parameterName));
             }
 
             if (e != null)
@@ -90,7 +91,7 @@ namespace Microsoft.Data.Entity.Utilities
             {
                 NotEmpty(parameterName, nameof(parameterName));
 
-                throw new ArgumentException(Internal.Strings.ArgumentIsEmpty(parameterName));
+                throw new ArgumentException(CoreStrings.ArgumentIsEmpty(parameterName));
             }
 
             return value;
@@ -118,7 +119,7 @@ namespace Microsoft.Data.Entity.Utilities
             {
                 NotEmpty(parameterName, nameof(parameterName));
 
-                throw new ArgumentException(Internal.Strings.InvalidEnumValue(parameterName, typeof(T)));
+                throw new ArgumentException(CoreStrings.InvalidEnumValue(parameterName, typeof(T)));
             }
 
             return value;
@@ -130,7 +131,7 @@ namespace Microsoft.Data.Entity.Utilities
             {
                 NotEmpty(parameterName, nameof(parameterName));
 
-                throw new ArgumentException(Internal.Strings.InvalidEntityType(parameterName, value));
+                throw new ArgumentException(CoreStrings.InvalidEntityType(parameterName, value));
             }
 
             return value;

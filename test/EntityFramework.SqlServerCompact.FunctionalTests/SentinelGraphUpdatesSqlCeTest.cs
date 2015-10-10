@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.Entity;
-
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+﻿namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class SentinelGraphUpdatesSqlCeTest : GraphUpdatesSqlCeTestBase<SentinelGraphUpdatesSqlCeTest.SentinelGraphUpdatesSqlCeFixture>
     {

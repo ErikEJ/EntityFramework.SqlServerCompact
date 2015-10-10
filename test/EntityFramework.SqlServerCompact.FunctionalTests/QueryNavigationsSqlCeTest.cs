@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.Data.Entity.FunctionalTests;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class QueryNavigationsSqlCeTest : QueryNavigationsTestBase<NorthwindQuerySqlCeFixture>
     {

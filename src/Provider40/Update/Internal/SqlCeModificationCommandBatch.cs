@@ -2,35 +2,46 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
-using System.Linq;
+using System.Diagnostics.Tracing;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.ChangeTracking.Internal;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
     {
         private readonly IRelationalValueBufferFactoryFactory _valueBufferFactoryFactory;
+        private readonly ISensitiveDataLogger _logger;
 
         public SqlCeModificationCommandBatch(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
+            [NotNull] ISqlGenerator sqlGenerator,
+            [NotNull] ISqlCeUpdateSqlGenerator updateSqlGenerator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
-            [NotNull] IUpdateSqlGenerator sqlGenerator)
-            : base(commandBuilderFactory, sqlGenerator, valueBufferFactoryFactory)
+            [NotNull] ISensitiveDataLogger logger,
+            [NotNull] TelemetrySource telemetrySource)
+            : base(
+                commandBuilderFactory,
+                sqlGenerator,
+                updateSqlGenerator,
+                valueBufferFactoryFactory,
+                logger,
+                telemetrySource)
         {
             _valueBufferFactoryFactory = valueBufferFactoryFactory;
+            _logger = logger;
         }
 
-        public override void Execute(IRelationalConnection connection, ILogger logger)
+        public override void Execute(IRelationalConnection connection)
         {
             Check.NotNull(connection, nameof(connection));
-            Check.NotNull(logger, nameof(logger));
 
             var initialCommandText = GetCommandText();
             Tuple<string, string> commandText = SplitCommandText(initialCommandText);
@@ -40,9 +51,9 @@ namespace Microsoft.Data.Entity.Update.Internal
             var commandIndex = 0;
             using (var storeCommand = CreateStoreCommand(commandText.Item1, connection))
             {
-                if (logger.IsEnabled(LogLevel.Verbose))
+                if (_logger.IsEnabled(LogLevel.Verbose))
                 {
-                    logger.LogCommand(storeCommand);
+                    _logger.LogCommand(storeCommand);
                 }
 
                 try
@@ -87,14 +98,13 @@ namespace Microsoft.Data.Entity.Update.Internal
             }
         }
 
-        public override Task ExecuteAsync(IRelationalConnection connection, ILogger logger, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken = default(CancellationToken))
         {
             Check.NotNull(connection, nameof(connection));
-            Check.NotNull(logger, nameof(logger));
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Task.Run(() => Execute(connection, logger), cancellationToken);
+            return Task.Run(() => Execute(connection), cancellationToken);
         }
 
         private Tuple<string, string> SplitCommandText(string commandText)
@@ -126,16 +136,6 @@ namespace Microsoft.Data.Entity.Update.Internal
 
             return commandIndex;
         }
-
-        private IRelationalValueBufferFactory CreateValueBufferFactory(IReadOnlyList<ColumnModification> columnModifications)
-             => _valueBufferFactoryFactory 
-                 .Create( 
-                     columnModifications
-                         .Where(c => c.IsRead)
-                         .Select(c => c.Property.ClrType)
-                         .ToArray(), 
-                     indexMap: null); 
-
 
         private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader)
         {
@@ -182,6 +182,5 @@ namespace Microsoft.Data.Entity.Update.Internal
                  RelationalStrings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected), 
                  AggregateEntries(commandIndex, expectedRowsAffected)); 
          }
-
-}
+    }
 }

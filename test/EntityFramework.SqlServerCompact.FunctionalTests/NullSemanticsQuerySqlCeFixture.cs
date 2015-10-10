@@ -1,12 +1,10 @@
 ﻿using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.NullSemantics;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.NullSemanticsModel;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class NullSemanticsQuerySqlCeFixture : NullSemanticsQueryRelationalFixture<SqlCeTestStore>
     {
@@ -52,6 +50,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         {
             var optionsBuilder = new DbContextOptionsBuilder();
             var sqlCeOptions = optionsBuilder.UseSqlCe(testStore.Connection);
+
+            sqlCeOptions.LogSqlParameterValues();
 
             if (useRelationalNulls)
             {

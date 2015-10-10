@@ -70,6 +70,20 @@ namespace Microsoft.Data.Entity.Migrations
             }
         }
 
+        protected override void ForeignKeyAction(ReferentialAction referentialAction, RelationalCommandListBuilder builder)
+        {
+            Check.NotNull(builder, nameof(builder));
+
+            if (referentialAction == ReferentialAction.Restrict)
+            {
+                builder.Append("NO ACTION");
+            }
+            else
+            {
+                base.ForeignKeyAction(referentialAction, builder);
+            }
+        }
+
         protected override void Generate(DropIndexOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
 using Xunit;
 using Xunit.Abstractions;
@@ -9,7 +8,7 @@ using Xunit.Abstractions;
 using System.Threading;
 #endif
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class QuerySqlCeTest : QueryTestBase<NorthwindQuerySqlCeFixture>
     {

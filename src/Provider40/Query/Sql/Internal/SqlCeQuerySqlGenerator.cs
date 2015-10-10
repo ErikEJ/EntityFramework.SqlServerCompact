@@ -19,17 +19,28 @@ namespace Microsoft.Data.Entity.Query.Sql.Internal
         {
         }
 
+        public override Expression VisitLateralJoin(LateralJoinExpression lateralJoinExpression)
+        {
+            Check.NotNull(lateralJoinExpression, nameof(lateralJoinExpression));
+
+            Sql.Append("CROSS APPLY ");
+
+            Visit(lateralJoinExpression.TableExpression);
+
+            return lateralJoinExpression;
+        }
+
         public override Expression VisitCount(CountExpression countExpression)
         {
             Check.NotNull(countExpression, nameof(countExpression));
 
-            if (countExpression.Type == typeof(long))
+            if (countExpression.Type != typeof (long))
             {
-                Sql.Append("CAST(COUNT(*) AS bigint)");
-
-                return countExpression;
+                return base.VisitCount(countExpression);
             }
-            return base.VisitCount(countExpression);
+            Sql.Append("CAST(COUNT(*) AS bigint)");
+
+            return countExpression;
         }
 
         protected override void GenerateLimitOffset(SelectExpression selectExpression)

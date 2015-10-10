@@ -2,7 +2,7 @@
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Storage.Internal
 {

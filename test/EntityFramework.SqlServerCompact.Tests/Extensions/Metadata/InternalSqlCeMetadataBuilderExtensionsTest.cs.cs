@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Conventions;
 using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.MetaData.Internal;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions.Metadata
+namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
 {
     public class InternalSqlCeMetadataBuilderExtensionsTest
     {
@@ -92,7 +91,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions.Metadata
             var modelBuilder = CreateBuilder();
             var entityTypeBuilder = modelBuilder.Entity(typeof(Splot), ConfigurationSource.Convention);
             entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention);
-            var indexBuilder = entityTypeBuilder.Index(new[] { "Id" }, ConfigurationSource.Convention);
+            var indexBuilder = entityTypeBuilder.HasIndex(new[] { "Id" }, ConfigurationSource.Convention);
 
             indexBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew");
             Assert.Equal("Splew", indexBuilder.Metadata.SqlCe().Name);
@@ -113,7 +112,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions.Metadata
             var modelBuilder = CreateBuilder();
             var entityTypeBuilder = modelBuilder.Entity(typeof(Splot), ConfigurationSource.Convention);
             entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention);
-            var relationshipBuilder = entityTypeBuilder.ForeignKey("Splot", new[] { "Id" }, ConfigurationSource.Convention);
+            var relationshipBuilder = entityTypeBuilder.HasForeignKey("Splot", new[] { "Id" }, ConfigurationSource.Convention);
 
             Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew"));
             Assert.Equal("Splew", relationshipBuilder.Metadata.SqlCe().Name);

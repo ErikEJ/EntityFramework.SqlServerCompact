@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class NavigationTest
     {
@@ -24,8 +22,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             {
                 context.ConfigAction = modelBuilder =>
                 {
-                    modelBuilder.Entity<Person>().HasMany(p => p.Siblings).WithOne(p => p.SiblingReverse).Required(false);
-                    modelBuilder.Entity<Person>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).Required(false);
+                    modelBuilder.Entity<Person>().HasMany(p => p.Siblings).WithOne(p => p.SiblingReverse).IsRequired(false);
+                    modelBuilder.Entity<Person>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).IsRequired(false);
                     return 0;
                 };
 
@@ -51,8 +49,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             {
                 context.ConfigAction = modelBuilder =>
                 {
-                    modelBuilder.Entity<Person>().HasOne(p => p.SiblingReverse).WithMany(p => p.Siblings).Required(false);
-                    modelBuilder.Entity<Person>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).Required(false);
+                    modelBuilder.Entity<Person>().HasOne(p => p.SiblingReverse).WithMany(p => p.Siblings).IsRequired(false);
+                    modelBuilder.Entity<Person>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).IsRequired(false);
                     return 0;
                 };
 

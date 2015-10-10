@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class BuiltInDataTypesSqlCeTest : BuiltInDataTypesTestBase<BuiltInDataTypesSqlCeFixture>
     {

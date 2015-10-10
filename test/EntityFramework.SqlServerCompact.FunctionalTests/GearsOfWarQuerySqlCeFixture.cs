@@ -1,11 +1,9 @@
 ﻿using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.GearsOfWarModel;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class GearsOfWarQuerySqlCeFixture : GearsOfWarQueryRelationalFixture<SqlCeTestStore>
     {
@@ -50,7 +48,9 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public override GearsOfWarContext CreateContext(SqlCeTestStore testStore)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection);
+            optionsBuilder
+                .UseSqlCe(testStore.Connection)
+                .LogSqlParameterValues();
 
             var context = new GearsOfWarContext(_serviceProvider, optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);

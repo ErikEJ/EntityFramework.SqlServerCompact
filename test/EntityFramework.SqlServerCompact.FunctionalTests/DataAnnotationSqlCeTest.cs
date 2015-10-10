@@ -1,7 +1,6 @@
-﻿using Microsoft.Data.Entity.FunctionalTests;
-using Xunit;
+﻿using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class DataAnnotationSqlCeTest : DataAnnotationTestBase<SqlCeTestStore, DataAnnotationSqlCeFixture>
     {
@@ -80,7 +79,7 @@ VALUES (@p0, @p1, @p2);",
 INSERT INTO [BookDetail] ([BookId])
 VALUES (@p0);
 
-@p0:
+@p0: 
 
 INSERT INTO [BookDetail] ([BookId])
 VALUES (@p0);",

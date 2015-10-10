@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Data.Entity;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class BasicEndToEndScenario
     {
@@ -41,7 +40,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
                 builder.Entity<Blog>()
                     .HasMany(b => b.Posts)
                     .WithOne(p => p.Blog)
-                    .ForeignKey(p => p.BlogId);
+                    .HasForeignKey(p => p.BlogId);
             }
         }
 

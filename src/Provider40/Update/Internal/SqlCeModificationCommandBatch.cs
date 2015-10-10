@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.ChangeTracking.Internal;
+using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Framework.Logging;
@@ -14,22 +16,20 @@ namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
     {
+        private readonly IRelationalValueBufferFactoryFactory _valueBufferFactoryFactory;
+
         public SqlCeModificationCommandBatch(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
+            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
             [NotNull] IUpdateSqlGenerator sqlGenerator)
-            : base(commandBuilderFactory, sqlGenerator)
+            : base(commandBuilderFactory, sqlGenerator, valueBufferFactoryFactory)
         {
+            _valueBufferFactoryFactory = valueBufferFactoryFactory;
         }
 
-        public override void Execute(
-            IRelationalTransaction transaction,
-            IRelationalTypeMapper typeMapper,
-            DbContext context,
-            ILogger logger)
+        public override void Execute(IRelationalConnection connection, ILogger logger)
         {
-            Check.NotNull(transaction, nameof(transaction));
-            Check.NotNull(typeMapper, nameof(typeMapper));
-            Check.NotNull(context, nameof(context));
+            Check.NotNull(connection, nameof(connection));
             Check.NotNull(logger, nameof(logger));
 
             var initialCommandText = GetCommandText();
@@ -38,7 +38,7 @@ namespace Microsoft.Data.Entity.Update.Internal
             Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
 
             var commandIndex = 0;
-            using (var storeCommand = CreateStoreCommand(commandText.Item1, transaction.Connection, typeMapper, transaction.Connection?.CommandTimeout))
+            using (var storeCommand = CreateStoreCommand(commandText.Item1, connection))
             {
                 if (logger.IsEnabled(LogLevel.Verbose))
                 {
@@ -55,12 +55,12 @@ namespace Microsoft.Data.Entity.Update.Internal
                         {
                             if (commandText.Item2.Length > 0)
                             {
-                                returningCommand = CreateStoreCommand(commandText.Item2, transaction.Connection, typeMapper, transaction.Connection?.CommandTimeout);
+                                returningCommand = CreateStoreCommand(commandText.Item2,  connection);
                                 returningReader = returningCommand.ExecuteReader();
                             }
                             commandIndex = ModificationCommands[commandIndex].RequiresResultPropagation
-                            ? ConsumeResultSetWithPropagation(commandIndex, reader, returningReader, context)
-                            : ConsumeResultSetWithoutPropagation(commandIndex, reader, context);
+                            ? ConsumeResultSetWithPropagation(commandIndex, reader, returningReader)
+                            : ConsumeResultSetWithoutPropagation(commandIndex, reader);
 
                             Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
                         }
@@ -87,21 +87,14 @@ namespace Microsoft.Data.Entity.Update.Internal
             }
         }
 
-        public override Task ExecuteAsync(
-            IRelationalTransaction transaction, 
-            IRelationalTypeMapper typeMapper, 
-            DbContext context, 
-            ILogger logger, 
-            CancellationToken cancellationToken = default(CancellationToken))
+        public override Task ExecuteAsync(IRelationalConnection connection, ILogger logger, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Check.NotNull(transaction, nameof(transaction));
-            Check.NotNull(typeMapper, nameof(typeMapper));
-            Check.NotNull(context, nameof(context));
+            Check.NotNull(connection, nameof(connection));
             Check.NotNull(logger, nameof(logger));
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Task.Run(() => Execute(transaction, typeMapper, context, logger), cancellationToken);
+            return Task.Run(() => Execute(connection, logger), cancellationToken);
         }
 
         private Tuple<string, string> SplitCommandText(string commandText)
@@ -119,8 +112,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 commandText,
                 string.Empty);
         }
-
-        protected override int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader, DbContext context)
+        protected override int ConsumeResultSetWithoutPropagation(int commandIndex, [NotNull] DbDataReader reader)
         {
             const int expectedRowsAffected = 1;
             var rowsAffected = reader.RecordsAffected;
@@ -129,15 +121,23 @@ namespace Microsoft.Data.Entity.Update.Internal
 
             if (rowsAffected != expectedRowsAffected)
             {
-                throw new DbUpdateConcurrencyException(
-                    Relational.Internal.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-                    AggregateEntries(commandIndex, expectedRowsAffected));
+                ThrowAggregateUpdateConcurrencyException(commandIndex, expectedRowsAffected, rowsAffected);
             }
 
             return commandIndex;
         }
 
-        private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader, DbContext context)
+        private IRelationalValueBufferFactory CreateValueBufferFactory(IReadOnlyList<ColumnModification> columnModifications)
+             => _valueBufferFactoryFactory 
+                 .Create( 
+                     columnModifications
+                         .Where(c => c.IsRead)
+                         .Select(c => c.Property.ClrType)
+                         .ToArray(), 
+                     indexMap: null); 
+
+
+        private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader)
         {
             const int expectedRowsAffected = 1;
             var tableModification = ModificationCommands[commandIndex];
@@ -151,14 +151,14 @@ namespace Microsoft.Data.Entity.Update.Internal
             var rowsAffected = reader.RecordsAffected;
             if (rowsAffected != expectedRowsAffected)
             {
-                throw new DbUpdateConcurrencyException(
-                    Relational.Internal.Strings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected),
-                    AggregateEntries(commandIndex, expectedRowsAffected));
+                ThrowAggregateUpdateConcurrencyException(commandIndex, expectedRowsAffected, rowsAffected);
             }
 
             returningReader.Read();
 
-            tableModification.PropagateResults(tableModification.ValueBufferFactory.Create(returningReader));
+            var valueBufferFactory = CreateValueBufferFactory(tableModification.ColumnModifications);
+
+            tableModification.PropagateResults(valueBufferFactory.Create(returningReader));
 
             return commandIndex;
         }
@@ -172,5 +172,16 @@ namespace Microsoft.Data.Entity.Update.Internal
             }
             return entries;
         }
-    }
+
+        protected override void ThrowAggregateUpdateConcurrencyException( 
+             int commandIndex,
+             int expectedRowsAffected,
+             int rowsAffected)
+         { 
+             throw new DbUpdateConcurrencyException( 
+                 RelationalStrings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected), 
+                 AggregateEntries(commandIndex, expectedRowsAffected)); 
+         }
+
+}
 }

@@ -2,7 +2,7 @@
 using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
 using Microsoft.Data.Entity.Infrastructure;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests.TestModels
+namespace Microsoft.Data.Entity.FunctionalTests.TestModels
 {
     public class SqlCeNorthwindContext : NorthwindContext
     {

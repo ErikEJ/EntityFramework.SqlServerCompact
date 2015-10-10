@@ -1,7 +1,6 @@
-﻿using Microsoft.Data.Entity.FunctionalTests;
-using Xunit;
+﻿using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class InheritanceRelationshipsQuerySqlCeTest : InheritanceRelationshipsQueryTestBase<SqlCeTestStore, InheritanceRelationshipsQuerySqlCeFixture>
     {

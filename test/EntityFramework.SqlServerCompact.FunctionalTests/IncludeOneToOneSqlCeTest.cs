@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class IncludeOneToOneSqlCeTest : IncludeOneToOneTestBase, IClassFixture<OneToOneQuerySqlCeFixture>
     {

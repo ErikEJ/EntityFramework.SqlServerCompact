@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.Data.Entity.FunctionalTests;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class TransactionSqlCeTest : TransactionTestBase<SqlCeTestStore, TransactionSqlCeFixture>
     {

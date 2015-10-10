@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Data.Entity.Metadata.Conventions;
-using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Metadata.Builders
+namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 {
     public class SqlCeBuilderExtensionsTest
     {
@@ -190,7 +189,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Metadata.Builders
 
             var index = modelBuilder
                 .Entity<Customer>()
-                .Index(e => e.Id)
+                .HasIndex(e => e.Id)
                 .SqlCeIndexName("Dexter")
                 .Metadata;
 

@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlServerCe;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Data.Entity.Tests
 {

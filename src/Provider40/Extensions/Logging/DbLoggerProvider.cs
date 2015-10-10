@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.Data.Entity.Extensions.Logging;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Data.Entity

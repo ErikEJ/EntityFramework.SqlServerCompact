@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {

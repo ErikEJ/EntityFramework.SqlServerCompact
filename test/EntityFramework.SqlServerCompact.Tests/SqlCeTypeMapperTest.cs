@@ -6,7 +6,7 @@ using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Storage.Internal;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Tests
+namespace Microsoft.Data.Entity.Tests
 {
     public class SqlCeTypeMapperTest
     {

@@ -6,10 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class SqlCeTestStore : RelationalTestStore
     {

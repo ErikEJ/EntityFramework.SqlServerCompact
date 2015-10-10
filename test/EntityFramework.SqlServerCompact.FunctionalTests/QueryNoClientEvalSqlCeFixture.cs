@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Entity.Infrastructure;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class QueryNoClientEvalSqlCeFixture : NorthwindQuerySqlCeFixture
     {

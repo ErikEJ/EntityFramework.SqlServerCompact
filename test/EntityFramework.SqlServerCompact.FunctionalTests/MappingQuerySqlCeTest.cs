@@ -1,8 +1,6 @@
-﻿using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
-using Xunit;
+﻿using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class MappingQuerySqlCeTest : MappingQueryTestBase, IClassFixture<MappingQuerySqlCeFixture>
     {

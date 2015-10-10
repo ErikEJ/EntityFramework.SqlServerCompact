@@ -1,12 +1,10 @@
 ﻿using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.Inheritance;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class InheritanceSqlCeFixture : InheritanceRelationalFixture
     {
@@ -27,7 +25,10 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
             var testStore = SqlCeTestStore.CreateScratch(createDatabase: true);
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection);
+            optionsBuilder
+                .UseSqlCe(testStore.Connection)
+                .LogSqlParameterValues();
+
             _options = optionsBuilder.Options;
 
             // TODO: Do this via migrations

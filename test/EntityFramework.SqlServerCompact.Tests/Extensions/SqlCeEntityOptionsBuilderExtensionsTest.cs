@@ -1,10 +1,9 @@
 ﻿using System.Data.SqlServerCe;
 using System.Linq;
-using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Internal;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Extensions
+namespace Microsoft.Data.Entity.Tests.Extensions
 {
     public class SqlCeDbContextOptionsBuilderExtensionsTest
     {

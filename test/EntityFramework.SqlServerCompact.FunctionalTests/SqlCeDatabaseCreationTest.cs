@@ -3,13 +3,12 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Storage;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class SqlCeDatabaseCreationTest
     {

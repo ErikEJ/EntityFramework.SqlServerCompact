@@ -10,19 +10,23 @@ namespace Microsoft.Data.Entity.Query.Sql.Internal
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
         private readonly ISqlGenerator _sqlGenerator;
         private readonly IParameterNameGeneratorFactory _parameterNameGeneratorFactory;
-
+        private readonly ISqlCommandBuilder _sqlCommandBuilder;
+            
         public SqlCeQuerySqlGeneratorFactory(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
             [NotNull] ISqlGenerator sqlGenerator,
-            [NotNull] IParameterNameGeneratorFactory parameterNameGeneratorFactory)
+            [NotNull] IParameterNameGeneratorFactory parameterNameGeneratorFactory,
+            [NotNull] ISqlCommandBuilder sqlCommandBuilder)
         {
             Check.NotNull(commandBuilderFactory, nameof(commandBuilderFactory));
             Check.NotNull(sqlGenerator, nameof(sqlGenerator));
             Check.NotNull(parameterNameGeneratorFactory, nameof(parameterNameGeneratorFactory));
+            Check.NotNull(sqlCommandBuilder, nameof(sqlCommandBuilder));
 
             _commandBuilderFactory = commandBuilderFactory;
             _sqlGenerator = sqlGenerator;
             _parameterNameGeneratorFactory = parameterNameGeneratorFactory;
+            _sqlCommandBuilder = sqlCommandBuilder;
         }
 
         public virtual ISqlQueryGenerator CreateGenerator(SelectExpression selectExpression)
@@ -37,18 +41,9 @@ namespace Microsoft.Data.Entity.Query.Sql.Internal
             string sql,
             object[] parameters)
             => new RawSqlQueryGenerator(
-                _commandBuilderFactory,
-                _parameterNameGeneratorFactory,
+                _sqlCommandBuilder,
                 Check.NotNull(selectExpression, nameof(selectExpression)),
                 Check.NotNull(sql, nameof(sql)),
                 Check.NotNull(parameters, nameof(parameters)));
-
-        public SqlCeQuerySqlGeneratorFactory(
-            [NotNull] IParameterNameGeneratorFactory parameterNameGeneratorFactory)
-        {
-            Check.NotNull(parameterNameGeneratorFactory, nameof(parameterNameGeneratorFactory));
-
-            _parameterNameGeneratorFactory = parameterNameGeneratorFactory;
-        }
     }
 }

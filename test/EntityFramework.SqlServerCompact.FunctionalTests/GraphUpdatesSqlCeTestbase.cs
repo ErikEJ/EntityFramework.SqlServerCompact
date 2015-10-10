@@ -1,9 +1,7 @@
 ﻿using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.FunctionalTests;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public abstract class GraphUpdatesSqlCeTestBase<TFixture> : GraphUpdatesTestBase<SqlCeTestStore, TFixture>
         where TFixture : GraphUpdatesSqlCeTestBase<TFixture>.GraphUpdatesSqlCeFixtureBase, new()

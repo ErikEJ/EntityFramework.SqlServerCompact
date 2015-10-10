@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Data.SqlServerCe;
-using Microsoft.Data.Entity.FunctionalTests;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Data.Entity.SqlCe.FunctionalTests
+namespace Microsoft.Data.Entity.FunctionalTests
 {
     public class MigrationsSqlCeFixture : MigrationsFixtureBase
     {

@@ -1,4 +1,6 @@
-﻿namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+﻿using Microsoft.Data.Entity.FunctionalTests;
+
+namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {
     public class GraphUpdatesWithIdentitySqlCeTest : GraphUpdatesSqlCeTestBase<GraphUpdatesWithIdentitySqlCeTest.GraphUpdatesWithIdentitySqlCeFixture>
     {

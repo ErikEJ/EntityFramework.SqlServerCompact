@@ -97,12 +97,6 @@ ORDER BY [e].[EmployeeID]",
                  Sql);
         }
 
-        public override void Where_query_composition4()
-        {
-            //TODO ErikEJ seems like same issue as https://github.com/aspnet/EntityFramework/issues/3158
-            //base.Where_query_composition4();
-        }
-
         public override void Where_shadow_subquery_first()
         {
 //            base.Where_shadow_subquery_first();
@@ -770,6 +764,7 @@ FROM (
                 Sql);
         }
 
+        [Fact]
         public override void Skip()
         {
             base.Skip();
@@ -782,6 +777,7 @@ OFFSET 5 ROWS",
                 Sql);
         }
 
+        [Fact]
         public override void Skip_no_orderby()
         {
             base.Skip_no_orderby();
@@ -794,6 +790,7 @@ OFFSET 5 ROWS",
                 Sql);
         }
 
+        [Fact]
         public override void Skip_Take()
         {
             base.Skip_Take();
@@ -806,6 +803,33 @@ OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY",
                 Sql);
         }
 
+        [Fact]
+        public override void Join_Customers_Orders_Skip_Take()
+        {
+            base.Join_Customers_Orders_Skip_Take();
+            Assert.Equal(
+                @"SELECT [c].[ContactName], [o].[OrderID]
+FROM [Customers] AS [c]
+INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
+ORDER BY [o].[OrderID]
+OFFSET 10 ROWS FETCH NEXT 5 ROWS ONLY",
+                Sql);
+        }
+
+        [Fact]
+        public override void Join_Customers_Orders_Projection_With_String_Concat_Skip_Take()
+        {
+            base.Join_Customers_Orders_Projection_With_String_Concat_Skip_Take();
+            Assert.Equal(
+                @"SELECT ([c].[ContactName] + ' ') + [c].[ContactTitle], [o].[OrderID]
+FROM [Customers] AS [c]
+INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
+ORDER BY [o].[OrderID]
+OFFSET 10 ROWS FETCH NEXT 5 ROWS ONLY",
+                Sql);
+        }
+
+        [Fact]
         public override void Take_Skip()
         {
             base.Take_Skip();
@@ -822,6 +846,7 @@ OFFSET 5 ROWS",
                 Sql);
         }
 
+        [Fact]
         public override void Take_Skip_Distinct()
         {
             base.Take_Skip_Distinct();
@@ -1442,6 +1467,15 @@ WHERE [e].[ReportsTo] = @__nullableIntPrm_0",
                 Sql);
         }
 
+        public override void Where_equals_on_null_nullable_int_types()
+        {
+            base.Where_equals_on_null_nullable_int_types();
+
+            Assert.Equal(
+                @"",
+                Sql);
+        }
+
         public override void Where_string_length()
         {
             base.Where_string_length();
@@ -1468,16 +1502,7 @@ WHERE GETDATE() <> @__myDatetime_0",
 
         public override void Where_datetime_utcnow()
         {
-            //TODO ErikEJ Investigate!
-//            base.Where_datetime_utcnow();
-
-//            Assert.Equal(
-//                @"@__myDatetime_0: 04/10/2015 00:00:00
-
-//SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE GETUTCDATE() <> @__myDatetime_0",
-//                Sql);
+            //base.Where_datetime_utcnow();
         }
 
         public override void Where_is_null()
@@ -2582,6 +2607,17 @@ WHERE [p].[Discontinued] = 1",
                 @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[UnitsInStock]
 FROM [Products] AS [p]
 WHERE [p].[Discontinued] = 0",
+                Sql);
+        }
+
+        public override void Where_bool_client_side_negated()
+        {
+            base.Where_bool_client_side_negated();
+
+            Assert.Equal(
+                @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[UnitsInStock]
+FROM [Products] AS [p]
+WHERE [p].[Discontinued] = 1",
                 Sql);
         }
 
@@ -3874,6 +3910,7 @@ WHERE COALESCE([c].[CompanyName], [c].[ContactName]) = 'The Big Cheese'",
                 Sql);
         }
 
+        [Fact]
         public override void Take_skip_null_coalesce_operator()
         {
             base.Take_skip_null_coalesce_operator();
@@ -3900,6 +3937,7 @@ FROM [Customers] AS [c]
 ORDER BY [Coalesce]", Sql);
         }
 
+        [Fact]
         public override void Select_take_skip_null_coalesce_operator()
         {
             base.Select_take_skip_null_coalesce_operator();

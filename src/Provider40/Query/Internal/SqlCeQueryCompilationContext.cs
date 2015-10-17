@@ -9,7 +9,6 @@ namespace Microsoft.Data.Entity.Query.Internal
 {
     public class SqlCeQueryCompilationContext : RelationalQueryCompilationContext
     {
-#pragma warning disable 0618
         public SqlCeQueryCompilationContext(
              [NotNull] ISensitiveDataLogger logger,
             [NotNull] IEntityQueryModelVisitorFactory entityQueryModelVisitorFactory,
@@ -17,7 +16,7 @@ namespace Microsoft.Data.Entity.Query.Internal
             [NotNull] ILinqOperatorProvider linqOpeartorProvider,
             [NotNull] IQueryMethodProvider queryMethodProvider,
             [NotNull] Type contextType,
-            [NotNull] TelemetrySource telemetrySource)
+            bool trackQueryResults)
             : base(
                 Check.NotNull(logger, nameof(logger)),
                 Check.NotNull(entityQueryModelVisitorFactory, nameof(entityQueryModelVisitorFactory)),
@@ -25,10 +24,9 @@ namespace Microsoft.Data.Entity.Query.Internal
                 Check.NotNull(linqOpeartorProvider, nameof(linqOpeartorProvider)),
                 Check.NotNull(queryMethodProvider, nameof(queryMethodProvider)),
                 Check.NotNull(contextType, nameof(contextType)),
-                Check.NotNull(telemetrySource, nameof(telemetrySource)))
+                trackQueryResults)
         {
         }
-#pragma warning restore 0618
 
         public override bool IsLateralJoinSupported => true;
     }

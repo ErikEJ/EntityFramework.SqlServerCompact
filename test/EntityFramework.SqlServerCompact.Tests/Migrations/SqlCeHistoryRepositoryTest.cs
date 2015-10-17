@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.MetaData;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Storage.Internal;
+using Microsoft.Data.Entity.TestUtilities;
 using Moq;
 using Xunit;
 
@@ -94,6 +95,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
             var typeMapper = new SqlCeTypeMapper();
 
             var commandBuilderFactory = new RelationalCommandBuilderFactory(
+                new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
+                new TelemetryListener("Fake"),
                 typeMapper);
 
             return new SqlCeHistoryRepository(

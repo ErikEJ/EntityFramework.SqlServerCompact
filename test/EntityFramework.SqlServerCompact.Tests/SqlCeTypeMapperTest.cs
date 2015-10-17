@@ -358,17 +358,17 @@ namespace Microsoft.Data.Entity.Tests
         [Fact]
         public void Does_default_mappings_for_values()
         {
-            Assert.Equal("nvarchar(4000)", new SqlCeTypeMapper().GetMapping("Cheese").DefaultTypeName);
-            Assert.Equal("image", new SqlCeTypeMapper().GetMapping(new byte[1]).DefaultTypeName);
-            Assert.Equal("datetime", new SqlCeTypeMapper().GetMapping(new DateTime()).DefaultTypeName);
+            Assert.Equal("nvarchar(4000)", new SqlCeTypeMapper().GetMappingForValue("Cheese").DefaultTypeName);
+            Assert.Equal("image", new SqlCeTypeMapper().GetMappingForValue(new byte[1]).DefaultTypeName);
+            Assert.Equal("datetime", new SqlCeTypeMapper().GetMappingForValue(new DateTime()).DefaultTypeName);
         }
 
         [Fact]
         public void Does_default_mappings_for_null_values()
         {
-            Assert.Equal("NULL", new SqlCeTypeMapper().GetMapping((object)null).DefaultTypeName);
-            Assert.Equal("NULL", new SqlCeTypeMapper().GetMapping(DBNull.Value).DefaultTypeName);
-            Assert.Equal("NULL", RelationalTypeMapperExtensions.GetMapping(null, "Itz").DefaultTypeName);
+            Assert.Equal("NULL", new SqlCeTypeMapper().GetMappingForValue((object)null).DefaultTypeName);
+            Assert.Equal("NULL", new SqlCeTypeMapper().GetMappingForValue(DBNull.Value).DefaultTypeName);
+            Assert.Equal("NULL", RelationalTypeMapperExtensions.GetMappingForValue(null, "Itz").DefaultTypeName);
         }
 
         private enum LongEnum : long

@@ -22,13 +22,12 @@ namespace Microsoft.Data.Entity.Tests.Extensions
             VerifySingleton<IComparer<ModificationCommand>>();
 
             // SQL Server Ce dingletones
-            VerifySingleton<SqlCeConventionSetBuilder>();
-            VerifySingleton<SqlCeValueGeneratorCache>();
-            
+            VerifySingleton<SqlCeValueGeneratorCache>();           
             VerifySingleton<SqlCeTypeMapper>();            
             VerifySingleton<SqlCeModelSource>();
 
             // SQL Server Ce scoped
+            VerifyScoped<SqlCeConventionSetBuilder>();
             VerifyScoped<ISqlCeUpdateSqlGenerator>();
             VerifyScoped<SqlCeModificationCommandBatchFactory>();
             VerifyScoped<SqlCeDatabaseProviderServices>();

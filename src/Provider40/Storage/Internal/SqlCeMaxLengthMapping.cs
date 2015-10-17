@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
@@ -9,8 +10,8 @@ namespace Microsoft.Data.Entity.Storage.Internal
     {
         private readonly int _maxSpecificSize;
 
-        public SqlCeMaxLengthMapping([NotNull] string defaultTypeName, DbType? storeType = null)
-            : base(defaultTypeName, storeType)
+        public SqlCeMaxLengthMapping([NotNull] string defaultTypeName, [NotNull] Type clrType, DbType? storeType = null)
+            : base(defaultTypeName, clrType, storeType)
         {
             _maxSpecificSize = 
                 storeType == DbType.Binary

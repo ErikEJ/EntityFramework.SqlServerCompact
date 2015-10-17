@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -25,15 +24,12 @@ namespace Microsoft.Data.Entity.Update.Internal
             [NotNull] ISqlGenerator sqlGenerator,
             [NotNull] ISqlCeUpdateSqlGenerator updateSqlGenerator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
-            [NotNull] ISensitiveDataLogger logger,
-            [NotNull] TelemetrySource telemetrySource)
+            [NotNull] ISensitiveDataLogger logger)
             : base(
                 commandBuilderFactory,
                 sqlGenerator,
                 updateSqlGenerator,
-                valueBufferFactoryFactory,
-                logger,
-                telemetrySource)
+                valueBufferFactoryFactory)
         {
             _valueBufferFactoryFactory = valueBufferFactoryFactory;
             _logger = logger;
@@ -47,14 +43,17 @@ namespace Microsoft.Data.Entity.Update.Internal
             Tuple<string, string> commandText = SplitCommandText(initialCommandText);
 
             Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
-
+            
             var commandIndex = 0;
-            using (var storeCommand = CreateStoreCommand(commandText.Item1, connection))
+
+            var relationalCommand = CreateStoreCommand();
+            using (var storeCommand = relationalCommand.CreateCommand(connection))
             {
-                if (_logger.IsEnabled(LogLevel.Verbose))
-                {
-                    _logger.LogCommand(storeCommand);
-                }
+                storeCommand.CommandText = commandText.Item1;
+                //if (_logger.IsEnabled(LogLevel.Verbose))
+                //{
+                //    _logger.LogCommand(storeCommand);
+                //}
 
                 try
                 {
@@ -66,7 +65,8 @@ namespace Microsoft.Data.Entity.Update.Internal
                         {
                             if (commandText.Item2.Length > 0)
                             {
-                                returningCommand = CreateStoreCommand(commandText.Item2,  connection);
+                                returningCommand = relationalCommand.CreateCommand(connection);
+                                returningCommand.CommandText = commandText.Item2;
                                 returningReader = returningCommand.ExecuteReader();
                             }
                             commandIndex = ModificationCommands[commandIndex].RequiresResultPropagation

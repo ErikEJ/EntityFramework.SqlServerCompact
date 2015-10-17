@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Tracing;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
@@ -14,8 +13,6 @@ namespace Microsoft.Data.Entity.Update.Internal
         private readonly IRelationalValueBufferFactoryFactory _valueBufferFactoryFactory;
         private readonly IDbContextOptions _options;
         private readonly ISensitiveDataLogger<SqlCeModificationCommandBatchFactory> _logger;
-#pragma warning disable 0618
-        private readonly TelemetrySource _telemetrySource;
 
         public SqlCeModificationCommandBatchFactory(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
@@ -23,8 +20,7 @@ namespace Microsoft.Data.Entity.Update.Internal
             [NotNull] ISqlCeUpdateSqlGenerator updateSqlGenerator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
             [NotNull] IDbContextOptions options,
-            [NotNull] ISensitiveDataLogger<SqlCeModificationCommandBatchFactory> logger,
-            [NotNull] TelemetrySource telemetrySource)
+            [NotNull] ISensitiveDataLogger<SqlCeModificationCommandBatchFactory> logger)
         {
             Check.NotNull(commandBuilderFactory, nameof(commandBuilderFactory));
             Check.NotNull(updateSqlGenerator, nameof(updateSqlGenerator));
@@ -37,9 +33,8 @@ namespace Microsoft.Data.Entity.Update.Internal
             _valueBufferFactoryFactory = valueBufferFactoryFactory;
             _options = options;
             _logger = logger;
-            _telemetrySource = telemetrySource;
         }
-#pragma warning restore 0618
+
         public virtual ModificationCommandBatch Create()
         {
             return new SqlCeModificationCommandBatch(
@@ -47,8 +42,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 _sqlGenerator,
                 _updateSqlGenerator,
                 _valueBufferFactoryFactory,
-                _logger,
-                _telemetrySource);
+                _logger);
         }
     }
 }

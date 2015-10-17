@@ -31,13 +31,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 .Singleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>());
 
             service.TryAdd(new ServiceCollection()
-                .AddSingleton<SqlCeConventionSetBuilder>()
                 .AddSingleton<SqlCeValueGeneratorCache>()                
                 .AddSingleton<SqlCeTypeMapper>()
                 .AddSingleton<SqlCeSqlGenerator>()
                 .AddSingleton<SqlCeModelSource>()
                 .AddSingleton<SqlCeAnnotationProvider>()
-                .AddSingleton<SqlCeMigrationsAnnotationProvider>()                
+                .AddSingleton<SqlCeMigrationsAnnotationProvider>()
+                .AddScoped<SqlCeConventionSetBuilder>()
                 .AddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
                 .AddScoped<SqlCeModificationCommandBatchFactory>()
                 .AddScoped<SqlCeDatabaseProviderServices>()

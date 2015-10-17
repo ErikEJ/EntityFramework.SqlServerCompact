@@ -12,8 +12,6 @@ namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
         public class GraphUpdatesWithIdentitySqlCeFixture : GraphUpdatesSqlCeFixtureBase
         {
             protected override string DatabaseName => "GraphIdentityUpdatesTest";
-
-            public override int IntSentinel => 0;
         }
     }
 }

@@ -13,12 +13,12 @@
     <releaseNotes>for EF7 Release Candidate 1</releaseNotes>
     <tags>EntityFramework EF sqlce sqlservercompact entity framework provider sql server compact</tags>
     <dependencies>
-        <group targetFramework=".NETFramework4.5">
+        <group targetFramework="net451">
             <dependency id="EntityFramework.Relational" version="[7.0.0-rc1-16018]" />
          </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFramework.SqlServerCompact35.dll" target="lib\net45\" />
+    <file src="bin\Release\EntityFramework.SqlServerCompact35.dll" target="lib\net451\" />
   </files>
 </package>

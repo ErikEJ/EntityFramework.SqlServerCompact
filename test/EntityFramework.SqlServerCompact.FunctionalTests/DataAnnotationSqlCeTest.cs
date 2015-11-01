@@ -9,6 +9,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
         {
         }
 
+        //TODO ErikEJ Fix broken logging after error due to new command handling
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();
@@ -47,16 +48,11 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3;", Sql);
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
 VALUES (@p0, @p1, @p2);
-SELECT [UniqueNo]
-FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
 
 @p0: 
 @p1: Third
 @p2: 00000000-0000-0000-0000-000000000003
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
 SELECT [UniqueNo]
 FROM [Sample]
 WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);",
@@ -73,29 +69,16 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);",
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
 VALUES (@p0, @p1, @p2);
-SELECT [UniqueNo]
-FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
 
 @p0: Short
 @p1: ValidString
 @p2: 00000000-0000-0000-0000-000000000001
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
 SELECT [UniqueNo]
 FROM [Sample]
 WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
 
-@p0: VeryVeryVeryVeryVeryVeryLongString
-@p1: ValidString
-@p2: 00000000-0000-0000-0000-000000000002
-
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
-SELECT [UniqueNo]
-FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);",
+",
                 Sql);
         }
 
@@ -103,29 +86,13 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);",
         {
             base.RequiredAttribute_for_navigation_throws_while_inserting_null_value();
 
-            Assert.Equal(@"@p0: Book1
+            Assert.Equal(@"@p0: 0
+@p1: Book1
 
-INSERT INTO [BookDetail] ([BookId])
-VALUES (@p0);
-SELECT [Id]
-FROM [BookDetail]
-WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
+INSERT INTO [BookDetail] ([Id], [BookId])
+VALUES (@p0, @p1);
 
-@p0: Book1
-
-INSERT INTO [BookDetail] ([BookId])
-VALUES (@p0);
-SELECT [Id]
-FROM [BookDetail]
-WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
-
-@p0: 
-
-INSERT INTO [BookDetail] ([BookId])
-VALUES (@p0);
-SELECT [Id]
-FROM [BookDetail]
-WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);",
+",
                 Sql);
         }
 
@@ -139,60 +106,37 @@ WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);",
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
 VALUES (@p0, @p1, @p2);
-SELECT [UniqueNo]
-FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
 
 @p0: 
 @p1: ValidString
 @p2: 00000000-0000-0000-0000-000000000001
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
 SELECT [UniqueNo]
 FROM [Sample]
 WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
 
-@p0: 
-@p1: 
-@p2: 00000000-0000-0000-0000-000000000002
-
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
-SELECT [UniqueNo]
-FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);",
+",
                 Sql);
         }
 
 
         public override void StringLengthAttribute_throws_while_inserting_value_longer_than_max_length()
         {
+            TestSqlLoggerFactory.SqlStatements.Clear();
             base.StringLengthAttribute_throws_while_inserting_value_longer_than_max_length();
 
             Assert.Equal(@"@p0: ValidString
 
 INSERT INTO [Two] ([Data])
 VALUES (@p0);
-SELECT [Id], [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
 
 @p0: ValidString
 
-INSERT INTO [Two] ([Data])
-VALUES (@p0);
 SELECT [Id], [Timestamp]
 FROM [Two]
 WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
 
-@p0: ValidButLongString
-
-INSERT INTO [Two] ([Data])
-VALUES (@p0);
-SELECT [Id], [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);",
+",
                 Sql);
         }
 
@@ -214,16 +158,11 @@ WHERE [r].[Id] = 1
 
 UPDATE [Two] SET [Data] = @p0
 WHERE [Id] = @p1 AND [Timestamp] = @p2;
-SELECT [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1;
 
 @p1: 1
 @p0: ModifiedData
 @p2: System.Byte[]
 
-UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2;
 SELECT [Timestamp]
 FROM [Two]
 WHERE 1 = 1 AND [Id] = @p1;
@@ -234,16 +173,11 @@ WHERE 1 = 1 AND [Id] = @p1;
 
 UPDATE [Two] SET [Data] = @p0
 WHERE [Id] = @p1 AND [Timestamp] = @p2;
-SELECT [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1;
 
 @p1: 1
 @p0: ChangedData
 @p2: System.Byte[]
 
-UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2;
 SELECT [Timestamp]
 FROM [Two]
 WHERE 1 = 1 AND [Id] = @p1;",

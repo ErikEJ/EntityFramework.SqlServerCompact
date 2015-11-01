@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.Entity.Metadata;
-
-namespace Microsoft.Data.Entity.MetaData
+﻿namespace Microsoft.Data.Entity.Metadata
 {
     public class SqlCeAnnotationProvider : IRelationalAnnotationProvider
     {

@@ -1,8 +1,8 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.MetaData;
-using Microsoft.Data.Entity.MetaData.Conventions.Internal;
+using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Query.ExpressionTranslators.Internal;
@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             Check.NotNull(services, nameof(services));
 
-            var service = services.AddRelational().GetService();
+            var service = services.AddRelational().GetInfrastructure();
 
             service.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>());
@@ -55,7 +55,6 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             return serviceCollection
                 .AddScoped<SqlCeQueryCompilationContextFactory>()
-                .AddScoped<SqlCeCompositeExpressionFragmentTranslator>()
                 .AddScoped<SqlCeCompositeMemberTranslator>()
                 .AddScoped<SqlCeCompositeMethodCallTranslator>()
                 .AddScoped<SqlCeQuerySqlGeneratorFactory>();

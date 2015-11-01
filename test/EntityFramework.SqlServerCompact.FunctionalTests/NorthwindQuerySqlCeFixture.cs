@@ -28,8 +28,6 @@ namespace Microsoft.Data.Entity.FunctionalTests
                     .BuildServiceProvider();
 
             _options = BuildOptions();
-
-            _serviceProvider.GetRequiredService<ILoggerFactory>().MinimumLevel = LogLevel.Debug;
         }
 
         protected DbContextOptions BuildOptions()
@@ -37,27 +35,21 @@ namespace Microsoft.Data.Entity.FunctionalTests
             var optionsBuilder = new DbContextOptionsBuilder();
 
             var sqlCeDbContextOptionsBuilder
-                = optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
-
-            sqlCeDbContextOptionsBuilder.LogSqlParameterValues();
+                = optionsBuilder
+                    .EnableSensitiveDataLogging()
+                    .UseSqlCe(_testStore.Connection.ConnectionString);
 
             ConfigureOptions(sqlCeDbContextOptionsBuilder);
 
             return optionsBuilder.Options;
         }
 
-        protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlCeDbContextOptionsBuilder)
+        protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlServerDbContextOptionsBuilder)
         {
         }
 
         public override NorthwindContext CreateContext()
-        {
-            var context = new SqlCeNorthwindContext(_serviceProvider, _options);
-
-            context.ChangeTracker.AutoDetectChangesEnabled = false;
-
-            return context;
-        }
+            => new SqlCeNorthwindContext(_serviceProvider, _options);
 
         public void Dispose() => _testStore.Dispose();
 

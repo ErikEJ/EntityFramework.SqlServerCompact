@@ -11,18 +11,20 @@ namespace Microsoft.Data.Entity.Storage.Internal
     public class SqlCeDatabaseCreator : RelationalDatabaseCreator
     {
         private readonly ISqlCeDatabaseConnection _connection;
-        private readonly IMigrationsSqlGenerator _sqlGenerator;
+        private readonly ISqlCommandBuilder _sqlCommandBuilder;
 
         public SqlCeDatabaseCreator(
             [NotNull] ISqlCeDatabaseConnection connection,
             [NotNull] IMigrationsModelDiffer modelDiffer,
-            [NotNull] IMigrationsSqlGenerator sqlGenerator,
-            [NotNull] ISqlStatementExecutor statementExecutor,
-            [NotNull] IModel model)
-             : base(model, connection, modelDiffer, sqlGenerator, statementExecutor)
+            [NotNull] IMigrationsSqlGenerator migrationsSqlGenerator,
+            [NotNull] IModel model,
+            [NotNull] ISqlCommandBuilder sqlCommandBuilder)
+            : base(model, connection, modelDiffer, migrationsSqlGenerator)
         {
+            Check.NotNull(sqlCommandBuilder, nameof(sqlCommandBuilder));
+
+            _sqlCommandBuilder = sqlCommandBuilder;
             _connection = connection;
-            _sqlGenerator = sqlGenerator;
         }
 
         public override void Create()
@@ -39,14 +41,14 @@ namespace Microsoft.Data.Entity.Storage.Internal
         }
 
         protected override bool HasTables()
-           => (int)SqlStatementExecutor.ExecuteScalar(_connection, CreateHasTablesCommand()) > 0;
+           => (int)CreateHasTablesCommand().ExecuteScalar(_connection) != 0;  
 
         protected override async Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
-            => (int)(await SqlStatementExecutor
-                .ExecuteScalarAsync(_connection, CreateHasTablesCommand(), cancellationToken)) > 0;
+            => (int)(await CreateHasTablesCommand().ExecuteScalarAsync(_connection, cancellationToken)) != 0;
 
-        private string CreateHasTablesCommand()
-            => "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE <> N'SYSTEM TABLE';";
+        private IRelationalCommand CreateHasTablesCommand()
+            => _sqlCommandBuilder
+                .Build("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE <> N'SYSTEM TABLE';");
 
         public override void Delete()
         {

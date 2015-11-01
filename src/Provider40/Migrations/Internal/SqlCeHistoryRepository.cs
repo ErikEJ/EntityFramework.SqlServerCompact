@@ -2,8 +2,7 @@
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata.Internal;
-using Microsoft.Data.Entity.MetaData;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Storage.Internal;
 
 namespace Microsoft.Data.Entity.Migrations.Internal
@@ -12,7 +11,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
     {
         public SqlCeHistoryRepository(
             [NotNull] IDatabaseCreator databaseCreator,
-            [NotNull] ISqlStatementExecutor executor,
+            [NotNull] ISqlCommandBuilder sqlCommandBuilder,
             [NotNull] ISqlCeDatabaseConnection connection,
             [NotNull] IDbContextOptions options,
             [NotNull] IMigrationsModelDiffer modelDiffer,
@@ -21,7 +20,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
             [NotNull] ISqlGenerator sql)
             : base(
                   databaseCreator,
-                  executor,
+                  sqlCommandBuilder,
                   connection,
                   options,
                   modelDiffer,

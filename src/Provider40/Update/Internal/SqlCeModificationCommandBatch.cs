@@ -2,100 +2,153 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.ChangeTracking.Internal;
-using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Utilities;
-using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
     {
-        private readonly IRelationalValueBufferFactoryFactory _valueBufferFactoryFactory;
-        private readonly ISensitiveDataLogger _logger;
+        private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
 
         public SqlCeModificationCommandBatch(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
             [NotNull] ISqlGenerator sqlGenerator,
             [NotNull] ISqlCeUpdateSqlGenerator updateSqlGenerator,
-            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
-            [NotNull] ISensitiveDataLogger logger)
+            [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory)
             : base(
                 commandBuilderFactory,
                 sqlGenerator,
                 updateSqlGenerator,
                 valueBufferFactoryFactory)
         {
-            _valueBufferFactoryFactory = valueBufferFactoryFactory;
-            _logger = logger;
+            _commandBuilderFactory = commandBuilderFactory;
         }
 
         public override void Execute(IRelationalConnection connection)
         {
             Check.NotNull(connection, nameof(connection));
 
-            var initialCommandText = GetCommandText();
-            Tuple<string, string> commandText = SplitCommandText(initialCommandText);
+            //Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
 
-            Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
-            
-            var commandIndex = 0;
+            var commandTexts = SplitCommandText(GetCommandText());
+            //var commandIndex = 0;
 
-            var relationalCommand = CreateStoreCommand();
-            using (var storeCommand = relationalCommand.CreateCommand(connection))
+            var relationalCommand = CreateStoreCommand(commandTexts.Item1);
+            try
             {
-                storeCommand.CommandText = commandText.Item1;
-                //if (_logger.IsEnabled(LogLevel.Verbose))
-                //{
-                //    _logger.LogCommand(storeCommand);
-                //}
 
-                try
+                using (var reader = relationalCommand.ExecuteReader(connection))
                 {
-                    using (var reader = storeCommand.ExecuteReader())
-                    {
-                        DbCommand returningCommand = null;
-                        DbDataReader returningReader = null;
-                        try
-                        {
-                            if (commandText.Item2.Length > 0)
-                            {
-                                returningCommand = relationalCommand.CreateCommand(connection);
-                                returningCommand.CommandText = commandText.Item2;
-                                returningReader = returningCommand.ExecuteReader();
-                            }
-                            commandIndex = ModificationCommands[commandIndex].RequiresResultPropagation
-                            ? ConsumeResultSetWithPropagation(commandIndex, reader, returningReader)
-                            : ConsumeResultSetWithoutPropagation(commandIndex, reader);
+                    Consume(reader.DbDataReader, commandTexts.Item2, connection);
 
-                            Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
-                        }
-                        finally
-                        {
-                            if (returningCommand != null)
-                            {
-                                returningCommand.Dispose();
-                                returningReader?.Dispose();
-                            }
-                        }
-                    }
-                }
-                catch (DbUpdateException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    throw new DbUpdateException(
-                        "An error occurred while updating the entries. See the inner exception for details.",
-                        ex);
+                    //    RelationalDataReader returningReader = null;
+                    //    try
+                    //    {
+                    //        if (commandTexts.Item2.Length > 0)
+                    //        {
+                    //            var returningCommand = CreateStoreCommand(commandTexts.Item2, false);
+                    //            returningReader = returningCommand.ExecuteReader(connection);
+                    //        }
+                    //        if (ModificationCommands[commandIndex].RequiresResultPropagation && returningReader != null)
+                    //        {
+                    //            commandIndex = ConsumeResultSetWithPropagation(commandIndex, reader.DbDataReader, returningReader.DbDataReader);
+                    //        }
+                    //        else
+                    //        {
+                    //            commandIndex = ConsumeResultSetWithoutPropagation(commandIndex, reader.DbDataReader);
+                    //        }
+
+                    //        Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
+                    //    }
+                    //    finally
+                    //    {
+                    //        returningReader?.Dispose();
+                    //    }
                 }
             }
+            catch (DbUpdateException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new DbUpdateException(
+                    "An error occurred while updating the entries. See the inner exception for details.",
+                    ex);
+            }
+        }
+
+        private void Consume(DbDataReader reader, string returningCommandText, IRelationalConnection connection)
+        {
+            Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
+            var commandIndex = 0;
+
+            try
+            {
+                if (ModificationCommands[commandIndex].RequiresResultPropagation && returningCommandText != null)
+                {
+                    var returningCommand = CreateStoreCommand(returningCommandText);
+
+                    using (var returningReader = returningCommand.ExecuteReader(connection))
+                    {
+                        commandIndex = ConsumeResultSetWithPropagation(commandIndex, 
+                            reader,
+                            returningReader.DbDataReader);
+                    }
+                }
+                else
+                {
+                    commandIndex = ConsumeResultSetWithoutPropagation(commandIndex, reader);
+                }
+
+                Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
+            }
+            catch (DbUpdateException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new DbUpdateException(
+                    RelationalStrings.UpdateStoreException,
+                    ex,
+                    ModificationCommands[commandIndex].Entries);
+            }
+        }
+
+        private IRelationalCommand CreateStoreCommand(string commandText, bool includeParameters = true)
+        {
+            var commandBuilder = _commandBuilderFactory
+                .Create()
+                .Append(commandText);
+
+            if (!includeParameters) return commandBuilder.BuildRelationalCommand();
+            foreach (var columnModification in ModificationCommands.SelectMany(t => t.ColumnModifications))
+            {
+                if (columnModification.ParameterName != null)
+                {
+                    commandBuilder.AddParameter(
+                        SqlGenerator.GenerateParameterName(columnModification.ParameterName),
+                        columnModification.Value,
+                        columnModification.Property);
+                }
+
+                if (columnModification.OriginalParameterName != null)
+                {
+                    commandBuilder.AddParameter(
+                        SqlGenerator.GenerateParameterName(columnModification.OriginalParameterName),
+                        columnModification.OriginalValue,
+                        columnModification.Property);
+                }
+            }
+
+            return commandBuilder.BuildRelationalCommand();
         }
 
         public override Task ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken = default(CancellationToken))
@@ -115,13 +168,12 @@ namespace Microsoft.Data.Entity.Update.Internal
             if (stringToFindIndex > 0)
             {
                 return new Tuple<string, string>(
-                    commandText.Substring(0, stringToFindIndex + 1),
-                    commandText.Substring(commandText.LastIndexOf(stringToFind, StringComparison.OrdinalIgnoreCase) + 1));
+                    commandText.Substring(0, stringToFindIndex + 1).Trim(),
+                    commandText.Substring(commandText.LastIndexOf(stringToFind, StringComparison.OrdinalIgnoreCase) + 1).Trim());
             }
-            return new Tuple<string, string>(
-                commandText,
-                string.Empty);
+            return new Tuple<string, string>(commandText.Trim(), null);
         }
+
         protected override int ConsumeResultSetWithoutPropagation(int commandIndex, [NotNull] DbDataReader reader)
         {
             const int expectedRowsAffected = 1;
@@ -163,9 +215,9 @@ namespace Microsoft.Data.Entity.Update.Internal
             return commandIndex;
         }
 
-        private IReadOnlyList<InternalEntityEntry> AggregateEntries(int endIndex, int commandCount)
+        private IReadOnlyList<IUpdateEntry> AggregateEntries(int endIndex, int commandCount)
         {
-            var entries = new List<InternalEntityEntry>();
+            var entries = new List<IUpdateEntry>();
             for (var i = endIndex - commandCount; i < endIndex; i++)
             {
                 entries.AddRange(ModificationCommands[i].Entries);

@@ -11,28 +11,25 @@ namespace Microsoft.Data.Entity.Update.Internal
         private readonly ISqlGenerator _sqlGenerator;
         private readonly ISqlCeUpdateSqlGenerator _updateSqlGenerator;
         private readonly IRelationalValueBufferFactoryFactory _valueBufferFactoryFactory;
-        private readonly IDbContextOptions _options;
-        private readonly ISensitiveDataLogger<SqlCeModificationCommandBatchFactory> _logger;
 
         public SqlCeModificationCommandBatchFactory(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
             [NotNull] ISqlGenerator sqlGenerator,
+            [NotNull] ISqlCommandBuilder sqlCommandBuilder,
             [NotNull] ISqlCeUpdateSqlGenerator updateSqlGenerator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
-            [NotNull] IDbContextOptions options,
-            [NotNull] ISensitiveDataLogger<SqlCeModificationCommandBatchFactory> logger)
+            [NotNull] IDbContextOptions options)
         {
             Check.NotNull(commandBuilderFactory, nameof(commandBuilderFactory));
             Check.NotNull(updateSqlGenerator, nameof(updateSqlGenerator));
             Check.NotNull(valueBufferFactoryFactory, nameof(valueBufferFactoryFactory));
             Check.NotNull(options, nameof(options));
+            Check.NotNull(sqlCommandBuilder, nameof(sqlCommandBuilder));
 
             _commandBuilderFactory = commandBuilderFactory;
             _sqlGenerator = sqlGenerator;
             _updateSqlGenerator = updateSqlGenerator;
             _valueBufferFactoryFactory = valueBufferFactoryFactory;
-            _options = options;
-            _logger = logger;
         }
 
         public virtual ModificationCommandBatch Create()
@@ -41,8 +38,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 _commandBuilderFactory,
                 _sqlGenerator,
                 _updateSqlGenerator,
-                _valueBufferFactoryFactory,
-                _logger);
+                _valueBufferFactoryFactory);
         }
     }
 }

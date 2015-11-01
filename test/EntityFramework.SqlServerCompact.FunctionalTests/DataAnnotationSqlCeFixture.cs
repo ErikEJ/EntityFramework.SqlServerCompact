@@ -47,11 +47,12 @@ namespace Microsoft.Data.Entity.FunctionalTests
         public override DataAnnotationContext CreateContext(SqlCeTestStore testStore)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection).LogSqlParameterValues();
+            optionsBuilder.EnableSensitiveDataLogging().UseSqlCe(testStore.Connection);
 
             var context = new DataAnnotationContext(_serviceProvider, optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);
             return context;
+
         }
     }
 }

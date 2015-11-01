@@ -6,14 +6,14 @@ using Microsoft.Data.Entity.Storage;
 [assembly: AssemblyTitle("EntityFramework.SqlServerCompact35")]
 [assembly: AssemblyProduct("EntityFramework.SqlServerCompact35")]
 [assembly: DesignTimeProviderServices(
-    typeName: "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeDesignTimeMetadataProviderFactory",
-    assemblyName: "EntityFramework.SqlServerCompact35.Design")]
+    fullyQualifiedTypeName: "Microsoft.Data.Entity.Scaffolding.SqlCeDesignTimeServices, EntityFramework.SqlServerCompact35.Design",
+    packageName: "EntityFramework.SqlServerCompact35.Design")]
 #else
-[assembly: DesignTimeProviderServices(
-    typeName: "Microsoft.Data.Entity.SqlServerCompact.Design.ReverseEngineering.SqlCeDesignTimeMetadataProviderFactory",
-    assemblyName: "EntityFramework.SqlServerCompact40.Design")]
 [assembly: AssemblyTitle("EntityFramework.SqlServerCompact40")]
 [assembly: AssemblyProduct("EntityFramework.SqlServerCompact40")]
+[assembly: DesignTimeProviderServices(
+    fullyQualifiedTypeName: "Microsoft.Data.Entity.Scaffolding.SqlCeDesignTimeServices, EntityFramework.SqlServerCompact40.Design",
+    packageName: "EntityFramework.SqlServerCompact40.Design")]
 #endif
 [assembly: AssemblyVersion("7.0.0.0")]
 [assembly: AssemblyFileVersion("7.0.0.0")]

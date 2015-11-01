@@ -226,9 +226,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
 
                 using (var context = new BloggingContext(serviceProvider, optionsBuilder.Options))
                 {
-                    var contextServices = ((IAccessor<IServiceProvider>)context).Service;
-
-                    var creator = (RelationalDatabaseCreator)contextServices.GetRequiredService<IDatabaseCreator>();
+                    var creator = (RelationalDatabaseCreator)context.GetService<IDatabaseCreator>();
 
                     if (async)
                     {
@@ -368,10 +366,10 @@ namespace Microsoft.Data.Entity.FunctionalTests
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
 
-            return ((IAccessor<IServiceProvider>)new DbContext(
+            return ((IInfrastructure<IServiceProvider>)new BloggingContext(
                 serviceCollection.BuildServiceProvider(),
                 optionsBuilder.Options))
-                .Service;
+                .Instance;
         }
 
         private static IRelationalDatabaseCreator GetDatabaseCreator(SqlCeTestStore testStore)
@@ -399,9 +397,9 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 ISqlCeDatabaseConnection connection,
                 IMigrationsModelDiffer modelDiffer,
                 IMigrationsSqlGenerator sqlGenerator,
-                ISqlStatementExecutor statementExecutor,
+                ISqlCommandBuilder sqlCommandBuilder,
                 IModel model)
-                : base(connection, modelDiffer, sqlGenerator, statementExecutor, model)
+                : base(connection, modelDiffer, sqlGenerator, model, sqlCommandBuilder)
             {
             }
 

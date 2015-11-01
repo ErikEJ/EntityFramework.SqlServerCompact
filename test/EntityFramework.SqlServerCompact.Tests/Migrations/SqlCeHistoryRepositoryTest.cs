@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
+using System.Diagnostics;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.MetaData;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Storage;
@@ -96,12 +96,12 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 
             var commandBuilderFactory = new RelationalCommandBuilderFactory(
                 new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
-                new TelemetryListener("Fake"),
+                new DiagnosticListener("Fake"), 
                 typeMapper);
 
             return new SqlCeHistoryRepository(
                 Mock.Of<IRelationalDatabaseCreator>(),
-                Mock.Of<ISqlStatementExecutor>(),
+                Mock.Of<ISqlCommandBuilder>(),
                 Mock.Of<ISqlCeDatabaseConnection>(),
                 new DbContextOptions<DbContext>(
                     new Dictionary<Type, IDbContextOptionsExtension>

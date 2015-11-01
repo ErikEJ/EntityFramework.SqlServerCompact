@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.MetaData.Conventions.Internal;
+using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
 using Microsoft.Data.Entity.Storage.Internal;

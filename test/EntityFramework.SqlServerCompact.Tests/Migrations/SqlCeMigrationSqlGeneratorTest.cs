@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Diagnostics.Tracing;
+using System.Diagnostics;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Internal;
-using Microsoft.Data.Entity.MetaData;
-using Microsoft.Data.Entity.MetaData.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Operations;
-using Microsoft.Data.Entity.Storage;
 using Microsoft.Data.Entity.Storage.Internal;
 using Microsoft.Data.Entity.TestUtilities;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
+namespace Microsoft.Data.Entity.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
@@ -24,7 +21,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 return new SqlCeMigrationsSqlGenerator(
                     new RelationalCommandBuilderFactory(
                         new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
-                        new TelemetryListener("Fake"),
+                        new DiagnosticListener("Fake"),
                         typeMapper),
                     new SqlCeSqlGenerator(),
                     typeMapper,

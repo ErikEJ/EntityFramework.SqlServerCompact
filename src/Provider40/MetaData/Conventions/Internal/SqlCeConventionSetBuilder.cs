@@ -2,7 +2,7 @@
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Storage;
 
-namespace Microsoft.Data.Entity.MetaData.Conventions.Internal
+namespace Microsoft.Data.Entity.Metadata.Conventions.Internal
 {
     public class SqlCeConventionSetBuilder : RelationalConventionSetBuilder
     {

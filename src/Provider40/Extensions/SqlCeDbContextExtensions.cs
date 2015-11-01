@@ -13,7 +13,7 @@ namespace Microsoft.Data.Entity
         public static void LogToConsole([NotNull] this DbContext context)
         {
             Check.NotNull(context, nameof(context));
-            var loggerFactory = ((IAccessor<IServiceProvider>)context).GetService<ILoggerFactory>();
+            var loggerFactory = context.GetService<ILoggerFactory>();
             loggerFactory.AddProvider(new DbLoggerProvider());
         }
     }

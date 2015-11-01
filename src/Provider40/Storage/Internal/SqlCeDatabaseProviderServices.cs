@@ -4,16 +4,15 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.ValueGeneration;
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;
-using Microsoft.Data.Entity.MetaData;
-using Microsoft.Data.Entity.MetaData.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
+using Microsoft.Data.Entity.Query;
 using Microsoft.Data.Entity.Query.ExpressionTranslators;
 using Microsoft.Data.Entity.Query.ExpressionTranslators.Internal;
+using Microsoft.Data.Entity.Query.Internal;
 using Microsoft.Data.Entity.Query.Sql;
 using Microsoft.Data.Entity.Query.Sql.Internal;
 using Microsoft.Data.Entity.Update.Internal;
@@ -45,7 +44,6 @@ namespace Microsoft.Data.Entity.Storage.Internal
         public override IRelationalAnnotationProvider AnnotationProvider => GetService<SqlCeAnnotationProvider>();
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
-        public override IExpressionFragmentTranslator CompositeExpressionFragmentTranslator => GetService<SqlCeCompositeExpressionFragmentTranslator>();
         public override ISqlQueryGeneratorFactory SqlQueryGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
     }
 }

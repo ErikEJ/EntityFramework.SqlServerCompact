@@ -9,8 +9,6 @@ namespace Microsoft.Data.Entity.Tests
     public static class TestExtensions
     {
         public static IServiceCollection ServiceCollection(this EntityFrameworkServicesBuilder builder)
-        {
-            return ((IAccessor<IServiceCollection>)builder).Service;
-        }
+            => builder.GetInfrastructure();
     }
 }

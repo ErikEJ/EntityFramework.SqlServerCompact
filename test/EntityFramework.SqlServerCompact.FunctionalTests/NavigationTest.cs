@@ -22,7 +22,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 };
 
                 var model = context.Model;
-                var entityType = model.EntityTypes.First();
+                var entityType = model.GetEntityTypes().First();
 
                 Assert.Equal("'GoTPerson' {'LoverId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().First().ToString());
                 Assert.Equal("'GoTPerson' {'SiblingReverseId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().Skip(1).First().ToString());
@@ -42,7 +42,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 };
 
                 var model = context.Model;
-                var entityType = model.EntityTypes.First();
+                var entityType = model.GetEntityTypes().First();
 
                 Assert.Equal("'GoTPerson' {'LoverId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().First().ToString());
                 Assert.Equal("'GoTPerson' {'SiblingReverseId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().Skip(1).First().ToString());

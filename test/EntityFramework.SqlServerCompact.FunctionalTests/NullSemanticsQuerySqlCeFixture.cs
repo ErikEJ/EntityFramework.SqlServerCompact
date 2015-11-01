@@ -49,13 +49,15 @@ namespace Microsoft.Data.Entity.FunctionalTests
         public override NullSemanticsContext CreateContext(SqlCeTestStore testStore, bool useRelationalNulls)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            var sqlCeOptions = optionsBuilder.UseSqlCe(testStore.Connection);
 
-            sqlCeOptions.LogSqlParameterValues();
+            var sqlServerOptions
+                = optionsBuilder
+                    .EnableSensitiveDataLogging()
+                    .UseSqlCe(testStore.Connection);
 
             if (useRelationalNulls)
             {
-                sqlCeOptions.UseRelationalNulls();
+                sqlServerOptions.UseRelationalNulls();
             }
 
             var context = new NullSemanticsContext(_serviceProvider, optionsBuilder.Options);

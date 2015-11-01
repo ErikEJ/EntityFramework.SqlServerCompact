@@ -26,8 +26,8 @@ namespace Microsoft.Data.Entity.FunctionalTests
 
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder
-                .UseSqlCe(testStore.Connection)
-                .LogSqlParameterValues();
+                .EnableSensitiveDataLogging()
+                .UseSqlCe(testStore.Connection);
 
             _options = optionsBuilder.Options;
 

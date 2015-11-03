@@ -265,7 +265,7 @@ FROM [Orders] AS [o]",
                 Sql);
         }
 
-        //TODO ErikEJ Wait for fix for #3038
+        //TODO ErikEJ Wait for fix for https://github.com/aspnet/EntityFramework/issues/3038 
         public override void Collection_orderby_nav_prop_count()
         {
             //base.Collection_orderby_nav_prop_count();

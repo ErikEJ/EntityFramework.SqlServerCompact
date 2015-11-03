@@ -26,7 +26,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
             //base.Projection_when_arithmetic_mixed_subqueries();
         }
 
-        //TODO ErikEJ Broken by recent query update in core
+        //TODO ErikEJ Broken by recent query update in core https://github.com/aspnet/EntityFramework/issues/2626
         public override async Task OrderBy_correlated_subquery_lol()
         {
             //base.OrderBy_correlated_subquery_lol();

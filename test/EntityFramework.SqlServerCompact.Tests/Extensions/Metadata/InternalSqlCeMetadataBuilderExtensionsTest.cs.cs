@@ -20,7 +20,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
 
             Assert.Equal(77, builder.Metadata.SqlCe().FindSequence("Mine").IncrementBy);
 
-            Assert.Equal(1, builder.Metadata.Annotations.Count(
+            Assert.Equal(1, builder.Metadata.GetAnnotations().Count(
                 a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
             Assert.False(typeBuilder.SqlCe(ConfigurationSource.Convention).ToTable("Splod"));
             Assert.Equal("Splow", typeBuilder.Metadata.SqlCe().TableName);
 
-            Assert.Equal(1, typeBuilder.Metadata.Annotations.Count(
+            Assert.Equal(1, typeBuilder.Metadata.GetAnnotations().Count(
                 a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
@@ -58,7 +58,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
             Assert.False(propertyBuilder.SqlCe(ConfigurationSource.Convention).ColumnName("Splod"));
             Assert.Equal("Splow", propertyBuilder.Metadata.SqlCe().ColumnName);
 
-            Assert.Equal(1, propertyBuilder.Metadata.Annotations.Count(
+            Assert.Equal(1, propertyBuilder.Metadata.GetAnnotations().Count(
                 a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
@@ -79,7 +79,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
             Assert.False(keyBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod"));
             Assert.Equal("Splow", keyBuilder.Metadata.SqlCe().Name);
 
-            Assert.Equal(1, keyBuilder.Metadata.Annotations.Count(
+            Assert.Equal(1, keyBuilder.Metadata.GetAnnotations().Count(
                 a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
@@ -100,7 +100,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
             indexBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod");
             Assert.Equal("Splow", indexBuilder.Metadata.SqlCe().Name);
 
-            Assert.Equal(1, indexBuilder.Metadata.Annotations.Count(
+            Assert.Equal(1, indexBuilder.Metadata.GetAnnotations().Count(
                 a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
@@ -121,7 +121,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
             Assert.False(relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
 
-            Assert.Equal(1, relationshipBuilder.Metadata.Annotations.Count(
+            Assert.Equal(1, relationshipBuilder.Metadata.GetAnnotations().Count(
                 a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 

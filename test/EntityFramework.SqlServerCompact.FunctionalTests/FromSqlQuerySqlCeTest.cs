@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
+using Xunit;
 
 namespace Microsoft.Data.Entity.FunctionalTests
 {
@@ -138,14 +140,18 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
 
         public override void From_sql_queryable_with_null_parameter()
         {
-            //TODO ErikEJ Fix is to rephrase client side
-//            base.From_sql_queryable_with_null_parameter();
+            // http://entityframework.codeplex.com/workitem/287
+            int? reportsTo = null;
 
-//            Assert.Equal(
-//                @"@p0: 
+            using (var context = CreateContext())
+            {
+                var actual = context.Set<Employee>()
+                    .FromSql(@"SELECT * FROM ""Employees"" WHERE ""ReportsTo"" = {0} OR (""ReportsTo"" IS NULL AND  cast({0} AS nvarchar(4000)) IS NULL)",
+                        reportsTo)
+                    .ToArray();
 
-//SELECT * FROM ""Employees"" WHERE ""ReportsTo"" = @p0 OR (""ReportsTo"" IS NULL AND @p0 IS NULL)",
-//                Sql);
+                Assert.Equal(1, actual.Length);
+            }
         }
 
         public override void From_sql_queryable_with_parameters_and_closure()

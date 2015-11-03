@@ -9,7 +9,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
         {
         }
 
-        //TODO ErikEJ Fix broken logging after error due to new command handling
+        //TODO ErikEJ Hackathon Fix broken logging after error due to new command handling
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();

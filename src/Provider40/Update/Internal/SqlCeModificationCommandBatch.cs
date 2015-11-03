@@ -34,10 +34,7 @@ namespace Microsoft.Data.Entity.Update.Internal
         {
             Check.NotNull(connection, nameof(connection));
 
-            //Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
-
             var commandTexts = SplitCommandText(GetCommandText());
-            //var commandIndex = 0;
 
             var relationalCommand = CreateStoreCommand(commandTexts.Item1);
             try
@@ -46,30 +43,6 @@ namespace Microsoft.Data.Entity.Update.Internal
                 using (var reader = relationalCommand.ExecuteReader(connection))
                 {
                     Consume(reader.DbDataReader, commandTexts.Item2, connection);
-
-                    //    RelationalDataReader returningReader = null;
-                    //    try
-                    //    {
-                    //        if (commandTexts.Item2.Length > 0)
-                    //        {
-                    //            var returningCommand = CreateStoreCommand(commandTexts.Item2, false);
-                    //            returningReader = returningCommand.ExecuteReader(connection);
-                    //        }
-                    //        if (ModificationCommands[commandIndex].RequiresResultPropagation && returningReader != null)
-                    //        {
-                    //            commandIndex = ConsumeResultSetWithPropagation(commandIndex, reader.DbDataReader, returningReader.DbDataReader);
-                    //        }
-                    //        else
-                    //        {
-                    //            commandIndex = ConsumeResultSetWithoutPropagation(commandIndex, reader.DbDataReader);
-                    //        }
-
-                    //        Debug.Assert(commandIndex == ModificationCommands.Count, "Expected " + ModificationCommands.Count + " results, got " + commandIndex);
-                    //    }
-                    //    finally
-                    //    {
-                    //        returningReader?.Dispose();
-                    //    }
                 }
             }
             catch (DbUpdateException)

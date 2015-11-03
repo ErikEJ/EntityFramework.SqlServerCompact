@@ -2300,7 +2300,7 @@ FROM [Orders] AS [o]",
 
         public override void SelectMany_Joined_Take()
         {
-            //TODO ErikEJ Why does this fail?
+            //TODO ErikEJ Hackathon Why does this fail?
 //            base.SelectMany_Joined_Take();
 
 //            Assert.Equal(

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
@@ -12,7 +11,7 @@ using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity.Update.Internal
 {
-    public class SqlCeModificationCommandBatch : SingularModificationCommandBatch
+    public class SqlCeModificationCommandBatch : AffectedCountModificationCommandBatch
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
 
@@ -64,7 +63,7 @@ namespace Microsoft.Data.Entity.Update.Internal
 
             try
             {
-                if (ModificationCommands[commandIndex].RequiresResultPropagation && returningCommandText != null)
+                if (ModificationCommands[0].RequiresResultPropagation && returningCommandText != null)
                 {
                     var returningCommand = CreateStoreCommand(returningCommandText);
 
@@ -164,7 +163,6 @@ namespace Microsoft.Data.Entity.Update.Internal
 
         private int ConsumeResultSetWithPropagation(int commandIndex, DbDataReader reader, DbDataReader returningReader)
         {
-            const int expectedRowsAffected = 1;
             var tableModification = ModificationCommands[commandIndex];
 
             Debug.Assert(tableModification.RequiresResultPropagation);
@@ -173,10 +171,9 @@ namespace Microsoft.Data.Entity.Update.Internal
 
             reader.Read();
 
-            var rowsAffected = reader.RecordsAffected;
-            if (rowsAffected != expectedRowsAffected)
+            if (reader.RecordsAffected != 1)
             {
-                ThrowAggregateUpdateConcurrencyException(commandIndex, expectedRowsAffected, rowsAffected);
+                ThrowAggregateUpdateConcurrencyException(commandIndex, 1, 0);
             }
 
             returningReader.Read();
@@ -188,24 +185,10 @@ namespace Microsoft.Data.Entity.Update.Internal
             return commandIndex;
         }
 
-        private IReadOnlyList<IUpdateEntry> AggregateEntries(int endIndex, int commandCount)
-        {
-            var entries = new List<IUpdateEntry>();
-            for (var i = endIndex - commandCount; i < endIndex; i++)
-            {
-                entries.AddRange(ModificationCommands[i].Entries);
-            }
-            return entries;
-        }
+        protected override bool CanAddCommand([NotNull] ModificationCommand modificationCommand)
+            => ModificationCommands.Count == 0;
 
-        protected override void ThrowAggregateUpdateConcurrencyException( 
-             int commandIndex,
-             int expectedRowsAffected,
-             int rowsAffected)
-         { 
-             throw new DbUpdateConcurrencyException( 
-                 RelationalStrings.UpdateConcurrencyException(expectedRowsAffected, rowsAffected), 
-                 AggregateEntries(commandIndex, expectedRowsAffected)); 
-         }
+        protected override bool IsCommandTextValid()
+            => true;
     }
 }

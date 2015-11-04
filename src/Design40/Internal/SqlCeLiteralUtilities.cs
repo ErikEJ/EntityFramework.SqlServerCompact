@@ -1,13 +1,13 @@
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
+namespace Microsoft.Data.Entity.Scaffolding.Internal
 {
     public class SqlServerLiteralUtilities
     {
@@ -22,7 +22,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
         }
 
         public virtual ILogger Logger { get; }
-
 
         /// <summary>
         ///     Converts a string of the form 'There''s a double single quote in here'
@@ -44,15 +43,16 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
             var sqlServerStringLiteralLength = sqlServerStringLiteral.Length;
             if (sqlServerStringLiteralLength < 2)
             {
-                Logger.LogWarning(string.Format("Unable to interpret the string {0} as a SQL Server Compact string literal", sqlServerStringLiteral));
+                Logger.LogWarning(
+                    string.Format("Unable to interpret the string { sqlServerStringLiteral} as a SQLServer string literal.", sqlServerStringLiteral));
                 return null;
             }
 
             if (sqlServerStringLiteral[0] != '\''
-                ||
-                sqlServerStringLiteral[sqlServerStringLiteralLength - 1] != '\'')
+                || sqlServerStringLiteral[sqlServerStringLiteralLength - 1] != '\'')
             {
-                Logger.LogWarning(string.Format("Unable to interpret the string {0} as a SQL Server Compact string literal", sqlServerStringLiteral));
+                Logger.LogWarning(
+                    string.Format("Unable to interpret the string { sqlServerStringLiteral} as a SQLServer string literal.", sqlServerStringLiteral));
                 return null;
             }
 
@@ -67,7 +67,7 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
         /// <param name="sqlServerStringLiteral"> the string to convert </param>
         /// <returns>
         ///     false if the string can be interpreted as 0, true if it can be
-        ///     intrepreted as 1, otherwise null
+        ///     interpreted as 1, otherwise null
         /// </returns>
         public virtual bool? ConvertSqlServerBitLiteral([NotNull] string sqlServerStringLiteral)
         {
@@ -96,7 +96,6 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
             Check.NotNull(propertyType, nameof(propertyType));
             Check.NotEmpty(sqlServerDefaultValue, nameof(sqlServerDefaultValue));
 
-            //TODO ErikEJ Handle 0 as default value!
             if (sqlServerDefaultValue.Length < 2)
             {
                 return null;
@@ -121,9 +120,24 @@ namespace Microsoft.Data.Entity.SqlServerCompact.Design.Utilities
                 };
             }
 
-            propertyType = propertyType.IsNullableType()
-                ? propertyType.UnwrapNullableType()
-                : propertyType;
+            if (propertyType.IsNullableType()
+                && sqlServerDefaultValue == "NULL")
+            {
+                return new DefaultExpressionOrValue()
+                {
+                    DefaultValue = null
+                };
+            }
+
+            propertyType = propertyType.UnwrapNullableType();
+
+            if (typeof(DateTime) == propertyType)
+            {
+                return new DefaultExpressionOrValue
+                {
+                    DefaultExpression = sqlServerDefaultValue
+                };
+            }
 
             if (typeof(string) == propertyType)
             {

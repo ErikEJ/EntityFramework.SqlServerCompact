@@ -14,7 +14,7 @@
     <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact</tags>
     <dependencies>
         <group targetFramework="net451">
-            <dependency id="EntityFramework.Relational" version="[7.0.0-rc1-16220]" />
+            <dependency id="EntityFramework.Relational" version="[7.0.0-rc1-16247]" />
             <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>
     </dependencies>

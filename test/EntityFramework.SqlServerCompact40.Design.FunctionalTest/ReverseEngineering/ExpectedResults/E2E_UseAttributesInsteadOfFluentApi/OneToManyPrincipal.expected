@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace E2ETest.Namespace
 {
-    public class OneToManyPrincipal
+    public partial class OneToManyPrincipal
     {
         public OneToManyPrincipal()
         {
@@ -17,6 +15,7 @@ namespace E2ETest.Namespace
         public int OneToManyPrincipalID1 { get; set; }
         public int OneToManyPrincipalID2 { get; set; }
         [Required]
+        [MaxLength(20)]
         public string Other { get; set; }
 
         [InverseProperty("OneToManyDependentFK")]

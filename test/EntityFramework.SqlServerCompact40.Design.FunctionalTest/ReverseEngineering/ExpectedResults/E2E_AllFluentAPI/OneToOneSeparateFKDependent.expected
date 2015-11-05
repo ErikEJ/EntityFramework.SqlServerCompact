@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace E2ETest.Namespace
 {
-    public class OneToOneSeparateFKDependent
+    public partial class OneToOneSeparateFKDependent
     {
         public int OneToOneSeparateFKDependentID1 { get; set; }
         public int OneToOneSeparateFKDependentID2 { get; set; }

@@ -16,7 +16,7 @@ namespace Microsoft.Data.Entity.Scaffolding
                 .AddSingleton<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
                 .AddSingleton<SqlServerLiteralUtilities>()
                 .AddSingleton<IRelationalTypeMapper, SqlCeTypeMapper>()
-                .AddSingleton<IDatabaseModelFactory, SqlServerDatabaseModelFactory>();
+                .AddSingleton<IDatabaseModelFactory, SqlCeDatabaseModelFactory>();
         }
     }
 }

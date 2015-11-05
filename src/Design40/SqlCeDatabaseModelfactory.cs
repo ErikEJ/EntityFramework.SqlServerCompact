@@ -55,7 +55,7 @@ namespace Microsoft.Data.Entity.Scaffolding
         {
             var command = _connection.CreateCommand();
             command.CommandText = @"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
-                WHERE TABLE_TYPE = 'TABLE' AND (SUBSTRING(TABLE_NAME, 1,2) <> '__')";
+                                    WHERE TABLE_TYPE = 'TABLE' AND (SUBSTRING(TABLE_NAME, 1,2) <> '__')";
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -77,65 +77,36 @@ namespace Microsoft.Data.Entity.Scaffolding
 
         private void GetColumns()
         {
-            
-       //     @"SELECT TOP(2147483648)
-       //    '[' + c.TABLE_NAME + ']' + '[' + c.COLUMN_NAME + ']' [Id]
-       //,   '[' + c.TABLE_NAME + ']' [ParentId]
-       //,   c.COLUMN_NAME [Name]
-       //,   CAST(c.ORDINAL_POSITION as integer) [Ordinal]
-       //,   CAST(CASE c.IS_NULLABLE WHEN 'YES' THEN 1 WHEN 'NO' THEN 0 ELSE 0 END as bit) [IsNullable]
-       //,   c.DATA_TYPE [DataType]
-       //,   c.CHARACTER_MAXIMUM_LENGTH [MaxLength]
-       //,   c.NUMERIC_PRECISION [NumericPrecision]
-       //,   CAST(c.DATETIME_PRECISION as integer) [DateTimePrecision]
-       //,   c.NUMERIC_SCALE [Scale]
-       //,   CAST(CASE WHEN c.AUTOINC_INCREMENT IS NULL THEN 0 ELSE 1 END AS bit) [IsIdentity]
-       //,   CAST(CASE WHEN c.DATA_TYPE = 'rowversion' THEN 1 ELSE 0 END AS bit) [IsStoreGenerated]
-       //,   RTRIM(LTRIM(c.COLUMN_DEFAULT)) as [Default]
-       // FROM
-       //INFORMATION_SCHEMA.COLUMNS c
-       //INNER JOIN
-       //INFORMATION_SCHEMA.TABLES t ON
-       //c.TABLE_NAME = t.TABLE_NAME       AND
-       //t.TABLE_TYPE = 'TABLE'
-       //WHERE SUBSTRING(c.COLUMN_NAME, 1,5) != '__sys'";
-
-        var command = _connection.CreateCommand();
-            command.CommandText = @"SELECT DISTINCT 
-    schema_name(t.schema_id) AS [schema], 
-    t.name AS [table], 
-    type_name(c.user_type_id) AS [typename],
-    c.name AS [column_name], 
-    c.column_id AS [ordinal],
-    c.is_nullable AS [nullable],
-    CAST(ic.key_ordinal AS int) AS [primary_key_ordinal],
-	object_definition(c.default_object_id) AS [default_sql],
-    CAST(CASE WHEN c.precision <> tp.precision
-			THEN c.precision
-			ELSE null
-		END AS int) AS [precision],
-	CAST(CASE WHEN c.scale <> tp.scale
-			THEN c.scale
-			ELSE null
-		END AS int) AS [scale],
-    CAST(CASE WHEN c.max_length <> tp.max_length
-			THEN c.max_length
-			ELSE null
-		END AS int) AS [max_length],
-    c.is_identity,
-    c.is_computed
-FROM sys.index_columns ic
-	RIGHT JOIN (SELECT * FROM sys.indexes WHERE is_primary_key = 1) AS i ON i.object_id = ic.object_id AND i.index_id = ic.index_id
-	RIGHT JOIN sys.columns c ON ic.object_id = c.object_id AND c.column_id = ic.column_id
-	RIGHT JOIN sys.types tp ON tp.user_type_id = c.user_type_id
-JOIN sys.tables AS t ON t.object_id = c.object_id
-WHERE t.name <> '" + HistoryRepository.DefaultTableName + "'";
+            var command = _connection.CreateCommand();
+            command.CommandText = @"SELECT
+		   NULL [schema]
+       ,   c.TABLE_NAME  [table]
+	   ,   c.DATA_TYPE [typename]
+       ,   c.COLUMN_NAME [column_name]
+       ,   CAST(c.ORDINAL_POSITION as integer) [ordinal]
+       ,   CAST(CASE c.IS_NULLABLE WHEN 'YES' THEN 1 WHEN 'NO' THEN 0 ELSE 0 END as bit) [nullable]
+	   ,   ix.ORDINAL_POSITION as [primary_key_ordinal]
+	   ,   RTRIM(LTRIM(c.COLUMN_DEFAULT)) as [default_sql]
+	   ,   c.NUMERIC_PRECISION [precision]
+	   ,   c.NUMERIC_SCALE [scale]
+       ,   c.CHARACTER_MAXIMUM_LENGTH [max_length]
+       ,   CAST(CASE WHEN c.AUTOINC_INCREMENT IS NULL THEN 0 ELSE 1 END AS bit) [is_identity]
+       ,   CAST(CASE WHEN c.DATA_TYPE = 'rowversion' THEN 1 ELSE 0 END AS bit) [is_computed]       
+       FROM
+       INFORMATION_SCHEMA.COLUMNS c
+       INNER JOIN
+       INFORMATION_SCHEMA.TABLES t ON
+       c.TABLE_NAME = t.TABLE_NAME
+       LEFT JOIN INFORMATION_SCHEMA.INDEXES ix
+       ON c.TABLE_NAME = ix.TABLE_NAME AND c.COLUMN_NAME = ix.COLUMN_NAME AND ix.PRIMARY_KEY = 1
+       WHERE SUBSTRING(c.COLUMN_NAME, 1,5) != '__sys'
+       AND t.TABLE_TYPE = 'TABLE' 
+       AND (SUBSTRING(t.TABLE_NAME, 1,2) <> '__');";
 
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    var schemaName = reader.GetString(0);
                     var tableName = reader.GetString(1);
                     if (!_tableSelectionSet.Allows(tableName))
                     {
@@ -147,12 +118,6 @@ WHERE t.name <> '" + HistoryRepository.DefaultTableName + "'";
 
                     var maxLength = reader.IsDBNull(10) ? default(int?) : reader.GetInt32(10);
 
-                    if (dataTypeName == "nvarchar"
-                        || dataTypeName == "nchar")
-                    {
-                        maxLength /= 2;
-                    }
-
                     if (dataTypeName == "decimal"
                         || dataTypeName == "numeric")
                     {
@@ -161,7 +126,7 @@ WHERE t.name <> '" + HistoryRepository.DefaultTableName + "'";
                     }
 
                     var isIdentity = !reader.IsDBNull(11) && reader.GetBoolean(11);
-                    var isComputed = reader.GetBoolean(12) || dataTypeName == "timestamp";
+                    var isComputed = reader.GetBoolean(12) || dataTypeName == "rowversion";
 
                     var table = _tables[TableKey(tableName)];
                     var column = new ColumnModel
@@ -173,7 +138,7 @@ WHERE t.name <> '" + HistoryRepository.DefaultTableName + "'";
                         IsNullable = nullable,
                         PrimaryKeyOrdinal = reader.IsDBNull(6) ? default(int?) : reader.GetInt32(6),
                         DefaultValue = reader.IsDBNull(7) ? null : reader.GetString(7),
-                        Precision = reader.IsDBNull(8) ? default(int?) : reader.GetInt32(8),
+                        Precision = reader.IsDBNull(8) ? default(int?) : Convert.ToInt32(reader[8], System.Globalization.CultureInfo.InvariantCulture),
                         Scale = reader.IsDBNull(9) ? default(int?) : reader.GetInt32(9),
                         MaxLength = maxLength <= 0 ? default(int?) : maxLength,
                         IsIdentity = isIdentity,
@@ -191,36 +156,18 @@ WHERE t.name <> '" + HistoryRepository.DefaultTableName + "'";
 
         private void GetIndexes()
         {
-
-            //     @"SELECT TOP(2147483648)
-            //'[' + tc.TABLE_NAME + ']' + '[' + tc.CONSTRAINT_NAME      + ']' + '[' + kcu.COLUMN_NAME + ']'    [Id]
-            //, '[' + tc.TABLE_NAME + ']' + '[' + kcu.COLUMN_NAME + ']'             [ColumnId]
-            //, '[' + tc.CONSTRAINT_NAME + ']' [ConstraintId]
-            //, tc.CONSTRAINT_TYPE [ConstraintType]
-            //, kcu.ORDINAL_POSITION [Ordinal]
-            //FROM
-            //INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc
-            //INNER JOIN
-            //INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu
-            //ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
-            //AND tc.TABLE_NAME = kcu.TABLE_NAME
-            //WHERE tc.TABLE_NAME IS NOT NULL";
-
+            //TODO ERIKEJ Filter out unique indexes that duplicate the PK index, maybe??
             var command = _connection.CreateCommand();
-            command.CommandText = @"SELECT 
-    i.name AS [index_name],
-    object_schema_name(i.object_id) AS [schema_name],
-    object_name(i.object_id) AS [table_name],
-	i.is_unique,
-    c.name AS [column_name],
-    i.type_desc
-FROM sys.indexes i
-    inner join sys.index_columns ic  ON i.object_id = ic.object_id AND i.index_id = ic.index_id
-    inner join sys.columns c ON ic.object_id = c.object_id AND c.column_id = ic.column_id
-WHERE   object_schema_name(i.object_id) <> 'sys' 
-    AND i.is_primary_key <> 1
-    AND object_name(i.object_id) <> '" + HistoryRepository.DefaultTableName + @"'
-ORDER BY i.name, ic.key_ordinal";
+            command.CommandText = @"SELECT  
+    ix.[INDEX_NAME] AS [index_name],
+    NULL AS [schema_name],
+    ix.[TABLE_NAME] AS [table_name],
+	ix.[UNIQUE] AS is_unique,
+    ix.[COLUMN_NAME] AS [column_name]
+    FROM INFORMATION_SCHEMA.INDEXES ix
+    WHERE ix.PRIMARY_KEY = 0
+    AND (SUBSTRING(TABLE_NAME, 1,2) <> '__')
+    ORDER BY ix.[INDEX_NAME], ix.[ORDINAL_POSITION];";
 
             using (var reader = command.ExecuteReader())
             {
@@ -228,7 +175,6 @@ ORDER BY i.name, ic.key_ordinal";
                 while (reader.Read())
                 {
                     var indexName = reader.GetString(0);
-                    var schemaName = reader.GetString(1);
                     var tableName = reader.GetString(2);
 
                     if (!_tableSelectionSet.Allows(tableName))
@@ -250,7 +196,7 @@ ORDER BY i.name, ic.key_ordinal";
                             Table = table,
                             Name = indexName,
                             IsUnique = reader.GetBoolean(3),
-                            IsClustered = (reader.GetString(5) == "CLUSTERED") ? true : default(bool?)
+                            IsClustered = false
                         };
                         table.Indexes.Add(index);
                     }
@@ -263,41 +209,26 @@ ORDER BY i.name, ic.key_ordinal";
 
         private void GetForeignKeys()
         {
-            //     @"SELECT TOP(2147483648)
-            //    '[' + FC.CONSTRAINT_NAME + ']' + '[' + FC.TABLE_NAME + ']' + '[' + FC.COLUMN_NAME + ']'  [Id]
-            //,   '[' + FC.TABLE_NAME + ']' + '[' + FC.CONSTRAINT_NAME + ']'                                                           [ConstraintId]
-            //,   '[' + FC.TABLE_NAME      + ']' + '[' + FC.COLUMN_NAME + ']'                                                          [FromColumnId]
-            //,   '[' + PC.TABLE_NAME      + ']' + '[' + PC.COLUMN_NAME + ']'                                                          [ToColumnId]
-            //FROM
-            //INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS AS RC
-            //INNER JOIN
-            //INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS PC /* PRIMARY KEY COLS*/
-            //ON        RC.UNIQUE_CONSTRAINT_NAME    = PC.CONSTRAINT_NAME
-            //AND       RC.UNIQUE_CONSTRAINT_TABLE_NAME = PC.TABLE_NAME
-            //INNER JOIN
-            //INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS FC /* FOREIGN KEY COLS*/
-            //ON        RC.CONSTRAINT_NAME    = FC.CONSTRAINT_NAME
-            //AND      RC.CONSTRAINT_TABLE_NAME = FC.TABLE_NAME
-            //AND      PC.ORDINAL_POSITION = FC.ORDINAL_POSITION";
-
-
-
             var command = _connection.CreateCommand();
+            //TODO ErikEJ Assume name is used to uniquely identify the constraint?
             command.CommandText = @"SELECT 
-    f.name AS foreign_key_name,
-    schema_name(f.schema_id) AS [schema_name],
-    object_name(f.parent_object_id) AS table_name,
-    object_schema_name(f.referenced_object_id) AS principal_table_schema_name,
-    object_name(f.referenced_object_id) AS principal_table_name,
-    col_name(fc.parent_object_id, fc.parent_column_id) AS constraint_column_name,
-    col_name(fc.referenced_object_id, fc.referenced_column_id) AS referenced_column_name,
-    is_disabled,
-    delete_referential_action_desc,
-    update_referential_action_desc
-FROM sys.foreign_keys AS f
-INNER JOIN sys.foreign_key_columns AS fc 
-   ON f.object_id = fc.constraint_object_id
-ORDER BY f.name, fc.constraint_column_id";
+                KCU1.TABLE_NAME + '_' + KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
+                NULL AS [SCHEMA_NAME],
+                KCU1.TABLE_NAME AS FK_TABLE_NAME,  
+                NULL AS [UQ_SCHEMA_NAME],
+                KCU2.TABLE_NAME AS UQ_TABLE_NAME, 
+                KCU1.COLUMN_NAME AS FK_COLUMN_NAME, 
+                KCU2.COLUMN_NAME AS UQ_COLUMN_NAME, 
+                0 AS [IS_DISABLED],
+                RC.DELETE_RULE, 
+                RC.UPDATE_RULE
+                FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS RC 
+                JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE KCU1 ON KCU1.CONSTRAINT_NAME = RC.CONSTRAINT_NAME 
+                AND KCU1.TABLE_NAME = RC.CONSTRAINT_TABLE_NAME 
+                JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE KCU2 ON  KCU2.CONSTRAINT_NAME =  RC.UNIQUE_CONSTRAINT_NAME 
+                    AND KCU2.ORDINAL_POSITION = KCU1.ORDINAL_POSITION 
+                    AND KCU2.TABLE_NAME = RC.UNIQUE_CONSTRAINT_TABLE_NAME 
+                ORDER BY FK_TABLE_NAME, FK_CONSTRAINT_NAME, KCU1.ORDINAL_POSITION;";
             using (var reader = command.ExecuteReader())
             {
                 var lastFkName = "";
@@ -350,17 +281,8 @@ ORDER BY f.name, fc.constraint_column_id";
         {
             switch (onDeleteAction.ToUpperInvariant())
             {
-                case "RESTRICT":
-                    return ReferentialAction.Restrict;
-
                 case "CASCADE":
                     return ReferentialAction.Cascade;
-
-                case "SET_NULL":
-                    return ReferentialAction.SetNull;
-
-                case "SET_DEFAULT":
-                    return ReferentialAction.SetDefault;
 
                 case "NO_ACTION":
                     return ReferentialAction.NoAction;

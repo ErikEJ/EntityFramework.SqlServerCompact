@@ -2,16 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
 
 namespace E2ETest.Namespace
 {
-    public class OneToOnePrincipal
+    public partial class OneToOnePrincipal
     {
         public int OneToOnePrincipalID1 { get; set; }
         public int OneToOnePrincipalID2 { get; set; }
         [Required]
+        [MaxLength(20)]
         public string SomeOneToOnePrincipalColumn { get; set; }
 
         [InverseProperty("OneToOneDependentNavigation")]

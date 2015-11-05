@@ -118,10 +118,25 @@ namespace Microsoft.Data.Entity.Scaffolding
 
                     var maxLength = reader.IsDBNull(10) ? default(int?) : reader.GetInt32(10);
 
+                    int? precision = null;
+                    int? scale = null;
+
                     if (dataTypeName == "decimal"
                         || dataTypeName == "numeric")
                     {
+                        precision = reader.IsDBNull(8) ? default(int?) : Convert.ToInt32(reader[8], System.Globalization.CultureInfo.InvariantCulture);
+                        scale = reader.IsDBNull(9) ? default(int?) : Convert.ToInt32(reader[9], System.Globalization.CultureInfo.InvariantCulture);
                         // maxlength here represents storage bytes. The server determines this, not the client.
+                        maxLength = null;
+                    }
+
+                    if (dataTypeName == "rowversion")
+                    {
+                        maxLength = null;
+                    }
+
+                    if (maxLength.HasValue && maxLength.Value > 8000)
+                    {
                         maxLength = null;
                     }
 
@@ -129,17 +144,18 @@ namespace Microsoft.Data.Entity.Scaffolding
                     var isComputed = reader.GetBoolean(12) || dataTypeName == "rowversion";
 
                     var table = _tables[TableKey(tableName)];
+                    var columnName = reader.GetString(3);
                     var column = new ColumnModel
                     {
                         Table = table,
                         DataType = dataTypeName,
-                        Name = reader.GetString(3),
+                        Name = columnName,
                         Ordinal = reader.GetInt32(4) - 1,
                         IsNullable = nullable,
                         PrimaryKeyOrdinal = reader.IsDBNull(6) ? default(int?) : reader.GetInt32(6),
                         DefaultValue = reader.IsDBNull(7) ? null : reader.GetString(7),
-                        Precision = reader.IsDBNull(8) ? default(int?) : Convert.ToInt32(reader[8], System.Globalization.CultureInfo.InvariantCulture),
-                        Scale = reader.IsDBNull(9) ? default(int?) : reader.GetInt32(9),
+                        Precision = precision,
+                        Scale = scale,
                         MaxLength = maxLength <= 0 ? default(int?) : maxLength,
                         IsIdentity = isIdentity,
                         ValueGenerated = isIdentity ?
@@ -156,7 +172,7 @@ namespace Microsoft.Data.Entity.Scaffolding
 
         private void GetIndexes()
         {
-            //TODO ERIKEJ Filter out unique indexes that duplicate the PK index, maybe??
+            //TODO ERIKEJ Filter out unique indexes that duplicate the PK index
             var command = _connection.CreateCommand();
             command.CommandText = @"SELECT  
     ix.[INDEX_NAME] AS [index_name],
@@ -196,7 +212,7 @@ namespace Microsoft.Data.Entity.Scaffolding
                             Table = table,
                             Name = indexName,
                             IsUnique = reader.GetBoolean(3),
-                            IsClustered = false
+                            IsClustered = null
                         };
                         table.Indexes.Add(index);
                     }
@@ -210,7 +226,6 @@ namespace Microsoft.Data.Entity.Scaffolding
         private void GetForeignKeys()
         {
             var command = _connection.CreateCommand();
-            //TODO ErikEJ Assume name is used to uniquely identify the constraint?
             command.CommandText = @"SELECT 
                 KCU1.TABLE_NAME + '_' + KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
                 NULL AS [SCHEMA_NAME],
@@ -236,7 +251,6 @@ namespace Microsoft.Data.Entity.Scaffolding
                 while (reader.Read())
                 {
                     var fkName = reader.GetString(0);
-                    var schemaName = reader.GetString(1);
                     var tableName = reader.GetString(2);
 
                     if (!_tableSelectionSet.Allows(tableName))
@@ -247,7 +261,6 @@ namespace Microsoft.Data.Entity.Scaffolding
                         || lastFkName != fkName)
                     {
                         lastFkName = fkName;
-                        var principalSchemaTableName = reader.GetString(3);
                         var principalTableName = reader.GetString(4);
                         var table = _tables[TableKey(tableName)];
                         TableModel principalTable;
@@ -284,7 +297,7 @@ namespace Microsoft.Data.Entity.Scaffolding
                 case "CASCADE":
                     return ReferentialAction.Cascade;
 
-                case "NO_ACTION":
+                case "NO ACTION":
                     return ReferentialAction.NoAction;
 
                 default:

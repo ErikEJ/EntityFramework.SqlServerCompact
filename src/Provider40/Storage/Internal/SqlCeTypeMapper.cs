@@ -14,7 +14,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
         private readonly SqlCeMaxLengthMapping _varbinary512 = new SqlCeMaxLengthMapping("varbinary(512)", typeof(byte[]), DbType.Binary);
         private readonly RelationalSizedTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", typeof(byte[]), DbType.Binary, 8);
         private readonly RelationalTypeMapping _int = new RelationalTypeMapping("int", typeof(int), DbType.Int32);
-        private readonly RelationalTypeMapping _bigint = new RelationalTypeMapping("bigint", typeof(int), DbType.Int64);
+        private readonly RelationalTypeMapping _bigint = new RelationalTypeMapping("bigint", typeof(long), DbType.Int64);
         private readonly RelationalTypeMapping _bit = new RelationalTypeMapping("bit", typeof(bool));
         private readonly RelationalTypeMapping _smallint = new RelationalTypeMapping("smallint", typeof(short), DbType.Int16);
         private readonly RelationalTypeMapping _tinyint = new RelationalTypeMapping("tinyint", typeof(byte), DbType.Byte);

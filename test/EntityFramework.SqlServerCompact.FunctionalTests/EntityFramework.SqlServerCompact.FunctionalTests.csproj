@@ -193,6 +193,7 @@
     <Compile Include="QueryNoClientEvalSqlCeFixture.cs" />
     <Compile Include="QueryNoClientEvalSqlCeTest.cs" />
     <Compile Include="QuerySqlCeTest.cs" />
+    <Compile Include="SqlCeCommandDisposeTest.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />
     <Compile Include="SqlCeDataStoreCreatorTest.cs" />
     <Compile Include="SqlCeMigrationsTest.cs" />

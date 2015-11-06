@@ -11,7 +11,7 @@ using System.Resources;
 
 [assembly: AssemblyVersion("7.0.0.0")]
 [assembly: AssemblyFileVersion("7.0.0.0")]
-[assembly: AssemblyInformationalVersion("7.0.0.0-beta8")]
+[assembly: AssemblyInformationalVersion("7.0.0.0-rc1")]
 
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: AssemblyMetadata("Serviceable", "True")]

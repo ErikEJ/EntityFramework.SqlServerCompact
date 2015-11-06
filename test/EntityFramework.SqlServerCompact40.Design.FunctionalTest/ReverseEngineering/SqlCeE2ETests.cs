@@ -100,8 +100,8 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineer
                 "Test_Spaces_Keywords_Table.expected"
             };
 
-        //[Fact]
-        //[UseCulture("en-US")]
+        [Fact]
+        [UseCulture("en-US")]
         public void E2ETest_UseAttributesInsteadOfFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration
@@ -130,22 +130,6 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineer
                     .Concat(_expectedEntityTypeFiles).ToList()
             };
 
-            AssertLog(new LoggerMessages
-            {
-                Warn =
-                        {
-                            RelationalDesignStrings.CannotFindTypeMappingForColumn("dbo.AllDataTypes.geographyColumn", "geography"),
-                            RelationalDesignStrings.CannotFindTypeMappingForColumn("dbo.AllDataTypes.geometryColumn", "geometry"),
-                            RelationalDesignStrings.CannotFindTypeMappingForColumn("dbo.AllDataTypes.hierarchyidColumn", "hierarchyid"),
-                            RelationalDesignStrings.CannotFindTypeMappingForColumn("dbo.AllDataTypes.sql_variantColumn", "sql_variant"),
-                            RelationalDesignStrings.CannotFindTypeMappingForColumn("dbo.AllDataTypes.xmlColumn", "xml"),
-                            RelationalDesignStrings.UnableToScaffoldIndex("IX_UnscaffoldableIndex"),
-                            //SqlServerDesignStrings.DataTypeDoesNotAllowSqlServerIdentityStrategy("dbo.PropertyConfiguration.PropertyConfigurationID","tinyint"),
-                            RelationalDesignStrings.CannotFindTypeMappingForColumn("dbo.TableWithUnmappablePrimaryKeyColumn.TableWithUnmappablePrimaryKeyColumnID", "hierarchyid"),
-                            RelationalDesignStrings.PrimaryKeyErrorPropertyNotFound("dbo.TableWithUnmappablePrimaryKeyColumn"),
-                            RelationalDesignStrings.UnableToGenerateEntityType("dbo.TableWithUnmappablePrimaryKeyColumn"),
-                        }
-            });
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }

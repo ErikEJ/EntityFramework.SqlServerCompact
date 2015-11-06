@@ -18,10 +18,12 @@ namespace E2ETest.Namespace
         public DateTime? datetime24Column { get; set; }
         public DateTime? datetime2Column { get; set; }
         public DateTime? datetimeColumn { get; set; }
-        public DateTimeOffset? datetimeoffset5Column { get; set; }
-        public DateTimeOffset? datetimeoffsetColumn { get; set; }
+        public DateTime? datetimeoffset5Column { get; set; }
+        public DateTime? datetimeoffsetColumn { get; set; }
         public decimal decimalColumn { get; set; }
         public double floatColumn { get; set; }
+        public byte[] geographyColumn { get; set; }
+        public byte[] geometryColumn { get; set; }
         public byte[] imageColumn { get; set; }
         public int intColumn { get; set; }
         public decimal moneyColumn { get; set; }
@@ -36,8 +38,10 @@ namespace E2ETest.Namespace
         public short smallintColumn { get; set; }
         public decimal smallmoneyColumn { get; set; }
         public string textColumn { get; set; }
-        public TimeSpan? time4Column { get; set; }
-        public TimeSpan? timeColumn { get; set; }
+        [MaxLength(16)]
+        public string time4Column { get; set; }
+        [MaxLength(16)]
+        public string timeColumn { get; set; }
         public byte[] timestampColumn { get; set; }
         public byte tinyintColumn { get; set; }
         public Guid? uniqueidentifierColumn { get; set; }
@@ -45,5 +49,6 @@ namespace E2ETest.Namespace
         public byte[] varbinaryColumn { get; set; }
         [MaxLength(1)]
         public string varcharColumn { get; set; }
+        public string xmlColumn { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Data.Entity.FunctionalTests.TestModels.Northwind;
+using Microsoft.Data.Entity.FunctionalTests.TestUtilities.Xunit;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -17,31 +18,126 @@ namespace Microsoft.Data.Entity.FunctionalTests
         {
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
+        public override void SelectMany_Joined_Take()
+        {
+            //TODO ErikEJ Hackathon Why does this fail?
+            //            base.SelectMany_Joined_Take();
+
+            //            Assert.Equal(
+            //                @"SELECT [c].[CustomerID], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [c].[ContactName]
+            //FROM [Customers] AS [c]
+            //CROSS APPLY (
+            //    SELECT TOP(1000) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+            //    FROM [Orders] AS [o]
+            //    WHERE [o].[CustomerID] = [c].[CustomerID]
+            //) AS [t0]",
+            //                Sql);
+        }
+
+        public override void Where_shadow_subquery_first()
+        {
+            //            base.Where_shadow_subquery_first();
+
+            //            Assert.Equal(
+            //                 @"SELECT [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
+            //FROM [Employees] AS [e]
+            //WHERE [e].[Title] = (
+            //    SELECT TOP(1) [e2].[Title]
+            //    FROM [Employees] AS [e2]
+            //    ORDER BY [e2].[Title]
+            //)",
+            //                 Sql);
+        }
+
+        public override void Where_query_composition()
+        {
+            //            base.Where_query_composition();
+
+            //            Assert.Equal(
+            //                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+            //FROM [Employees] AS [e1]
+            //WHERE [e1].[FirstName] = (
+            //    SELECT TOP(1) [e].[FirstName]
+            //    FROM [Employees] AS [e]
+            //    ORDER BY [e].[EmployeeID]
+            //)",
+            //                 Sql);
+        }
+
+        public override void Where_subquery_correlated()
+        {
+            //            base.Where_subquery_correlated();
+
+            //            Assert.Equal(
+            //                 @"SELECT [c1].[CustomerID], [c1].[Address], [c1].[City], [c1].[CompanyName], [c1].[ContactName], [c1].[ContactTitle], [c1].[Country], [c1].[Fax], [c1].[Phone], [c1].[PostalCode], [c1].[Region]
+            //FROM [Customers] AS [c1]
+            //WHERE (
+            //    SELECT CASE
+            //        WHEN EXISTS (
+            //            SELECT 1
+            //            FROM [Customers] AS [c2]
+            //            WHERE [c1].[CustomerID] = [c2].[CustomerID])
+            //        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+            //    END
+            //) = 1",
+            //                 Sql);
+        }
+
+        public override void OrderBy_correlated_subquery_lol()
+        {
+            //            base.OrderBy_correlated_subquery_lol();
+
+            //            Assert.Equal(
+            //                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+            //FROM [Customers] AS [c]
+            //ORDER BY (
+            //    SELECT CASE
+            //        WHEN EXISTS (
+            //            SELECT 1
+            //            FROM [Customers] AS [c2]
+            //            WHERE [c2].[CustomerID] = [c].[CustomerID])
+            //        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+            //    END
+            //)",
+            //                Sql);
+        }
+
+        public override void Where_subquery_recursive_trivial()
+        {
+            //            base.Where_subquery_recursive_trivial();
+
+            //            Assert.Equal(
+            //                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+            //FROM [Employees] AS [e1]
+            //WHERE (
+            //    SELECT CASE
+            //        WHEN EXISTS (
+            //            SELECT 1
+            //            FROM [Employees] AS [e2]
+            //            WHERE (
+            //                SELECT CASE
+            //                    WHEN EXISTS (
+            //                        SELECT 1
+            //                        FROM [Employees] AS [e3])
+            //                    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+            //                END
+            //            ) = 1)
+            //        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+            //    END
+            //) = 1
+            //ORDER BY [e1].[EmployeeID]",
+            //                Sql);
+        }
 
         public override void Default_if_empty_top_level()
         {
             base.Default_if_empty_top_level();
 
             Assert.StartsWith(
-                  @"SELECT [c].[EmployeeID], [c].[City], [c].[Country], [c].[FirstName], [c].[ReportsTo], [c].[Title]
+                @"SELECT [c].[EmployeeID], [c].[City], [c].[Country], [c].[FirstName], [c].[ReportsTo], [c].[Title]
 FROM [Employees] AS [c]
 WHERE [c].[EmployeeID] = -1",
-                  Sql);
-        }
-
-        public override void Where_query_composition()
-        {
-//            base.Where_query_composition();
-
-//            Assert.Equal(
-//                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
-//FROM [Employees] AS [e1]
-//WHERE [e1].[FirstName] = (
-//    SELECT TOP(1) [e].[FirstName]
-//    FROM [Employees] AS [e]
-//    ORDER BY [e].[EmployeeID]
-//)",
-//                 Sql);
+                Sql);
         }
 
         public override void Where_query_composition_is_null()
@@ -49,12 +145,12 @@ WHERE [c].[EmployeeID] = -1",
             base.Where_query_composition_is_null();
 
             Assert.StartsWith(
-                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
 FROM [Employees] AS [e1]
 
 SELECT [e2].[EmployeeID], [e2].[City], [e2].[Country], [e2].[FirstName], [e2].[ReportsTo], [e2].[Title]
 FROM [Employees] AS [e2]",
-                 Sql);
+                Sql);
         }
 
         public override void Where_query_composition_is_not_null()
@@ -62,12 +158,12 @@ FROM [Employees] AS [e2]",
             base.Where_query_composition_is_null();
 
             Assert.StartsWith(
-                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
 FROM [Employees] AS [e1]
 
 SELECT [e2].[EmployeeID], [e2].[City], [e2].[Country], [e2].[FirstName], [e2].[ReportsTo], [e2].[Title]
 FROM [Employees] AS [e2]",
-                 Sql);
+                Sql);
         }
 
         public override void Where_query_composition_entity_equality()
@@ -75,12 +171,12 @@ FROM [Employees] AS [e2]",
             base.Where_query_composition_entity_equality();
 
             Assert.StartsWith(
-                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
 FROM [Employees] AS [e1]
 
 SELECT [e2].[EmployeeID], [e2].[City], [e2].[Country], [e2].[FirstName], [e2].[ReportsTo], [e2].[Title]
 FROM [Employees] AS [e2]",
-                 Sql);
+                Sql);
         }
 
         public override void Where_query_composition2()
@@ -88,28 +184,13 @@ FROM [Employees] AS [e2]",
             base.Where_query_composition2();
 
             Assert.StartsWith(
-                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
 FROM [Employees] AS [e1]
 
 SELECT TOP(1) [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
 FROM [Employees] AS [e]
 ORDER BY [e].[EmployeeID]",
-                 Sql);
-        }
-
-        public override void Where_shadow_subquery_first()
-        {
-//            base.Where_shadow_subquery_first();
-
-//            Assert.Equal(
-//                 @"SELECT [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
-//FROM [Employees] AS [e]
-//WHERE [e].[Title] = (
-//    SELECT TOP(1) [e2].[Title]
-//    FROM [Employees] AS [e2]
-//    ORDER BY [e2].[Title]
-//)",
-//                 Sql);
+                Sql);
         }
 
         public override void Select_Subquery_Single()
@@ -117,7 +198,7 @@ ORDER BY [e].[EmployeeID]",
             base.Select_Subquery_Single();
 
             Assert.Equal(
-                 @"SELECT TOP(2) [od].[OrderID]
+                @"SELECT TOP(2) [od].[OrderID]
 FROM [Order Details] AS [od]
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
@@ -125,7 +206,7 @@ FROM [Orders] AS [o]
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]",
-                 Sql);
+                Sql);
         }
 
         public override void Select_Where_Subquery_Deep_Single()
@@ -133,7 +214,7 @@ FROM [Orders] AS [o]",
             base.Select_Where_Subquery_Deep_Single();
 
             Assert.StartsWith(
-                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
 
 SELECT [o].[OrderID], [o].[CustomerID]
@@ -141,7 +222,7 @@ FROM [Orders] AS [o]
 
 SELECT [c].[CustomerID], [c].[City]
 FROM [Customers] AS [c]",
-                 Sql);
+                Sql);
         }
 
         public override void Select_Where_Subquery_Deep_First()
@@ -149,7 +230,7 @@ FROM [Customers] AS [c]",
             base.Select_Where_Subquery_Deep_First();
 
             Assert.StartsWith(
-                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
+                @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
 
 SELECT [o].[OrderID], [o].[CustomerID]
@@ -157,7 +238,7 @@ FROM [Orders] AS [o]
 
 SELECT [c].[CustomerID], [c].[City]
 FROM [Customers] AS [c]",
-                 Sql);
+                Sql);
         }
 
         public override void Where_subquery_anon()
@@ -177,36 +258,17 @@ CROSS JOIN (
                 Sql);
         }
 
-        public override void Where_subquery_correlated()
-        {
-//            base.Where_subquery_correlated();
-
-//            Assert.Equal(
-//                 @"SELECT [c1].[CustomerID], [c1].[Address], [c1].[City], [c1].[CompanyName], [c1].[ContactName], [c1].[ContactTitle], [c1].[Country], [c1].[Fax], [c1].[Phone], [c1].[PostalCode], [c1].[Region]
-//FROM [Customers] AS [c1]
-//WHERE (
-//    SELECT CASE
-//        WHEN EXISTS (
-//            SELECT 1
-//            FROM [Customers] AS [c2]
-//            WHERE [c1].[CustomerID] = [c2].[CustomerID])
-//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//    END
-//) = 1",
-//                 Sql);
-        }
-
         public override void Where_subquery_correlated_client_eval()
         {
             base.Where_subquery_correlated_client_eval();
 
             Assert.StartsWith(
-                 @"SELECT [c1].[CustomerID], [c1].[Address], [c1].[City], [c1].[CompanyName], [c1].[ContactName], [c1].[ContactTitle], [c1].[Country], [c1].[Fax], [c1].[Phone], [c1].[PostalCode], [c1].[Region]
+                @"SELECT [c1].[CustomerID], [c1].[Address], [c1].[City], [c1].[CompanyName], [c1].[ContactName], [c1].[ContactTitle], [c1].[Country], [c1].[Fax], [c1].[Phone], [c1].[PostalCode], [c1].[Region]
 FROM [Customers] AS [c1]
 
 SELECT [c2].[CustomerID], [c2].[Address], [c2].[City], [c2].[CompanyName], [c2].[ContactName], [c2].[ContactTitle], [c2].[Country], [c2].[Fax], [c2].[Phone], [c2].[PostalCode], [c2].[Region]
 FROM [Customers] AS [c2]",
-                 Sql);
+                Sql);
         }
 
         public override void OrderBy_SelectMany()
@@ -214,14 +276,14 @@ FROM [Customers] AS [c2]",
             base.OrderBy_SelectMany();
 
             Assert.StartsWith(
-     @"SELECT [c].[CustomerID], [c].[ContactName]
+                @"SELECT [c].[CustomerID], [c].[ContactName]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]
 
 SELECT [o].[CustomerID], [o].[OrderID]
 FROM [Orders] AS [o]
 ORDER BY [o].[OrderID]",
-     Sql);
+                Sql);
         }
 
         public override void Where_simple_closure()
@@ -682,9 +744,9 @@ FROM [Orders] AS [o]",
             base.Sum_with_arg_expression();
 
             Assert.Equal(
-                 @"SELECT SUM([o].[OrderID] + [o].[OrderID])
+                @"SELECT SUM([o].[OrderID] + [o].[OrderID])
 FROM [Orders] AS [o]",
-                 Sql);
+                Sql);
         }
 
         public override void Sum_with_binary_expression()
@@ -764,7 +826,7 @@ FROM (
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Skip()
         {
             base.Skip();
@@ -777,7 +839,7 @@ OFFSET 5 ROWS",
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Skip_no_orderby()
         {
             base.Skip_no_orderby();
@@ -790,7 +852,7 @@ OFFSET 5 ROWS",
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Skip_Take()
         {
             base.Skip_Take();
@@ -803,10 +865,11 @@ OFFSET 5 ROWS FETCH NEXT 10 ROWS ONLY",
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Join_Customers_Orders_Skip_Take()
         {
             base.Join_Customers_Orders_Skip_Take();
+
             Assert.Equal(
                 @"SELECT [c].[ContactName], [o].[OrderID]
 FROM [Customers] AS [c]
@@ -816,10 +879,11 @@ OFFSET 10 ROWS FETCH NEXT 5 ROWS ONLY",
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Join_Customers_Orders_Projection_With_String_Concat_Skip_Take()
         {
             base.Join_Customers_Orders_Projection_With_String_Concat_Skip_Take();
+
             Assert.Equal(
                 @"SELECT ([c].[ContactName] + ' ') + [c].[ContactTitle], [o].[OrderID]
 FROM [Customers] AS [c]
@@ -829,7 +893,7 @@ OFFSET 10 ROWS FETCH NEXT 5 ROWS ONLY",
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Take_Skip()
         {
             base.Take_Skip();
@@ -846,7 +910,7 @@ OFFSET 5 ROWS",
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Take_Skip_Distinct()
         {
             base.Take_Skip_Distinct();
@@ -970,6 +1034,20 @@ ORDER BY [c].[CustomerID]",
                 @"SELECT TOP(10) [c].[City]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
+                Sql);
+        }
+
+        public override void Take_subquery_projection()
+        {
+            base.Take_subquery_projection();
+
+            Assert.Equal(
+                @"SELECT [t0].[City]
+FROM (
+    SELECT TOP(2) [c].*
+    FROM [Customers] AS [c]
+    ORDER BY [c].[CustomerID]
+) AS [t0]",
                 Sql);
         }
 
@@ -1132,11 +1210,11 @@ FROM [Customers] AS [c]",
             base.Select_local();
 
             Assert.Equal(
-                 @"@__x_0: 10
+                @"@__x_0: 10
 
 SELECT @__x_0
 FROM [Customers] AS [c]",
-                 Sql);
+                Sql);
         }
 
         public override void Where_simple()
@@ -1209,10 +1287,10 @@ FROM [Customers] AS [c]",
             base.Where_client_and_server_top_level();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] <> 'AROUT'",
-    Sql);
+                Sql);
         }
 
         public override void Where_client_or_server_top_level()
@@ -1421,10 +1499,10 @@ WHERE 1 = 0",
                 Sql);
 
             Assert.True(TestSqlLoggerFactory.Log.Contains(
-                 "Possible unintended use of method Equals(object) for arguments of different types: 'e.ReportsTo', '__longPrm_0'. This comparison will always return 'false'."));
+                "Possible unintended use of method Equals(object) for arguments of different types: 'e.ReportsTo', '__longPrm_0'. This comparison will always return 'false'."));
 
             Assert.True(TestSqlLoggerFactory.Log.Contains(
-                 "Possible unintended use of method Equals(object) for arguments of different types: '__longPrm_0', 'e.ReportsTo'. This comparison will always return 'false'."));
+                "Possible unintended use of method Equals(object) for arguments of different types: '__longPrm_0', 'e.ReportsTo'. This comparison will always return 'false'."));
         }
 
         public override void Where_equals_on_mismatched_types_nullable_long_nullable_int()
@@ -1442,10 +1520,10 @@ WHERE 1 = 0",
                 Sql);
 
             Assert.True(TestSqlLoggerFactory.Log.Contains(
-                  "Possible unintended use of method Equals(object) for arguments of different types: '__nullableLongPrm_0', 'e.ReportsTo'. This comparison will always return 'false'."));
+                "Possible unintended use of method Equals(object) for arguments of different types: '__nullableLongPrm_0', 'e.ReportsTo'. This comparison will always return 'false'."));
 
             Assert.True(TestSqlLoggerFactory.Log.Contains(
-                 "Possible unintended use of method Equals(object) for arguments of different types: 'e.ReportsTo', '__nullableLongPrm_0'. This comparison will always return 'false'."));
+                "Possible unintended use of method Equals(object) for arguments of different types: 'e.ReportsTo', '__nullableLongPrm_0'. This comparison will always return 'false'."));
         }
 
         public override void Where_equals_on_matched_nullable_int_types()
@@ -1498,11 +1576,6 @@ SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[Cont
 FROM [Customers] AS [c]
 WHERE GETDATE() <> @__myDatetime_0",
                 Sql);
-        }
-
-        public override void Where_datetime_utcnow()
-        {
-            //base.Where_datetime_utcnow();
         }
 
         public override void Where_is_null()
@@ -1959,7 +2032,8 @@ FROM [Employees] AS [e3]",
                 @"SELECT COUNT(*)
 FROM [Customers] AS [c]
 INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
-WHERE [c].[CustomerID] = 'ALFKI'", Sql);
+WHERE [c].[CustomerID] = 'ALFKI'",
+                Sql);
         }
 
         public override void Join_OrderBy_Count()
@@ -1969,7 +2043,8 @@ WHERE [c].[CustomerID] = 'ALFKI'", Sql);
             Assert.Equal(
                 @"SELECT COUNT(*)
 FROM [Customers] AS [c]
-INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]", Sql);
+INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]",
+                Sql);
         }
 
         public override void Join_customers_orders_with_subquery()
@@ -1982,7 +2057,8 @@ FROM [Orders] AS [o2]
 ORDER BY [o2].[OrderID]
 
 SELECT [c].[CustomerID], [c].[ContactName]
-FROM [Customers] AS [c]", Sql);
+FROM [Customers] AS [c]",
+                Sql);
         }
 
         public override void Join_customers_orders_with_subquery_with_take()
@@ -1997,7 +2073,8 @@ INNER JOIN (
     FROM [Orders] AS [o2]
     ORDER BY [o2].[OrderID]
 ) AS [t0] ON [c].[CustomerID] = [t0].[CustomerID]
-WHERE [t0].[CustomerID] = 'ALFKI'", Sql);
+WHERE [t0].[CustomerID] = 'ALFKI'",
+                Sql);
         }
 
         public override void Join_customers_orders_with_subquery_anonymous_property_method()
@@ -2010,7 +2087,8 @@ FROM [Orders] AS [o2]
 ORDER BY [o2].[OrderID]
 
 SELECT [c].[CustomerID]
-FROM [Customers] AS [c]", Sql);
+FROM [Customers] AS [c]",
+                Sql);
         }
 
         public override void Join_customers_orders_with_subquery_anonymous_property_method_with_take()
@@ -2023,7 +2101,8 @@ FROM [Orders] AS [o2]
 ORDER BY [o2].[OrderID]
 
 SELECT [c].[CustomerID]
-FROM [Customers] AS [c]", Sql);
+FROM [Customers] AS [c]",
+                Sql);
         }
 
         public override void Join_customers_orders_with_subquery_predicate()
@@ -2037,7 +2116,8 @@ WHERE [o2].[OrderID] > 0
 ORDER BY [o2].[OrderID]
 
 SELECT [c].[CustomerID], [c].[ContactName]
-FROM [Customers] AS [c]", Sql);
+FROM [Customers] AS [c]",
+                Sql);
         }
 
         public override void Join_customers_orders_with_subquery_predicate_with_take()
@@ -2053,7 +2133,8 @@ INNER JOIN (
     WHERE [o2].[OrderID] > 0
     ORDER BY [o2].[OrderID]
 ) AS [t0] ON [c].[CustomerID] = [t0].[CustomerID]
-WHERE [t0].[CustomerID] = 'ALFKI'", Sql);
+WHERE [t0].[CustomerID] = 'ALFKI'",
+                Sql);
         }
 
         public override void Join_customers_orders_select()
@@ -2063,7 +2144,8 @@ WHERE [t0].[CustomerID] = 'ALFKI'", Sql);
             Assert.Equal(
                 @"SELECT [c].[ContactName], [o].[OrderID]
 FROM [Customers] AS [c]
-INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]", Sql);
+INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]",
+                Sql);
         }
 
         public override void Multiple_joins_Where_Order_Any()
@@ -2079,7 +2161,8 @@ INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]", Sql);
         INNER JOIN [Order Details] AS [od] ON [or].[OrderID] = [od].[OrderID]
         WHERE [c].[City] = 'London')
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-END", Sql);
+END",
+                Sql);
         }
 
         public override void Where_join_select()
@@ -2090,7 +2173,8 @@ END", Sql);
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
-WHERE [c].[CustomerID] = 'ALFKI'", Sql);
+WHERE [c].[CustomerID] = 'ALFKI'",
+                Sql);
         }
 
         public override void Where_orderby_join_select()
@@ -2102,7 +2186,8 @@ WHERE [c].[CustomerID] = 'ALFKI'", Sql);
 FROM [Customers] AS [c]
 INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
 WHERE [c].[CustomerID] <> 'ALFKI'
-ORDER BY [c].[CustomerID]", Sql);
+ORDER BY [c].[CustomerID]",
+                Sql);
         }
 
         public override void Where_join_orderby_join_select()
@@ -2115,7 +2200,8 @@ FROM [Customers] AS [c]
 INNER JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
 INNER JOIN [Order Details] AS [od] ON [o].[OrderID] = [od].[OrderID]
 WHERE [c].[CustomerID] <> 'ALFKI'
-ORDER BY [c].[CustomerID]", Sql);
+ORDER BY [c].[CustomerID]",
+                Sql);
         }
 
         public override void Where_select_many()
@@ -2126,7 +2212,8 @@ ORDER BY [c].[CustomerID]", Sql);
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 CROSS JOIN [Orders] AS [o]
-WHERE [c].[CustomerID] = 'ALFKI'", Sql);
+WHERE [c].[CustomerID] = 'ALFKI'",
+                Sql);
         }
 
         public override void Where_orderby_select_many()
@@ -2138,7 +2225,8 @@ WHERE [c].[CustomerID] = 'ALFKI'", Sql);
 FROM [Customers] AS [c]
 CROSS JOIN [Orders] AS [o]
 WHERE [c].[CustomerID] = 'ALFKI'
-ORDER BY [c].[CustomerID]", Sql);
+ORDER BY [c].[CustomerID]",
+                Sql);
         }
 
         public override void GroupBy_Distinct()
@@ -2225,11 +2313,23 @@ ORDER BY [c].[CustomerID]",
             base.GroupJoin_simple();
 
             Assert.Equal(
-     @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Customers] AS [c]
 LEFT JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
 ORDER BY [c].[CustomerID]",
-     Sql);
+                Sql);
+        }
+
+        public override void GroupJoin_simple2()
+        {
+            base.GroupJoin_simple2();
+
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region], [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Customers] AS [c]
+LEFT JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
+ORDER BY [c].[CustomerID]",
+                Sql);
         }
 
         public override void GroupJoin_simple_ordering()
@@ -2237,11 +2337,11 @@ ORDER BY [c].[CustomerID]",
             base.GroupJoin_simple_ordering();
 
             Assert.Equal(
-     @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Customers] AS [c]
 LEFT JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
 ORDER BY [c].[City], [c].[CustomerID]",
-     Sql);
+                Sql);
         }
 
         public override void GroupJoin_simple_subquery()
@@ -2296,22 +2396,6 @@ FROM [Customers] AS [c]
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]",
                 Sql);
-        }
-
-        public override void SelectMany_Joined_Take()
-        {
-            //TODO ErikEJ Hackathon Why does this fail?
-//            base.SelectMany_Joined_Take();
-
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [c].[ContactName]
-//FROM [Customers] AS [c]
-//CROSS APPLY (
-//    SELECT TOP(1000) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-//    FROM [Orders] AS [o]
-//    WHERE [o].[CustomerID] = [c].[CustomerID]
-//) AS [t0]",
-//                Sql);
         }
 
         public override void Take_with_single()
@@ -2516,52 +2600,6 @@ ORDER BY [c].[Country], [c].[CustomerID]",
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END",
                 Sql);
-        }
-
-        public override void OrderBy_correlated_subquery_lol()
-        {
-//            base.OrderBy_correlated_subquery_lol();
-
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY (
-//    SELECT CASE
-//        WHEN EXISTS (
-//            SELECT 1
-//            FROM [Customers] AS [c2]
-//            WHERE [c2].[CustomerID] = [c].[CustomerID])
-//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//    END
-//)",
-//                Sql);
-        }
-
-        public override void Where_subquery_recursive_trivial()
-        {
-//            base.Where_subquery_recursive_trivial();
-
-//            Assert.Equal(
-//                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
-//FROM [Employees] AS [e1]
-//WHERE (
-//    SELECT CASE
-//        WHEN EXISTS (
-//            SELECT 1
-//            FROM [Employees] AS [e2]
-//            WHERE (
-//                SELECT CASE
-//                    WHEN EXISTS (
-//                        SELECT 1
-//                        FROM [Employees] AS [e3])
-//                    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//                END
-//            ) = 1)
-//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//    END
-//) = 1
-//ORDER BY [e1].[EmployeeID]",
-//                Sql);
         }
 
         public override void Where_false()
@@ -2970,7 +3008,6 @@ FROM [Customers] AS [c]",
                 Sql);
         }
 
-
         public override void String_EndsWith_Literal()
         {
             base.String_EndsWith_Literal();
@@ -3246,6 +3283,23 @@ WHERE CEILING([od].[UnitPrice]) > 10",
 FROM [Order Details] AS [od]
 WHERE FLOOR([od].[UnitPrice]) > 10",
                 Sql);
+        }
+
+        public override void Where_query_composition4()
+        {
+            base.Where_query_composition4();
+
+            Assert.StartsWith(
+                 @"SELECT [c1].[CustomerID], [c1].[Address], [c1].[City], [c1].[CompanyName], [c1].[ContactName], [c1].[ContactTitle], [c1].[Country], [c1].[Fax], [c1].[Phone], [c1].[PostalCode], [c1].[Region]
+FROM [Customers] AS [c1]
+
+SELECT 1
+FROM [Customers] AS [c]
+ORDER BY [c].[CustomerID]
+
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]",
+                 Sql);
         }
 
         public override void Where_math_power()
@@ -3748,7 +3802,7 @@ WHERE [c].[CustomerID] IN (
             base.Contains_with_local_array_closure();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')
 
@@ -3763,7 +3817,7 @@ WHERE [c].[CustomerID] IN ('ABCDE')",
             base.Contains_with_local_array_inline();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
                 Sql);
@@ -3774,7 +3828,7 @@ WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
             base.Contains_with_local_list_closure();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
                 Sql);
@@ -3785,7 +3839,7 @@ WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
             base.Contains_with_local_list_inline();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
                 Sql);
@@ -3796,7 +3850,7 @@ WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
             base.Contains_with_local_list_inline_closure_mix();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
                 Sql);
@@ -3807,7 +3861,7 @@ WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
             base.Contains_with_local_collection_false();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] NOT IN ('ABCDE', 'ALFKI')",
                 Sql);
@@ -3818,7 +3872,7 @@ WHERE [c].[CustomerID] NOT IN ('ABCDE', 'ALFKI')",
             base.Contains_with_local_collection_complex_predicate_and();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ALFKI', 'ABCDE') AND [c].[CustomerID] IN ('ABCDE', 'ALFKI')",
                 Sql);
@@ -3829,7 +3883,7 @@ WHERE [c].[CustomerID] IN ('ALFKI', 'ABCDE') AND [c].[CustomerID] IN ('ABCDE', '
             base.Contains_with_local_collection_complex_predicate_or();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI', 'ALFKI', 'ABCDE')",
                 Sql);
@@ -3840,7 +3894,7 @@ WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI', 'ALFKI', 'ABCDE')",
             base.Contains_with_local_collection_complex_predicate_not_matching_ins1();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ALFKI', 'ABCDE') OR [c].[CustomerID] NOT IN ('ABCDE', 'ALFKI')",
                 Sql);
@@ -3851,7 +3905,7 @@ WHERE [c].[CustomerID] IN ('ALFKI', 'ABCDE') OR [c].[CustomerID] NOT IN ('ABCDE'
             base.Contains_with_local_collection_complex_predicate_not_matching_ins2();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI') AND [c].[CustomerID] NOT IN ('ALFKI', 'ABCDE')",
                 Sql);
@@ -3862,7 +3916,7 @@ WHERE [c].[CustomerID] IN ('ABCDE', 'ALFKI') AND [c].[CustomerID] NOT IN ('ALFKI
             base.Contains_with_local_collection_sql_injection();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN ('ALFKI', 'ABC'')); GO; DROP TABLE Orders; GO; --', 'ALFKI', 'ABCDE')",
                 Sql);
@@ -3873,10 +3927,10 @@ WHERE [c].[CustomerID] IN ('ALFKI', 'ABC'')); GO; DROP TABLE Orders; GO; --', 'A
             base.Contains_with_local_collection_empty_closure();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE 1 = 0",
-        Sql);
+                Sql);
         }
 
         public override void Contains_with_local_collection_empty_inline()
@@ -3884,7 +3938,7 @@ WHERE 1 = 0",
             base.Contains_with_local_collection_empty_inline();
 
             Assert.Equal(
-    @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE 1 = 1",
                 Sql);
@@ -3911,7 +3965,7 @@ WHERE COALESCE([c].[CompanyName], [c].[ContactName]) = 'The Big Cheese'",
                 Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Take_skip_null_coalesce_operator()
         {
             base.Take_skip_null_coalesce_operator();
@@ -3938,7 +3992,7 @@ FROM [Customers] AS [c]
 ORDER BY [Coalesce]", Sql);
         }
 
-        [Fact]
+        [ConditionalFact]
         public override void Select_take_skip_null_coalesce_operator()
         {
             base.Select_take_skip_null_coalesce_operator();
@@ -3952,7 +4006,7 @@ FROM (
 ) AS [t0]
 ORDER BY [Coalesce]
 OFFSET 5 ROWS",
-            Sql);
+                Sql);
         }
 
         public override void Selected_column_can_coalesce()

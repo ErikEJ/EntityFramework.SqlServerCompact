@@ -164,6 +164,8 @@
     <Compile Include="SqlCeTestHelpers.cs" />
     <Compile Include="SqlCeTypeMapperTest.cs" />
     <Compile Include="Extensions\SqlCeEntityFrameworkServicesBuilderExtensionsTest.cs" />
+    <Compile Include="Storage\RelationalTypeMappingTest.cs" />
+    <Compile Include="Storage\SqlCeTypeMappingTest.cs" />
     <Compile Include="TestExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

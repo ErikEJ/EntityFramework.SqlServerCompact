@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Storage;
 
 #if SQLCE35
 [assembly: AssemblyTitle("EntityFramework.SqlServerCompact35")]
@@ -17,4 +16,4 @@ using Microsoft.Data.Entity.Storage;
 #endif
 [assembly: AssemblyVersion("7.0.0.0")]
 [assembly: AssemblyFileVersion("7.0.0.0")]
-[assembly: AssemblyInformationalVersion("7.0.0.0-rc1")]
+[assembly: AssemblyInformationalVersion("7.0.0.0-rc1-final")]

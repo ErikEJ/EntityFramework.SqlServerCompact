@@ -30,10 +30,6 @@ namespace Microsoft.Data.Entity.Update.Internal
                 .Append(")");
         }
 
-        protected override void AppendSelectAffectedCountCommand(StringBuilder builder, string tableName, string schemaName)
-        {
-        }
-
         protected override void AppendRowsAffectedWhereCondition(StringBuilder builder, int expectedRowsAffected)
         {
             Check.NotNull(builder, nameof(builder));

@@ -2,28 +2,24 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering;
 using Microsoft.CodeAnalysis;
 using Microsoft.Data.Entity.FunctionalTests.TestUtilities.Xunit;
 using Microsoft.Data.Entity.Relational.Design.FunctionalTests.ReverseEngineering;
+using Microsoft.Data.Entity.Scaffolding;
+using Microsoft.Data.Entity.Scaffolding.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.Scaffolding;
-using Microsoft.Data.Entity.Scaffolding.Internal;
-using EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering;
 
 namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineering
 {
-    public class SqlServerE2ETests : E2ETestBase, IClassFixture<SqlCeE2EFixture>
+    public class SqlCeE2ETests : E2ETestBase, IClassFixture<SqlCeE2EFixture>
     {
         protected override string ProviderName => "EntityFramework.SqlServerCompact40.Design";
 
         protected override void ConfigureDesignTimeServices(IServiceCollection services)
-        {
-            base.ConfigureDesignTimeServices(services);
-            new SqlServerDesignTimeServices().ConfigureDesignTimeServices(services);
-        }
+            => new SqlCeDesignTimeServices().ConfigureDesignTimeServices(services);
 
         public virtual string TestNamespace => "E2ETest.Namespace";
         public virtual string TestProjectDir => Path.Combine("E2ETest", "Output");
@@ -48,7 +44,7 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineer
                 "SelfReferencing",
             });
 
-        public SqlServerE2ETests(SqlCeE2EFixture fixture, ITestOutputHelper output)
+        public SqlCeE2ETests(SqlCeE2EFixture fixture, ITestOutputHelper output)
             : base(output)
         {
         }

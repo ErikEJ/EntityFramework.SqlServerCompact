@@ -109,6 +109,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                         { typeof(SqlCeOptionsExtension), new SqlCeOptionsExtension() }
                     }),
                 new MigrationsModelDiffer(
+                    new SqlCeTypeMapper(),
                     annotationsProvider,
                     new SqlCeMigrationsAnnotationProvider()),
                 new SqlCeMigrationsSqlGenerator(

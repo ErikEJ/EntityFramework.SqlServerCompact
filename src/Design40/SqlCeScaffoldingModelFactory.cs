@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Builders;
+using Microsoft.Data.Entity.Metadata.Internal;
 using Microsoft.Data.Entity.Scaffolding.Internal;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
 using Microsoft.Data.Entity.Storage;
@@ -120,7 +120,7 @@ namespace Microsoft.Data.Entity.Scaffolding
             if (column.DefaultValue != null)
             {
                 // unset default
-                propertyBuilder.Metadata.ValueGenerated = null;
+                ((Property)propertyBuilder.Metadata).SetValueGenerated(null, ConfigurationSource.Explicit);
                 propertyBuilder.Metadata.Relational().GeneratedValueSql = null;
 
                 var property = propertyBuilder.Metadata;

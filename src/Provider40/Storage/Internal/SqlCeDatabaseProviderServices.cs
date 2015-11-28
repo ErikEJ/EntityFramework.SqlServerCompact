@@ -44,6 +44,6 @@ namespace Microsoft.Data.Entity.Storage.Internal
         public override IRelationalAnnotationProvider AnnotationProvider => GetService<SqlCeAnnotationProvider>();
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
-        public override ISqlQueryGeneratorFactory SqlQueryGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
+        public override IQuerySqlGeneratorFactory QuerySqlGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
     }
 }

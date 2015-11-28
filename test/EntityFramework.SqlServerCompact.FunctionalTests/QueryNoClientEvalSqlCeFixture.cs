@@ -5,6 +5,6 @@ namespace Microsoft.Data.Entity.FunctionalTests
     public class QueryNoClientEvalSqlCeFixture : NorthwindQuerySqlCeFixture
     {
         protected override void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlCeDbContextOptionsBuilder)
-            => sqlCeDbContextOptionsBuilder.DisableQueryClientEvaluation();
+            => sqlCeDbContextOptionsBuilder.QueryClientEvaluationBehavior(QueryClientEvaluationBehavior.Throw);
     }
 }

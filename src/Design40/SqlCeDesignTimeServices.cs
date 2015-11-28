@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Data.Entity.Scaffolding
 {
-    public class SqlServerDesignTimeServices
+    public class SqlCeDesignTimeServices
     {
         public virtual void ConfigureDesignTimeServices([NotNull] IServiceCollection serviceCollection)
         {

@@ -20,7 +20,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 .AddSqlCe()
                 .ServiceCollection()
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
-                .AddInstance<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
         }
 

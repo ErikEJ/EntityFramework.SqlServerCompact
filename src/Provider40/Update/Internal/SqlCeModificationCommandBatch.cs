@@ -100,7 +100,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 .Create()
                 .Append(commandText);
 
-            if (!includeParameters) return commandBuilder.BuildRelationalCommand();
+            if (!includeParameters) return commandBuilder.Build();
             foreach (var columnModification in ModificationCommands.SelectMany(t => t.ColumnModifications))
             {
                 if (columnModification.ParameterName != null)
@@ -120,7 +120,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 }
             }
 
-            return commandBuilder.BuildRelationalCommand();
+            return commandBuilder.Build();
         }
 
         public override Task ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken = default(CancellationToken))

@@ -10,11 +10,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</description>
     <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</summary>
-    <releaseNotes>for EF7 Release Candidate 1</releaseNotes>
+    <releaseNotes>for EF7 Release Candidate 2</releaseNotes>
     <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact</tags>
     <dependencies>
         <group targetFramework="net451">
-            <dependency id="EntityFramework.Relational" version="[7.0.0-rc1-final]" />
+            <dependency id="EntityFramework.Relational" version="[7.0.0-rc2-16436]" />
             <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>
     </dependencies>

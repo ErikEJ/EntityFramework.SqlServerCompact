@@ -18,7 +18,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 .AddEntityFramework()
                 .AddSqlCe()
                 .ServiceCollection()
-                .AddInstance<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
 
             _testDatabase = SqlCeNorthwindContext.GetSharedStore();

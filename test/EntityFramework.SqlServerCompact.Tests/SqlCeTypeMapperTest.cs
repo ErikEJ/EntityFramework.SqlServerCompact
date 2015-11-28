@@ -332,7 +332,7 @@ namespace Microsoft.Data.Entity.Tests
 
             if (isNullable.HasValue)
             {
-                property.IsNullable = isNullable;
+                property.IsNullable = isNullable.Value;
             }
 
             return new SqlCeTypeMapper().GetMapping(property);

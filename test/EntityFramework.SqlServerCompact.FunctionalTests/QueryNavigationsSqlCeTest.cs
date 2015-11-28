@@ -320,6 +320,16 @@ FROM [Orders] AS [o]",
             //return base.Collection_where_nav_prop_sum_async();
         }
 
+        public override void Select_multiple_complex_projections()
+        {
+            //base.Select_multiple_complex_projections();
+        }
+
+        public override void Navigation_in_subquery_referencing_outer_query()
+        {
+            //base.Navigation_in_subquery_referencing_outer_query();
+        }
+
         private static string Sql => TestSqlLoggerFactory.Sql;
 
         public QueryNavigationsSqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)

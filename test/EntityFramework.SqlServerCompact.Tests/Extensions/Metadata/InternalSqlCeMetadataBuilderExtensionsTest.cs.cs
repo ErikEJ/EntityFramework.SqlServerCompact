@@ -9,7 +9,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
     public class InternalSqlCeMetadataBuilderExtensionsTest
     {
         private InternalModelBuilder CreateBuilder()
-            => new InternalModelBuilder(new Model(), new ConventionSet());
+            => new InternalModelBuilder(new Model());
 
         [Fact]
         public void Can_access_model()

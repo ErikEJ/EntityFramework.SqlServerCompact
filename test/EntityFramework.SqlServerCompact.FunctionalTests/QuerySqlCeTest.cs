@@ -2235,7 +2235,8 @@ ORDER BY [c].[CustomerID]",
 
             Assert.Equal(
                 @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]",
+FROM [Orders] AS [o]
+ORDER BY [o].[CustomerID]",
                 Sql);
         }
 
@@ -2245,7 +2246,8 @@ FROM [Orders] AS [o]",
 
             Assert.Equal(
                 @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]",
+FROM [Orders] AS [o]
+ORDER BY [o].[CustomerID]",
                 Sql);
         }
 
@@ -2255,7 +2257,8 @@ FROM [Orders] AS [o]",
 
             Assert.Equal(
                 @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]",
+FROM [Orders] AS [o]
+ORDER BY [o].[CustomerID]",
                 Sql);
         }
 

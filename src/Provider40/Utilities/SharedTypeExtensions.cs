@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 
 // ReSharper disable once CheckNamespace
@@ -22,11 +21,6 @@ namespace System
                    || (typeInfo.IsGenericType
                        && typeInfo.GetGenericTypeDefinition() == typeof(Nullable<>));
         }
-
-        public static Type MakeNullable(this Type type)
-            => type.IsNullableType()
-                ? type
-                : typeof(Nullable<>).MakeGenericType(type);
 
         public static bool IsInteger(this Type type)
         {
@@ -50,17 +44,6 @@ namespace System
                    || type == typeof(long);
         }
 
-        public static PropertyInfo GetAnyProperty(this Type type, string name)
-        {
-            var props = type.GetRuntimeProperties().Where(p => p.Name == name).ToList();
-            if (props.Count() > 1)
-            {
-                throw new AmbiguousMatchException();
-            }
-
-            return props.SingleOrDefault();
-        }
-
         private static bool IsNonIntegerPrimitive(this Type type)
         {
             type = type.UnwrapNullableType();
@@ -78,10 +61,6 @@ namespace System
                    || type == typeof(TimeSpan)
                    || type.GetTypeInfo().IsEnum;
         }
-
-        public static bool IsPrimitive(this Type type)
-            => type.IsInteger()
-               || type.IsNonIntegerPrimitive();
 
         public static Type UnwrapEnumType(this Type type)
             => type.GetTypeInfo().IsEnum ? Enum.GetUnderlyingType(type) : type;

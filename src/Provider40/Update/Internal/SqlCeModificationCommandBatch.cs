@@ -14,6 +14,7 @@ namespace Microsoft.Data.Entity.Update.Internal
     public class SqlCeModificationCommandBatch : AffectedCountModificationCommandBatch
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
+        private bool _returnFirstCommandText;
 
         public SqlCeModificationCommandBatch(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
@@ -29,19 +30,18 @@ namespace Microsoft.Data.Entity.Update.Internal
             _commandBuilderFactory = commandBuilderFactory;
         }
 
+
         public override void Execute(IRelationalConnection connection)
         {
             Check.NotNull(connection, nameof(connection));
 
-            var commandTexts = SplitCommandText(GetCommandText());
-
-            var relationalCommand = CreateStoreCommand(commandTexts.Item1);
+            _returnFirstCommandText = true;
+            var relationalCommand = CreateStoreCommand();
             try
             {
-
                 using (var reader = relationalCommand.ExecuteReader(connection))
                 {
-                    Consume(reader.DbDataReader, commandTexts.Item2, connection);
+                    Consume(reader.DbDataReader, GetCommandText(), connection);
                 }
             }
             catch (DbUpdateException)
@@ -65,7 +65,8 @@ namespace Microsoft.Data.Entity.Update.Internal
             {
                 if (ModificationCommands[0].RequiresResultPropagation && returningCommandText != null)
                 {
-                    var returningCommand = CreateStoreCommand(returningCommandText);
+                    _returnFirstCommandText = false;
+                    var returningCommand = CreateStoreCommand();
 
                     using (var returningReader = returningCommand.ExecuteReader(connection))
                     {
@@ -94,35 +95,6 @@ namespace Microsoft.Data.Entity.Update.Internal
             }
         }
 
-        private IRelationalCommand CreateStoreCommand(string commandText, bool includeParameters = true)
-        {
-            var commandBuilder = _commandBuilderFactory
-                .Create()
-                .Append(commandText);
-
-            if (!includeParameters) return commandBuilder.Build();
-            foreach (var columnModification in ModificationCommands.SelectMany(t => t.ColumnModifications))
-            {
-                if (columnModification.ParameterName != null)
-                {
-                    commandBuilder.AddParameter(
-                        SqlGenerator.GenerateParameterName(columnModification.ParameterName),
-                        columnModification.Value,
-                        columnModification.Property);
-                }
-
-                if (columnModification.OriginalParameterName != null)
-                {
-                    commandBuilder.AddParameter(
-                        SqlGenerator.GenerateParameterName(columnModification.OriginalParameterName),
-                        columnModification.OriginalValue,
-                        columnModification.Property);
-                }
-            }
-
-            return commandBuilder.Build();
-        }
-
         public override Task ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken = default(CancellationToken))
         {
             Check.NotNull(connection, nameof(connection));
@@ -130,6 +102,12 @@ namespace Microsoft.Data.Entity.Update.Internal
             cancellationToken.ThrowIfCancellationRequested();
 
             return Task.Run(() => Execute(connection), cancellationToken);
+        }
+
+        protected override string GetCommandText()
+        {
+            var commandTexts = SplitCommandText(base.GetCommandText());
+            return _returnFirstCommandText ? commandTexts.Item1 : commandTexts.Item2;
         }
 
         private Tuple<string, string> SplitCommandText(string commandText)

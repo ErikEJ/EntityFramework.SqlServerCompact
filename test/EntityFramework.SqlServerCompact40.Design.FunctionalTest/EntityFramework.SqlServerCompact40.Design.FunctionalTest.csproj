@@ -74,7 +74,7 @@
     <None Include="ReverseEngineering\ExpectedResults\E2E_AllFluentAPI\AllDataTypes.expected">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReverseEngineering\ExpectedResults\E2E_AllFluentAPI\E2E_sdfContext.expected">
+    <None Include="ReverseEngineering\ExpectedResults\E2E_AllFluentAPI\E2EContext.expected">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ReverseEngineering\ExpectedResults\E2E_AllFluentAPI\OneToManyDependent.expected">

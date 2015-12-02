@@ -3,7 +3,7 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace E2ETest.Namespace
 {
-    public partial class E2E_sdfContext : DbContext
+    public partial class E2EContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

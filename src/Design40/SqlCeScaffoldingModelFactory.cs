@@ -17,9 +17,6 @@ namespace Microsoft.Data.Entity.Scaffolding
     {
         private readonly SqlServerLiteralUtilities _sqlServerLiteralUtilities;
 
-        private const int DefaultDateTimePrecision = 7;
-        private static readonly ISet<string> _dateTimePrecisionTypes = new HashSet<string> { "datetimeoffset", "datetime2", "time" };
-
         public SqlCeScaffoldingModelFactory(
             [NotNull] ILoggerFactory loggerFactory,
             [NotNull] IRelationalTypeMapper typeMapper,

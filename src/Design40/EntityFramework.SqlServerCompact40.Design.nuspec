@@ -15,11 +15,11 @@
     <dependencies>
         <group targetFramework=".NETFramework4.5">
             <dependency id="EntityFramework.Relational.Design" version="[7.0.0-rc2-16436]" />
-            <dependency id="EntityFramework.SqlServerCompact40" version="7.0.0" />
+            <dependency id="EntityFramework.SqlServerCompact40" version="7.0.0-rc1-final" />
          </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFramework.SqlServerCompact40.Design.dll" target="lib\net46\" />
+    <file src="bin\Release\EntityFramework.SqlServerCompact40.Design.dll" target="lib\net451\" />
   </files>
 </package>

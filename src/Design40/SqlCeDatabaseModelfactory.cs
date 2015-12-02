@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
+using System.IO;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
@@ -41,7 +42,17 @@ namespace Microsoft.Data.Entity.Scaffolding
                 _connection.Open();
                 _tableSelectionSet = tableSelectionSet;
 
-                _databaseModel.DatabaseName = _connection.Database;
+                string databaseName = null;
+                try
+                {
+                    databaseName = Path.GetFileNameWithoutExtension(_connection.DataSource);
+                }
+                catch (ArgumentException)
+                {
+                    // graceful fallback
+                }
+
+                _databaseModel.DatabaseName = !string.IsNullOrEmpty(databaseName) ? databaseName : _connection.DataSource;
 
                 GetTables();
                 GetColumns();

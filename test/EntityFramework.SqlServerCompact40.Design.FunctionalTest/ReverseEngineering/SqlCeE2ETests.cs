@@ -155,7 +155,7 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineer
                 Path.Combine("ReverseEngineering", "ExpectedResults", "E2E_AllFluentApi"),
                 inputFile => inputFile.Replace("{{connectionString}}", _connectionString))
             {
-                Files = (new List<string> { "E2E_sdfContext.expected" })
+                Files = (new List<string> { "E2EContext.expected" })
                     .Concat(_expectedEntityTypeFiles).ToList()
             };
 

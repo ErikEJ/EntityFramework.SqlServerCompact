@@ -11,19 +11,19 @@ namespace Microsoft.Data.Entity.Storage.Internal
     public class SqlCeDatabaseCreator : RelationalDatabaseCreator
     {
         private readonly ISqlCeDatabaseConnection _connection;
-        private readonly ISqlCommandBuilder _sqlCommandBuilder;
+        private readonly IRawSqlCommandBuilder _rawSqlCommandBuilder;
 
         public SqlCeDatabaseCreator(
             [NotNull] ISqlCeDatabaseConnection connection,
             [NotNull] IMigrationsModelDiffer modelDiffer,
             [NotNull] IMigrationsSqlGenerator migrationsSqlGenerator,
             [NotNull] IModel model,
-            [NotNull] ISqlCommandBuilder sqlCommandBuilder)
+            [NotNull] IRawSqlCommandBuilder rawSqlCommandBuilder)
             : base(model, connection, modelDiffer, migrationsSqlGenerator)
         {
-            Check.NotNull(sqlCommandBuilder, nameof(sqlCommandBuilder));
+            Check.NotNull(rawSqlCommandBuilder, nameof(rawSqlCommandBuilder));
 
-            _sqlCommandBuilder = sqlCommandBuilder;
+            _rawSqlCommandBuilder = rawSqlCommandBuilder;
             _connection = connection;
         }
 
@@ -44,10 +44,10 @@ namespace Microsoft.Data.Entity.Storage.Internal
            => (int)CreateHasTablesCommand().ExecuteScalar(_connection) != 0;  
 
         protected override async Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
-            => (int)(await CreateHasTablesCommand().ExecuteScalarAsync(_connection, cancellationToken)) != 0;
+            => (int)(await CreateHasTablesCommand().ExecuteScalarAsync(_connection, true, cancellationToken)) != 0;
 
         private IRelationalCommand CreateHasTablesCommand()
-            => _sqlCommandBuilder
+            => _rawSqlCommandBuilder
                 .Build("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE <> N'SYSTEM TABLE';");
 
         public override void Delete()

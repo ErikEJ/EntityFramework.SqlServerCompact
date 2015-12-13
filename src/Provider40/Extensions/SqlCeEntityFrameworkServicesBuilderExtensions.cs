@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
             service.TryAdd(new ServiceCollection()
                 .AddSingleton<SqlCeValueGeneratorCache>()                
                 .AddSingleton<SqlCeTypeMapper>()
-                .AddSingleton<SqlCeSqlGenerator>()
+                .AddSingleton<SqlCeSqlGenerationHelper>()
                 .AddSingleton<SqlCeModelSource>()
                 .AddSingleton<SqlCeAnnotationProvider>()
                 .AddSingleton<SqlCeMigrationsAnnotationProvider>()

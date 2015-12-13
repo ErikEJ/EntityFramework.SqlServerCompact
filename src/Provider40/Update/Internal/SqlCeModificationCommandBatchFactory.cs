@@ -8,14 +8,14 @@ namespace Microsoft.Data.Entity.Update.Internal
     public class SqlCeModificationCommandBatchFactory : IModificationCommandBatchFactory
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
-        private readonly ISqlGenerator _sqlGenerator;
+        private readonly ISqlGenerationHelper _sqlGenerationHelper;
         private readonly ISqlCeUpdateSqlGenerator _updateSqlGenerator;
         private readonly IRelationalValueBufferFactoryFactory _valueBufferFactoryFactory;
 
         public SqlCeModificationCommandBatchFactory(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
-            [NotNull] ISqlGenerator sqlGenerator,
-            [NotNull] ISqlCommandBuilder sqlCommandBuilder,
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper,
+            [NotNull] IRawSqlCommandBuilder rawSqlCommandBuilder,
             [NotNull] ISqlCeUpdateSqlGenerator updateSqlGenerator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory,
             [NotNull] IDbContextOptions options)
@@ -24,10 +24,10 @@ namespace Microsoft.Data.Entity.Update.Internal
             Check.NotNull(updateSqlGenerator, nameof(updateSqlGenerator));
             Check.NotNull(valueBufferFactoryFactory, nameof(valueBufferFactoryFactory));
             Check.NotNull(options, nameof(options));
-            Check.NotNull(sqlCommandBuilder, nameof(sqlCommandBuilder));
+            Check.NotNull(rawSqlCommandBuilder, nameof(rawSqlCommandBuilder));
 
             _commandBuilderFactory = commandBuilderFactory;
-            _sqlGenerator = sqlGenerator;
+            _sqlGenerationHelper = sqlGenerationHelper;
             _updateSqlGenerator = updateSqlGenerator;
             _valueBufferFactoryFactory = valueBufferFactoryFactory;
         }
@@ -36,7 +36,7 @@ namespace Microsoft.Data.Entity.Update.Internal
         {
             return new SqlCeModificationCommandBatch(
                 _commandBuilderFactory,
-                _sqlGenerator,
+                _sqlGenerationHelper,
                 _updateSqlGenerator,
                 _valueBufferFactoryFactory);
         }

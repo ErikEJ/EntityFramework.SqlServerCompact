@@ -9,8 +9,6 @@ namespace Microsoft.Data.Entity.FunctionalTests
         {
         }
 
-        //TODO ErikEJ Hackathon Fix broken logging after error due to new command handling
-        //Test dispose() of SqlCeCommand! and SqlCommand
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();

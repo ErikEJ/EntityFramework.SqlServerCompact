@@ -8,8 +8,8 @@ namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlCeUpdateSqlGenerator : UpdateSqlGenerator, ISqlCeUpdateSqlGenerator
     {
-        public SqlCeUpdateSqlGenerator([NotNull] ISqlGenerator sqlGenerator)
-            : base(sqlGenerator)
+        public SqlCeUpdateSqlGenerator([NotNull] ISqlGenerationHelper sqlGenerationHelper)
+            : base(sqlGenerationHelper)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 : "bigint";
 
             builder
-                .Append(SqlGenerator.DelimitIdentifier(columnModification.ColumnName))
+                .Append(SqlGenerationHelper.DelimitIdentifier(columnModification.ColumnName))
                 .Append(" = ")
                 .Append("CAST (@@IDENTITY AS ")
                 .Append(castAs)

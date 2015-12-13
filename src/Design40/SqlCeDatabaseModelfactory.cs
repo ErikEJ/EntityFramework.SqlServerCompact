@@ -6,6 +6,7 @@ using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
 using Microsoft.Data.Entity.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Scaffolding
 {
@@ -156,7 +157,7 @@ namespace Microsoft.Data.Entity.Scaffolding
 
                     var table = _tables[TableKey(tableName)];
                     var columnName = reader.GetString(3);
-                    var column = new ColumnModel
+                    var column = new SqlCeColumnModel
                     {
                         Table = table,
                         DataType = dataTypeName,
@@ -183,7 +184,6 @@ namespace Microsoft.Data.Entity.Scaffolding
 
         private void GetIndexes()
         {
-            //TODO ERIKEJ Filter out unique indexes that duplicate the PK index
             var command = _connection.CreateCommand();
             command.CommandText = @"SELECT  
     ix.[INDEX_NAME] AS [index_name],
@@ -222,8 +222,7 @@ namespace Microsoft.Data.Entity.Scaffolding
                         {
                             Table = table,
                             Name = indexName,
-                            IsUnique = reader.GetBoolean(3),
-                            IsClustered = null
+                            IsUnique = reader.GetBoolean(3)
                         };
                         table.Indexes.Add(index);
                     }
@@ -286,20 +285,51 @@ namespace Microsoft.Data.Entity.Scaffolding
                         table.ForeignKeys.Add(fkInfo);
                     }
                     var fromColumnName = reader.GetString(5);
-                    var fromColumn = _tableColumns[ColumnKey(fkInfo.Table, fromColumnName)];
-                    fkInfo.Columns.Add(fromColumn);
+                    ColumnModel fromColumn;
+                    if ((fromColumn = FindColumnForForeignKey(fromColumnName, fkInfo.Table, fkName)) != null)
+                    {
+                        fkInfo.Columns.Add(fromColumn);
+                    }
 
                     if (fkInfo.PrincipalTable != null)
                     {
                         var toColumnName = reader.GetString(6);
-                        var toColumn = _tableColumns[ColumnKey(fkInfo.PrincipalTable, toColumnName)];
-                        fkInfo.PrincipalColumns.Add(toColumn);
+                        ColumnModel toColumn;
+                        if ((toColumn = FindColumnForForeignKey(toColumnName, fkInfo.PrincipalTable, fkName)) != null)
+                        {
+                            fkInfo.PrincipalColumns.Add(toColumn);
+                        }
                     }
 
                     fkInfo.OnDelete = ConvertToReferentialAction(reader.GetString(8));
                 }
             }
         }
+
+        private ColumnModel FindColumnForForeignKey(
+            string columnName, TableModel table, string fkName)
+        {
+            ColumnModel column = null;
+            if (string.IsNullOrEmpty(columnName))
+            {
+                ////TODO ErikEJ Log
+                //Logger.LogWarning(
+                //    SqlServerDesignStrings.ColumnNameEmptyOnForeignKey(
+                //        table.SchemaName, table.Name, fkName));
+                return null;
+            }
+            else if (!_tableColumns.TryGetValue(
+                ColumnKey(table, columnName), out column))
+            {
+                //TODO ErikEJ Log
+                //Logger.LogWarning(
+                //    SqlServerDesignStrings.UnableToFindColumnForForeignKey(
+                //        fkName, columnName, table.SchemaName, table.Name));
+                return null;
+            }
+            return column;
+        }
+
 
         private static ReferentialAction? ConvertToReferentialAction(string onDeleteAction)
         {

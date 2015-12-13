@@ -13,10 +13,10 @@ namespace Microsoft.Data.Entity.Migrations
     {
         public SqlCeMigrationsSqlGenerator(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
-            [NotNull] ISqlGenerator sqlGenerator,
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper,
             [NotNull] IRelationalTypeMapper typeMapper,
             [NotNull] IRelationalAnnotationProvider annotations)
-            : base(commandBuilderFactory, sqlGenerator, typeMapper, annotations)
+            : base(commandBuilderFactory, sqlGenerationHelper, typeMapper, annotations)
         {
         }
 
@@ -28,15 +28,15 @@ namespace Microsoft.Data.Entity.Migrations
             builder
                 .EndCommand()
                 .Append("ALTER TABLE ")
-                .Append(SqlGenerator.DelimitIdentifier(operation.Table))
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ")
-                .Append(SqlGenerator.DelimitIdentifier(operation.Name))
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
                 .Append(" DROP DEFAULT;");
 
             builder
                 .EndCommand()
                 .Append("ALTER TABLE ")
-                .Append(SqlGenerator.DelimitIdentifier(operation.Table))
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ");
             ColumnDefinition(
                     null,
@@ -58,9 +58,9 @@ namespace Microsoft.Data.Entity.Migrations
                     .EndCommand()
                     .AppendLine(";")
                     .Append("ALTER TABLE ")
-                    .Append(SqlGenerator.DelimitIdentifier(operation.Table))
+                    .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
                     .Append(" ALTER COLUMN ")
-                    .Append(SqlGenerator.DelimitIdentifier(operation.Name))
+                    .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
                     .Append(" SET ");
                 DefaultValue(operation.DefaultValue, operation.DefaultValueSql, builder);
             }
@@ -88,7 +88,7 @@ namespace Microsoft.Data.Entity.Migrations
             builder
                 .EndCommand()
                 .Append("DROP INDEX ")
-                .Append(SqlGenerator.DelimitIdentifier(operation.Name));
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name));
         }
 
         #region Invalid schema operations
@@ -215,7 +215,7 @@ namespace Microsoft.Data.Entity.Migrations
             if (computedColumnSql != null)
             {
                 builder
-                    .Append(SqlGenerator.DelimitIdentifier(name))
+                    .Append(SqlGenerationHelper.DelimitIdentifier(name))
                     .Append(" AS ")
                     .Append(computedColumnSql);
 

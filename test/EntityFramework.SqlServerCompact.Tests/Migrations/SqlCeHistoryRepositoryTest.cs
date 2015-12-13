@@ -28,7 +28,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 "CREATE TABLE [__EFMigrationsHistory] (" + EOL +
                 "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
                 "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
-                "    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])" + EOL +
+                "    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])" + EOL +
                 ");"+ EOL,
                 sql);
         }
@@ -42,7 +42,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 "CREATE TABLE [__EFMigrationsHistory] (" + EOL +
                 "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
                 "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
-                "    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])" + EOL +
+                "    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])" + EOL +
                 ");" + EOL,
                 sql);
         }
@@ -91,7 +91,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
         private static IHistoryRepository CreateHistoryRepository()
         {
             var annotationsProvider = new SqlCeAnnotationProvider();
-            var sqlGenerator = new SqlCeSqlGenerator();
+            var sqlGenerator = new SqlCeSqlGenerationHelper();
             var typeMapper = new SqlCeTypeMapper();
 
             var commandBuilderFactory = new RelationalCommandBuilderFactory(
@@ -101,7 +101,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 
             return new SqlCeHistoryRepository(
                 Mock.Of<IRelationalDatabaseCreator>(),
-                Mock.Of<ISqlCommandBuilder>(),
+                Mock.Of<IRawSqlCommandBuilder>(),
                 Mock.Of<ISqlCeDatabaseConnection>(),
                 new DbContextOptions<DbContext>(
                     new Dictionary<Type, IDbContextOptionsExtension>
@@ -114,7 +114,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                     new SqlCeMigrationsAnnotationProvider()),
                 new SqlCeMigrationsSqlGenerator(
                     commandBuilderFactory,
-                    new SqlCeSqlGenerator(),
+                    new SqlCeSqlGenerationHelper(),
                     typeMapper,
                     annotationsProvider),
                 annotationsProvider,

@@ -8,7 +8,7 @@ using Microsoft.Data.Entity.Scaffolding;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
 using Xunit;
 
-namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests
+namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
 {
     public class SqlCeDatabaseModelFactoryTest : IClassFixture<SqlCeDatabaseModelFixture>
     {
@@ -97,7 +97,6 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests
                 nonClustered =>
                 {
                     Assert.Equal("IX_Location", nonClustered.Name);
-                    Assert.Null(nonClustered.IsClustered);
                     Assert.Equal("Location", nonClustered.Columns.Select(c => c.Name).Single());
                 },
                 unique =>
@@ -215,10 +214,10 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests
                 "CREATE TABLE [Identities] ( Id INT " + (isIdentity ? "IDENTITY(1,1)" : "") + ")"
             };
 
-            var db = CreateModel(sql, new TableSelectionSet(new List<string> { "Identities" }));
+            var dbInfo = CreateModel(sql, new TableSelectionSet(new List<string> { "Identities" }));
 
-            var column = Assert.Single(db.Tables.Single().Columns);
-            Assert.Equal(isIdentity, column.IsIdentity.Value);
+            var column = Assert.IsType<SqlCeColumnModel>(Assert.Single(dbInfo.Tables.Single().Columns));
+            Assert.Equal(isIdentity, column.IsIdentity);
             Assert.Equal(isIdentity ? ValueGenerated.OnAdd : default(ValueGenerated?), column.ValueGenerated);
         }
 

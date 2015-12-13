@@ -10,7 +10,7 @@ namespace Microsoft.Data.Entity.Tests
         [Fact]
         public void BatchSeparator_returns_seperator()
         {
-            Assert.Equal("GO" + Environment.NewLine + Environment.NewLine, CreateSqlGenerator().BatchSeparator);
+            Assert.Equal("GO" + Environment.NewLine + Environment.NewLine, CreateSqlGenerator().BatchTerminator);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Microsoft.Data.Entity.Tests
             Assert.Equal("'c6f43a9e-91e1-45ef-a320-832ea23b7292'", literal);
         }
 
-        protected ISqlGenerator CreateSqlGenerator()
-            => new SqlCeSqlGenerator();
+        protected ISqlGenerationHelper CreateSqlGenerator()
+            => new SqlCeSqlGenerationHelper();
     }
 }

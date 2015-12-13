@@ -67,7 +67,7 @@ namespace Microsoft.Data.Entity.Scaffolding
             // override this behavior.
 
             // TODO use KeyConvention directly to detect when it will be applied
-            var pkColumns = table.Columns.Where(c => c.PrimaryKeyOrdinal.HasValue).ToList();
+            var pkColumns = table.Columns.OfType<SqlCeColumnModel>().Where(c => c.PrimaryKeyOrdinal.HasValue).ToList();
             if (pkColumns.Count != 1 || pkColumns[0].IsIdentity == true)
             {
                 return keyBuilder;
@@ -88,7 +88,13 @@ namespace Microsoft.Data.Entity.Scaffolding
 
         private PropertyBuilder VisitTypeMapping(PropertyBuilder propertyBuilder, ColumnModel column)
         {
-            if (column.IsIdentity == true)
+            var sqlCeColumn = column as SqlCeColumnModel;
+            if (sqlCeColumn == null)
+            {
+                return propertyBuilder;
+            }
+
+            if (sqlCeColumn.IsIdentity == true)
             {
                 if (typeof(byte) == propertyBuilder.Metadata.ClrType)
                 {

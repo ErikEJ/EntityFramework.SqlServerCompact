@@ -30,7 +30,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
         public override string InvariantName => GetType().GetTypeInfo().Assembly.GetName().Name;
         public override IDatabaseCreator Creator => GetService<SqlCeDatabaseCreator>();
         public override IHistoryRepository HistoryRepository => GetService<SqlCeHistoryRepository>();
-        public override ISqlGenerator SqlGenerator => GetService<SqlCeSqlGenerator>();
+        public override ISqlGenerationHelper SqlGenerationHelper => GetService<SqlCeSqlGenerationHelper>();
         public override IMigrationsSqlGenerator MigrationsSqlGenerator => GetService<SqlCeMigrationsSqlGenerator>();
         public override IMigrationsAnnotationProvider MigrationsAnnotationProvider => GetService<SqlCeMigrationsAnnotationProvider>();
         public override IModelSource ModelSource => GetService<SqlCeModelSource>();

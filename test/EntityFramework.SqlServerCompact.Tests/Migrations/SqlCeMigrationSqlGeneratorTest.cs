@@ -23,7 +23,7 @@ namespace Microsoft.Data.Entity.Tests.Migrations
                         new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
                         new DiagnosticListener("Fake"),
                         typeMapper),
-                    new SqlCeSqlGenerator(),
+                    new SqlCeSqlGenerationHelper(),
                     typeMapper,
                     new SqlCeAnnotationProvider());
             }

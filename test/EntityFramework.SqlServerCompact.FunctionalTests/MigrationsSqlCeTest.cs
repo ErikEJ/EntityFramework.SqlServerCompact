@@ -21,7 +21,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 @"CREATE TABLE [__EFMigrationsHistory] (
     [MigrationId] nvarchar(150) NOT NULL,
     [ProductVersion] nvarchar(32) NOT NULL,
-    CONSTRAINT [PK_HistoryRow] PRIMARY KEY ([MigrationId])
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
 );
 
 GO

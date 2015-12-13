@@ -387,7 +387,14 @@ ORDER BY [c].[Name]",
             base.Include_with_join_and_inheritance1();
 
             Assert.Equal(
-                @"",
+                @"SELECT [t0].[Nickname], [t0].[SquadId], [t0].[AssignedCityName], [t0].[CityOrBirthName], [t0].[Discriminator], [t0].[FullName], [t0].[LeaderNickname], [t0].[LeaderSquadId], [t0].[Rank], [c].[Name], [c].[Location]
+FROM [CogTag] AS [t]
+INNER JOIN (
+    SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+    FROM [Gear] AS [g]
+    WHERE [g].[Discriminator] = 'Officer'
+) AS [t0] ON ([t].[GearSquadId] = [t0].[SquadId]) AND ([t].[GearNickName] = [t0].[Nickname])
+INNER JOIN [City] AS [c] ON [t0].[CityOrBirthName] = [c].[Name]",
                 Sql);
         }
 
@@ -396,7 +403,27 @@ ORDER BY [c].[Name]",
             base.Include_with_join_and_inheritance2();
 
             Assert.Equal(
-                @"",
+                @"SELECT [t0].[Nickname], [t0].[SquadId], [t0].[AssignedCityName], [t0].[CityOrBirthName], [t0].[Discriminator], [t0].[FullName], [t0].[LeaderNickname], [t0].[LeaderSquadId], [t0].[Rank]
+FROM (
+    SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+    FROM [Gear] AS [g]
+    WHERE [g].[Discriminator] = 'Officer'
+) AS [t0]
+INNER JOIN [CogTag] AS [t] ON ([t0].[SquadId] = [t].[GearSquadId]) AND ([t0].[Nickname] = [t].[GearNickName])
+ORDER BY [t0].[FullName]
+
+SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+FROM [Weapon] AS [w]
+INNER JOIN (
+    SELECT DISTINCT [t0].[FullName]
+    FROM (
+        SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+        FROM [Gear] AS [g]
+        WHERE [g].[Discriminator] = 'Officer'
+    ) AS [t0]
+    INNER JOIN [CogTag] AS [t] ON ([t0].[SquadId] = [t].[GearSquadId]) AND ([t0].[Nickname] = [t].[GearNickName])
+) AS [t0] ON [w].[OwnerFullName] = [t0].[FullName]
+ORDER BY [t0].[FullName]",
                 Sql);
         }
 
@@ -405,7 +432,46 @@ ORDER BY [c].[Name]",
             base.Include_with_join_and_inheritance3();
 
             Assert.Equal(
-                @"",
+                @"SELECT [t0].[Nickname], [t0].[SquadId], [t0].[AssignedCityName], [t0].[CityOrBirthName], [t0].[Discriminator], [t0].[FullName], [t0].[LeaderNickname], [t0].[LeaderSquadId], [t0].[Rank]
+FROM [CogTag] AS [t]
+INNER JOIN (
+    SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+    FROM [Gear] AS [g]
+    WHERE [g].[Discriminator] = 'Officer'
+) AS [t0] ON ([t].[GearSquadId] = [t0].[SquadId]) AND ([t].[GearNickName] = [t0].[Nickname])
+ORDER BY [t0].[Nickname], [t0].[SquadId]
+
+SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Gear] AS [g]
+INNER JOIN (
+    SELECT DISTINCT [t0].[Nickname], [t0].[SquadId]
+    FROM [CogTag] AS [t]
+    INNER JOIN (
+        SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+        FROM [Gear] AS [g]
+        WHERE [g].[Discriminator] = 'Officer'
+    ) AS [t0] ON ([t].[GearSquadId] = [t0].[SquadId]) AND ([t].[GearNickName] = [t0].[Nickname])
+) AS [t0] ON ([g].[LeaderNickname] = [t0].[Nickname]) AND ([g].[LeaderSquadId] = [t0].[SquadId])
+WHERE ([g].[Discriminator] = 'Officer') OR ([g].[Discriminator] = 'Gear')
+ORDER BY [t0].[Nickname], [t0].[SquadId]",
+                Sql);
+        }
+
+        public override void Include_with_nested_navigation_in_order_by()
+        {
+            base.Include_with_nested_navigation_in_order_by();
+
+            Assert.Equal(
+                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId], [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Weapon] AS [w]
+INNER JOIN [Gear] AS [w.Owner] ON [w].[OwnerFullName] = [w.Owner].[FullName]
+INNER JOIN [City] AS [w.Owner.CityOfBirth] ON [w.Owner].[CityOrBirthName] = [w.Owner.CityOfBirth].[Name]
+LEFT JOIN (
+    SELECT [g].*
+    FROM [Gear] AS [g]
+    WHERE ([g].[Discriminator] = 'Officer') OR ([g].[Discriminator] = 'Gear')
+) AS [g] ON [w].[OwnerFullName] = [g].[FullName]
+ORDER BY [w.Owner.CityOfBirth].[Name]",
                 Sql);
         }
 
@@ -460,11 +526,11 @@ WHERE [w].[AmmunitionType] = @__p_0",
             base.Where_nullable_enum_with_nullable_parameter();
 
             Assert.Equal(
-                @"@__p_0: 1
+                @"@__ammunitionType_0: Cartridge
 
 SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
-WHERE [w].[AmmunitionType] = @__p_0
+WHERE [w].[AmmunitionType] = @__ammunitionType_0
 
 SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
@@ -593,6 +659,37 @@ ORDER BY [ct].[GearNickName], [ct].[GearSquadId]",
                 Sql);
         }
 
+        public override void Collection_with_inheritance_and_join_include_joined()
+        {
+            base.Collection_with_inheritance_and_join_include_joined();
+
+            Assert.Equal(
+                @"SELECT [t0].[Nickname], [t0].[SquadId], [t0].[AssignedCityName], [t0].[CityOrBirthName], [t0].[Discriminator], [t0].[FullName], [t0].[LeaderNickname], [t0].[LeaderSquadId], [t0].[Rank], [c].[Id], [c].[GearNickName], [c].[GearSquadId], [c].[Note]
+FROM [CogTag] AS [t]
+INNER JOIN (
+    SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+    FROM [Gear] AS [g]
+    WHERE [g].[Discriminator] = 'Officer'
+) AS [t0] ON ([t].[GearSquadId] = [t0].[SquadId]) AND ([t].[GearNickName] = [t0].[Nickname])
+LEFT JOIN [CogTag] AS [c] ON ([c].[GearNickName] = [t0].[Nickname]) AND ([c].[GearSquadId] = [t0].[SquadId])",
+                Sql);
+        }
+
+        public override void Collection_with_inheritance_and_join_include_source()
+        {
+            base.Collection_with_inheritance_and_join_include_source();
+
+            Assert.Equal(
+                @"SELECT [t0].[Nickname], [t0].[SquadId], [t0].[AssignedCityName], [t0].[CityOrBirthName], [t0].[Discriminator], [t0].[FullName], [t0].[LeaderNickname], [t0].[LeaderSquadId], [t0].[Rank], [c].[Id], [c].[GearNickName], [c].[GearSquadId], [c].[Note]
+FROM (
+    SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+    FROM [Gear] AS [g]
+    WHERE [g].[Discriminator] = 'Officer'
+) AS [t0]
+INNER JOIN [CogTag] AS [t] ON ([t0].[SquadId] = [t].[GearSquadId]) AND ([t0].[Nickname] = [t].[GearNickName])
+LEFT JOIN [CogTag] AS [c] ON ([c].[GearNickName] = [t0].[Nickname]) AND ([c].[GearSquadId] = [t0].[SquadId])",
+                Sql);
+        }
         public override void Join_navigation_translated_to_subquery_composite_key()
         {
             //TODO ErikEJ Broken by recent fix https://github.com/aspnet/EntityFramework/issues/3467 

@@ -9,20 +9,23 @@ namespace Microsoft.Data.Entity.Query.Sql.Internal
     {
         public SqlCeQuerySqlGeneratorFactory(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
-            [NotNull] ISqlGenerator sqlGenerator,
-            [NotNull] IParameterNameGeneratorFactory parameterNameGeneratorFactory)
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper,
+            [NotNull] IParameterNameGeneratorFactory parameterNameGeneratorFactory,
+            [NotNull] IRelationalTypeMapper relationalTypeMapper)
             : base(
                 Check.NotNull(commandBuilderFactory, nameof(commandBuilderFactory)),
-                Check.NotNull(sqlGenerator, nameof(sqlGenerator)),
-                Check.NotNull(parameterNameGeneratorFactory, nameof(parameterNameGeneratorFactory)))
+                Check.NotNull(sqlGenerationHelper, nameof(sqlGenerationHelper)),
+                Check.NotNull(parameterNameGeneratorFactory, nameof(parameterNameGeneratorFactory)),
+                Check.NotNull(relationalTypeMapper, nameof(relationalTypeMapper)))
         {
         }
 
         public override IQuerySqlGenerator CreateDefault(SelectExpression selectExpression)
             => new SqlCeQuerySqlGenerator(
                 CommandBuilderFactory,
-                SqlGenerator,
+                SqlGenerationHelper,
                 ParameterNameGeneratorFactory,
+                RelationalTypeMapper,
                 Check.NotNull(selectExpression, nameof(selectExpression)));
     }
 }

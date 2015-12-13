@@ -44,24 +44,6 @@ namespace System
                    || type == typeof(long);
         }
 
-        private static bool IsNonIntegerPrimitive(this Type type)
-        {
-            type = type.UnwrapNullableType();
-
-            return type == typeof(bool)
-                   || type == typeof(byte[])
-                   || type == typeof(char)
-                   || type == typeof(DateTime)
-                   || type == typeof(DateTimeOffset)
-                   || type == typeof(decimal)
-                   || type == typeof(double)
-                   || type == typeof(float)
-                   || type == typeof(Guid)
-                   || type == typeof(string)
-                   || type == typeof(TimeSpan)
-                   || type.GetTypeInfo().IsEnum;
-        }
-
         public static Type UnwrapEnumType(this Type type)
             => type.GetTypeInfo().IsEnum ? Enum.GetUnderlyingType(type) : type;
     }

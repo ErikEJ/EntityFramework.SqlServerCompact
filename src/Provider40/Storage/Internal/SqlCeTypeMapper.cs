@@ -15,7 +15,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
         private readonly RelationalSizedTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", typeof(byte[]), DbType.Binary, 8);
         private readonly RelationalTypeMapping _int = new RelationalTypeMapping("int", typeof(int), DbType.Int32);
         private readonly RelationalTypeMapping _bigint = new RelationalTypeMapping("bigint", typeof(long), DbType.Int64);
-        private readonly RelationalTypeMapping _bit = new RelationalTypeMapping("bit", typeof(bool));
+        private readonly RelationalTypeMapping _bit = new RelationalTypeMapping("bit", typeof(bool), DbType.Boolean);
         private readonly RelationalTypeMapping _smallint = new RelationalTypeMapping("smallint", typeof(short), DbType.Int16);
         private readonly RelationalTypeMapping _tinyint = new RelationalTypeMapping("tinyint", typeof(byte), DbType.Byte);
         private readonly SqlCeMaxLengthMapping _nchar = new SqlCeMaxLengthMapping("nchar", typeof(string), DbType.StringFixedLength);
@@ -87,10 +87,10 @@ namespace Microsoft.Data.Entity.Storage.Internal
 
         protected override string GetColumnType(IProperty property) => property.SqlCe().ColumnType;
 
-        protected override IReadOnlyDictionary<Type, RelationalTypeMapping> SimpleMappings
-            => _simpleMappings;
+        protected override IReadOnlyDictionary<Type, RelationalTypeMapping> GetSimpleMappings()
+             => _simpleMappings;
 
-        protected override IReadOnlyDictionary<string, RelationalTypeMapping> SimpleNameMappings
+        protected override IReadOnlyDictionary<string, RelationalTypeMapping> GetSimpleNameMappings()
             => _simpleNameMappings;
 
         public override RelationalTypeMapping FindMapping(Type clrType)

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering;
 using Microsoft.CodeAnalysis;
 using Microsoft.Data.Entity.FunctionalTests.TestUtilities.Xunit;
 using Microsoft.Data.Entity.Relational.Design.FunctionalTests.ReverseEngineering;
@@ -11,8 +11,9 @@ using Microsoft.Data.Entity.Scaffolding.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
-namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineering
+namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {
     public class SqlCeE2ETests : E2ETestBase, IClassFixture<SqlCeE2EFixture>
     {
@@ -75,8 +76,6 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineer
                     }
         };
 
-        // weird extenstion method call because the compiler can't disambiguate without adding a project reference
-        // ApplyConfiguration swaps out the Server if this tests are configured to run against something different that localdb.
         private string _connectionString = @"Data Source=E2E.sdf";
 
         private static readonly List<string> _expectedEntityTypeFiles = new List<string>
@@ -112,7 +111,7 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineer
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
 
-            var actualFileSet = new FileSet(InMemoryFiles, Path.Combine(TestProjectDir, TestSubDir))
+            var actualFileSet = new FileSet(InMemoryFiles, Path.GetFullPath(Path.Combine(TestProjectDir, TestSubDir)))
             {
                 Files = Enumerable.Repeat(filePaths.ContextFile, 1).Concat(filePaths.EntityTypeFiles).Select(Path.GetFileName).ToList()
             };
@@ -146,7 +145,7 @@ namespace Microsoft.Data.Entity.SqlServer.Design.FunctionalTests.ReverseEngineer
 
             var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
 
-            var actualFileSet = new FileSet(InMemoryFiles, TestProjectDir)
+            var actualFileSet = new FileSet(InMemoryFiles, Path.GetFullPath(TestProjectDir))
             {
                 Files = Enumerable.Repeat(filePaths.ContextFile, 1).Concat(filePaths.EntityTypeFiles).Select(Path.GetFileName).ToList()
             };

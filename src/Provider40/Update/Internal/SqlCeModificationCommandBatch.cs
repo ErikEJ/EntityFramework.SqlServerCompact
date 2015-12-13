@@ -18,12 +18,12 @@ namespace Microsoft.Data.Entity.Update.Internal
 
         public SqlCeModificationCommandBatch(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
-            [NotNull] ISqlGenerator sqlGenerator,
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper,
             [NotNull] ISqlCeUpdateSqlGenerator updateSqlGenerator,
             [NotNull] IRelationalValueBufferFactoryFactory valueBufferFactoryFactory)
             : base(
                 commandBuilderFactory,
-                sqlGenerator,
+                sqlGenerationHelper,
                 updateSqlGenerator,
                 valueBufferFactoryFactory)
         {
@@ -58,7 +58,6 @@ namespace Microsoft.Data.Entity.Update.Internal
 
         private void Consume(DbDataReader reader, string returningCommandText, IRelationalConnection connection)
         {
-            Debug.Assert(ResultSetEnds.Count == ModificationCommands.Count);
             var commandIndex = 0;
 
             try

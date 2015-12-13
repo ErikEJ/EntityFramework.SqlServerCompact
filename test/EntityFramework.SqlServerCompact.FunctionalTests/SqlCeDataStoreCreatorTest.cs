@@ -397,9 +397,9 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 ISqlCeDatabaseConnection connection,
                 IMigrationsModelDiffer modelDiffer,
                 IMigrationsSqlGenerator sqlGenerator,
-                ISqlCommandBuilder sqlCommandBuilder,
+                IRawSqlCommandBuilder rawSqlCommandBuilder,
                 IModel model)
-                : base(connection, modelDiffer, sqlGenerator, model, sqlCommandBuilder)
+                : base(connection, modelDiffer, sqlGenerator, model, rawSqlCommandBuilder)
             {
             }
 

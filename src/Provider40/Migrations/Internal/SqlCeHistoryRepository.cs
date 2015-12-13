@@ -11,13 +11,13 @@ namespace Microsoft.Data.Entity.Migrations.Internal
     {
         public SqlCeHistoryRepository(
             [NotNull] IDatabaseCreator databaseCreator,
-            [NotNull] ISqlCommandBuilder sqlCommandBuilder,
+            [NotNull] IRawSqlCommandBuilder sqlCommandBuilder,
             [NotNull] ISqlCeDatabaseConnection connection,
             [NotNull] IDbContextOptions options,
             [NotNull] IMigrationsModelDiffer modelDiffer,
             [NotNull] SqlCeMigrationsSqlGenerator migrationSqlGenerator,
             [NotNull] SqlCeAnnotationProvider annotations,
-            [NotNull] ISqlGenerator sql)
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper)
             : base(
                   databaseCreator,
                   sqlCommandBuilder,
@@ -26,14 +26,14 @@ namespace Microsoft.Data.Entity.Migrations.Internal
                   modelDiffer,
                   migrationSqlGenerator,
                   annotations,
-                  sql)
+                  sqlGenerationHelper)
         {
         }
 
         protected override string ExistsSql
 
             => "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" +
-                SqlGenerator.EscapeLiteral(TableName) + 
+                SqlGenerationHelper.EscapeLiteral(TableName) + 
                 "' AND TABLE_TYPE <> N'SYSTEM TABLE'";
 
         protected override bool InterpretExistsResult(object value) => value != DBNull.Value;

@@ -92,7 +92,7 @@ namespace Microsoft.Data.Entity.Tests
             Assert.Null(GetTypeMapping(typeof(ushort)).StoreType);
             Assert.Null(GetTypeMapping(typeof(uint)).StoreType);
             Assert.Null(GetTypeMapping(typeof(ulong)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(bool)).StoreType);
+            Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool)).StoreType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long)).StoreType);
             Assert.Null(GetTypeMapping(typeof(float)).StoreType);
@@ -113,7 +113,7 @@ namespace Microsoft.Data.Entity.Tests
             Assert.Null(GetTypeMapping(typeof(ushort?)).StoreType);
             Assert.Null(GetTypeMapping(typeof(uint?)).StoreType);
             Assert.Null(GetTypeMapping(typeof(ulong?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(bool?)).StoreType);
+            Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool?)).StoreType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short?)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long?)).StoreType);
             Assert.Null(GetTypeMapping(typeof(float?)).StoreType);

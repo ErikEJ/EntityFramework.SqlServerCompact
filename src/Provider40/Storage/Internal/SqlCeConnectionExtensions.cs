@@ -3,9 +3,7 @@ using System.IO;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 
-// ReSharper disable once CheckNamespace
-
-namespace Microsoft.Data.Entity
+namespace Microsoft.Data.Entity.Storage.Internal
 {
     public static class SqlCeConnectionExtensions
     {

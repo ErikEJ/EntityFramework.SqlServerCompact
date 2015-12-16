@@ -72,6 +72,9 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                         MetadataReference.CreateFromFile(
                             Assembly.Load(new AssemblyName(
                                 "System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")).Location),
+                        MetadataReference.CreateFromFile(
+                            Assembly.Load(new AssemblyName(
+                                "System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91")).Location),
 #endif
                     }
         };

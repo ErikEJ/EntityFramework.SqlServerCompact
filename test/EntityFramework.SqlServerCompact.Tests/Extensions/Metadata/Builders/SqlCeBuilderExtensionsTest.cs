@@ -14,7 +14,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var property = modelBuilder
                 .Entity<Customer>()
                 .Property(e => e.Name)
-                .HasSqlCeColumnName("MyNameIs")
+                .ForSqlCeHasColumnName("MyNameIs")
                 .Metadata;
 
             Assert.Equal("MyNameIs", property.SqlCe().ColumnName);
@@ -28,7 +28,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var property = modelBuilder
                 .Entity<Customer>()
                 .Property<string>("Name")
-                .HasSqlCeColumnName("MyNameIs")
+                .ForSqlCeHasColumnName("MyNameIs")
                 .Metadata;
 
             Assert.Equal("MyNameIs", property.SqlCe().ColumnName);
@@ -42,7 +42,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var property = modelBuilder
                 .Entity<Customer>()
                 .Property(e => e.Name)
-                .HasSqlCeColumnType("nvarchar(DA)")
+                .ForSqlCeHasColumnType("nvarchar(DA)")
                 .Metadata;
 
             Assert.Equal("nvarchar(DA)", property.SqlCe().ColumnType);
@@ -56,7 +56,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var property = modelBuilder
                 .Entity<Customer>()
                 .Property<string>("Name")
-                .HasSqlCeColumnType("nvarchar(DA)")
+                .ForSqlCeHasColumnType("nvarchar(DA)")
                 .Metadata;
 
             Assert.Equal("nvarchar(DA)", property.SqlCe().ColumnType);
@@ -70,7 +70,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var property = modelBuilder
                 .Entity<Customer>()
                 .Property(e => e.Name)
-                .HasSqlCeDefaultValueSql("VanillaCoke")
+                .ForSqlCeHasDefaultValueSql("VanillaCoke")
                 .Metadata;
 
             Assert.Equal("VanillaCoke", property.SqlCe().GeneratedValueSql);
@@ -84,7 +84,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var property = modelBuilder
                 .Entity<Customer>()
                 .Property<string>("Name")
-                .HasSqlCeDefaultValueSql("VanillaCoke")
+                .ForSqlCeHasDefaultValueSql("VanillaCoke")
                 .Metadata;
 
             Assert.Equal("VanillaCoke", property.SqlCe().GeneratedValueSql);
@@ -98,7 +98,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var key = modelBuilder
                 .Entity<Customer>()
                 .HasKey(e => e.Id)
-                .SqlCeKeyName("LemonSupreme")
+                .ForSqlCeHasName("LemonSupreme")
                 .Metadata;
 
             Assert.Equal("LemonSupreme", key.SqlCe().Name);
@@ -111,7 +111,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var foreignKey = modelBuilder
                 .Entity<Customer>().HasMany(e => e.Orders).WithOne(e => e.Customer)
-                .SqlCeConstraintName("ChocolateLimes")
+                .ForSqlCeHasConstraintName("ChocolateLimes")
                 .Metadata;
 
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
@@ -124,7 +124,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var foreignKey = modelBuilder
                 .Entity<Customer>().HasMany(typeof(Order)).WithOne()
-                .SqlCeConstraintName("ChocolateLimes")
+                .ForSqlCeHasConstraintName("ChocolateLimes")
                 .Metadata;
 
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
@@ -137,7 +137,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var foreignKey = modelBuilder
                 .Entity<Order>().HasOne(e => e.Customer).WithMany(e => e.Orders)
-                .SqlCeConstraintName("ChocolateLimes")
+                .ForSqlCeHasConstraintName("ChocolateLimes")
                 .Metadata;
 
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
@@ -150,7 +150,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var foreignKey = modelBuilder
                 .Entity<Order>().HasMany(typeof(Customer)).WithOne()
-                .SqlCeConstraintName("ChocolateLimes")
+                .ForSqlCeHasConstraintName("ChocolateLimes")
                 .Metadata;
 
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
@@ -163,7 +163,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var foreignKey = modelBuilder
                 .Entity<Order>().HasOne(e => e.Details).WithOne(e => e.Order)
-                .SqlCeConstraintName("ChocolateLimes")
+                .ForSqlCeHasConstraintName("ChocolateLimes")
                 .Metadata;
 
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
@@ -176,7 +176,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var foreignKey = modelBuilder
                 .Entity<Order>().HasMany(typeof(OrderDetails)).WithOne()
-                .SqlCeConstraintName("ChocolateLimes")
+                .ForSqlCeHasConstraintName("ChocolateLimes")
                 .Metadata;
 
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
@@ -190,7 +190,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
             var index = modelBuilder
                 .Entity<Customer>()
                 .HasIndex(e => e.Id)
-                .SqlCeIndexName("Dexter")
+                .ForSqlCeHasName("Dexter")
                 .Metadata;
 
             Assert.Equal("Dexter", index.SqlCe().Name);
@@ -203,7 +203,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var entityType = modelBuilder
                 .Entity<Customer>()
-                .ToSqlCeTable("Custardizer")
+                .ForSqlCeToTable("Custardizer")
                 .Metadata;
 
             Assert.Equal("Custardizer", entityType.SqlCe().TableName);
@@ -216,7 +216,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata.Builders
 
             var entityType = modelBuilder
                 .Entity("Customer")
-                .ToSqlCeTable("Custardizer")
+                .ForSqlCeToTable("Custardizer")
                 .Metadata;
 
             Assert.Equal("Custardizer", entityType.SqlCe().TableName);

@@ -8,7 +8,7 @@ namespace Microsoft.Data.Entity
 {
     public static class SqlCeEntityTypeBuilderExtensions
     {
-        public static EntityTypeBuilder ToSqlCeTable([NotNull] this EntityTypeBuilder builder, [CanBeNull] string name)
+        public static EntityTypeBuilder ForSqlCeToTable([NotNull] this EntityTypeBuilder builder, [CanBeNull] string name)
         {
             Check.NotNull(builder, nameof(builder));
             Check.NullButNotEmpty(name, nameof(name));
@@ -18,10 +18,10 @@ namespace Microsoft.Data.Entity
             return builder;
         }
 
-        public static EntityTypeBuilder<TEntity> ToSqlCeTable<TEntity>(
+        public static EntityTypeBuilder<TEntity> ForSqlCeToTable<TEntity>(
             [NotNull] this EntityTypeBuilder<TEntity> builder,
             [CanBeNull] string name)
             where TEntity : class
-            => (EntityTypeBuilder<TEntity>)((EntityTypeBuilder)builder).ToSqlCeTable(name);
+            => (EntityTypeBuilder<TEntity>)((EntityTypeBuilder)builder).ForSqlCeToTable(name);
     }
 }

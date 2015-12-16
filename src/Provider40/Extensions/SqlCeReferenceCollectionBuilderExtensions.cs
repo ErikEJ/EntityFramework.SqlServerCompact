@@ -8,7 +8,7 @@ namespace Microsoft.Data.Entity
 {
     public static class SqlCeReferenceCollectionBuilderExtensions
     {
-        public static ReferenceCollectionBuilder SqlCeConstraintName(
+        public static ReferenceCollectionBuilder ForSqlCeHasConstraintName(
             [NotNull] this ReferenceCollectionBuilder builder,
             [CanBeNull] string name)
         {
@@ -20,11 +20,11 @@ namespace Microsoft.Data.Entity
             return builder;
         }
 
-        public static ReferenceCollectionBuilder<TEntity, TReferencedEntity> SqlCeConstraintName<TEntity, TReferencedEntity>(
+        public static ReferenceCollectionBuilder<TEntity, TReferencedEntity> ForSqlCeHasConstraintName<TEntity, TReferencedEntity>(
             [NotNull] this ReferenceCollectionBuilder<TEntity, TReferencedEntity> builder,
             [CanBeNull] string name)
             where TEntity : class
             where TReferencedEntity : class
-            => (ReferenceCollectionBuilder<TEntity, TReferencedEntity>)((ReferenceCollectionBuilder)builder).SqlCeConstraintName(name);
+            => (ReferenceCollectionBuilder<TEntity, TReferencedEntity>)((ReferenceCollectionBuilder)builder).ForSqlCeHasConstraintName(name);
     }
 }

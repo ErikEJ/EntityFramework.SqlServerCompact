@@ -8,7 +8,7 @@ namespace Microsoft.Data.Entity
 {
     public static class SqlCePropertyBuilderExtensions
     {
-        public static PropertyBuilder HasSqlCeColumnName([NotNull] this PropertyBuilder builder, [CanBeNull] string name)
+        public static PropertyBuilder ForSqlCeHasColumnName([NotNull] this PropertyBuilder builder, [CanBeNull] string name)
         {
             Check.NotNull(builder, nameof(builder));
             Check.NullButNotEmpty(name, nameof(name));
@@ -18,11 +18,11 @@ namespace Microsoft.Data.Entity
             return builder;
         }
 
-        public static PropertyBuilder<TEntity> HasSqlCeColumnName<TEntity>(
+        public static PropertyBuilder<TEntity> ForSqlCeHasColumnName<TEntity>(
             [NotNull] this PropertyBuilder<TEntity> builder,
             [CanBeNull] string name)
             where TEntity : class
-            => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).HasSqlCeColumnName(name);
+            => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).ForSqlCeHasColumnName(name);
 
         public static PropertyBuilder HasSqlCeColumnType([NotNull] this PropertyBuilder builder, [CanBeNull] string type)
         {
@@ -34,13 +34,13 @@ namespace Microsoft.Data.Entity
             return builder;
         }
 
-        public static PropertyBuilder<TEntity> HasSqlCeColumnType<TEntity>(
+        public static PropertyBuilder<TEntity> ForSqlCeHasColumnType<TEntity>(
             [NotNull] this PropertyBuilder<TEntity> builder,
             [CanBeNull] string type)
             where TEntity : class
             => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).HasSqlCeColumnType(type);
 
-        public static PropertyBuilder HasSqlCeDefaultValueSql(
+        public static PropertyBuilder ForSqlCeHasDefaultValueSql(
             [NotNull] this PropertyBuilder builder,
             [CanBeNull] string sql)
         {
@@ -53,10 +53,10 @@ namespace Microsoft.Data.Entity
             return builder;
         }
 
-        public static PropertyBuilder<TEntity> HasSqlCeDefaultValueSql<TEntity>(
+        public static PropertyBuilder<TEntity> ForSqlCeHasDefaultValueSql<TEntity>(
             [NotNull] this PropertyBuilder<TEntity> builder,
             [CanBeNull] string sql)
             where TEntity : class
-            => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).HasSqlCeDefaultValueSql(sql);
+            => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).ForSqlCeHasDefaultValueSql(sql);
     }
 }

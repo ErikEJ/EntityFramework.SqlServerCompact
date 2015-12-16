@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity.Storage.Internal;
 
 namespace Microsoft.Data.Entity.FunctionalTests
 {

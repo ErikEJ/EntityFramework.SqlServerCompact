@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.SqlServerCe;
+using System.Linq;
 using Xunit;
 
 namespace Microsoft.Data.Entity.FunctionalTests
@@ -28,7 +29,12 @@ namespace Microsoft.Data.Entity.FunctionalTests
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlCe(@"Data Source=BloggingIdentity.sdf");
+                optionsBuilder.UseSqlCe(
+                    new SqlCeConnectionStringBuilder
+                    {
+                        DataSource = "BloggingIdentity.sdf"
+                    }
+                    .ConnectionString);
             }
         }
 

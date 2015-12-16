@@ -26,7 +26,12 @@ namespace Microsoft.Data.Entity.FunctionalTests
         public class BloggingContext : DbContext
         {
             public DbSet<Blog> Blogs { get; set; }
-
+#if SQLCE35
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            {
+                optionsBuilder.UseSqlCe(@"Data Source=BloggingIdentity.sdf");
+            }
+#else
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlCe(
@@ -36,6 +41,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
                     }
                     .ConnectionString);
             }
+#endif
         }
 
         public class Blog

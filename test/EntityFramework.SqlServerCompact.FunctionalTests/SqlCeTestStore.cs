@@ -71,11 +71,6 @@ namespace Microsoft.Data.Entity.FunctionalTests
             return this;
         }
 
-        private async Task<SqlCeTestStore> CreateTransientAsync(bool createDatabase)
-        {
-            return await Task.FromResult(CreateTransient(createDatabase));
-        }
-
         public override DbConnection Connection => _connection;
         public override DbTransaction Transaction => _transaction;
 
@@ -132,12 +127,12 @@ namespace Microsoft.Data.Entity.FunctionalTests
         public override void Dispose()
         {
             Transaction?.Dispose();
-            Connection?.Dispose();
 
-            if (_connection.Exists() && _deleteDatabase)
+            if (_deleteDatabase)
             {
                 _connection.Drop(throwOnOpen: false);
             }
+            Connection?.Dispose();
             base.Dispose();
         }
 

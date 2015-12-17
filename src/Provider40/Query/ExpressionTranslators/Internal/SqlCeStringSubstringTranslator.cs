@@ -8,15 +8,25 @@ namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
     public class SqlCeStringSubstringTranslator : IMethodCallTranslator
     {
         private static readonly MethodInfo _methodInfo = typeof(string).GetTypeInfo()
-            .GetDeclaredMethods(nameof(string.Substring))
-            .Single(m => m.GetParameters().Count() == 2);
+           .GetDeclaredMethods(nameof(string.Substring))
+           .Single(m => m.GetParameters().Count() == 2);
 
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
             => methodCallExpression.Method == _methodInfo
                 ? new SqlFunctionExpression(
                     "SUBSTRING",
                     methodCallExpression.Type,
-                    new[] { methodCallExpression.Object }.Concat(methodCallExpression.Arguments))
+                    new[] {
+                        methodCallExpression.Object,
+                        // Accomodate for SQL Server Compact assumption of 1-based string indexes
+                        methodCallExpression.Arguments[0].NodeType == ExpressionType.Constant
+                            ? (Expression)Expression.Constant(
+                                (int)((ConstantExpression) methodCallExpression.Arguments[0]).Value + 1)
+                            : Expression.Add(
+                                methodCallExpression.Arguments[0],
+                                Expression.Constant(1)),
+                        methodCallExpression.Arguments[1] })
                 : null;
+
     }
 }

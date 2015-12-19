@@ -6,7 +6,6 @@ namespace Microsoft.Data.Entity
 {
     public static class SqlCeHelper
     {
-
         public static string PathFromConnectionString(string connectionString)
         {
 #if SQLCE35

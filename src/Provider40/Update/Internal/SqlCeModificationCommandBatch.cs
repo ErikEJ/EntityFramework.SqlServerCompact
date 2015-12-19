@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Common;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -13,7 +12,7 @@ namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlCeModificationCommandBatch : AffectedCountModificationCommandBatch
     {
-        private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
+        public IRelationalCommandBuilderFactory CommandBuilderFactory { get; }
         private bool _returnFirstCommandText;
 
         public SqlCeModificationCommandBatch(
@@ -27,7 +26,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 updateSqlGenerator,
                 valueBufferFactoryFactory)
         {
-            _commandBuilderFactory = commandBuilderFactory;
+            CommandBuilderFactory = commandBuilderFactory;
         }
 
 
@@ -62,7 +61,7 @@ namespace Microsoft.Data.Entity.Update.Internal
 
             try
             {
-                if (ModificationCommands[0].RequiresResultPropagation && returningCommandText != null)
+                if (ModificationCommands[0].RequiresResultPropagation && (returningCommandText != null))
                 {
                     _returnFirstCommandText = false;
                     var returningCommand = CreateStoreCommand();
@@ -123,7 +122,7 @@ namespace Microsoft.Data.Entity.Update.Internal
             return new Tuple<string, string>(commandText.Trim(), null);
         }
 
-        protected override int ConsumeResultSetWithoutPropagation(int commandIndex, [NotNull] DbDataReader reader)
+        protected override int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader)
         {
             const int expectedRowsAffected = 1;
             var rowsAffected = reader.RecordsAffected;
@@ -162,7 +161,7 @@ namespace Microsoft.Data.Entity.Update.Internal
             return commandIndex;
         }
 
-        protected override bool CanAddCommand([NotNull] ModificationCommand modificationCommand)
+        protected override bool CanAddCommand(ModificationCommand modificationCommand)
             => ModificationCommands.Count == 0;
 
         protected override bool IsCommandTextValid()

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if SQLCE35
+using System;
+#endif
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
@@ -52,7 +54,7 @@ namespace Microsoft.Data.Entity.Query.Sql.Internal
                 throw new NotSupportedException("SKIP clause is not supported by SQL Server Compact 3.5");
             }
 #endif
-            if (selectExpression.Offset != null
+            if ((selectExpression.Offset != null)
                 && !selectExpression.OrderBy.Any())
             {
                 Sql.AppendLine().Append("ORDER BY GETDATE()");

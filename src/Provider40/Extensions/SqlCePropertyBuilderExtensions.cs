@@ -38,7 +38,7 @@ namespace Microsoft.Data.Entity
             [NotNull] this PropertyBuilder<TEntity> builder,
             [CanBeNull] string type)
             where TEntity : class
-            => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).HasSqlCeColumnType(type);
+            => (PropertyBuilder<TEntity>)builder.HasSqlCeColumnType(type);
 
         public static PropertyBuilder ForSqlCeHasDefaultValueSql(
             [NotNull] this PropertyBuilder builder,

@@ -37,14 +37,14 @@ namespace Microsoft.Data.Entity.Storage.Internal
         public override bool Exists()
         {
             var connection = _connection.DbConnection as SqlCeConnection;
-            return connection != null && connection.Exists();
+            return (connection != null) && connection.Exists();
         }
 
         protected override bool HasTables()
            => (int)CreateHasTablesCommand().ExecuteScalar(_connection) != 0;  
 
         protected override async Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
-            => (int)(await CreateHasTablesCommand().ExecuteScalarAsync(_connection, true, cancellationToken)) != 0;
+            => (int)await CreateHasTablesCommand().ExecuteScalarAsync(_connection, true, cancellationToken) != 0;
 
         private IRelationalCommand CreateHasTablesCommand()
             => _rawSqlCommandBuilder

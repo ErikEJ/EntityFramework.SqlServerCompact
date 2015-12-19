@@ -6,6 +6,7 @@ using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Scaffolding;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
+using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
@@ -266,7 +267,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
                 _testStore.ExecuteNonQuery(sql);
             }
 
-            var reader = new SqlCeDatabaseModelFactory();
+            var reader = new SqlCeDatabaseModelFactory(new LoggerFactory());
 
             return reader.Create(_testStore.Connection.ConnectionString, selection ?? TableSelectionSet.All);
         }

@@ -26,7 +26,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
 
             var length = (parameter.Value as string)?.Length ?? (parameter.Value as byte[])?.Length;
 
-            if (length == null || length.Value <= _maxSpecificSize) return;
+            if ((length == null) || (length.Value <= _maxSpecificSize)) return;
             if (parameter.DbType == DbType.Binary)
             {
                 ((SqlCeParameter)parameter).SqlDbType = SqlDbType.Image;

@@ -44,7 +44,7 @@ namespace Microsoft.Data.Entity.Scaffolding.Internal
             if (sqlServerStringLiteralLength < 2)
             {
                 Logger.LogWarning(
-                    string.Format("Unable to interpret the string { sqlServerStringLiteral} as a SQLServer string literal.", sqlServerStringLiteral));
+                    $"Unable to interpret the string {sqlServerStringLiteral} as a SQLServer string literal.");
                 return null;
             }
 
@@ -52,7 +52,7 @@ namespace Microsoft.Data.Entity.Scaffolding.Internal
                 || sqlServerStringLiteral[sqlServerStringLiteralLength - 1] != '\'')
             {
                 Logger.LogWarning(
-                    string.Format("Unable to interpret the string { sqlServerStringLiteral} as a SQLServer string literal.", sqlServerStringLiteral));
+                    $"Unable to interpret the string {sqlServerStringLiteral} as a SQLServer string literal.");
                 return null;
             }
 

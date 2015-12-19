@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
@@ -21,6 +22,15 @@ namespace Microsoft.Data.Entity.Scaffolding
         private static string TableKey(TableModel table) => TableKey(table.Name);
         private static string TableKey(string name) => "[" + name + "]";
         private static string ColumnKey(TableModel table, string columnName) => TableKey(table) + ".[" + columnName + "]";
+
+        public SqlCeDatabaseModelFactory([NotNull] ILoggerFactory loggerFactory)
+        {
+            Check.NotNull(loggerFactory, nameof(loggerFactory));
+
+            Logger = loggerFactory.CreateCommandsLogger();
+        }
+
+        public virtual ILogger Logger { get; }
 
         private void ResetState()
         {
@@ -309,27 +319,24 @@ namespace Microsoft.Data.Entity.Scaffolding
         private ColumnModel FindColumnForForeignKey(
             string columnName, TableModel table, string fkName)
         {
-            ColumnModel column = null;
+            ColumnModel column;
             if (string.IsNullOrEmpty(columnName))
             {
-                ////TODO ErikEJ Log
-                //Logger.LogWarning(
-                //    SqlServerDesignStrings.ColumnNameEmptyOnForeignKey(
-                //        table.SchemaName, table.Name, fkName));
+                Logger.LogWarning(
+                    "Found a column on foreign key [{tableName}].[{fkName}] with an empty or null name. Not including column in foreign key",
+                        table.Name, fkName);
                 return null;
             }
             else if (!_tableColumns.TryGetValue(
                 ColumnKey(table, columnName), out column))
             {
-                //TODO ErikEJ Log
-                //Logger.LogWarning(
-                //    SqlServerDesignStrings.UnableToFindColumnForForeignKey(
-                //        fkName, columnName, table.SchemaName, table.Name));
+                Logger.LogWarning(
+                    "Foreign Key {fkName} contains a column named {columnName} which cannot be found on table [{tableName}]. Not including column in foreign key.",
+                        fkName, columnName, table.Name);
                 return null;
             }
             return column;
         }
-
 
         private static ReferentialAction? ConvertToReferentialAction(string onDeleteAction)
         {
@@ -339,6 +346,7 @@ namespace Microsoft.Data.Entity.Scaffolding
                     return ReferentialAction.Cascade;
 
                 case "NO ACTION":
+
                     return ReferentialAction.NoAction;
 
                 default:

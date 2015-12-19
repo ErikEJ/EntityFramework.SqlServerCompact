@@ -10,9 +10,9 @@ namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
     public class SqlCeMathTruncateTranslator : IMethodCallTranslator
     {
-        private static readonly IEnumerable<MethodInfo> _methodInfos = typeof(Math).GetTypeInfo().GetDeclaredMethods("Truncate");
+        private static readonly IEnumerable<MethodInfo> _methodInfos = typeof(Math).GetTypeInfo().GetDeclaredMethods(nameof(Math.Truncate));
 
-        public virtual Expression Translate([NotNull] MethodCallExpression methodCallExpression)
+        public virtual Expression Translate(MethodCallExpression methodCallExpression)
         {
             if (_methodInfos.Contains(methodCallExpression.Method))
             {

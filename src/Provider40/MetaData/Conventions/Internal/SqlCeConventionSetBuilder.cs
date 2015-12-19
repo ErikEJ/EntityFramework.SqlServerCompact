@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Storage;
 
 namespace Microsoft.Data.Entity.Metadata.Conventions.Internal

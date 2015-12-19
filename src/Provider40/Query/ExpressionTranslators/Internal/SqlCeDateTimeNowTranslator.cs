@@ -7,7 +7,7 @@ namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
 {
     public class SqlCeDateTimeNowTranslator : IMemberTranslator
     {
-        public virtual Expression Translate([NotNull] MemberExpression memberExpression)
+        public virtual Expression Translate(MemberExpression memberExpression)
         {
             if (memberExpression.Expression == null
                 && memberExpression.Member.DeclaringType == typeof(DateTime)

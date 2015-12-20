@@ -102,6 +102,7 @@
     <Compile Include="Extensions\Logging\DbConsoleLogger.cs" />
     <Compile Include="Extensions\Logging\DbLoggerProvider.cs" />
     <Compile Include="Extensions\Logging\NullLogger.cs" />
+    <Compile Include="Internal\SqlCeModelValidator.cs" />
     <Compile Include="Storage\Internal\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlCeDbContextExtensions.cs" />
     <Compile Include="Extensions\SqlCeEntityTypeBuilderExtensions.cs" />
@@ -157,8 +158,8 @@
     <Compile Include="Storage\Internal\SqlCeDatabaseConnection.cs" />
     <Compile Include="Storage\Internal\SqlCeDatabaseCreator.cs" />
     <Compile Include="Storage\Internal\SqlCeDatabaseProviderServices.cs" />
-    <Compile Include="Internal\SqlCeModelSource.cs" />
-    <Compile Include="Internal\SqlCeOptionsExtensions.cs" />
+    <Compile Include="Infrastructure\Internal\SqlCeModelSource.cs" />
+    <Compile Include="Infrastructure\Internal\SqlCeOptionsExtensions.cs" />
     <Compile Include="Update\Internal\SqlCeModificationCommandBatch.cs" />
     <Compile Include="Update\Internal\SqlCeModificationCommandBatchFactory.cs" />
     <Compile Include="Utilities\Check.cs" />

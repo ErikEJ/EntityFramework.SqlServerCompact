@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Data.Entity.Infrastructure.Internal;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;

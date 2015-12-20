@@ -2,6 +2,7 @@
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Infrastructure.Internal;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Update;
@@ -43,5 +44,6 @@ namespace Microsoft.Data.Entity.Storage.Internal
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
         public override IQuerySqlGeneratorFactory QuerySqlGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
+        public override IModelValidator ModelValidator => GetService<SqlCeModelValidator>();
     }
 }

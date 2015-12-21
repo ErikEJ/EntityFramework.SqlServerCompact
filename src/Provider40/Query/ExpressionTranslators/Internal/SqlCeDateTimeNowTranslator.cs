@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using JetBrains.Annotations;
 using Microsoft.Data.Entity.Query.Expressions;
 
 namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal

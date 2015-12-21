@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Infrastructure.Internal;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;
@@ -66,6 +67,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddSingleton<SqlCeModelSource>()
                 .AddSingleton<SqlCeAnnotationProvider>()
                 .AddSingleton<SqlCeMigrationsAnnotationProvider>()
+                .AddScoped<SqlCeModelValidator>()
                 .AddScoped<SqlCeConventionSetBuilder>()
                 .AddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
                 .AddScoped<SqlCeModificationCommandBatchFactory>()
@@ -80,13 +82,11 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder;
         }
 
-        private static IServiceCollection AddQuery(this IServiceCollection serviceCollection)
-        {
-            return serviceCollection
+        private static IServiceCollection AddQuery(this IServiceCollection serviceCollection) 
+            => serviceCollection
                 .AddScoped<SqlCeQueryCompilationContextFactory>()
                 .AddScoped<SqlCeCompositeMemberTranslator>()
                 .AddScoped<SqlCeCompositeMethodCallTranslator>()
                 .AddScoped<SqlCeQuerySqlGeneratorFactory>();
-        }
     }
 }

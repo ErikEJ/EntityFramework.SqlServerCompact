@@ -137,14 +137,17 @@
     <Compile Include="..\Provider40\Extensions\SqlCeReferenceReferenceBuilderExtensions.cs">
       <Link>Extensions\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Infrastructure\Internal\SqlCeModelSource.cs">
+      <Link>Infrastructure\Internal\SqlCeModelSource.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Infrastructure\Internal\SqlCeOptionsExtensions.cs">
+      <Link>Infrastructure\Internal\SqlCeOptionsExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Infrastructure\SqlCeDbContextOptionsBuilder.cs">
       <Link>Infrastructure\SqlCeDbContextOptionsBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Internal\SqlCeModelSource.cs">
-      <Link>Internal\SqlCeModelSource.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Internal\SqlCeOptionsExtensions.cs">
-      <Link>Internal\SqlCeOptionsExtensions.cs</Link>
+    <Compile Include="..\Provider40\Internal\SqlCeModelValidator.cs">
+      <Link>Internal\SqlCeModelValidator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs">
       <Link>MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs</Link>

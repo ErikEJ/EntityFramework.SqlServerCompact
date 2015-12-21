@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +10,6 @@ using Microsoft.Data.Entity.Scaffolding.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {

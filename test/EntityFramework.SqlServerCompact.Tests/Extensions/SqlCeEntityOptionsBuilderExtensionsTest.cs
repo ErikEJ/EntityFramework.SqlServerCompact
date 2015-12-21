@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlServerCe;
 using System.Linq;
-using Microsoft.Data.Entity.Internal;
+using Microsoft.Data.Entity.Infrastructure.Internal;
 using Xunit;
 
 namespace Microsoft.Data.Entity.Tests.Extensions

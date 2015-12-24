@@ -69,6 +69,38 @@ namespace Microsoft.Data.Entity.Tests.Migrations
         }
 
         [Fact]
+        public virtual void RenameColumnOperation()
+        {
+            Assert.Throws<NotSupportedException>(() =>
+                Generate(
+                    new RenameColumnOperation
+                    {
+                        Table = "People",
+                        Schema = "dbo",
+                        Name = "Name",
+                        NewName = "FullName"
+                    }));
+        }
+
+        //TODO ErikEJ
+        //[Fact]
+        //public virtual void RenameIndexOperation()
+        //{
+        //    Generate(
+        //        new RenameIndexOperation
+        //        {
+        //            Table = "People",
+        //            Schema = "dbo",
+        //            Name = "IX_People_Name",
+        //            NewName = "IX_People_FullName"
+        //        });
+
+        //    Assert.Equal(
+        //        "EXEC sp_rename N'dbo.People.IX_People_Name', N'IX_People_FullName', 'INDEX';" + EOL,
+        //        Sql);
+        //}
+
+        [Fact]
         public virtual void RenameTableOperation()
         {
             Generate(

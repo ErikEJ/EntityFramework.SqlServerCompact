@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
@@ -11,6 +12,8 @@ namespace Microsoft.Data.Entity.Migrations
 {
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {
+        private readonly IRelationalAnnotationProvider _annotations;
+
         public SqlCeMigrationsSqlGenerator(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
             [NotNull] ISqlGenerationHelper sqlGenerationHelper,
@@ -18,6 +21,7 @@ namespace Microsoft.Data.Entity.Migrations
             [NotNull] IRelationalAnnotationProvider annotations)
             : base(commandBuilderFactory, sqlGenerationHelper, typeMapper, annotations)
         {
+            _annotations = annotations;
         }
 
         protected override void Generate(AlterColumnOperation operation, IModel model, RelationalCommandListBuilder builder)
@@ -92,7 +96,6 @@ namespace Microsoft.Data.Entity.Migrations
         }
 
         #region Invalid schema operations
-
         protected override void Generate(EnsureSchemaOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
@@ -102,11 +105,9 @@ namespace Microsoft.Data.Entity.Migrations
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
-
         #endregion
 
         #region Sequences not supported
-
         protected override void Generate(RestartSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
@@ -131,7 +132,6 @@ namespace Microsoft.Data.Entity.Migrations
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
-
         #endregion 
 
         protected override void Generate(RenameColumnOperation operation, IModel model, RelationalCommandListBuilder builder)
@@ -141,7 +141,33 @@ namespace Microsoft.Data.Entity.Migrations
 
         protected override void Generate(RenameIndexOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support index renames.");
+            Check.NotNull(operation, nameof(operation));
+            Check.NotNull(builder, nameof(builder));
+
+            if (model == null)
+            {
+                throw new NotSupportedException("SQL Server Compact does not support index renames.");
+            }
+
+            //TODO ErikEJ
+            //var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.Name);
+
+            //var dropIndexOperation = new DropIndexOperation
+            //{
+            //    Name = operation.Name,
+            //    IsDestructiveChange = true,
+            //    Table = operation.Table
+            //};
+            //Generate(dropIndexOperation, model, builder);
+
+            //var createIndexOperation = new CreateIndexOperation
+            //{
+            //    Columns = index.Properties.Select(p => p.Name).ToArray(),
+            //    IsUnique = index.IsUnique,
+            //    Name = operation.NewName,
+            //    Table = operation.Table
+            //};
+            //Generate(createIndexOperation, model, builder);
         }
 
         protected override void Generate(RenameTableOperation operation, IModel model, RelationalCommandListBuilder builder)
@@ -241,5 +267,13 @@ namespace Microsoft.Data.Entity.Migrations
                 builder.Append(" IDENTITY");
             }
         }
+
+        protected virtual IEntityType FindEntityType(
+    [CanBeNull] IModel model,
+    [CanBeNull] string schema,
+    [NotNull] string tableName)
+    => model?.GetEntityTypes().FirstOrDefault(
+        t => (_annotations.For(t).TableName == tableName) && (_annotations.For(t).Schema == schema));
+
     }
 }

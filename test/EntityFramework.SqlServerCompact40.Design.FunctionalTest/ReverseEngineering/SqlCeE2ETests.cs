@@ -40,7 +40,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "OneToOneFKToUniqueKeyPrincipal",
                 "ReferredToByTableWithUnmappablePrimaryKeyColumn",
                 "TableWithUnmappablePrimaryKeyColumn",
-                "SelfReferencing",
+                "selfReferencing",
             });
 
         public SqlCeE2ETests(SqlCeE2EFixture fixture, ITestOutputHelper output)

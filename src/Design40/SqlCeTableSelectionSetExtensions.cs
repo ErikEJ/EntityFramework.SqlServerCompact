@@ -1,20 +1,21 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace Microsoft.Data.Entity.Scaffolding
 {
     internal static class SqlCeTableSelectionSetExtensions
     {
-        public static bool Allows(this TableSelectionSet _tableSelectionSet, [NotNull] string tableName)
+        public static bool Allows(this TableSelectionSet tableSelectionSet, [NotNull] string tableName)
         {
-            if (_tableSelectionSet == null
-                || (_tableSelectionSet.Tables.Count == 0))
+            if ((tableSelectionSet == null)
+                || (tableSelectionSet.Tables.Count == 0))
             {
                 return true;
             }
 
-            return _tableSelectionSet.Tables.Contains($"{tableName}")
-                || _tableSelectionSet.Tables.Contains($"[{tableName}]");
+            return tableSelectionSet.Tables.Contains($"{tableName}", StringComparer.OrdinalIgnoreCase)
+                || tableSelectionSet.Tables.Contains($"[{tableName}]", StringComparer.OrdinalIgnoreCase);
         }
     }
 }

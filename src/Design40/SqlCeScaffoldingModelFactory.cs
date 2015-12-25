@@ -4,28 +4,20 @@ using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Builders;
 using Microsoft.Data.Entity.Metadata.Internal;
-using Microsoft.Data.Entity.Scaffolding.Internal;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
 using Microsoft.Data.Entity.Storage;
-using Microsoft.Data.Entity.Utilities;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Scaffolding
 {
     public class SqlCeScaffoldingModelFactory : RelationalScaffoldingModelFactory
     {
-        private readonly SqlServerLiteralUtilities _sqlServerLiteralUtilities;
-
         public SqlCeScaffoldingModelFactory(
             [NotNull] ILoggerFactory loggerFactory,
             [NotNull] IRelationalTypeMapper typeMapper,
-            [NotNull] IDatabaseModelFactory databaseModelFactory,
-            [NotNull] SqlServerLiteralUtilities sqlServerLiteralUtilities)
+            [NotNull] IDatabaseModelFactory databaseModelFactory)
             : base(loggerFactory, typeMapper, databaseModelFactory)
         {
-            Check.NotNull(sqlServerLiteralUtilities, nameof(sqlServerLiteralUtilities));
-
-            _sqlServerLiteralUtilities = sqlServerLiteralUtilities;
         }
 
         public override IModel Create(string connectionString, TableSelectionSet tableSelectionSet)
@@ -35,7 +27,7 @@ namespace Microsoft.Data.Entity.Scaffolding
             return model;
         }
 
-        protected override PropertyBuilder VisitColumn([NotNull] EntityTypeBuilder builder, [NotNull] ColumnModel column)
+        protected override PropertyBuilder VisitColumn(EntityTypeBuilder builder, ColumnModel column)
         {
             var propertyBuilder = base.VisitColumn(builder, column);
 
@@ -51,7 +43,7 @@ namespace Microsoft.Data.Entity.Scaffolding
             return propertyBuilder;
         }
 
-        protected override KeyBuilder VisitPrimaryKey([NotNull] EntityTypeBuilder builder, [NotNull] TableModel table)
+        protected override KeyBuilder VisitPrimaryKey(EntityTypeBuilder builder, TableModel table)
         {
             var keyBuilder = base.VisitPrimaryKey(builder, table);
 
@@ -66,8 +58,8 @@ namespace Microsoft.Data.Entity.Scaffolding
             // override this behavior.
 
             // TODO use KeyConvention directly to detect when it will be applied
-            var pkColumns = table.Columns.OfType<SqlCeColumnModel>().Where(c => c.PrimaryKeyOrdinal.HasValue).ToList();
-            if (pkColumns.Count != 1 || pkColumns[0].IsIdentity == true)
+            var pkColumns = table.Columns.OfType<ColumnModel>().Where(c => c.PrimaryKeyOrdinal.HasValue).ToList();
+            if ((pkColumns.Count != 1) || pkColumns[0].SqlCe().IsIdentity)
             {
                 return keyBuilder;
             }
@@ -76,8 +68,8 @@ namespace Microsoft.Data.Entity.Scaffolding
             var property = builder.Metadata.FindProperty(GetPropertyName(pkColumns[0]));
             var propertyType = property?.ClrType?.UnwrapNullableType();
 
-            if (propertyType?.IsInteger() == true
-                || propertyType == typeof(Guid))
+            if ((propertyType?.IsIntegerForIdentity() == true)
+                || (propertyType == typeof(Guid)))
             {
                 property.ValueGenerated = ValueGenerated.Never;
             }
@@ -85,19 +77,19 @@ namespace Microsoft.Data.Entity.Scaffolding
             return keyBuilder;
         }
 
-        private PropertyBuilder VisitTypeMapping(PropertyBuilder propertyBuilder, ColumnModel column)
+        private void VisitTypeMapping(PropertyBuilder propertyBuilder, ColumnModel column)
         {
-            var sqlCeColumn = column as SqlCeColumnModel;
+            var sqlCeColumn = column as ColumnModel;
             if (sqlCeColumn == null)
             {
-                return propertyBuilder;
+                return;
             }
 
-            if (sqlCeColumn.IsIdentity == true)
+            if (sqlCeColumn.SqlCe().IsIdentity)
             {
                 if (typeof(byte) == propertyBuilder.Metadata.ClrType)
                 {
-                    Logger.LogWarning(string.Format("For column { columnId}. This column is set up as an Identity column, but the SQL Server data type is { sqlServerDataType}. This will be mapped to CLR type byte which does not allow the SqlServerValueGenerationStrategy.IdentityColumn setting. Generating a matching Property but ignoring the Identity setting.",
+                    Logger.LogWarning(string.Format("For column {0}. This column is set up as an Identity column, but the SQL Server data type is {1}. This will be mapped to CLR type byte which does not allow the SqlServerValueGenerationStrategy.IdentityColumn setting. Generating a matching Property but ignoring the Identity setting.",
                             column.DisplayName, column.DataType));
                 }
                 else
@@ -108,46 +100,51 @@ namespace Microsoft.Data.Entity.Scaffolding
             }
 
             // undo quirk in reverse type mapping to litters code with unnecessary nvarchar annotations
-            if (typeof(string) == propertyBuilder.Metadata.ClrType
-                && propertyBuilder.Metadata.Relational().ColumnType == "nvarchar")
+            if ((typeof(string) == propertyBuilder.Metadata.ClrType)
+                && (propertyBuilder.Metadata.Relational().ColumnType == "nvarchar"))
             {
                 propertyBuilder.Metadata.Relational().ColumnType = null;
             }
-
-            return propertyBuilder;
         }
 
-        private PropertyBuilder VisitDefaultValue(ColumnModel column, PropertyBuilder propertyBuilder)
+        private void VisitDefaultValue(ColumnModel column, PropertyBuilder propertyBuilder)
         {
             if (column.DefaultValue != null)
             {
-                // unset default
                 ((Property)propertyBuilder.Metadata).SetValueGenerated(null, ConfigurationSource.Explicit);
                 propertyBuilder.Metadata.Relational().GeneratedValueSql = null;
 
-                var property = propertyBuilder.Metadata;
-                var defaultExpressionOrValue =
-                    _sqlServerLiteralUtilities
-                        .ConvertSqlServerDefaultValue(
-                            property.ClrType, column.DefaultValue);
-                if (defaultExpressionOrValue?.DefaultExpression != null)
+                var defaultExpression = ConvertSqlCeDefaultValue(column.DefaultValue);
+                if (defaultExpression != null)
                 {
-                    propertyBuilder.HasDefaultValueSql(defaultExpressionOrValue.DefaultExpression);
-                }
-                else if (defaultExpressionOrValue != null)
-                {
-                    // Note: defaultExpressionOrValue.DefaultValue == null is valid
-                    propertyBuilder.HasDefaultValue(defaultExpressionOrValue.DefaultValue);
+                    if (!((defaultExpression == "NULL")
+                            && propertyBuilder.Metadata.ClrType.IsNullableType()))
+                    {
+                        propertyBuilder.HasDefaultValueSql(defaultExpression);
+                    }
                 }
                 else
                 {
-                    Logger.LogWarning(string.Format(
-                        "For column {columnId} unable to convert default value {defaultValue} into type {propertyType}. Will not generate code setting a default value for the property {propertyName} on entity type {entityTypeName}.",
-                            column.DisplayName, column.DefaultValue,
-                            property.ClrType, property.Name, property.DeclaringEntityType.Name));
+                    Logger.LogWarning(
+                        $"For column {column.DisplayName} unable to interpret default value {column.DefaultValue}. Will not generate code setting a default value for the property {propertyBuilder.Metadata.Name} on entity type {propertyBuilder.Metadata.DeclaringEntityType.Name}.");
                 }
             }
-            return propertyBuilder;
+        }
+
+        private string ConvertSqlCeDefaultValue(string sqlCeDefaultValue)
+        {
+            if (sqlCeDefaultValue.Length < 2)
+            {
+                return null;
+            }
+
+            while ((sqlCeDefaultValue[0] == '(')
+                   && (sqlCeDefaultValue[sqlCeDefaultValue.Length - 1] == ')'))
+            {
+                sqlCeDefaultValue = sqlCeDefaultValue.Substring(1, sqlCeDefaultValue.Length - 2);
+            }
+
+            return sqlCeDefaultValue;
         }
     }
 }

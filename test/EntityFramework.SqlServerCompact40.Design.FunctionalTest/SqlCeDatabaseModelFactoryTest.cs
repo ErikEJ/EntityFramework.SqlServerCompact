@@ -51,8 +51,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
             Assert.Equal("Mountains", fk.Table.Name);
             Assert.Equal(null, fk.PrincipalTable.SchemaName);
             Assert.Equal("Ranges", fk.PrincipalTable.Name);
-            Assert.Equal("RangeId", fk.Columns.Single().Name);
-            Assert.Equal("Id", fk.PrincipalColumns.Single().Name);
+            Assert.Equal("RangeId", fk.Columns.Single().Column.Name);
+            Assert.Equal("Id", fk.Columns.Single().PrincipalColumn.Name);
             Assert.Equal(ReferentialAction.Cascade, fk.OnDelete);
         }
 
@@ -71,8 +71,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
             Assert.Equal("Mountains1", fk.Table.Name);
             Assert.Equal(null, fk.PrincipalTable.SchemaName);
             Assert.Equal("Ranges1", fk.PrincipalTable.Name);
-            Assert.Equal(new[] { "RangeId", "RangeAltId" }, fk.Columns.Select(c => c.Name).ToArray());
-            Assert.Equal(new[] { "Id", "AltId" }, fk.PrincipalColumns.Select(c => c.Name).ToArray());
+            Assert.Equal(new[] { "RangeId", "RangeAltId" }, fk.Columns.Select(c => c.Column.Name).ToArray());
+            Assert.Equal(new[] { "Id", "AltId" }, fk.Columns.Select(c => c.PrincipalColumn.Name).ToArray());
             Assert.Equal(ReferentialAction.NoAction, fk.OnDelete);
         }
 
@@ -98,12 +98,12 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
                 nonClustered =>
                 {
                     Assert.Equal("IX_Location", nonClustered.Name);
-                    Assert.Equal("Location", nonClustered.Columns.Select(c => c.Name).Single());
+                    Assert.Equal("Location", nonClustered.IndexColumns.Select(c => c.Column.Name).Single());
                 },
                 unique =>
                 {
                     Assert.True(unique.IsUnique);
-                    Assert.Equal("Name", unique.Columns.Single().Name);
+                    Assert.Equal("Name", unique.IndexColumns.Single().Column.Name);
                 });
         }
 
@@ -217,8 +217,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
 
             var dbInfo = CreateModel(sql, new TableSelectionSet(new List<string> { "Identities" }));
 
-            var column = Assert.IsType<SqlCeColumnModel>(Assert.Single(dbInfo.Tables.Single().Columns));
-            Assert.Equal(isIdentity, column.IsIdentity);
+            var column = Assert.IsType<ColumnModel>(Assert.Single(dbInfo.Tables.Single().Columns));
+            Assert.Equal(isIdentity, column.SqlCe().IsIdentity);
             Assert.Equal(isIdentity ? ValueGenerated.OnAdd : default(ValueGenerated?), column.ValueGenerated);
         }
 

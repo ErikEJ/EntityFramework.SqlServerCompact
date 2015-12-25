@@ -5,6 +5,7 @@ using System.IO;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Scaffolding.Internal;
 using Microsoft.Data.Entity.Scaffolding.Metadata;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Extensions.Logging;
@@ -143,8 +144,8 @@ namespace Microsoft.Data.Entity.Scaffolding
                     int? precision = null;
                     int? scale = null;
 
-                    if (dataTypeName == "decimal"
-                        || dataTypeName == "numeric")
+                    if ((dataTypeName == "decimal")
+                        || (dataTypeName == "numeric"))
                     {
                         precision = reader.IsDBNull(8) ? default(int?) : Convert.ToInt32(reader[8], System.Globalization.CultureInfo.InvariantCulture);
                         scale = reader.IsDBNull(9) ? default(int?) : Convert.ToInt32(reader[9], System.Globalization.CultureInfo.InvariantCulture);
@@ -157,17 +158,17 @@ namespace Microsoft.Data.Entity.Scaffolding
                         maxLength = null;
                     }
 
-                    if (maxLength.HasValue && maxLength.Value > 8000)
+                    if (maxLength.HasValue && (maxLength.Value > 8000))
                     {
                         maxLength = null;
                     }
 
                     var isIdentity = !reader.IsDBNull(11) && reader.GetBoolean(11);
-                    var isComputed = reader.GetBoolean(12) || dataTypeName == "rowversion";
+                    var isComputed = reader.GetBoolean(12) || (dataTypeName == "rowversion");
 
                     var table = _tables[TableKey(tableName)];
                     var columnName = reader.GetString(3);
-                    var column = new SqlCeColumnModel
+                    var column = new ColumnModel
                     {
                         Table = table,
                         DataType = dataTypeName,
@@ -179,12 +180,13 @@ namespace Microsoft.Data.Entity.Scaffolding
                         Precision = precision,
                         Scale = scale,
                         MaxLength = maxLength <= 0 ? default(int?) : maxLength,
-                        IsIdentity = isIdentity,
                         ValueGenerated = isIdentity ?
                             ValueGenerated.OnAdd :
                             isComputed ?
                                 ValueGenerated.OnAddOrUpdate : default(ValueGenerated?)
                     };
+
+                    column.SqlCe().IsIdentity = isIdentity;
 
                     table.Columns.Add(column);
                     _tableColumns.Add(ColumnKey(table, column.Name), column);
@@ -200,7 +202,8 @@ namespace Microsoft.Data.Entity.Scaffolding
     NULL AS [schema_name],
     ix.[TABLE_NAME] AS [table_name],
 	ix.[UNIQUE] AS is_unique,
-    ix.[COLUMN_NAME] AS [column_name]
+    ix.[COLUMN_NAME] AS [column_name],
+    ix.[ORDINAL_POSITION]
     FROM INFORMATION_SCHEMA.INDEXES ix
     WHERE ix.PRIMARY_KEY = 0
     AND (SUBSTRING(TABLE_NAME, 1,2) <> '__')
@@ -219,8 +222,8 @@ namespace Microsoft.Data.Entity.Scaffolding
                         continue;
                     }
 
-                    if (index == null
-                        || index.Name != indexName)
+                    if ((index == null)
+                        || (index.Name != indexName))
                     {
                         TableModel table;
                         if (!_tables.TryGetValue(TableKey(tableName), out table))
@@ -238,7 +241,17 @@ namespace Microsoft.Data.Entity.Scaffolding
                     }
                     var columnName = reader.GetString(4);
                     var column = _tableColumns[ColumnKey(index.Table, columnName)];
-                    index.Columns.Add(column);
+
+                    var indexOrdinal = reader.GetInt32(5);
+
+                    var indexColumn = new IndexColumnModel
+                    {
+                        Index = index,
+                        Column = column,
+                        Ordinal = indexOrdinal
+                    };
+
+                    index.IndexColumns.Add(indexColumn);
                 }
             }
         }
@@ -256,7 +269,8 @@ namespace Microsoft.Data.Entity.Scaffolding
                 KCU2.COLUMN_NAME AS UQ_COLUMN_NAME, 
                 0 AS [IS_DISABLED],
                 RC.DELETE_RULE, 
-                RC.UPDATE_RULE
+                RC.UPDATE_RULE,
+                KCU1.ORDINAL_POSITION
                 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS RC 
                 JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE KCU1 ON KCU1.CONSTRAINT_NAME = RC.CONSTRAINT_NAME 
                 AND KCU1.TABLE_NAME = RC.CONSTRAINT_TABLE_NAME 
@@ -277,8 +291,8 @@ namespace Microsoft.Data.Entity.Scaffolding
                     {
                         continue;
                     }
-                    if (fkInfo == null
-                        || lastFkName != fkName)
+                    if ((fkInfo == null)
+                        || (lastFkName != fkName))
                     {
                         lastFkName = fkName;
                         var principalTableName = reader.GetString(4);
@@ -288,17 +302,25 @@ namespace Microsoft.Data.Entity.Scaffolding
 
                         fkInfo = new ForeignKeyModel
                         {
+                            Name = fkName,
                             Table = table,
-                            PrincipalTable = principalTable
+                            PrincipalTable = principalTable,
+                            OnDelete = ConvertToReferentialAction(reader.GetStringOrNull(8))
                         };
 
                         table.ForeignKeys.Add(fkInfo);
                     }
+
+                    var fkColumn = new ForeignKeyColumnModel
+                    {
+                        Ordinal = reader.GetInt32(10)
+                    };
+
                     var fromColumnName = reader.GetString(5);
                     ColumnModel fromColumn;
                     if ((fromColumn = FindColumnForForeignKey(fromColumnName, fkInfo.Table, fkName)) != null)
                     {
-                        fkInfo.Columns.Add(fromColumn);
+                        fkColumn.Column = fromColumn;
                     }
 
                     if (fkInfo.PrincipalTable != null)
@@ -307,11 +329,11 @@ namespace Microsoft.Data.Entity.Scaffolding
                         ColumnModel toColumn;
                         if ((toColumn = FindColumnForForeignKey(toColumnName, fkInfo.PrincipalTable, fkName)) != null)
                         {
-                            fkInfo.PrincipalColumns.Add(toColumn);
+                            fkColumn.PrincipalColumn = toColumn;
                         }
                     }
 
-                    fkInfo.OnDelete = ConvertToReferentialAction(reader.GetString(8));
+                    fkInfo.Columns.Add(fkColumn);
                 }
             }
         }

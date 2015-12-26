@@ -10,8 +10,10 @@ using Microsoft.Data.Entity.ValueGeneration;
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
+using Microsoft.Data.Entity.Query;
 using Microsoft.Data.Entity.Query.ExpressionTranslators;
 using Microsoft.Data.Entity.Query.ExpressionTranslators.Internal;
+using Microsoft.Data.Entity.Query.Internal;
 using Microsoft.Data.Entity.Query.Sql;
 using Microsoft.Data.Entity.Query.Sql.Internal;
 using Microsoft.Data.Entity.Update.Internal;
@@ -43,6 +45,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
         public override IRelationalAnnotationProvider AnnotationProvider => GetService<SqlCeAnnotationProvider>();
         public override IMethodCallTranslator CompositeMethodCallTranslator => GetService<SqlCeCompositeMethodCallTranslator>();
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
+        public override IQueryCompilationContextFactory QueryCompilationContextFactory => GetService<SqlCeQueryCompilationContextFactory>();
         public override IQuerySqlGeneratorFactory QuerySqlGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
         public override IModelValidator ModelValidator => GetService<SqlCeModelValidator>();
     }

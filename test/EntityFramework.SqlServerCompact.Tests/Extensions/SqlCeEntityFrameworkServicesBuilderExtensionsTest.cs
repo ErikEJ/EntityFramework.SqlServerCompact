@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Data.Entity.Infrastructure.Internal;
+using Microsoft.Data.Entity.Internal;
+using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Metadata.Conventions.Internal;
 using Microsoft.Data.Entity.Migrations;
 using Microsoft.Data.Entity.Migrations.Internal;
+using Microsoft.Data.Entity.Query.ExpressionTranslators.Internal;
+using Microsoft.Data.Entity.Query.Internal;
+using Microsoft.Data.Entity.Query.Sql.Internal;
 using Microsoft.Data.Entity.Storage.Internal;
 using Microsoft.Data.Entity.Update;
 using Microsoft.Data.Entity.Update.Internal;
@@ -25,6 +30,9 @@ namespace Microsoft.Data.Entity.Tests.Extensions
             VerifySingleton<SqlCeValueGeneratorCache>();           
             VerifySingleton<SqlCeTypeMapper>();            
             VerifySingleton<SqlCeModelSource>();
+            VerifySingleton<SqlCeSqlGenerationHelper>();
+            VerifySingleton<SqlCeAnnotationProvider>();
+            VerifySingleton<SqlCeMigrationsAnnotationProvider>();
 
             // SQL Server Ce scoped
             VerifyScoped<SqlCeConventionSetBuilder>();
@@ -32,12 +40,18 @@ namespace Microsoft.Data.Entity.Tests.Extensions
             VerifyScoped<SqlCeModificationCommandBatchFactory>();
             VerifyScoped<SqlCeDatabaseProviderServices>();
             VerifyScoped<ISqlCeDatabaseConnection>();
-            VerifyScoped<SqlCeMigrationsAnnotationProvider>();
-            VerifyScoped<SqlCeMigrationsSqlGenerator>();
             VerifyScoped<SqlCeDatabaseCreator>();
+            VerifyScoped<SqlCeModelValidator>();
+
+            //Query
+            VerifyScoped<SqlCeQueryCompilationContextFactory>();
+            VerifyScoped<SqlCeCompositeMemberTranslator>();
+            VerifyScoped<SqlCeCompositeMethodCallTranslator>();
+            VerifyScoped<SqlCeQuerySqlGeneratorFactory>();
 
             // Migrations
             VerifyScoped<IMigrationsAssembly>();
+            VerifyScoped<SqlCeMigrationsAnnotationProvider>();
             VerifyScoped<SqlCeHistoryRepository>();
             VerifyScoped<IMigrator>();
             VerifySingleton<IMigrationsIdGenerator>();

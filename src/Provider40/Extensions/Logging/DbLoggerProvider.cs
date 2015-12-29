@@ -7,15 +7,14 @@ namespace Microsoft.Data.Entity
 {
     public class DbLoggerProvider : ILoggerProvider
     {
-        private static readonly string[] Whitelist = new string[]
+        private static readonly string[] _whitelist = 
         {
-                typeof(Update.Internal.BatchExecutor).FullName,
-                typeof(Query.QueryContextFactory).FullName
+            typeof(Storage.Internal.RelationalCommandBuilderFactory).FullName
         };
 
         public ILogger CreateLogger(string name)
         {
-            if (Whitelist.Contains(name))
+            if (_whitelist.Contains(name))
             {
                 return new DbConsoleLogger();
             }

@@ -100,17 +100,17 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Provider40\Extensions\Logging\DbConsoleLogger.cs">
-      <Link>Extensions\Logging\DbConsoleLogger.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Extensions\Logging\DbLoggerProvider.cs">
       <Link>Extensions\Logging\DbLoggerProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Extensions\Logging\DbSimpleLogger.cs">
+      <Link>Extensions\Logging\DbSimpleLogger.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Extensions\Logging\NullLogger.cs">
       <Link>Extensions\Logging\NullLogger.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeDbContextExtensions.cs">
-      <Link>Extensions\SqlCeDbContextExtensions.cs</Link>
+    <Compile Include="..\Provider40\Extensions\SqlCeDatabaseFacadeExtensions.cs">
+      <Link>Extensions\SqlCeDatabaseFacadeExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeDbContextOptionsExtensions.cs">
       <Link>Extensions\SqlCeDbContextOptionsExtensions.cs</Link>

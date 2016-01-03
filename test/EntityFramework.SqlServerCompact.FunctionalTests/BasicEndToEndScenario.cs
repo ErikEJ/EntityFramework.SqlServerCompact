@@ -21,7 +21,7 @@ namespace Microsoft.Data.Entity.FunctionalTests
 
                 using (diag.Subscribe(observer))
                 {
-                    db.LogToConsole();
+                    db.Database.Log(s => { Debug.WriteLine(s); });
                     db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
                     db.Blogs.Add(new Blog { BlogId = Guid.NewGuid(), Url = "http://erikej.blogspot.com" });

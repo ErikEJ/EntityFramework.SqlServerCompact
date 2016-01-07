@@ -135,11 +135,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\EntityFrameworkServiceCollectionExtensionsTest.cs" />
-    <Compile Include="Extensions\Metadata\Builders\SqlCeBuilderExtensionsTest.cs" />
+    <Compile Include="Extensions\Metadata\SqlCeBuilderExtensionsTest.cs" />
     <Compile Include="Extensions\Metadata\InternalSqlCeMetadataBuilderExtensionsTest.cs.cs" />
     <Compile Include="Extensions\Metadata\SqlCeMetadataExtensionsTest.cs" />
     <Compile Include="Extensions\RelationalEntityFrameworkServicesBuilderExtensionsTest.cs" />
-    <Compile Include="Extensions\SqlCeEntityOptionsBuilderExtensionsTest.cs" />
+    <Compile Include="Extensions\SqlCeDbContextOptionsExtensionsTest.cs" />
     <Compile Include="FakeSensitiveDataLogger`.cs" />
     <Compile Include="Migrations\MigrationSqlGeneratorTestBase.cs" />
     <Compile Include="Migrations\SqlCeHistoryRepositoryTest.cs" />

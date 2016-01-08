@@ -134,6 +134,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\src\Provider40\Utilities\Check.cs">
+      <Link>Utilities\Check.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Provider40\Utilities\CodeAnnotations.cs">
+      <Link>Utilities\CodeAnnotations.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Provider40\Utilities\SharedTypeExtensions.cs">
+      <Link>Utilities\SharedTypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="ApiConsistencyTest.cs" />
+    <Compile Include="ApiConsistencyTestBase.cs" />
     <Compile Include="Extensions\EntityFrameworkServiceCollectionExtensionsTest.cs" />
     <Compile Include="Extensions\Metadata\SqlCeBuilderExtensionsTest.cs" />
     <Compile Include="Extensions\Metadata\InternalSqlCeMetadataBuilderExtensionsTest.cs.cs" />

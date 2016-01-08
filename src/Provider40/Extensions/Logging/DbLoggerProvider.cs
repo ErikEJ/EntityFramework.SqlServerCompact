@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Data.Entity
 {
-    public class DbLoggerProvider : ILoggerProvider
+    internal class DbLoggerProvider : ILoggerProvider
     {
         private readonly Action<string> _writeAction;
 

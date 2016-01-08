@@ -1,4 +1,6 @@
 ﻿using System.Data.SqlServerCe;
+using JetBrains.Annotations;
+using Microsoft.Data.Entity.Utilities;
 
 // ReSharper disable once CheckNamespace
 
@@ -6,8 +8,9 @@ namespace Microsoft.Data.Entity
 {
     public static class SqlCeHelper
     {
-        public static string PathFromConnectionString(string connectionString)
+        public static string PathFromConnectionString([NotNull] string connectionString)
         {
+            Check.NotNull(connectionString, nameof(connectionString));
 #if SQLCE35
             var conn = new SqlCeConnection(GetFullConnectionString(connectionString));
             return conn.Database;

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Extensions.Logging
 {
-    public class DbSimpleLogger : ILogger
+    internal class DbSimpleLogger : ILogger
     {
         private readonly Action<string> _writeAction;
 

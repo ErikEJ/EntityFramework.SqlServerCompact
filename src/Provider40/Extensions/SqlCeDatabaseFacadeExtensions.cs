@@ -15,7 +15,7 @@ namespace Microsoft.Data.Entity
         /// </summary>
         /// <param name="database"> The database facade.</param>
         /// <param name="writeAction">The method to write the log</param>
-        public static void Log([NotNull] this DatabaseFacade database, Action<string> writeAction)
+        public static void Log([NotNull] this DatabaseFacade database, [NotNull] Action<string> writeAction)
         {
             Check.NotNull(database, nameof(database));
             Check.NotNull(writeAction, nameof(writeAction));

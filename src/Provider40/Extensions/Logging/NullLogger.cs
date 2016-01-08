@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Data.Entity.Extensions.Logging
 {
-    public class NullLogger : ILogger
+    internal class NullLogger : ILogger
     {
         private static NullLogger _instance = new NullLogger();
 

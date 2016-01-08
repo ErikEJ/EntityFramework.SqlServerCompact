@@ -12,7 +12,6 @@ namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlCeModificationCommandBatch : AffectedCountModificationCommandBatch
     {
-        public IRelationalCommandBuilderFactory CommandBuilderFactory { get; }
         private bool _returnFirstCommandText;
 
         public SqlCeModificationCommandBatch(
@@ -26,7 +25,6 @@ namespace Microsoft.Data.Entity.Update.Internal
                 updateSqlGenerator,
                 valueBufferFactoryFactory)
         {
-            CommandBuilderFactory = commandBuilderFactory;
         }
 
 

@@ -187,6 +187,7 @@ INNER JOIN (
     SELECT DISTINCT TOP(2) [e].[Species]
     FROM [Animal] AS [e]
     WHERE [e].[Discriminator] = 'Eagle'
+    ORDER BY [e].[Species]
 ) AS [e] ON [a].[EagleId] = [e].[Species]
 WHERE ([a].[Discriminator] = 'Kiwi') OR ([a].[Discriminator] = 'Eagle')
 ORDER BY [e].[Species]",
@@ -261,9 +262,9 @@ WHERE ([k].[Discriminator] = 'Kiwi') AND [k].[Species] LIKE '%' + 'owenii'",
         public InheritanceSqlCeTest(InheritanceSqlCeFixture fixture)
             : base(fixture)
         {
-            TestSqlLoggerFactory.Reset();
         }
 
         private static string Sql => TestSqlLoggerFactory.Sql;
     }
 }
+

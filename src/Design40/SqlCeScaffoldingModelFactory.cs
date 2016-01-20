@@ -22,6 +22,14 @@ namespace Microsoft.Data.Entity.Scaffolding
 
         public override IModel Create(string connectionString, TableSelectionSet tableSelectionSet)
         {
+            if (tableSelectionSet != null
+                && tableSelectionSet.Schemas.Any())
+            {
+                Logger.LogWarning("You have specified some schema selections. The SQL Server Compact provider does not support these and they will be ignored. Note: it does support table selections.");
+
+                tableSelectionSet.Schemas.ToList().ForEach(s => s.IsMatched = true);
+            }
+
             var model = base.Create(connectionString, tableSelectionSet);
             model.Scaffolding().UseProviderMethodName = nameof(SqlCeDbContextOptionsExtensions.UseSqlCe);
             return model;

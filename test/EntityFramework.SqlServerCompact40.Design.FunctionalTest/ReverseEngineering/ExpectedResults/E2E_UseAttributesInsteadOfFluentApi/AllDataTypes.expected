@@ -9,46 +9,46 @@ namespace E2ETest.Namespace
     {
         public int AllDataTypesID { get; set; }
         public long bigintColumn { get; set; }
-        [MaxLength(1)]
-        public byte[] binaryColumn { get; set; }
         public bool bitColumn { get; set; }
-        [MaxLength(1)]
-        public string charColumn { get; set; }
-        public DateTime dateColumn { get; set; }
-        public DateTime? datetime24Column { get; set; }
-        public DateTime? datetime2Column { get; set; }
-        public DateTime? datetimeColumn { get; set; }
-        public DateTime? datetimeoffset5Column { get; set; }
-        public DateTime? datetimeoffsetColumn { get; set; }
         public decimal decimalColumn { get; set; }
-        public double floatColumn { get; set; }
-        public byte[] geographyColumn { get; set; }
-        public byte[] geometryColumn { get; set; }
-        public byte[] imageColumn { get; set; }
         public int intColumn { get; set; }
         public decimal moneyColumn { get; set; }
+        public decimal numericColumn { get; set; }
+        public short smallintColumn { get; set; }
+        public decimal smallmoneyColumn { get; set; }
+        public byte tinyintColumn { get; set; }
+        public double floatColumn { get; set; }
+        public float? realColumn { get; set; }
+        public DateTime dateColumn { get; set; }
+        public DateTime? datetimeColumn { get; set; }
+        public DateTime? datetime2Column { get; set; }
+        public DateTime? datetime24Column { get; set; }
+        public DateTime? datetimeoffsetColumn { get; set; }
+        public DateTime? datetimeoffset5Column { get; set; }
+        public DateTime? smalldatetimeColumn { get; set; }
+        [MaxLength(16)]
+        public string timeColumn { get; set; }
+        [MaxLength(16)]
+        public string time4Column { get; set; }
+        [MaxLength(1)]
+        public string charColumn { get; set; }
+        public string textColumn { get; set; }
+        [MaxLength(1)]
+        public string varcharColumn { get; set; }
         [MaxLength(1)]
         public string ncharColumn { get; set; }
         public string ntextColumn { get; set; }
-        public decimal numericColumn { get; set; }
         [MaxLength(1)]
         public string nvarcharColumn { get; set; }
-        public float? realColumn { get; set; }
-        public DateTime? smalldatetimeColumn { get; set; }
-        public short smallintColumn { get; set; }
-        public decimal smallmoneyColumn { get; set; }
-        public string textColumn { get; set; }
-        [MaxLength(16)]
-        public string time4Column { get; set; }
-        [MaxLength(16)]
-        public string timeColumn { get; set; }
-        public byte[] timestampColumn { get; set; }
-        public byte tinyintColumn { get; set; }
-        public Guid? uniqueidentifierColumn { get; set; }
+        [MaxLength(1)]
+        public byte[] binaryColumn { get; set; }
+        public byte[] imageColumn { get; set; }
         [MaxLength(1)]
         public byte[] varbinaryColumn { get; set; }
-        [MaxLength(1)]
-        public string varcharColumn { get; set; }
+        public byte[] timestampColumn { get; set; }
+        public Guid? uniqueidentifierColumn { get; set; }
         public string xmlColumn { get; set; }
+        public byte[] geographyColumn { get; set; }
+        public byte[] geometryColumn { get; set; }
     }
 }

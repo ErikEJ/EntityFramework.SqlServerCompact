@@ -1,21 +1,30 @@
 ﻿using System;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace Microsoft.Data.Entity.Scaffolding
 {
     internal static class SqlCeTableSelectionSetExtensions
     {
-        public static bool Allows(this TableSelectionSet tableSelectionSet, [NotNull] string tableName)
+        public static bool Allows(this TableSelectionSet tableSet, string tableName)
         {
-            if ((tableSelectionSet == null)
-                || (tableSelectionSet.Tables.Count == 0))
+            if ((tableSet == null)
+                || (tableSet.Tables.Count == 0))
             {
                 return true;
             }
 
-            return tableSelectionSet.Tables.Contains($"{tableName}", StringComparer.OrdinalIgnoreCase)
-                || tableSelectionSet.Tables.Contains($"[{tableName}]", StringComparer.OrdinalIgnoreCase);
+            //TODO: look into performance for large selection sets and numbers of tables
+            var result = false;
+            var matchingTableSelections = tableSet.Tables.Where(
+                t => t.Text.Equals(tableName, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (matchingTableSelections.Any())
+            {
+                matchingTableSelections.ToList().ForEach(selection => selection.IsMatched = true);
+                result = true;
+            }
+
+            return result;
         }
+
     }
 }

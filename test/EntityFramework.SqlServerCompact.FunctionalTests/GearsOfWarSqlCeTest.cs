@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.Data.Entity.FunctionalTests
 {
-    public class GearsOfWarQuerySqlServerTest : GearsOfWarQueryTestBase<SqlCeTestStore, GearsOfWarQuerySqlCeFixture>
+    public class GearsOfWarQuerySqlCeTest : GearsOfWarQueryTestBase<SqlCeTestStore, GearsOfWarQuerySqlCeFixture>
     {
         public override void Include_multiple_one_to_one_and_one_to_many()
         {
@@ -19,7 +19,7 @@ LEFT JOIN (
 ) AS [g] ON ([t].[GearNickName] = [g].[Nickname]) AND ([t].[GearSquadId] = [g].[SquadId])
 ORDER BY [g].[FullName]
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 INNER JOIN (
     SELECT DISTINCT [g].[FullName]
@@ -48,7 +48,7 @@ LEFT JOIN (
 ) AS [g] ON ([t].[GearNickName] = [g].[Nickname]) AND ([t].[GearSquadId] = [g].[SquadId])
 ORDER BY [g].[FullName]
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 INNER JOIN (
     SELECT DISTINCT [g].[FullName]
@@ -167,7 +167,7 @@ FROM [Gear] AS [g]
 WHERE [g].[Discriminator] IN ('Officer', 'Gear') AND ([g].[Nickname] = 'Marcus')
 ORDER BY [g].[FullName]
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 INNER JOIN (
     SELECT DISTINCT [g].[FullName]
@@ -323,7 +323,7 @@ INNER JOIN [CogTag] AS [t] ON ([g].[SquadId] = [t].[GearSquadId]) AND ([g].[Nick
 WHERE [g].[Discriminator] IN ('Officer', 'Gear')
 ORDER BY [g].[FullName]
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 INNER JOIN (
     SELECT DISTINCT [g].[FullName]
@@ -345,7 +345,7 @@ FROM [CogTag] AS [t]
 INNER JOIN [Gear] AS [g] ON ([t].[GearSquadId] = [g].[SquadId]) AND ([t].[GearNickName] = [g].[Nickname])
 ORDER BY [g].[FullName]
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 INNER JOIN (
     SELECT DISTINCT [g].[FullName]
@@ -412,7 +412,7 @@ FROM (
 INNER JOIN [CogTag] AS [t] ON ([t0].[SquadId] = [t].[GearSquadId]) AND ([t0].[Nickname] = [t].[GearNickName])
 ORDER BY [t0].[FullName]
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 INNER JOIN (
     SELECT DISTINCT [t0].[FullName]
@@ -462,7 +462,7 @@ ORDER BY [t0].[Nickname], [t0].[SquadId]",
             base.Include_with_nested_navigation_in_order_by();
 
             Assert.Equal(
-                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId], [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId], [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
 FROM [Weapon] AS [w]
 INNER JOIN [Gear] AS [w.Owner] ON [w].[OwnerFullName] = [w.Owner].[FullName]
 INNER JOIN [City] AS [w.Owner.CityOfBirth] ON [w.Owner].[CityOrBirthName] = [w.Owner.CityOfBirth].[Name]
@@ -491,7 +491,7 @@ WHERE [g].[Discriminator] IN ('Officer', 'Gear') AND ([g].[Rank] = 2)",
             base.Where_nullable_enum_with_constant();
 
             Assert.Equal(
-                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] = 1",
                 Sql);
@@ -502,7 +502,7 @@ WHERE [w].[AmmunitionType] = 1",
             base.Where_nullable_enum_with_null_constant();
 
             Assert.Equal(
-                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+                @"SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] IS NULL",
                 Sql);
@@ -528,13 +528,77 @@ WHERE [w].[AmmunitionType] = @__p_0",
             Assert.Equal(
                 @"@__ammunitionType_0: Cartridge
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] = @__ammunitionType_0
 
-SELECT [w].[Id], [w].[AmmunitionType], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+SELECT [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
 FROM [Weapon] AS [w]
 WHERE [w].[AmmunitionType] IS NULL",
+                Sql);
+        }
+
+        public override void Select_inverted_boolean()
+        {
+            base.Select_inverted_boolean();
+
+            Assert.Equal(
+                @"SELECT [w].[Id], CASE
+    WHEN [w].[IsAutomatic] = 0
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+FROM [Weapon] AS [w]
+WHERE [w].[IsAutomatic] = 1",
+                Sql);
+        }
+
+        public override void Select_comparison_with_null()
+        {
+            base.Select_comparison_with_null();
+
+            Assert.Equal(
+                @"@__ammunitionType_1: Cartridge
+@__ammunitionType_0: Cartridge
+
+SELECT [w].[Id], CASE
+    WHEN [w].[AmmunitionType] = @__ammunitionType_1
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+FROM [Weapon] AS [w]
+WHERE [w].[AmmunitionType] = @__ammunitionType_0
+
+SELECT [w].[Id], CASE
+    WHEN [w].[AmmunitionType] IS NULL
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+FROM [Weapon] AS [w]
+WHERE [w].[AmmunitionType] IS NULL",
+                Sql);
+        }
+
+        public override void Select_ternary_operation_with_boolean()
+        {
+            base.Select_ternary_operation_with_boolean();
+
+            Assert.Equal(
+                @"SELECT [w].[Id], CASE
+    WHEN [w].[IsAutomatic] = 1
+    THEN 1 ELSE 0
+END
+FROM [Weapon] AS [w]",
+                Sql);
+        }
+
+        public override void Select_ternary_operation_with_inverted_boolean()
+        {
+            base.Select_ternary_operation_with_inverted_boolean();
+
+            Assert.Equal(
+                @"SELECT [w].[Id], CASE
+    WHEN [w].[IsAutomatic] = 0
+    THEN 1 ELSE 0
+END
+FROM [Weapon] AS [w]",
                 Sql);
         }
 
@@ -659,6 +723,11 @@ ORDER BY [ct].[GearNickName], [ct].[GearSquadId]",
                 Sql);
         }
 
+        public override void Join_navigation_translated_to_subquery_composite_key()
+        {
+            //base.Join_navigation_translated_to_subquery_composite_key();
+        }
+
         public override void Collection_with_inheritance_and_join_include_joined()
         {
             base.Collection_with_inheritance_and_join_include_joined();
@@ -690,13 +759,8 @@ INNER JOIN [CogTag] AS [t] ON ([t0].[SquadId] = [t].[GearSquadId]) AND ([t0].[Ni
 LEFT JOIN [CogTag] AS [c] ON ([c].[GearNickName] = [t0].[Nickname]) AND ([c].[GearSquadId] = [t0].[SquadId])",
                 Sql);
         }
-        public override void Join_navigation_translated_to_subquery_composite_key()
-        {
-            //TODO ErikEJ Broken by recent fix https://github.com/aspnet/EntityFramework/issues/3467 
-            //base.Join_navigation_translated_to_subquery_composite_key();
-        }
 
-        public GearsOfWarQuerySqlServerTest(GearsOfWarQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
+        public GearsOfWarQuerySqlCeTest(GearsOfWarQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
@@ -707,3 +771,4 @@ LEFT JOIN [CogTag] AS [c] ON ([c].[GearNickName] = [t0].[Nickname]) AND ([c].[Ge
         private static string Sql => TestSqlLoggerFactory.Sql;
     }
 }
+

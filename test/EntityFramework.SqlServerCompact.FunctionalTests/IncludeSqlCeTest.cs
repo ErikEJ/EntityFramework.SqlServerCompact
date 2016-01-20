@@ -1,3 +1,4 @@
+using Microsoft.Data.Entity.FunctionalTests.TestUtilities.Xunit;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -149,6 +150,7 @@ INNER JOIN (
     FROM [Orders] AS [o]
     LEFT JOIN [Customers] AS [c] ON [o].[CustomerID] = [c].[CustomerID]
     WHERE [o].[OrderID] = 10248
+    ORDER BY [c].[CustomerID]
 ) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
 ORDER BY [c].[CustomerID]",
                 Sql);
@@ -170,6 +172,7 @@ INNER JOIN (
     SELECT DISTINCT TOP(2) [o].[OrderID]
     FROM [Orders] AS [o]
     WHERE [o].[OrderID] = 10248
+    ORDER BY [o].[OrderID]
 ) AS [o0] ON [o].[OrderID] = [o0].[OrderID]
 INNER JOIN [Products] AS [p] ON [o].[ProductID] = [p].[ProductID]
 ORDER BY [o0].[OrderID]",
@@ -272,6 +275,7 @@ INNER JOIN (
     SELECT DISTINCT TOP(2) [c].[CustomerID]
     FROM [Customers] AS [c]
     WHERE [c].[CustomerID] = 'ALFKI'
+    ORDER BY [c].[CustomerID]
 ) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
 ORDER BY [c].[CustomerID]",
                 Sql);
@@ -297,6 +301,7 @@ INNER JOIN (
     SELECT DISTINCT TOP(2) [c].[CustomerID]
     FROM [Customers] AS [c]
     WHERE [c].[CustomerID] = 'ALFKI'
+    ORDER BY [c].[CustomerID]
 ) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
 ORDER BY [c].[CustomerID]",
                 Sql);
@@ -567,6 +572,7 @@ INNER JOIN (
         ORDER BY [c].[CustomerID]
         OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
     ) AS [t1]
+    ORDER BY [t0].[CustomerID], [t1].[CustomerID]
 ) AS [t1] ON [o].[CustomerID] = [t1].[CustomerID0]
 ORDER BY [t1].[CustomerID], [t1].[CustomerID0]
 
@@ -588,6 +594,7 @@ INNER JOIN (
         ORDER BY [c].[CustomerID]
         OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
     ) AS [t1]
+    ORDER BY [t0].[CustomerID]
 ) AS [t0] ON [o].[CustomerID] = [t0].[CustomerID]
 ORDER BY [t0].[CustomerID]",
                     Sql);
@@ -672,6 +679,7 @@ INNER JOIN (
         ORDER BY [c].[CustomerID]
         OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
     ) AS [t1]
+    ORDER BY [t0].[CustomerID]
 ) AS [t0] ON [o].[CustomerID] = [t0].[CustomerID]
 ORDER BY [t0].[CustomerID]",
                     Sql);
@@ -762,7 +770,7 @@ LEFT JOIN [Customers] AS [c] ON [t0].[CustomerID] = [c].[CustomerID]",
         {
             base.Include_duplicate_reference3();
 
-                Assert.Equal(
+            Assert.Equal(
                     @"@__p_0: 2
 
 SELECT [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [t1].[OrderID], [t1].[CustomerID], [t1].[EmployeeID], [t1].[OrderDate], [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -835,6 +843,7 @@ INNER JOIN (
     SELECT DISTINCT TOP(2) [c].[CustomerID]
     FROM [Customers] AS [c]
     WHERE [c].[CustomerID] = 'ALFKI'
+    ORDER BY [c].[CustomerID]
 ) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
 ORDER BY [c].[CustomerID]",
                 Sql);
@@ -860,6 +869,7 @@ INNER JOIN (
     SELECT DISTINCT TOP(2) [c].[CustomerID]
     FROM [Customers] AS [c]
     WHERE [c].[CustomerID] = 'ALFKI'
+    ORDER BY [c].[CustomerID]
 ) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
 ORDER BY [c].[CustomerID]",
                 Sql);
@@ -909,11 +919,67 @@ FROM [Orders] AS [o]
 INNER JOIN (
     SELECT DISTINCT TOP(@__p_0) [c].[CustomerID]
     FROM [Customers] AS [c]
+    ORDER BY [c].[CustomerID]
 ) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
 ORDER BY [c].[CustomerID]",
+                Sql);
+        }
+
+        public override void Include_with_take()
+        {
+            base.Include_with_take();
+
+            Assert.Equal(
+                @"@__p_0: 10
+
+SELECT TOP(@__p_0) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY [c].[City] DESC, [c].[CustomerID]
+
+@__p_0: 10
+
+SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Orders] AS [o]
+INNER JOIN (
+    SELECT DISTINCT TOP(@__p_0) [c].[City], [c].[CustomerID]
+    FROM [Customers] AS [c]
+    ORDER BY [c].[City] DESC, [c].[CustomerID]
+) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
+ORDER BY [c].[City] DESC, [c].[CustomerID]",
+                Sql);
+        }
+
+        [ConditionalFact]
+        public override void Include_with_skip()
+        {
+            base.Include_with_skip();
+
+            Assert.Equal(
+                @"@__p_0: 80
+
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY [c].[ContactName], [c].[CustomerID]
+OFFSET @__p_0 ROWS
+
+@__p_0: 80
+
+SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Orders] AS [o]
+INNER JOIN (
+    SELECT DISTINCT [t0].*
+    FROM (
+        SELECT [c].[ContactName], [c].[CustomerID]
+        FROM [Customers] AS [c]
+        ORDER BY [c].[ContactName], [c].[CustomerID]
+        OFFSET @__p_0 ROWS
+    ) AS [t0]
+) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
+ORDER BY [c].[ContactName], [c].[CustomerID]",
                 Sql);
         }
 
         private static string Sql => TestSqlLoggerFactory.Sql;
     }
 }
+

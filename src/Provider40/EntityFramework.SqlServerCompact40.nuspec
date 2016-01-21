@@ -8,13 +8,13 @@
     <owners>ErikEJ</owners>
     <projectUrl>https://github.com/ErikEJ/EntityFramework7.SqlServerCompact</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</description>
-    <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework 7</summary>
+    <description>Allows SQL Server Compact 4.0 to be used with Entity Framework Core</description>
+    <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework Core</summary>
     <releaseNotes>for EF7 Release Candidate 2</releaseNotes>
-    <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact</tags>
+    <tags>EntityFramework EF sqlce entity framework core provider sql server compact sqlservercompact</tags>
     <dependencies>
         <group targetFramework="net451">
-            <dependency id="EntityFramework.Relational" version="[7.0.0-rc2-16724]" />
+            <dependency id="EntityFramework.Relational" version="[7.0.0-rc2-16751]" />
             <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>
     </dependencies>

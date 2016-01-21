@@ -23,10 +23,16 @@ namespace Microsoft.Data.Entity.FunctionalTests
         {
             base.Default_if_empty_top_level();
 
-            Assert.StartsWith(
-                @"SELECT [c].[EmployeeID], [c].[City], [c].[Country], [c].[FirstName], [c].[ReportsTo], [c].[Title]
-FROM [Employees] AS [c]
-WHERE [c].[EmployeeID] = -1",
+            Assert.Equal(
+                @"SELECT [t0].[EmployeeID], [t0].[City], [t0].[Country], [t0].[FirstName], [t0].[ReportsTo], [t0].[Title]
+FROM (
+    SELECT NULL AS [empty]
+) AS [empty]
+LEFT JOIN (
+    SELECT [c].[EmployeeID], [c].[City], [c].[Country], [c].[FirstName], [c].[ReportsTo], [c].[Title]
+    FROM [Employees] AS [c]
+    WHERE [c].[EmployeeID] = -1
+) AS [t0] ON 1 = 1",
                 Sql);
         }
 
@@ -62,6 +68,45 @@ WHERE [c].[EmployeeID] = -1",
             //    END
             //) = 1",
             //                 Sql);
+        }
+
+        public override void Where_subquery_on_bool()
+        {
+//            base.Where_subquery_on_bool();
+
+//            Assert.Equal(
+//                @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[UnitsInStock]
+//FROM [Products] AS [p]
+//WHERE (
+//    SELECT CASE
+//        WHEN 'Chai' IN (
+//            SELECT [p2].[ProductName]
+//            FROM [Products] AS [p2]
+//        )
+//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+//    END
+//) = 1",
+//                Sql);
+        }
+
+        public override void Where_subquery_on_collection()
+        {
+//            base.Where_subquery_on_collection();
+
+//            Assert.Equal(
+//                @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[UnitsInStock]
+//FROM [Products] AS [p]
+//WHERE (
+//    SELECT CASE
+//        WHEN 5 IN (
+//            SELECT [o].[Quantity]
+//            FROM [Order Details] AS [o]
+//            WHERE [o].[ProductID] = [p].[ProductID]
+//        )
+//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+//    END
+//) = 1",
+//                Sql);
         }
 
         public override void Where_query_composition_is_null()
@@ -2507,10 +2552,15 @@ ORDER BY [e].[EmployeeID]",
             base.GroupJoin_DefaultIfEmpty3();
 
             Assert.Equal(
-                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Customers] AS [c]
-LEFT JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
-ORDER BY [c].[CustomerID]",
+                @"@__p_0: 1
+
+SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM (
+    SELECT TOP(@__p_0) [c].*
+    FROM [Customers] AS [c]
+) AS [t0]
+LEFT JOIN [Orders] AS [o] ON [t0].[CustomerID] = [o].[CustomerID]
+ORDER BY [t0].[CustomerID]",
                 Sql);
         }
 
@@ -2585,11 +2635,19 @@ ORDER BY [c].[CustomerID]",
             base.SelectMany_Joined_DefaultIfEmpty();
 
             Assert.StartsWith(
-                @"SELECT [c].[CustomerID], [c].[ContactName]
+                @"SELECT [t1].[OrderID], [t1].[CustomerID], [t1].[EmployeeID], [t1].[OrderDate], [c].[ContactName]
 FROM [Customers] AS [c]
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]",
+CROSS APPLY (
+    SELECT [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate]
+    FROM (
+        SELECT NULL AS [empty]
+    ) AS [empty]
+    LEFT JOIN (
+        SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+        FROM [Orders] AS [o]
+        WHERE [o].[CustomerID] = [c].[CustomerID]
+    ) AS [t0] ON 1 = 1
+) AS [t1]",
                 Sql);
         }
 
@@ -2598,12 +2656,20 @@ FROM [Orders] AS [o]",
             base.SelectMany_Joined_DefaultIfEmpty2();
 
             Assert.StartsWith(
-                @"SELECT [c].[CustomerID]
+                 @"SELECT [t1].[OrderID], [t1].[CustomerID], [t1].[EmployeeID], [t1].[OrderDate]
 FROM [Customers] AS [c]
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]",
-                Sql);
+CROSS APPLY (
+    SELECT [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate]
+    FROM (
+        SELECT NULL AS [empty]
+    ) AS [empty]
+    LEFT JOIN (
+        SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+        FROM [Orders] AS [o]
+        WHERE [o].[CustomerID] = [c].[CustomerID]
+    ) AS [t0] ON 1 = 1
+) AS [t1]",
+                 Sql);
         }
 
         public override void SelectMany_Joined_Take()
@@ -2611,7 +2677,7 @@ FROM [Orders] AS [o]",
             base.SelectMany_Joined_Take();
 
             Assert.Equal(
-                @"SELECT [c].[CustomerID], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [c].[ContactName]
+                @"SELECT [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [c].[ContactName]
 FROM [Customers] AS [c]
 CROSS APPLY (
     SELECT TOP(1000) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Data.Entity.Scaffolding</RootNamespace>
-    <AssemblyName>EntityFramework.SqlServerCompact35.Design</AssemblyName>
+    <AssemblyName>EntityFrameworkCore.SqlServerCompact35.Design</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -150,7 +150,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="EntityFramework.SqlServerCompact35.Design.nuspec">
+    <None Include="EntityFrameworkCore.SqlServerCompact35.Design.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

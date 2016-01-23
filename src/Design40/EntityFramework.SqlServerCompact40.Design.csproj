@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Data.Entity.Scaffolding</RootNamespace>
-    <AssemblyName>EntityFramework.SqlServerCompact40.Design</AssemblyName>
+    <AssemblyName>EntityFrameworkCore.SqlServerCompact40.Design</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -131,7 +131,7 @@
     <Compile Include="Utilities\StringBuilderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EntityFramework.SqlServerCompact40.Design.nuspec">
+    <None Include="EntityFrameworkCore.SqlServerCompact40.Design.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>EntityFrameworkCore.SqlServerCompact35.Design</id>
+    <version>$version$</version>
+    <title>EntityFrameworkCore.SqlServerCompact35.Design</title>
+    <authors>ErikEJ</authors>
+    <owners>ErikEJ</owners>
+    <projectUrl>https://github.com/ErikEJ/EntityFramework.SqlServerCompact</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Design-time Entity Framework Core Functionality for SQL Server Compact 3.5 SP2 data store</description>
+    <summary>Design-time Entity Framework Core Functionality for SQL Server Compact 3.5 SP2 data store</summary>
+    <releaseNotes>for EF Core RC2</releaseNotes>
+    <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact reveng reverseengineer design</tags>
+    <dependencies>
+        <group targetFramework=".NETFramework4.5">
+            <dependency id="EntityFramework.Relational.Design" version="[7.0.0-rc2-16751]" />
+         </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\EntityFrameworkCore.SqlServerCompact35.Design.dll" target="lib\net451\" />
+  </files>
+</package>

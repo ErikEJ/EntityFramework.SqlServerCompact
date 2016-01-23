@@ -15,7 +15,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
 {
     public class SqlCeE2ETests : E2ETestBase, IClassFixture<SqlCeE2EFixture>
     {
-        protected override string ProviderName => "EntityFramework.SqlServerCompact40.Design";
+        protected override string ProviderName => "EntityFrameworkCore.SqlServerCompact40.Design";
 
         protected override void ConfigureDesignTimeServices(IServiceCollection services)
             => new SqlCeDesignTimeServices().ConfigureDesignTimeServices(services);
@@ -54,7 +54,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                     {
                         "EntityFramework.Core",
                         "EntityFramework.Relational",
-                        "EntityFramework.SqlServerCompact40",
+                        "EntityFrameworkCore.SqlServerCompact40",
 #if DNXCORE50 || NETCORE50
                         "System.Data.Common",
                         "System.Linq.Expressions",

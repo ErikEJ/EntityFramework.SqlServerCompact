@@ -268,7 +268,7 @@ namespace Microsoft.Data.Entity.Migrations
             }
         }
 
-        protected virtual IEntityType FindEntityType(
+        protected override IEntityType FindEntityType(
     [CanBeNull] IModel model,
     [CanBeNull] string schema,
     [NotNull] string tableName)

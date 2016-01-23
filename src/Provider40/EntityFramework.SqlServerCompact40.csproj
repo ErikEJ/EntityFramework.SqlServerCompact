@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Data.Entity</RootNamespace>
-    <AssemblyName>EntityFramework.SqlServerCompact40</AssemblyName>
+    <AssemblyName>EntityFrameworkCore.SqlServerCompact40</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -170,7 +170,7 @@
     <Compile Include="ValueGeneration\Internal\SqlCeValueGeneratorCache.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EntityFramework.SqlServerCompact40.nuspec" />
+    <None Include="EntityFrameworkCore.SqlServerCompact40.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

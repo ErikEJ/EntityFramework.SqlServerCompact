@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Data.Entity.Scaffolding</RootNamespace>
-    <AssemblyName>EntityFramework.SqlServerCompact35.Design</AssemblyName>
+    <AssemblyName>EntityFrameworkCore.SqlServerCompact35.Design</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -86,7 +86,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Concurrent" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -150,7 +149,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="EntityFramework.SqlServerCompact35.Design.nuspec">
+    <None Include="EntityFrameworkCore.SqlServerCompact35.Design.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

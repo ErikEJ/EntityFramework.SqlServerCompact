@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Metadata.Builders;
-using Microsoft.Data.Entity.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Xunit;
 
-namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
+namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 {
     public class SqlCeBuilderExtensionsTest
     {
@@ -87,15 +87,15 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
 
             modelBuilder
                 .Entity<Customer>()
-                .Property(e => e.Name)
+                .Property(e => e.Offset)
                 .HasDefaultValue(new DateTime(1973, 9, 3, 0, 10, 0));
 
             modelBuilder
                 .Entity<Customer>()
-                .Property(e => e.Name)
+                .Property(e => e.Offset)
                 .ForSqlCeHasDefaultValue(new DateTime(2006, 9, 19, 19, 0, 0));
 
-            var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
+            var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Offset");
 
             Assert.Equal(new DateTime(1973, 9, 3, 0, 10, 0), property.Relational().DefaultValue);
             Assert.Equal(new DateTime(2006, 9, 19, 19, 0, 0), property.SqlCe().DefaultValue);
@@ -540,6 +540,7 @@ namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public DateTime Offset { get; set; }
 
             public IEnumerable<Order> Orders { get; set; }
         }

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Metadata.Internal;
-using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Migrations.Operations;
-using Microsoft.Data.Entity.Storage.Internal;
-using Microsoft.Data.Entity.TestUtilities;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Xunit;
 
-namespace Microsoft.Data.Entity.Tests.Migrations
+namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {

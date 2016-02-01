@@ -2,7 +2,7 @@
 using System.Data.Common;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class TransactionSqlCeFixture : TransactionFixtureBase<SqlCeTestStore>
     {

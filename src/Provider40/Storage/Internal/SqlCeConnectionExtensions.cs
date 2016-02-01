@@ -1,9 +1,9 @@
 ﻿using System.Data.SqlServerCe;
 using System.IO;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.Utilities;
+using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.Data.Entity.Storage.Internal
+namespace Microsoft.EntityFrameworkCore.Storage.Internal
 {
     public static class SqlCeConnectionExtensions
     {

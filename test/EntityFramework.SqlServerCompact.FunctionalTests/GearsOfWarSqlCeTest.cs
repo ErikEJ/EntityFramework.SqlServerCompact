@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using Xunit.Abstractions;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class GearsOfWarQuerySqlCeTest : GearsOfWarQueryTestBase<SqlCeTestStore, GearsOfWarQuerySqlCeFixture>
     {

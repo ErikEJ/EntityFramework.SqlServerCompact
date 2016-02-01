@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.Storage;
-using Microsoft.Data.Entity.Utilities;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.Data.Entity.Update.Internal
+namespace Microsoft.EntityFrameworkCore.Update.Internal
 {
     public class SqlCeModificationCommandBatch : AffectedCountModificationCommandBatch
     {
@@ -36,6 +36,9 @@ namespace Microsoft.Data.Entity.Update.Internal
             var relationalCommand = CreateStoreCommand();
             try
             {
+#if DEBUG
+                //System.Diagnostics.Debug.WriteLine(GetCommandText());
+#endif
                 using (var reader = relationalCommand.ExecuteReader(connection))
                 {
                     Consume(reader.DbDataReader, GetCommandText(), connection);

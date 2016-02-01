@@ -1,9 +1,9 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.Utilities;
+using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Data.Entity.Extensions.Logging
+namespace Microsoft.EntityFrameworkCore.Extensions.Logging
 {
     internal class DbSimpleLogger : ILogger
     {
@@ -15,14 +15,14 @@ namespace Microsoft.Data.Entity.Extensions.Logging
             _writeAction = writeAction;
         }
 
-        public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        public IDisposable BeginScopeImpl(object state) => null;
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
             var message = $"{Environment.NewLine}{formatter(state, exception)}";
             _writeAction(message);
         }
-
-        public bool IsEnabled(LogLevel logLevel) => true;
-
-        public IDisposable BeginScopeImpl(object state) => null;
     }
 }

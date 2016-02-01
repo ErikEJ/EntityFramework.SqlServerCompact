@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data.Common;
 using System.Threading.Tasks;
-using Microsoft.Data.Entity.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class MigrationsSqlCeTest : MigrationsTestBase<MigrationsSqlCeFixture>
     {

@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.Data.Entity.FunctionalTests.TestModels.NullSemantics;
-using Microsoft.Data.Entity.FunctionalTests.TestModels.NullSemanticsModel;
+using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.NullSemantics;
+using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.NullSemanticsModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class NullSemanticsQuerySqlCeFixture : NullSemanticsQueryRelationalFixture<SqlCeTestStore>
     {

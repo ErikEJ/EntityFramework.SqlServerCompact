@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class BuiltInDataTypesSqlCeTest : BuiltInDataTypesTestBase<BuiltInDataTypesSqlCeFixture>
     {

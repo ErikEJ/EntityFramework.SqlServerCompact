@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Data.Entity.Metadata
+﻿namespace Microsoft.EntityFrameworkCore.Metadata
 {
     public class SqlCeAnnotationProvider : IRelationalAnnotationProvider
     {

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using Microsoft.Data.Entity.Query.Expressions;
+using Microsoft.EntityFrameworkCore.Query.Expressions;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
+namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
     public class SqlCeStringLengthTranslator : IMemberTranslator
     {

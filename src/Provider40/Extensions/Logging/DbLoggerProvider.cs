@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.Extensions.Logging;
-using Microsoft.Data.Entity.Utilities;
+using Microsoft.EntityFrameworkCore.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.Logging;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.Data.Entity
+namespace Microsoft.EntityFrameworkCore
 {
     internal class DbLoggerProvider : ILoggerProvider
     {

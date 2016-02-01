@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Data.Entity.Metadata.Conventions;
-using Microsoft.Data.Entity.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Xunit;
 
-namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
+namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 {
     public class InternalSqlCeMetadataBuilderExtensionsTest
     {

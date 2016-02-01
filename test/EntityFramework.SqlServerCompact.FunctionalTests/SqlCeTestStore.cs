@@ -6,9 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Data.Entity.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class SqlCeTestStore : RelationalTestStore
     {
@@ -37,7 +37,10 @@ namespace Microsoft.Data.Entity.FunctionalTests
         private SqlCeConnection _connection;
         private SqlCeTransaction _transaction;
         private readonly string _name;
+        private string _connectionString;
         private bool _deleteDatabase;
+
+        public override string ConnectionString => _connectionString;
 
         public SqlCeTestStore(string name)
         {
@@ -48,7 +51,9 @@ namespace Microsoft.Data.Entity.FunctionalTests
         {
             CreateShared(typeof(SqlCeTestStore).Name + _name, initializeDatabase);
 
-            _connection = new SqlCeConnection(CreateConnectionString(_name));
+            _connectionString = CreateConnectionString(_name);
+
+            _connection = new SqlCeConnection(_connectionString);
 
             _connection.Open();
             _transaction = _connection.BeginTransaction();
@@ -58,7 +63,9 @@ namespace Microsoft.Data.Entity.FunctionalTests
 
         private SqlCeTestStore CreateTransient(bool createDatabase)
         {
-            _connection = new SqlCeConnection(CreateConnectionString(_name));
+            _connectionString = CreateConnectionString(_name);
+
+            _connection = new SqlCeConnection(_connectionString);
 
             if (createDatabase)
             {

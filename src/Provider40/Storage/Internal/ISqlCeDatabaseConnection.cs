@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Data.Entity.Storage.Internal
+﻿namespace Microsoft.EntityFrameworkCore.Storage.Internal
 {
     public interface ISqlCeDatabaseConnection : IRelationalConnection
     {

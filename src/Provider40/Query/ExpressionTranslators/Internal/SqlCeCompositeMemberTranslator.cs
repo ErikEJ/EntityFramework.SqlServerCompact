@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
+namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
     public class SqlCeCompositeMemberTranslator : RelationalCompositeMemberTranslator
     {

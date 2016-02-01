@@ -1,11 +1,12 @@
 ﻿using System;
-using Microsoft.Data.Entity.Infrastructure.Internal;
-using Microsoft.Data.Entity.Internal;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Metadata.Conventions.Internal;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class TestSqlCeModelSource : SqlCeModelSource
     {
@@ -15,9 +16,9 @@ namespace Microsoft.Data.Entity.FunctionalTests
             Action<ModelBuilder> onModelCreating,
             IDbSetFinder setFinder,
             ICoreConventionSetBuilder coreConventionSetBuilder)
-            : base(setFinder, coreConventionSetBuilder)
+            : base(setFinder, coreConventionSetBuilder, new ModelCustomizer(), new ModelCacheKeyFactory())
         {
-            _testModelSource = new TestModelSource(onModelCreating, setFinder, coreConventionSetBuilder);
+            _testModelSource = new TestModelSource(onModelCreating, setFinder, coreConventionSetBuilder, new ModelCustomizer(), new ModelCacheKeyFactory());
         }
 
         public override IModel GetModel(DbContext context, IConventionSetBuilder conventionSetBuilder, IModelValidator validator)
@@ -29,5 +30,4 @@ namespace Microsoft.Data.Entity.FunctionalTests
                 p.GetRequiredService<IDbSetFinder>(),
                 p.GetRequiredService<ICoreConventionSetBuilder>());
     }
-
 }

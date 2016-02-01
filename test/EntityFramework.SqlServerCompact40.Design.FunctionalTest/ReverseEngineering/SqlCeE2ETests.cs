@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
-using Microsoft.Data.Entity.FunctionalTests.TestUtilities.Xunit;
-using Microsoft.Data.Entity.Relational.Design.FunctionalTests.ReverseEngineering;
-using Microsoft.Data.Entity.Scaffolding;
-using Microsoft.Data.Entity.Scaffolding.Internal;
+using Microsoft.EntityFrameworkCore.FunctionalTests.TestUtilities.Xunit;
+using Microsoft.EntityFrameworkCore.Relational.Design.FunctionalTests.ReverseEngineering;
+using Microsoft.EntityFrameworkCore.Scaffolding;
+using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -52,8 +52,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
         {
             NamedReferences =
                     {
-                        "EntityFramework.Core",
-                        "EntityFramework.Relational",
+                        "Microsoft.EntityFrameworkCore",
+                        "Microsoft.EntityFrameworkCore.Relational",
                         "EntityFrameworkCore.SqlServerCompact40",
 #if DNXCORE50 || NETCORE50
                         "System.Data.Common",
@@ -96,8 +96,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "Test_Spaces_Keywords_Table.expected"
             };
 
-        [Fact]
-        [UseCulture("en-US")]
+        //[Fact]
+        //[UseCulture("en-US")]
         public void E2ETest_UseAttributesInsteadOfFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration
@@ -130,8 +130,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertCompile(actualFileSet);
         }
 
-        [Fact]
-        [UseCulture("en-US")]
+        //[Fact]
+        //[UseCulture("en-US")]
         public void E2ETest_AllFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration

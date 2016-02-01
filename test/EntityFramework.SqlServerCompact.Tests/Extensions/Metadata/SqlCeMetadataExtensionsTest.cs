@@ -1,8 +1,8 @@
-﻿using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Metadata.Conventions;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Xunit;
 
-namespace Microsoft.Data.Entity.Tests.Extensions.Metadata
+namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 {
     public class SqlCeMetadataExtensionsTest
     {

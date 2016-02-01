@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 
-namespace Microsoft.Data.Entity.Storage.Internal
+namespace Microsoft.EntityFrameworkCore.Storage.Internal
 {
     public class SqlCeMaxLengthMapping : RelationalTypeMapping
     {

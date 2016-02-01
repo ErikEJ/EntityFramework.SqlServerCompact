@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.Data.Entity.Query.Expressions;
+using Microsoft.EntityFrameworkCore.Query.Expressions;
 
-namespace Microsoft.Data.Entity.Query.ExpressionTranslators.Internal
+namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
     public class SqlCeStringReplaceTranslator : IMethodCallTranslator
     {

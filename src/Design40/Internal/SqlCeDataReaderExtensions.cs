@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 
-namespace Microsoft.Data.Entity.Scaffolding.Internal
+namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 {
     public static class SqlCeDataReaderExtensions
     {

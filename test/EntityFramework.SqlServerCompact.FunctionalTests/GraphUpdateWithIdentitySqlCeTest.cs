@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Entity.FunctionalTests;
+﻿using Microsoft.EntityFrameworkCore.FunctionalTests;
 
 namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
 {

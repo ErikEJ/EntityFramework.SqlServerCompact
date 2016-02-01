@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Data.Entity.Utilities;
+using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.Data.Entity.Scaffolding.Metadata
+namespace Microsoft.EntityFrameworkCore.Scaffolding.Metadata
 {
     public class SqlCeColumnModelAnnotations
     {

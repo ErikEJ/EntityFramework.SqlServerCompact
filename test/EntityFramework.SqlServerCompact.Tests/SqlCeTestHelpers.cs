@@ -1,8 +1,8 @@
 ﻿using System.Data.SqlServerCe;
-using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Data.Entity.Tests
+namespace Microsoft.EntityFrameworkCore.Tests
 {
     public class SqlCeTestHelpers : RelationalTestHelpers
     {

@@ -1,8 +1,8 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Data.Entity.Utilities;
+using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Data.Entity.Infrastructure.Internal
+namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
 {
     public class SqlCeOptionsExtension : RelationalOptionsExtension
     {

@@ -2,7 +2,7 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace Microsoft.Data.Entity.Storage
+namespace Microsoft.EntityFrameworkCore.Storage
 {
     public class SqlServerTypeMappingTest : RelationalTypeMappingTest
     {

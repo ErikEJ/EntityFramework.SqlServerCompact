@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Entity.FunctionalTests;
+﻿using Microsoft.EntityFrameworkCore.FunctionalTests;
 
 namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {

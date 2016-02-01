@@ -1,10 +1,10 @@
 ﻿using System.Data.SqlServerCe;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
-namespace Microsoft.Data.Entity.Tests
+namespace Microsoft.EntityFrameworkCore.Tests
 {
     public class SqlCeDataStoreConnectionTest
     {

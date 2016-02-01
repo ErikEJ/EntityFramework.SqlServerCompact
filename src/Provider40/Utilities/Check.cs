@@ -4,11 +4,11 @@
 using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
-using Microsoft.Data.Entity.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
 
 // ReSharper disable once CheckNamespace
 
-namespace Microsoft.Data.Entity.Utilities
+namespace Microsoft.EntityFrameworkCore.Utilities
 {
     [DebuggerStepThrough]
     internal static class Check

@@ -2,12 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
-using Microsoft.Data.Entity.ChangeTracking.Internal;
-using Microsoft.Data.Entity.FunctionalTests.TestModels;
-using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class MonsterFixupSqlCeTest : MonsterFixupTestBase
     {

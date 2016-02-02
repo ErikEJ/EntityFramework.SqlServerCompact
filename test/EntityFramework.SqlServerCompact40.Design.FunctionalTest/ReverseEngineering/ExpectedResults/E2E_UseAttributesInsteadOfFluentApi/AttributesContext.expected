@@ -7,6 +7,7 @@ namespace E2ETest.Namespace
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
             optionsBuilder.UseSqlCe(@"{{connectionString}}");
         }
 
@@ -14,13 +15,19 @@ namespace E2ETest.Namespace
         {
             modelBuilder.Entity<AllDataTypes>(entity =>
             {
-                entity.Property(e => e.binaryColumn).HasColumnType("binary");
+                entity.Property(e => e.binary111Column).HasColumnType("binary");
 
-                entity.Property(e => e.charColumn).HasColumnType("nchar");
+                entity.Property(e => e.binaryColumn).HasColumnType("binary");
 
                 entity.Property(e => e.decimalColumn).HasColumnType("numeric");
 
                 entity.Property(e => e.moneyColumn).HasColumnType("money");
+
+                entity.Property(e => e.nationalCharacter171Column).HasColumnType("nchar");
+
+                entity.Property(e => e.nationalCharacterColumn).HasColumnType("nchar");
+
+                entity.Property(e => e.nchar99Column).HasColumnType("nchar");
 
                 entity.Property(e => e.ncharColumn).HasColumnType("nchar");
 
@@ -28,17 +35,13 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.numericColumn).HasColumnType("numeric");
 
-                entity.Property(e => e.smallmoneyColumn).HasColumnType("money");
-
-                entity.Property(e => e.textColumn).HasColumnType("ntext");
-
                 entity.Property(e => e.timestampColumn)
                     .HasColumnType("rowversion")
                     .ValueGeneratedOnAddOrUpdate();
 
-                entity.Property(e => e.varbinaryColumn).HasColumnType("varbinary");
+                entity.Property(e => e.varbinary123Column).HasColumnType("varbinary");
 
-                entity.Property(e => e.xmlColumn).HasColumnType("ntext");
+                entity.Property(e => e.varbinaryColumn).HasColumnType("varbinary");
             });
 
             modelBuilder.Entity<OneToManyDependent>(entity =>

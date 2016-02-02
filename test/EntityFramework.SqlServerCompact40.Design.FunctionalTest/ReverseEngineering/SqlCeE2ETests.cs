@@ -96,8 +96,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "Test_Spaces_Keywords_Table.expected"
             };
 
-        //[Fact]
-        //[UseCulture("en-US")]
+        [Fact]
+        [UseCulture("en-US")]
         public void E2ETest_UseAttributesInsteadOfFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration
@@ -130,8 +130,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertCompile(actualFileSet);
         }
 
-        //[Fact]
-        //[UseCulture("en-US")]
+        [Fact]
+        [UseCulture("en-US")]
         public void E2ETest_AllFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration

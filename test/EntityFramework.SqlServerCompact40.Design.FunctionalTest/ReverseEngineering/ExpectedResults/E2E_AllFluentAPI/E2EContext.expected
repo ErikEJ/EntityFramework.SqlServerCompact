@@ -7,6 +7,7 @@ namespace E2ETest.Namespace
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
             optionsBuilder.UseSqlCe(@"{{connectionString}}");
         }
 
@@ -14,47 +15,61 @@ namespace E2ETest.Namespace
         {
             modelBuilder.Entity<AllDataTypes>(entity =>
             {
-                entity.Property(e => e.binaryColumn)
-                    .HasMaxLength(1)
-                    .HasColumnType("binary");
+                entity.Property(e => e.binary111Column)
+                    .HasColumnType("binary")
+                    .HasMaxLength(111);
 
-                entity.Property(e => e.charColumn)
-                    .HasMaxLength(1)
-                    .HasColumnType("nchar");
+                entity.Property(e => e.binaryColumn)
+                    .HasColumnType("binary")
+                    .HasMaxLength(1);
 
                 entity.Property(e => e.decimalColumn).HasColumnType("numeric");
 
                 entity.Property(e => e.moneyColumn).HasColumnType("money");
 
+                entity.Property(e => e.nationalCharVarying177Column).HasMaxLength(177);
+
+                entity.Property(e => e.nationalCharVaryingColumn).HasMaxLength(1);
+
+                entity.Property(e => e.nationalCharacter171Column)
+                    .HasColumnType("nchar")
+                    .HasMaxLength(171);
+
+                entity.Property(e => e.nationalCharacterColumn)
+                    .HasColumnType("nchar")
+                    .HasMaxLength(1);
+
+                entity.Property(e => e.nationalCharacterVarying188Column).HasMaxLength(188);
+
+                entity.Property(e => e.nationalCharacterVaryingColumn).HasMaxLength(1);
+
+                entity.Property(e => e.nchar99Column)
+                    .HasColumnType("nchar")
+                    .HasMaxLength(99);
+
                 entity.Property(e => e.ncharColumn)
-                    .HasMaxLength(1)
-                    .HasColumnType("nchar");
+                    .HasColumnType("nchar")
+                    .HasMaxLength(1);
 
                 entity.Property(e => e.ntextColumn).HasColumnType("ntext");
 
                 entity.Property(e => e.numericColumn).HasColumnType("numeric");
 
+                entity.Property(e => e.nvarchar100Column).HasMaxLength(100);
+
                 entity.Property(e => e.nvarcharColumn).HasMaxLength(1);
-
-                entity.Property(e => e.smallmoneyColumn).HasColumnType("money");
-
-                entity.Property(e => e.textColumn).HasColumnType("ntext");
-
-                entity.Property(e => e.time4Column).HasMaxLength(16);
-
-                entity.Property(e => e.timeColumn).HasMaxLength(16);
 
                 entity.Property(e => e.timestampColumn)
                     .HasColumnType("rowversion")
                     .ValueGeneratedOnAddOrUpdate();
 
+                entity.Property(e => e.varbinary123Column)
+                    .HasColumnType("varbinary")
+                    .HasMaxLength(123);
+
                 entity.Property(e => e.varbinaryColumn)
-                    .HasMaxLength(1)
-                    .HasColumnType("varbinary");
-
-                entity.Property(e => e.varcharColumn).HasMaxLength(1);
-
-                entity.Property(e => e.xmlColumn).HasColumnType("ntext");
+                    .HasColumnType("varbinary")
+                    .HasMaxLength(1);
             });
 
             modelBuilder.Entity<OneToManyDependent>(entity =>

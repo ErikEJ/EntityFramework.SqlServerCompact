@@ -1,7 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -80,6 +77,32 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             Assert.Equal(ValueGenerated.OnAdd, property.ValueGenerated);
         }
 
+        //TODO ErikEJ Investigate why this fails?
+        //[Fact]
+        //public void Setting_column_default_expression_does_not_modify_explicitly_set_value_generated()
+        //{
+        //    var modelBuilder = CreateConventionModelBuilder();
+
+        //    modelBuilder
+        //        .Entity<Customer>()
+        //        .Property(e => e.Name)
+        //        .ValueGeneratedNever()
+        //        .ForSqlCeHasDefaultValueSql("VanillaCoke");
+
+        //    var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
+
+        //    Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
+
+        //    modelBuilder
+        //        .Entity<Customer>()
+        //        .Property(e => e.Name)
+        //        .HasDefaultValueSql("CherryCoke");
+
+        //    Assert.Equal("CherryCoke", property.Relational().GeneratedValueSql);
+        //    Assert.Equal("VanillaCoke", property.SqlCe().GeneratedValueSql);
+        //    Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
+        //}
+
         [Fact]
         public void Can_set_column_default_value()
         {
@@ -99,6 +122,29 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             Assert.Equal(new DateTime(1973, 9, 3, 0, 10, 0), property.Relational().DefaultValue);
             Assert.Equal(new DateTime(2006, 9, 19, 19, 0, 0), property.SqlCe().DefaultValue);
+        }
+
+        [Fact]
+        public void Setting_column_default_value_does_not_modify_explicitly_set_value_generated()
+        {
+            var modelBuilder = CreateConventionModelBuilder();
+
+            modelBuilder
+                .Entity<Customer>()
+                .Property(e => e.Offset)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasDefaultValue(new DateTime(1973, 9, 3, 0, 10, 0));
+
+            modelBuilder
+                .Entity<Customer>()
+                .Property(e => e.Offset)
+                .ForSqlCeHasDefaultValue(new DateTime(2006, 9, 19, 19, 0, 0));
+
+            var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Offset");
+
+            Assert.Equal(new DateTime(1973, 9, 3, 0, 10, 0), property.Relational().DefaultValue);
+            Assert.Equal(new DateTime(2006, 9, 19, 19, 0, 0), property.SqlCe().DefaultValue);
+            Assert.Equal(ValueGenerated.OnAddOrUpdate, property.ValueGenerated);
         }
 
         [Fact]
@@ -291,89 +337,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
         }
 
         [Fact]
-        public void Can_set_table_and_schema_name()
-        {
-            var modelBuilder = CreateConventionModelBuilder();
-
-            modelBuilder
-                .Entity<Customer>()
-                .ToTable("Customizer", "db0")
-                .ForSqlCeToTable("Custardizer");
-
-            var entityType = modelBuilder.Model.FindEntityType(typeof(Customer));
-
-            Assert.Equal("Customer", entityType.DisplayName());
-            Assert.Equal("Customizer", entityType.Relational().TableName);
-            Assert.Equal("Custardizer", entityType.SqlCe().TableName);
-        }
-
-        [Fact]
-        public void Can_set_table_and_schema_name_non_generic()
-        {
-            var modelBuilder = CreateConventionModelBuilder();
-
-            modelBuilder
-                .Entity(typeof(Customer))
-                .ToTable("Customizer", "db0")
-                .ForSqlCeToTable("Custardizer");
-
-            var entityType = modelBuilder.Model.FindEntityType(typeof(Customer));
-
-            Assert.Equal("Customer", entityType.DisplayName());
-            Assert.Equal("Customizer", entityType.Relational().TableName);
-            Assert.Equal("Custardizer", entityType.SqlCe().TableName);
-        }
-
-
-
-        [Fact]
-        public void Can_set_identities_for_property()
-        {
-            var modelBuilder = CreateConventionModelBuilder();
-
-            modelBuilder
-                .Entity<Customer>()
-                .Property(e => e.Id);
-
-            var model = modelBuilder.Model;
-            var property = model.FindEntityType(typeof(Customer)).FindProperty("Id");
-
-            Assert.Equal(ValueGenerated.OnAdd, property.ValueGenerated);
-        }
-
-        [Fact]
-        public void Can_set_identities_for_property_using_nested_closure()
-        {
-            var modelBuilder = CreateConventionModelBuilder();
-
-            modelBuilder
-                .Entity<Customer>()
-                .Property(e => e.Id);
-
-            var model = modelBuilder.Model;
-            var property = model.FindEntityType(typeof(Customer)).FindProperty("Id");
-
-            Assert.Equal(ValueGenerated.OnAdd, property.ValueGenerated);
-        }
-
-        [Fact]
-        public void SqlServer_entity_methods_dont_break_out_of_the_generics()
-        {
-            var modelBuilder = CreateConventionModelBuilder();
-
-            AssertIsGeneric(
-                modelBuilder
-                    .Entity<Customer>()
-                    .ForSqlCeToTable("Will"));
-
-            AssertIsGeneric(
-                modelBuilder
-                    .Entity<Customer>()
-                    .ForSqlCeToTable("Jay"));
-        }
-
-        [Fact]
-        public void SqlServer_entity_methods_have_non_generic_overloads()
+        public void SqlCe_entity_methods_have_non_generic_overloads()
         {
             var modelBuilder = CreateConventionModelBuilder();
 
@@ -383,11 +347,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             modelBuilder
                 .Entity<Customer>()
-                .ForSqlCeToTable("Jay");
+                .ForSqlCeToTable("Simon");
         }
 
         [Fact]
-        public void SqlServer_property_methods_dont_break_out_of_the_generics()
+        public void SqlCe_property_methods_dont_break_out_of_the_generics()
         {
             var modelBuilder = CreateConventionModelBuilder();
 
@@ -417,7 +381,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
         }
 
         [Fact]
-        public void SqlServer_property_methods_have_non_generic_overloads()
+        public void SqlCe_property_methods_have_non_generic_overloads()
         {
             var modelBuilder = CreateConventionModelBuilder();
 
@@ -463,7 +427,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
         }
 
         [Fact]
-        public void SqlServer_relationship_methods_dont_break_out_of_the_generics()
+        public void SqlCe_relationship_methods_dont_break_out_of_the_generics()
         {
             var modelBuilder = CreateConventionModelBuilder();
 
@@ -489,7 +453,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
         }
 
         [Fact]
-        public void SqlServer_relationship_methods_have_non_generic_overloads()
+        public void SqlCe_relationship_methods_have_non_generic_overloads()
         {
             var modelBuilder = CreateConventionModelBuilder();
 

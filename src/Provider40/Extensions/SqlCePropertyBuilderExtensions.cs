@@ -1,5 +1,7 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 
 // ReSharper disable once CheckNamespace
@@ -8,30 +10,33 @@ namespace Microsoft.EntityFrameworkCore
 {
     public static class SqlCePropertyBuilderExtensions
     {
-        public static PropertyBuilder ForSqlCeHasColumnName([NotNull] this PropertyBuilder builder, [CanBeNull] string name)
+        public static PropertyBuilder ForSqlCeHasColumnName(
+            [NotNull] this PropertyBuilder propertyBuilder,
+            [CanBeNull] string name)
         {
-            Check.NotNull(builder, nameof(builder));
+            Check.NotNull(propertyBuilder, nameof(propertyBuilder));
             Check.NullButNotEmpty(name, nameof(name));
 
-            builder.Metadata.SqlCe().ColumnName = name;
+            propertyBuilder.Metadata.SqlCe().ColumnName = name;
 
-            return builder;
+            return propertyBuilder;
         }
 
-        public static PropertyBuilder<TEntity> ForSqlCeHasColumnName<TEntity>(
-            [NotNull] this PropertyBuilder<TEntity> builder,
+        public static PropertyBuilder<TProperty> ForSqlCeHasColumnName<TProperty>(
+            [NotNull] this PropertyBuilder<TProperty> propertyBuilder,
             [CanBeNull] string name)
-            where TEntity : class
-            => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).ForSqlCeHasColumnName(name);
+            => (PropertyBuilder<TProperty>)ForSqlCeHasColumnName((PropertyBuilder)propertyBuilder, name);
 
-        public static PropertyBuilder ForSqlCeHasColumnType([NotNull] this PropertyBuilder builder, [CanBeNull] string type)
+        public static PropertyBuilder ForSqlCeHasColumnType(
+            [NotNull] this PropertyBuilder propertyBuilder,
+            [CanBeNull] string typeName)
         {
-            Check.NotNull(builder, nameof(builder));
-            Check.NullButNotEmpty(type, nameof(type));
+            Check.NotNull(propertyBuilder, nameof(propertyBuilder));
+            Check.NullButNotEmpty(typeName, nameof(typeName));
 
-            builder.Metadata.SqlCe().ColumnType = type;
+            propertyBuilder.Metadata.SqlCe().ColumnType = typeName;
 
-            return builder;
+            return propertyBuilder;
         }
 
         public static PropertyBuilder<TProperty> ForSqlCeHasColumnType<TProperty>(
@@ -39,11 +44,40 @@ namespace Microsoft.EntityFrameworkCore
             [CanBeNull] string typeName)
             => (PropertyBuilder<TProperty>)ForSqlCeHasColumnType((PropertyBuilder)propertyBuilder, typeName);
 
-        public static PropertyBuilder ForSqlCeHasDefaultValue(
-           [NotNull] this PropertyBuilder propertyBuilder,
-           [CanBeNull] object value)
+        public static PropertyBuilder ForSqlCeHasDefaultValueSql(
+            [NotNull] this PropertyBuilder propertyBuilder,
+            [CanBeNull] string sql)
         {
             Check.NotNull(propertyBuilder, nameof(propertyBuilder));
+            Check.NullButNotEmpty(sql, nameof(sql));
+
+            var property = (Property)propertyBuilder.Metadata;
+            if (ConfigurationSource.Convention.Overrides(property.GetValueGeneratedConfigurationSource()))
+            {
+                property.SetValueGenerated(ValueGenerated.OnAdd, ConfigurationSource.Convention);
+            }
+
+            propertyBuilder.Metadata.SqlCe().GeneratedValueSql = sql;
+
+            return propertyBuilder;
+        }
+
+        public static PropertyBuilder<TProperty> ForSqlCeHasDefaultValueSql<TProperty>(
+            [NotNull] this PropertyBuilder<TProperty> propertyBuilder,
+            [CanBeNull] string sql)
+            => (PropertyBuilder<TProperty>)ForSqlCeHasDefaultValueSql((PropertyBuilder)propertyBuilder, sql);
+
+        public static PropertyBuilder ForSqlCeHasDefaultValue(
+            [NotNull] this PropertyBuilder propertyBuilder,
+            [CanBeNull] object value)
+        {
+            Check.NotNull(propertyBuilder, nameof(propertyBuilder));
+
+            var property = (Property)propertyBuilder.Metadata;
+            if (ConfigurationSource.Convention.Overrides(property.GetValueGeneratedConfigurationSource()))
+            {
+                property.SetValueGenerated(ValueGenerated.OnAdd, ConfigurationSource.Convention);
+            }
 
             propertyBuilder.Metadata.SqlCe().DefaultValue = value;
 
@@ -54,24 +88,5 @@ namespace Microsoft.EntityFrameworkCore
             [NotNull] this PropertyBuilder<TProperty> propertyBuilder,
             [CanBeNull] object value)
             => (PropertyBuilder<TProperty>)ForSqlCeHasDefaultValue((PropertyBuilder)propertyBuilder, value);
-
-        public static PropertyBuilder ForSqlCeHasDefaultValueSql(
-            [NotNull] this PropertyBuilder builder,
-            [CanBeNull] string sql)
-        {
-            Check.NotNull(builder, nameof(builder));
-            Check.NullButNotEmpty(sql, nameof(sql));
-
-            builder.ValueGeneratedOnAdd();
-            builder.Metadata.SqlCe().GeneratedValueSql = sql;
-
-            return builder;
-        }
-
-        public static PropertyBuilder<TEntity> ForSqlCeHasDefaultValueSql<TEntity>(
-            [NotNull] this PropertyBuilder<TEntity> builder,
-            [CanBeNull] string sql)
-            where TEntity : class
-            => (PropertyBuilder<TEntity>)((PropertyBuilder)builder).ForSqlCeHasDefaultValueSql(sql);
     }
 }

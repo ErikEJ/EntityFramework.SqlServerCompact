@@ -35,7 +35,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ")
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
-                .Append(" DROP DEFAULT;");
+                .Append(" DROP DEFAULT");
 
             builder
                 .EndCommand()
@@ -56,11 +56,10 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                     model,
                     builder);
 
-            if (operation.DefaultValue != null || operation.DefaultValueSql != null)
+            if ((operation.DefaultValue != null) || (operation.DefaultValueSql != null))
             {
                 builder
                     .EndCommand()
-                    .AppendLine(";")
                     .Append("ALTER TABLE ")
                     .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
                     .Append(" ALTER COLUMN ")
@@ -141,13 +140,13 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
         protected override void Generate(RenameIndexOperation operation, IModel model, RelationalCommandListBuilder builder)
         {
-            Check.NotNull(operation, nameof(operation));
-            Check.NotNull(builder, nameof(builder));
+            //Check.NotNull(operation, nameof(operation));
+            //Check.NotNull(builder, nameof(builder));
 
-            if (model == null)
-            {
-                throw new NotSupportedException("SQL Server Compact does not support index renames.");
-            }
+            //if (model == null)
+            //{
+            throw new NotSupportedException("SQL Server Compact does not support index renames.");
+            //}
 
             //TODO ErikEJ
             //var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.Name);
@@ -269,11 +268,10 @@ namespace Microsoft.EntityFrameworkCore.Migrations
         }
 
         protected override IEntityType FindEntityType(
-    [CanBeNull] IModel model,
-    [CanBeNull] string schema,
-    [NotNull] string tableName)
-    => model?.GetEntityTypes().FirstOrDefault(
-        t => (_annotations.For(t).TableName == tableName) && (_annotations.For(t).Schema == schema));
-
+            IModel model,
+            string schema,
+            string tableName)
+            => model?.GetEntityTypes().FirstOrDefault(
+                t => (_annotations.For(t).TableName == tableName) && (_annotations.For(t).Schema == schema));
     }
 }

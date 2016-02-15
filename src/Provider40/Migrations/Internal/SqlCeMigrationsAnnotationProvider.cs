@@ -10,7 +10,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
     {        
         public override IEnumerable<IAnnotation> For(IProperty property)
         {
-            var generateIdentityKey = property.ValueGenerated == ValueGenerated.OnAdd
+            var generateIdentityKey = (property.ValueGenerated == ValueGenerated.OnAdd)
                 && property.ClrType.IsIntegerForIdentity();
 
             if (generateIdentityKey)

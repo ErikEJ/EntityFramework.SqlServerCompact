@@ -8,9 +8,9 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
     {
         public virtual Expression Translate(MemberExpression memberExpression)
         {
-            if (memberExpression.Expression == null
-                && memberExpression.Member.DeclaringType == typeof(DateTime)
-                && memberExpression.Member.Name == nameof(DateTime.Now))
+            if ((memberExpression.Expression == null)
+                && (memberExpression.Member.DeclaringType == typeof(DateTime))
+                && (memberExpression.Member.Name == nameof(DateTime.Now)))
             {
                 return new SqlFunctionExpression("GETDATE", memberExpression.Type);
             }

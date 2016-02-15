@@ -75,12 +75,12 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
 
         private class ProjectionComparisonTransformingVisitor : RelinqExpressionVisitor
         {
-            private bool _insideConditionalTest = false;
+            private bool _insideConditionalTest;
 
             protected override Expression VisitUnary(UnaryExpression node)
             {
                 if (!_insideConditionalTest
-                    && node.NodeType == ExpressionType.Not
+                    && (node.NodeType == ExpressionType.Not)
                     && node.Operand is AliasExpression)
                 {
                     return Expression.Condition(

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -13,6 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {
         private readonly IRelationalAnnotationProvider _annotations;
+        private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
@@ -22,6 +24,22 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             : base(commandBuilderFactory, sqlGenerationHelper, typeMapper, annotations)
         {
             _annotations = annotations;
+            _commandBuilderFactory = commandBuilderFactory;
+        }
+
+        public override IReadOnlyList<IRelationalCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
+        {
+            Check.NotNull(operations, nameof(operations));
+
+            var builder = new RelationalCommandListBuilder(_commandBuilderFactory);
+            foreach (var operation in operations)
+            {
+                Generate(operation, model, builder);
+                builder
+                    .EndCommand();
+            }
+
+            return builder.GetCommands();
         }
 
         protected override void Generate(AlterColumnOperation operation, IModel model, RelationalCommandListBuilder builder)
@@ -35,8 +53,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ")
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
-                .Append(" DROP DEFAULT");
-
+                .Append(" DROP DEFAULT")
+                .AppendLine();
             builder
                 .EndCommand()
                 .Append("ALTER TABLE ")
@@ -55,6 +73,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                     operation,
                     model,
                     builder);
+            builder.AppendLine();
 
             if ((operation.DefaultValue != null) || (operation.DefaultValueSql != null))
             {

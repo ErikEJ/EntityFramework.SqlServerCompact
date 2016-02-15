@@ -22,15 +22,13 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
     [MigrationId] nvarchar(150) NOT NULL,
     [ProductVersion] nvarchar(32) NOT NULL,
     CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
-);
-
+)
 GO
 
 CREATE TABLE [Table1] (
     [Id] int NOT NULL,
     CONSTRAINT [PK_Table1] PRIMARY KEY ([Id])
-);
-
+)
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
@@ -38,8 +36,7 @@ VALUES ('00000000000001_Migration1', '7.0.0-test');
 
 GO
 
-sp_rename N'Table1', N'Table2';
-
+sp_rename N'Table1', N'Table2'
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
@@ -61,8 +58,7 @@ GO
             base.Can_generate_down_scripts();
 
             Assert.Equal(
-                @"sp_rename N'Table2', N'Table1';
-
+                @"sp_rename N'Table2', N'Table1'
 GO
 
 DELETE FROM [__EFMigrationsHistory]
@@ -70,8 +66,7 @@ WHERE [MigrationId] = '00000000000002_Migration2';
 
 GO
 
-DROP TABLE [Table1];
-
+DROP TABLE [Table1]
 GO
 
 DELETE FROM [__EFMigrationsHistory]

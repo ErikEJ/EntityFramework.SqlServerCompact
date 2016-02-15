@@ -29,7 +29,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
                 "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
                 "    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])" + EOL +
-                ");"+ EOL,
+                ")",
                 sql);
         }
 
@@ -43,7 +43,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                 "    [MigrationId] nvarchar(150) NOT NULL," + EOL +
                 "    [ProductVersion] nvarchar(32) NOT NULL," + EOL +
                 "    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])" + EOL +
-                ");" + EOL,
+                ")",
                 sql);
         }
 

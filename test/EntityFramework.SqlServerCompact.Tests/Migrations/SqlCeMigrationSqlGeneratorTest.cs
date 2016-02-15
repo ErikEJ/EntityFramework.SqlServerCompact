@@ -64,7 +64,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             base.DropIndexOperation();
 
             Assert.Equal(
-                "DROP INDEX [IX_People_Name];" + EOL,
+                "DROP INDEX [IX_People_Name]",
                 Sql);
         }
 
@@ -111,7 +111,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 });
 
             Assert.Equal(
-                "sp_rename N'People', N'Person';" + EOL,
+                "sp_rename N'People', N'Person'",
                 Sql);
         }
 
@@ -131,7 +131,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY;" + EOL,
+                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY",
                 Sql);
         }
 
@@ -146,7 +146,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD PRIMARY KEY ([Id]);" + EOL,
+                "ALTER TABLE [People] ADD PRIMARY KEY ([Id])",
                 Sql);
         }
 
@@ -155,7 +155,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             base.AlterColumnOperation();
 
             Assert.StartsWith(
-                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] DROP DEFAULT",
+                "ALTER TABLE [People] ALTER COLUMN [LuckyNumber] DROP DEFAULT" + EOL,
                 Sql);
         }
 
@@ -171,7 +171,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 });
 
             Assert.Equal(
-                "CREATE INDEX [IX_People_Name] ON [People] ([Name]);" + EOL,
+                "CREATE INDEX [IX_People_Name] ON [People] ([Name])",
                 Sql);
         }
     }

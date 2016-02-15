@@ -94,7 +94,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Concurrent" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -158,10 +157,20 @@
     <Compile Include="InheritanceRelationshipsQuerySqlCeFixture.cs" />
     <Compile Include="InheritanceSqlCeFixture.cs" />
     <Compile Include="InheritanceSqlCeTest.cs" />
+    <Compile Include="Issue305Test.cs" />
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
     <Compile Include="MigrationsSqlCeFixture.cs" />
     <Compile Include="MigrationsSqlCeTest.cs" />
+    <Compile Include="Migrations\20160215092248_Migration01.cs" />
+    <Compile Include="Migrations\20160215092248_Migration01.Designer.cs">
+      <DependentUpon>20160215092248_Migration01.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20160215092329_Migration02.cs" />
+    <Compile Include="Migrations\20160215092329_Migration02.Designer.cs">
+      <DependentUpon>20160215092329_Migration02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\TiffFilesContextModelSnapshot.cs" />
     <Compile Include="MonsterFixUpSqlCeTest.cs" />
     <Compile Include="NavigationTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />

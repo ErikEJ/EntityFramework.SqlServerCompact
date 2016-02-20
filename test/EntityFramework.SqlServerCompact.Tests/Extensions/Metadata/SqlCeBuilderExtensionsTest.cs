@@ -77,31 +77,30 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             Assert.Equal(ValueGenerated.OnAdd, property.ValueGenerated);
         }
 
-        //TODO ErikEJ Investigate why this fails?
-        //[Fact]
-        //public void Setting_column_default_expression_does_not_modify_explicitly_set_value_generated()
-        //{
-        //    var modelBuilder = CreateConventionModelBuilder();
+        [Fact]
+        public void Setting_column_default_expression_does_not_modify_explicitly_set_value_generated()
+        {
+            var modelBuilder = CreateConventionModelBuilder();
 
-        //    modelBuilder
-        //        .Entity<Customer>()
-        //        .Property(e => e.Name)
-        //        .ValueGeneratedNever()
-        //        .ForSqlCeHasDefaultValueSql("VanillaCoke");
+            modelBuilder
+                .Entity<Customer>()
+                .Property(e => e.Name)
+                .ValueGeneratedNever()
+                .ForSqlCeHasDefaultValueSql("VanillaCoke");
 
-        //    var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
+            var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
 
-        //    Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
+            Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
 
-        //    modelBuilder
-        //        .Entity<Customer>()
-        //        .Property(e => e.Name)
-        //        .HasDefaultValueSql("CherryCoke");
+            modelBuilder
+                .Entity<Customer>()
+                .Property(e => e.Name)
+                .HasDefaultValueSql("CherryCoke");
 
-        //    Assert.Equal("CherryCoke", property.Relational().GeneratedValueSql);
-        //    Assert.Equal("VanillaCoke", property.SqlCe().GeneratedValueSql);
-        //    Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
-        //}
+            Assert.Equal("CherryCoke", property.Relational().GeneratedValueSql);
+            Assert.Equal("VanillaCoke", property.SqlCe().GeneratedValueSql);
+            Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
+        }
 
         [Fact]
         public void Can_set_column_default_value()

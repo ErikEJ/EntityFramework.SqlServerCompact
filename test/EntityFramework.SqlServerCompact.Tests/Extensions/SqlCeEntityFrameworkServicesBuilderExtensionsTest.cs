@@ -41,7 +41,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             VerifyScoped<SqlCeDatabaseProviderServices>();
             VerifyScoped<ISqlCeDatabaseConnection>();
             VerifyScoped<SqlCeDatabaseCreator>();
-            VerifyScoped<SqlCeModelValidator>();
 
             //Query
             VerifyScoped<SqlCeQueryCompilationContextFactory>();

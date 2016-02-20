@@ -94,7 +94,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Concurrent" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -175,6 +174,7 @@
     <Compile Include="MonsterFixUpSqlCeTest.cs" />
     <Compile Include="NavigationTest.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />
+    <Compile Include="NotificationEntitiesSqlCeTest.cs" />
     <Compile Include="NullKeysSqlCeTest.cs" />
     <Compile Include="NullSemanticsQuerySqlCeFixture.cs" />
     <Compile Include="NullSemanticsQuerySqlCeTest.cs" />

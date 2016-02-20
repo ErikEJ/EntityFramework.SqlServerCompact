@@ -22,7 +22,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
 
         public override IModel Create(string connectionString, TableSelectionSet tableSelectionSet)
         {
-            if (tableSelectionSet != null
+            if ((tableSelectionSet != null)
                 && tableSelectionSet.Schemas.Any())
             {
                 Logger.LogWarning("You have specified some schema selections. The SQL Server Compact provider does not support these and they will be ignored. Note: it does support table selections.");
@@ -66,7 +66,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
             // override this behavior.
 
             // TODO use KeyConvention directly to detect when it will be applied
-            var pkColumns = table.Columns.OfType<ColumnModel>().Where(c => c.PrimaryKeyOrdinal.HasValue).ToList();
+            var pkColumns = table.Columns.Where(c => c.PrimaryKeyOrdinal.HasValue).ToList();
             if ((pkColumns.Count != 1) || pkColumns[0].SqlCe().IsIdentity)
             {
                 return keyBuilder;
@@ -87,7 +87,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
 
         private void VisitTypeMapping(PropertyBuilder propertyBuilder, ColumnModel column)
         {
-            var sqlCeColumn = column as ColumnModel;
+            var sqlCeColumn = column;
             if (sqlCeColumn == null)
             {
                 return;

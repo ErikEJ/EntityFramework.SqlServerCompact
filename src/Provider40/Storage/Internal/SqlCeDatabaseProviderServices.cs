@@ -47,6 +47,5 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
         public override IQueryCompilationContextFactory QueryCompilationContextFactory => GetService<SqlCeQueryCompilationContextFactory>();
         public override IQuerySqlGeneratorFactory QuerySqlGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
-        public override IModelValidator ModelValidator => GetService<SqlCeModelValidator>();
     }
 }

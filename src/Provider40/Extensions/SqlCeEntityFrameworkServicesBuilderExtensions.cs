@@ -67,7 +67,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddSingleton<SqlCeModelSource>()
                 .AddSingleton<SqlCeAnnotationProvider>()
                 .AddSingleton<SqlCeMigrationsAnnotationProvider>()
-                .AddScoped<SqlCeModelValidator>()
                 .AddScoped<SqlCeConventionSetBuilder>()
                 .AddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
                 .AddScoped<SqlCeModificationCommandBatchFactory>()

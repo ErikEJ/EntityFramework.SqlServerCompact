@@ -138,6 +138,18 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 Sql);
         }
 
+        public override void From_sql_queryable_with_parameters_inline()
+        {
+            base.From_sql_queryable_with_parameters_inline();
+
+            Assert.Equal(
+                @"@p0: London
+@p1: Sales Representative
+
+SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
+                Sql);
+        }
+
         public override void From_sql_queryable_with_null_parameter()
         {
             // http://entityframework.codeplex.com/workitem/287
@@ -240,8 +252,8 @@ INNER JOIN (
     FROM (
         SELECT * FROM ""Customers""
     ) AS [c]
-) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
-ORDER BY [c].[CustomerID]",
+) AS [c0] ON [o].[CustomerID] = [c0].[CustomerID]
+ORDER BY [c0].[CustomerID]",
                 Sql);
         }
 
@@ -265,8 +277,8 @@ INNER JOIN (
         SELECT * FROM ""Customers""
     ) AS [c]
     WHERE [c].[City] = 'London'
-) AS [c] ON [o].[CustomerID] = [c].[CustomerID]
-ORDER BY [c].[CustomerID]",
+) AS [c0] ON [o].[CustomerID] = [c0].[CustomerID]
+ORDER BY [c0].[CustomerID]",
                 Sql);
         }
 

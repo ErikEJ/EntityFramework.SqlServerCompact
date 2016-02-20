@@ -85,11 +85,16 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
         {
             base.RequiredAttribute_for_navigation_throws_while_inserting_null_value();
 
-            Assert.Equal(@"@p0: 0
-@p1: Book1
+            Assert.Equal(@"@p0: Book1
 
-INSERT INTO [BookDetail] ([Id], [BookId])
-VALUES (@p0, @p1);
+INSERT INTO [BookDetail] ([BookId])
+VALUES (@p0);
+
+@p0: Book1
+
+SELECT [Id]
+FROM [BookDetail]
+WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
 
 ",
                 Sql);

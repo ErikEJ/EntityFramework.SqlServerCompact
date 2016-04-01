@@ -7,7 +7,7 @@
     <ProjectGuid>{C38B58D7-F346-40A2-9849-D12CB9EC5C69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Data.Entity.Tests</RootNamespace>
+    <RootNamespace>Microsoft.EntityFrameworkCore.Tests</RootNamespace>
     <AssemblyName>EntityFramework.SqlServerCompact.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -34,59 +34,59 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.1.0.0-rc2-16898\lib\net451\Microsoft.EntityFrameworkCore.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.1.0.0-rc2-20410\lib\net451\Microsoft.EntityFrameworkCore.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.FunctionalTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.FunctionalTests.1.0.0-rc2-16898\lib\net451\Microsoft.EntityFrameworkCore.FunctionalTests.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.FunctionalTests.1.0.0-rc2-20410\lib\net451\Microsoft.EntityFrameworkCore.FunctionalTests.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.InMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.InMemory.1.0.0-rc2-16898\lib\net451\Microsoft.EntityFrameworkCore.InMemory.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.InMemory.1.0.0-rc2-20410\lib\net451\Microsoft.EntityFrameworkCore.InMemory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.1.0.0-rc2-16898\lib\net451\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.1.0.0-rc2-20410\lib\net451\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational.FunctionalTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.FunctionalTests.1.0.0-rc2-16898\lib\net451\Microsoft.EntityFrameworkCore.Relational.FunctionalTests.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.FunctionalTests.1.0.0-rc2-20410\lib\net451\Microsoft.EntityFrameworkCore.Relational.FunctionalTests.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.1.0.0-rc2-16119\lib\net451\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.1.0.0-rc2-20410\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Memory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Memory.1.0.0-rc2-16119\lib\net451\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Memory.1.0.0-rc2-20410\lib\net451\Microsoft.Extensions.Caching.Memory.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.1.0.0-rc2-16040\lib\net451\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.1.0.0-rc2-20410\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-16040\lib\net451\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-20410\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Logging.1.0.0-rc2-16095\lib\net451\Microsoft.Extensions.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.1.0.0-rc2-20410\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.1.0.0-rc2-16095\lib\net451\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.1.0.0-rc2-20410\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Options.1.0.0-rc2-16068\lib\net451\Microsoft.Extensions.Options.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Options.1.0.0-rc2-20410\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.PlatformAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.PlatformAbstractions.1.0.0-rc2-16593\lib\net451\Microsoft.Extensions.PlatformAbstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.PlatformAbstractions.1.0.0-rc2-20410\lib\net451\Microsoft.Extensions.PlatformAbstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.1.0.0-rc2-16091\lib\net451\Microsoft.Extensions.Primitives.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.1.0.0-rc2-20410\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
@@ -107,7 +107,7 @@
       <HintPath>..\..\..\..\Program Files (x86)\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.0.0-rc2-23818\lib\dotnet5.2\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.0.0-rc2-23931\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Interactive.Async, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -148,7 +148,7 @@
     <Compile Include="Extensions\Metadata\SqlCeBuilderExtensionsTest.cs" />
     <Compile Include="Extensions\Metadata\InternalSqlCeMetadataBuilderExtensionsTest.cs.cs" />
     <Compile Include="Extensions\Metadata\SqlCeMetadataExtensionsTest.cs" />
-    <Compile Include="Extensions\RelationalEntityFrameworkServicesBuilderExtensionsTest.cs" />
+    <Compile Include="Extensions\RelationalServiceCollectionExtensionsTest.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsExtensionsTest.cs" />
     <Compile Include="FakeSensitiveDataLogger`.cs" />
     <Compile Include="Migrations\MigrationSqlGeneratorTestBase.cs" />

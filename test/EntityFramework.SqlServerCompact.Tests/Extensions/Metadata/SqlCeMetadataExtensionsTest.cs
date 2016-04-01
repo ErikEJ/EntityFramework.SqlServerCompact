@@ -120,23 +120,23 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Property(e => e.Name)
                 .Metadata;
 
-            Assert.Null(property.SqlCe().GeneratedValueSql);
-            Assert.Null(((IProperty)property).SqlCe().GeneratedValueSql);
+            Assert.Null(property.SqlCe().ComputedValueSql);
+            Assert.Null(((IProperty)property).SqlCe().ComputedValueSql);
 
-            property.Relational().GeneratedValueSql = "newsequentialid()";
+            property.Relational().ComputedValueSql = "newsequentialid()";
 
-            Assert.Equal("newsequentialid()", property.SqlCe().GeneratedValueSql);
-            Assert.Equal("newsequentialid()", ((IProperty)property).SqlCe().GeneratedValueSql);
+            Assert.Equal("newsequentialid()", property.SqlCe().ComputedValueSql);
+            Assert.Equal("newsequentialid()", ((IProperty)property).SqlCe().ComputedValueSql);
 
-            property.SqlCe().GeneratedValueSql = "expressyourself()";
+            property.SqlCe().ComputedValueSql = "expressyourself()";
 
-            Assert.Equal("expressyourself()", property.SqlCe().GeneratedValueSql);
-            Assert.Equal("expressyourself()", ((IProperty)property).SqlCe().GeneratedValueSql);
+            Assert.Equal("expressyourself()", property.SqlCe().ComputedValueSql);
+            Assert.Equal("expressyourself()", ((IProperty)property).SqlCe().ComputedValueSql);
 
-            property.SqlCe().GeneratedValueSql = null;
+            property.SqlCe().ComputedValueSql = null;
 
-            Assert.Equal("newsequentialid()", property.SqlCe().GeneratedValueSql);
-            Assert.Equal("newsequentialid()", ((IProperty)property).SqlCe().GeneratedValueSql);
+            Assert.Equal("newsequentialid()", property.SqlCe().ComputedValueSql);
+            Assert.Equal("newsequentialid()", ((IProperty)property).SqlCe().ComputedValueSql);
         }
 
         [Fact]

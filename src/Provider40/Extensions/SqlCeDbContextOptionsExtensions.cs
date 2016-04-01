@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -11,34 +12,17 @@ namespace Microsoft.EntityFrameworkCore
 {
     public static class SqlCeDbContextOptionsExtensions
     {
-#if SQLCE35
-#else
         /// <summary>
         ///     Configures the context to connect to a Microsoft SQL Server Compact database.
         /// </summary>
-        /// <param name="optionsBuilder"> The options for the context. </param>
-        /// <param name="connectionStringBuilder"> The connection string builder for the database to connect to. </param>
-        /// <returns> An options builder to allow additional SQL Server Compact specific configuration. </returns>
-        public static SqlCeDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder optionsBuilder, [NotNull] SqlCeConnectionStringBuilder connectionStringBuilder)
-        {
-            Check.NotNull(optionsBuilder, nameof(optionsBuilder));
-            Check.NotNull(connectionStringBuilder, nameof(connectionStringBuilder));
-
-            var extension = GetOrCreateExtension(optionsBuilder);
-            extension.ConnectionString = connectionStringBuilder.ConnectionString;
-            extension.MaxBatchSize = 1;
-            ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
-
-            return new SqlCeDbContextOptionsBuilder(optionsBuilder);
-        }
-#endif
-        /// <summary>
-        ///     Configures the context to connect to a Microsoft SQL Server Compact database.
-        /// </summary>
-        /// <param name="optionsBuilder"> The options for the context. </param>
-        /// <param name="connectionString"> The connection string for the database to connect to. </param>
-        /// <returns> An options builder to allow additional SQL Server Compact specific configuration. </returns>
-        public static SqlCeDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder optionsBuilder, [NotNull] string connectionString)
+        /// <param name="optionsBuilder"> A builder for setting options on the context. </param>
+        /// <param name="connectionString"> The connection string of the database to connect to. </param>
+        /// <param name="sqlCeOptionsAction">An optional action to allow additional SQL Server Compact specific configuration.</param>
+        /// <returns> The options builder so that further configuration can be chained. </returns>
+        public static DbContextOptionsBuilder UseSqlCe(
+            [NotNull] this DbContextOptionsBuilder optionsBuilder,
+            [NotNull] string connectionString,
+            [CanBeNull] Action<SqlCeDbContextOptionsBuilder> sqlCeOptionsAction = null)
         {
             Check.NotNull(optionsBuilder, nameof(optionsBuilder));
             Check.NotEmpty(connectionString, nameof(connectionString));
@@ -48,20 +32,26 @@ namespace Microsoft.EntityFrameworkCore
             extension.MaxBatchSize = 1;
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
-            return new SqlCeDbContextOptionsBuilder(optionsBuilder);
+            sqlCeOptionsAction?.Invoke(new SqlCeDbContextOptionsBuilder(optionsBuilder));
+
+            return optionsBuilder;
         }
 
         /// <summary>
         ///     Configures the context to connect to a Microsoft SQL Server Compact database.
         /// </summary>
-        /// <param name="optionsBuilder"> The options for the context. </param>
+        /// <param name="optionsBuilder"> A builder for setting options on the context. </param>
         /// <param name="connection">
         ///     An existing <see cref="DbConnection" /> to be used to connect to the database. If the connection is
         ///     in the open state then EF will not open or close the connection. If the connection is in the closed
         ///     state then EF will open and close the connection as needed.
         /// </param>
-        /// <returns> An options builder to allow additional SQL Server Compact specific configuration. </returns> 
-        public static SqlCeDbContextOptionsBuilder UseSqlCe([NotNull] this DbContextOptionsBuilder optionsBuilder, [NotNull] DbConnection connection)
+        /// <param name="sqlCeOptionsAction">An optional action to allow additional SQL Server Compact specific configuration.</param>
+        /// <returns> The options builder so that further configuration can be chained. </returns>
+        public static DbContextOptionsBuilder UseSqlCe(
+            [NotNull] this DbContextOptionsBuilder optionsBuilder,
+            [NotNull] DbConnection connection,
+            [CanBeNull] Action<SqlCeDbContextOptionsBuilder> sqlCeOptionsAction = null)
         {
             Check.NotNull(optionsBuilder, nameof(optionsBuilder));
             Check.NotNull(connection, nameof(connection));
@@ -71,8 +61,44 @@ namespace Microsoft.EntityFrameworkCore
             extension.MaxBatchSize = 1;
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
-            return new SqlCeDbContextOptionsBuilder(optionsBuilder);
+            sqlCeOptionsAction?.Invoke(new SqlCeDbContextOptionsBuilder(optionsBuilder));
+
+            return optionsBuilder;
         }
+
+        /// <summary>
+        ///     Configures the context to connect to a Microsoft SQL Server database.
+        /// </summary>
+        /// <param name="optionsBuilder"> A builder for setting options on the context. </param>
+        /// <param name="connectionString"> The connection string of the database to connect to. </param>
+        /// <param name="sqlCeOptionsAction">An optional action to allow additional SQL Server specific configuration.</param>
+        /// <returns> The options builder so that further configuration can be chained. </returns>
+        public static DbContextOptionsBuilder<TContext> UseSqlCe<TContext>(
+            [NotNull] this DbContextOptionsBuilder<TContext> optionsBuilder,
+            [NotNull] string connectionString,
+            [CanBeNull] Action<SqlCeDbContextOptionsBuilder> sqlCeOptionsAction = null)
+            where TContext : DbContext
+            => (DbContextOptionsBuilder<TContext>)UseSqlCe(
+                (DbContextOptionsBuilder)optionsBuilder, connectionString, sqlCeOptionsAction);
+
+        /// <summary>
+        ///     Configures the context to connect to a Microsoft SQL Server Compact database.
+        /// </summary>
+        /// <param name="optionsBuilder"> A builder for setting options on the context. </param>
+        /// <param name="connection">
+        ///     An existing <see cref="DbConnection" /> to be used to connect to the database. If the connection is
+        ///     in the open state then EF will not open or close the connection. If the connection is in the closed
+        ///     state then EF will open and close the connection as needed.
+        /// </param>
+        /// <param name="sqlCeOptionsAction">An optional action to allow additional SQL Server Compact specific configuration.</param>
+        /// <returns> The options builder so that further configuration can be chained. </returns>
+        public static DbContextOptionsBuilder<TContext> UseSqlCe<TContext>(
+            [NotNull] this DbContextOptionsBuilder<TContext> optionsBuilder,
+            [NotNull] DbConnection connection,
+            [CanBeNull] Action<SqlCeDbContextOptionsBuilder> sqlCeOptionsAction = null)
+            where TContext : DbContext
+            => (DbContextOptionsBuilder<TContext>)UseSqlCe(
+                (DbContextOptionsBuilder)optionsBuilder, connection, sqlCeOptionsAction);
 
         private static SqlCeOptionsExtension GetOrCreateExtension(DbContextOptionsBuilder optionsBuilder)
         {

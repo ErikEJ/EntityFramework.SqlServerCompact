@@ -15,9 +15,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         {
             _serviceProvider
                 = new ServiceCollection()
-                    .AddEntityFramework()
-                    .AddSqlCe()
-                    .ServiceCollection()
+                    .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                     .BuildServiceProvider();
@@ -27,7 +25,8 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlCe(testStore.Connection);
+                .UseSqlCe(testStore.Connection)
+                .UseInternalServiceProvider(_serviceProvider);
 
             _options = optionsBuilder.Options;
 
@@ -87,6 +86,6 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             }
         }
 
-        public override InheritanceContext CreateContext() => new InheritanceContext(_serviceProvider, _options);
+        public override InheritanceContext CreateContext() => new InheritanceContext(_options);
     }
 }

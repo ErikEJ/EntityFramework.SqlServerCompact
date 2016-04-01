@@ -8,9 +8,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
     public class DefaultValuesTest : IDisposable
     {
         private readonly IServiceProvider _serviceProvider = new ServiceCollection()
-            .AddEntityFramework()
-            .AddSqlCe()
-            .ServiceCollection()
+            .AddEntityFrameworkSqlCe()
             .BuildServiceProvider();
 
         [Fact]
@@ -48,18 +46,21 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         private class ChipsContext : DbContext
         {
             private readonly string _databaseName;
+            private readonly IServiceProvider _serviceProvider;
 
             public ChipsContext(IServiceProvider serviceProvider, string databaseName)
-                : base(serviceProvider)
             {
                 _databaseName = databaseName;
+                _serviceProvider = serviceProvider;
             }
 
             public DbSet<KettleChips> Chips { get; set; }
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlCe(SqlCeTestStore.CreateConnectionString(_databaseName));
+                optionsBuilder
+                    .UseSqlCe(SqlCeTestStore.CreateConnectionString(_databaseName))
+                    .UseInternalServiceProvider(_serviceProvider);
             }
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)

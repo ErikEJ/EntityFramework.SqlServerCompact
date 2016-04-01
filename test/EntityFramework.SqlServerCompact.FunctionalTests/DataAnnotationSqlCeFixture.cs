@@ -15,9 +15,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public DataAnnotationSqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
@@ -28,9 +26,11 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(_connectionString);
+                optionsBuilder
+                    .UseSqlCe(_connectionString)
+                    .UseInternalServiceProvider(_serviceProvider);
 
-                using (var context = new DataAnnotationContext(_serviceProvider, optionsBuilder.Options))
+                using (var context = new DataAnnotationContext(optionsBuilder.Options))
                 {
                     // TODO: Delete DB if model changed
                     context.Database.EnsureDeleted();
@@ -47,9 +47,12 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public override DataAnnotationContext CreateContext(SqlCeTestStore testStore)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.EnableSensitiveDataLogging().UseSqlCe(testStore.Connection);
+            optionsBuilder
+                .EnableSensitiveDataLogging()
+                .UseSqlCe(testStore.Connection)
+                .UseInternalServiceProvider(_serviceProvider);
 
-            var context = new DataAnnotationContext(_serviceProvider, optionsBuilder.Options);
+            var context = new DataAnnotationContext(optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);
             return context;
 

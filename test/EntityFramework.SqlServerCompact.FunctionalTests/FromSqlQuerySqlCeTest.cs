@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data.Common;
+using System.Data.SqlServerCe;
+using System.Linq;
 using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.Northwind;
 using Xunit;
 
@@ -42,7 +44,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 FROM (
     SELECT * FROM ""Customers""
 ) AS [c]
-WHERE [c].[ContactName] LIKE ('%' + 'z') + '%'",
+WHERE [c].[ContactName] LIKE (N'%' + N'z') + N'%'",
                 Sql);
         }
 
@@ -122,7 +124,7 @@ FROM (
     SELECT *
     FROM ""Customers""
 ) AS [c]
-WHERE [c].[City] = 'London'",
+WHERE [c].[City] = N'London'",
                 Sql);
         }
 
@@ -266,7 +268,7 @@ ORDER BY [c0].[CustomerID]",
 FROM (
     SELECT * FROM ""Customers""
 ) AS [c]
-WHERE [c].[City] = 'London'
+WHERE [c].[City] = N'London'
 ORDER BY [c].[CustomerID]
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
@@ -276,7 +278,7 @@ INNER JOIN (
     FROM (
         SELECT * FROM ""Customers""
     ) AS [c]
-    WHERE [c].[City] = 'London'
+    WHERE [c].[City] = N'London'
 ) AS [c0] ON [o].[CustomerID] = [c0].[CustomerID]
 ORDER BY [c0].[CustomerID]",
                 Sql);
@@ -311,6 +313,13 @@ WHERE ([c].[ContactName] = [c].[CompanyName]) OR ([c].[ContactName] IS NULL AND 
             : base(fixture)
         {
         }
+
+        protected override DbParameter CreateDbParameter(string name, object value)
+            => new SqlCeParameter
+            {
+                ParameterName = name,
+                Value = value
+            };
 
         private static string Sql => TestSqlLoggerFactory.Sql;
     }

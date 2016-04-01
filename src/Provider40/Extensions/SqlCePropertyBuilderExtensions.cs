@@ -57,7 +57,7 @@ namespace Microsoft.EntityFrameworkCore
                 property.SetValueGenerated(ValueGenerated.OnAdd, ConfigurationSource.Convention);
             }
 
-            propertyBuilder.Metadata.SqlCe().GeneratedValueSql = sql;
+            propertyBuilder.Metadata.SqlCe().DefaultValueSql = sql;
 
             return propertyBuilder;
         }

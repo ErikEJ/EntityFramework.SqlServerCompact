@@ -7,6 +7,13 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class GearsOfWarQuerySqlCeFixture : GearsOfWarQueryRelationalFixture<SqlCeTestStore>
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<City>().Property(g => g.Location).HasColumnType("nvarchar(100)");
+        }
+
         public static readonly string DatabaseName = "GearsOfWarQueryTest";
 
         private readonly IServiceProvider _serviceProvider;
@@ -16,9 +23,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public GearsOfWarQuerySqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
@@ -29,9 +34,11 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(_connectionString);
+                optionsBuilder
+                    .UseSqlCe(_connectionString)
+                    .UseInternalServiceProvider(_serviceProvider);
 
-                using (var context = new GearsOfWarContext(_serviceProvider, optionsBuilder.Options))
+                using (var context = new GearsOfWarContext(optionsBuilder.Options))
                 {
                     // TODO: Delete DB if model changed
 
@@ -50,9 +57,10 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlCe(testStore.Connection);
+                .UseSqlCe(testStore.Connection)
+                .UseInternalServiceProvider(_serviceProvider);
 
-            var context = new GearsOfWarContext(_serviceProvider, optionsBuilder.Options);
+            var context = new GearsOfWarContext(optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);
             return context;
         }

@@ -21,21 +21,21 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
             public NotificationEntitiesSqlCeFixture()
             {
                 _serviceProvider = new ServiceCollection()
-                    .AddEntityFramework()
-                    .AddSqlCe()
-                    .ServiceCollection()
+                    .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .BuildServiceProvider();
 
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(SqlCeTestStore.CreateConnectionString("NotificationEntities"));
+                optionsBuilder
+                    .UseSqlCe(SqlCeTestStore.CreateConnectionString("NotificationEntities"))
+                    .UseInternalServiceProvider(_serviceProvider);
                 _options = optionsBuilder.Options;
 
                 EnsureCreated();
             }
 
             public override DbContext CreateContext()
-                => new DbContext(_serviceProvider, _options);
+                => new DbContext(_options);
         }
     }
 }

@@ -1,13 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.Northwind;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.Northwind;
 
 namespace Microsoft.EntityFrameworkCore.FunctionalTests.TestModels
 {
     public class SqlCeNorthwindContext : NorthwindContext
     {
-        public SqlCeNorthwindContext(IServiceProvider serviceProvider, DbContextOptions options)
-            : base(serviceProvider, options)
+        public SqlCeNorthwindContext(DbContextOptions options)
+            : base(options)
         {
         }
 #if SQLCE35

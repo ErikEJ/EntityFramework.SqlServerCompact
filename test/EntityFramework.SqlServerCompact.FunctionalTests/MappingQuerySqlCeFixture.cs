@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -15,22 +14,22 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public MappingQuerySqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
 
             _testDatabase = SqlCeNorthwindContext.GetSharedStore();
 
             var optionsBuilder = new DbContextOptionsBuilder().UseModel(CreateModel());
-            optionsBuilder.UseSqlCe(_testDatabase.Connection.ConnectionString);
+            optionsBuilder
+                .UseSqlCe(_testDatabase.Connection.ConnectionString)
+                .UseInternalServiceProvider(_serviceProvider);
             _options = optionsBuilder.Options;
         }
 
         public DbContext CreateContext()
         {
-            return new DbContext(_serviceProvider, _options);
+            return new DbContext(_options);
         }
 
         public void Dispose()

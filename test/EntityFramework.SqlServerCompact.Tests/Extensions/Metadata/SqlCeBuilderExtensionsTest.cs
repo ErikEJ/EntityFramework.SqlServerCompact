@@ -72,8 +72,8 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Property(e => e.Name)
                 .HasDefaultValueSql("CherryCoke");
 
-            Assert.Equal("CherryCoke", property.Relational().GeneratedValueSql);
-            Assert.Equal("VanillaCoke", property.SqlCe().GeneratedValueSql);
+            Assert.Equal("CherryCoke", property.Relational().DefaultValueSql);
+            Assert.Equal("VanillaCoke", property.SqlCe().DefaultValueSql);
             Assert.Equal(ValueGenerated.OnAdd, property.ValueGenerated);
         }
 
@@ -97,8 +97,8 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Property(e => e.Name)
                 .HasDefaultValueSql("CherryCoke");
 
-            Assert.Equal("CherryCoke", property.Relational().GeneratedValueSql);
-            Assert.Equal("VanillaCoke", property.SqlCe().GeneratedValueSql);
+            Assert.Equal("CherryCoke", property.Relational().DefaultValueSql);
+            Assert.Equal("VanillaCoke", property.SqlCe().DefaultValueSql);
             Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
         }
 

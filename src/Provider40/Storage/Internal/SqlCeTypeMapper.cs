@@ -13,7 +13,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         private readonly SqlCeMaxLengthMapping _nvarchar256 = new SqlCeMaxLengthMapping("nvarchar(256)", typeof(string), DbType.String);
         private readonly SqlCeMaxLengthMapping _varbinarymax = new SqlCeMaxLengthMapping("image", typeof(byte[]), DbType.Binary);
         private readonly SqlCeMaxLengthMapping _varbinary512 = new SqlCeMaxLengthMapping("varbinary(512)", typeof(byte[]), DbType.Binary);
-        private readonly RelationalSizedTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", typeof(byte[]), DbType.Binary, 8);
+        private readonly RelationalSizedTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", typeof(byte[]), DbType.Binary, false, 8);
         private readonly RelationalTypeMapping _int = new RelationalTypeMapping("int", typeof(int), DbType.Int32);
         private readonly RelationalTypeMapping _bigint = new RelationalTypeMapping("bigint", typeof(long), DbType.Int64);
         private readonly RelationalTypeMapping _bit = new RelationalTypeMapping("bit", typeof(bool), DbType.Boolean);
@@ -94,7 +94,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         protected override IReadOnlyDictionary<string, RelationalTypeMapping> GetSimpleNameMappings()
             => _simpleNameMappings;
 
-        public override RelationalTypeMapping FindMapping(Type clrType)
+        public override RelationalTypeMapping FindMapping(Type clrType, bool isUniCode = true)
         {
             Check.NotNull(clrType, nameof(clrType));
 
@@ -105,7 +105,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     : base.FindMapping(clrType));
         }
 
-        protected override RelationalTypeMapping FindCustomMapping(IProperty property)
+        protected override RelationalTypeMapping FindCustomMapping(IProperty property, bool unicode = true)
         {
             Check.NotNull(property, nameof(property));
 

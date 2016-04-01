@@ -20,9 +20,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         {
             _serviceProvider
                 = new ServiceCollection()
-                    .AddEntityFramework()
-                    .AddSqlCe()
-                    .ServiceCollection()
+                    .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .AddSingleton<ILoggerFactory>(_testSqlLoggerFactory)
                     .BuildServiceProvider();
@@ -31,25 +29,19 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         }
 
         protected DbContextOptions BuildOptions()
-        {
-            var optionsBuilder = new DbContextOptionsBuilder();
-
-            var sqlCeDbContextOptionsBuilder
-                = optionsBuilder
-                    .EnableSensitiveDataLogging()
-                    .UseSqlCe(_testStore.Connection.ConnectionString);
-
-            ConfigureOptions(sqlCeDbContextOptionsBuilder);
-
-            return optionsBuilder.Options;
-        }
+            => new DbContextOptionsBuilder()
+                .EnableSensitiveDataLogging()
+                .UseInternalServiceProvider(_serviceProvider)
+                .UseSqlCe(
+                    _testStore.ConnectionString,
+                    ConfigureOptions).Options;
 
         protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlServerDbContextOptionsBuilder)
         {
         }
 
         public override NorthwindContext CreateContext()
-            => new SqlCeNorthwindContext(_serviceProvider, _options);
+            => new SqlCeNorthwindContext(_options);
 
         public void Dispose() => _testStore.Dispose();
 

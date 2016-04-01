@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SqlServerCe;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.FunctionalTests
@@ -13,9 +12,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public MigrationsSqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .BuildServiceProvider();
 
             var connectionStringBuilder = new SqlCeConnectionStringBuilder
@@ -25,10 +22,12 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             //connectionStringBuilder.ApplyConfiguration();
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(connectionStringBuilder.ConnectionString);
+            optionsBuilder
+                .UseSqlCe(connectionStringBuilder.ConnectionString)
+                .UseInternalServiceProvider(_serviceProvider);
             _options = optionsBuilder.Options;
         }
 
-        public override MigrationsContext CreateContext() => new MigrationsContext(_serviceProvider, _options);
+        public override MigrationsContext CreateContext() => new MigrationsContext(_options);
     }
 }

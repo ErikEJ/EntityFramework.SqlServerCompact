@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.FunctionalTests
@@ -19,9 +18,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         protected override IServiceProvider CreateServiceProvider(bool throwingStateManager = false)
         {
             var serviceCollection = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection();
+                .AddEntityFrameworkSqlCe();
 
             if (throwingStateManager)
             {
@@ -34,7 +31,8 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         protected override DbContextOptions CreateOptions(string databaseName)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(CreateConnectionString(databaseName));
+            optionsBuilder
+                .UseSqlCe(CreateConnectionString(databaseName));
 
             return optionsBuilder.Options;
         }

@@ -1,5 +1,4 @@
 ﻿using System.Data.SqlServerCe;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Tests
@@ -12,14 +11,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
 
         public new static SqlCeTestHelpers Instance { get; } = new SqlCeTestHelpers();
 
-        public override EntityFrameworkServicesBuilder AddProviderServices(EntityFrameworkServicesBuilder builder)
-        {
-            return builder.AddSqlCe();
-        }
+        public override IServiceCollection AddProviderServices(IServiceCollection services) 
+            => services.AddEntityFrameworkSqlCe();
 
-        protected override void UseProviderOptions(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlCe(new SqlCeConnection("Data Source=DummyDatabase"));
-        }
+        protected override void UseProviderOptions(DbContextOptionsBuilder optionsBuilder) 
+            => optionsBuilder.UseSqlCe(new SqlCeConnection("Data Source=DummyDatabase"));
     }
 }

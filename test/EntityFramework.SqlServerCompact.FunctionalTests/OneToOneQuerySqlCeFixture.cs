@@ -14,9 +14,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         {
             _serviceProvider
                 = new ServiceCollection()
-                    .AddEntityFramework()
-                    .AddSqlCe()
-                    .ServiceCollection()
+                    .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                     .BuildServiceProvider();
@@ -24,10 +22,12 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             var database = SqlCeTestStore.CreateScratch(createDatabase: true);
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(database.Connection.ConnectionString);
+            optionsBuilder
+                .UseSqlCe(database.Connection.ConnectionString)
+                .UseInternalServiceProvider(_serviceProvider);
             _options = optionsBuilder.Options;
 
-            using (var context = new DbContext(_serviceProvider, _options))
+            using (var context = new DbContext(_options))
             {
                 context.Database.EnsureCreated();
 
@@ -37,7 +37,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 
         public DbContext CreateContext()
         {
-            return new DbContext(_serviceProvider, _options);
+            return new DbContext(_options);
         }
     }
 }

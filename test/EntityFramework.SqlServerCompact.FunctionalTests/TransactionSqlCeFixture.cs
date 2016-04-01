@@ -11,9 +11,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public TransactionSqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                 .BuildServiceProvider();
         }
@@ -33,17 +31,21 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public override DbContext CreateContext(SqlCeTestStore testStore)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
+            optionsBuilder
+                .UseSqlCe(testStore.Connection.ConnectionString)
+                .UseInternalServiceProvider(_serviceProvider);
 
-            return new DbContext(_serviceProvider, optionsBuilder.Options);
+            return new DbContext(optionsBuilder.Options);
         }
 
         public override DbContext CreateContext(DbConnection connection)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(connection);
+            optionsBuilder
+                .UseSqlCe(connection)
+                .UseInternalServiceProvider(_serviceProvider);
 
-            return new DbContext(_serviceProvider, optionsBuilder.Options);
+            return new DbContext(optionsBuilder.Options);
         }
     }
 }

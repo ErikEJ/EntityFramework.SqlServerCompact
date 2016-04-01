@@ -79,8 +79,8 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
                 var creator = GetDatabaseCreator(testDatabase);
 
                 var errorNumber = async
-                    ? (await Assert.ThrowsAsync<SqlCeException>(() => ((TestDatabaseCreator)creator).HasTablesAsync())).NativeError
-                    : Assert.Throws<SqlCeException>(() => ((TestDatabaseCreator)creator).HasTables()).NativeError;
+                    ? (await Assert.ThrowsAsync<SqlCeException>(() => ((TestDatabaseCreator)creator).HasTablesAsyncBase())).NativeError
+                    : Assert.Throws<SqlCeException>(() => ((TestDatabaseCreator)creator).HasTablesBase()).NativeError;
 
                 Assert.Equal(
                     25046, // The database file cannot be found. Check the path to the database.
@@ -106,7 +106,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             {
                 var creator = GetDatabaseCreator(testDatabase);
 
-                Assert.False(async ? await ((TestDatabaseCreator)creator).HasTablesAsync() : ((TestDatabaseCreator)creator).HasTables());
+                Assert.False(async ? await ((TestDatabaseCreator)creator).HasTablesAsyncBase() : ((TestDatabaseCreator)creator).HasTablesBase());
             }
         }
 
@@ -130,7 +130,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 
                 var creator = GetDatabaseCreator(testDatabase);
 
-                Assert.True(async ? await ((TestDatabaseCreator)creator).HasTablesAsync() : ((TestDatabaseCreator)creator).HasTables());
+                Assert.True(async ? await ((TestDatabaseCreator)creator).HasTablesAsyncBase() : ((TestDatabaseCreator)creator).HasTablesBase());
             }
         }
 
@@ -216,15 +216,14 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             {
                 var serviceCollection = new ServiceCollection();
                 serviceCollection
-                    .AddEntityFramework()
-                    .AddSqlCe();
+                    .AddEntityFrameworkSqlCe();
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
                 var optionsBuilder = new DbContextOptionsBuilder();
                 optionsBuilder.UseSqlCe(testDatabase.Connection.ConnectionString);
 
-                using (var context = new BloggingContext(serviceProvider, optionsBuilder.Options))
+                using (var context = new BloggingContext(optionsBuilder.Options))
                 {
                     var creator = (RelationalDatabaseCreator)context.GetService<IDatabaseCreator>();
 
@@ -355,30 +354,21 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         }
 
         private static IServiceProvider CreateContextServices(SqlCeTestStore testStore)
-        {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection
-                .AddEntityFramework()
-                .AddSqlCe();
-
-            serviceCollection.AddScoped<SqlCeDatabaseCreator, TestDatabaseCreator>();
-
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
-
-            return ((IInfrastructure<IServiceProvider>)new BloggingContext(
-                serviceCollection.BuildServiceProvider(),
-                optionsBuilder.Options))
+            => ((IInfrastructure<IServiceProvider>)new BloggingContext(
+                new DbContextOptionsBuilder()
+                    .UseSqlCe(testStore.ConnectionString)
+                    .UseInternalServiceProvider(new ServiceCollection()
+                        .AddEntityFrameworkSqlCe()
+                        .AddScoped<SqlCeDatabaseCreator, TestDatabaseCreator>().BuildServiceProvider()).Options))
                 .Instance;
-        }
 
         private static IRelationalDatabaseCreator GetDatabaseCreator(SqlCeTestStore testStore)
            => CreateContextServices(testStore).GetRequiredService<IRelationalDatabaseCreator>();
 
         private class BloggingContext : DbContext
         {
-            public BloggingContext(IServiceProvider serviceProvider, DbContextOptions options)
-                : base(serviceProvider, options)
+            public BloggingContext(DbContextOptions options)
+                : base(options)
             {
             }
 
@@ -397,16 +387,16 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
                 ISqlCeDatabaseConnection connection,
                 IMigrationsModelDiffer modelDiffer,
                 IMigrationsSqlGenerator sqlGenerator,
-                IRawSqlCommandBuilder rawSqlCommandBuilder,
-                IModel model)
+                IModel model,
+                IRawSqlCommandBuilder rawSqlCommandBuilder)
                 : base(connection, modelDiffer, sqlGenerator, model, rawSqlCommandBuilder)
             {
             }
 
-            public new bool HasTables() => base.HasTables();
+            public bool HasTablesBase() => HasTables();
 
-            public new Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
-                => base.HasTablesAsync(cancellationToken);
+            public Task<bool> HasTablesAsyncBase(CancellationToken cancellationToken = default(CancellationToken))
+                => HasTablesAsync(cancellationToken);
         }
     }
 }

@@ -15,10 +15,7 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
         {
         }
 
-        public override void ApplyServices(EntityFrameworkServicesBuilder builder)
-        {
-            Check.NotNull(builder, nameof(builder));
-            builder.AddSqlCe();
-        }
+        public override void ApplyServices(IServiceCollection services)
+            => Check.NotNull(services, nameof(services)).AddEntityFrameworkSqlCe();
     }
 }

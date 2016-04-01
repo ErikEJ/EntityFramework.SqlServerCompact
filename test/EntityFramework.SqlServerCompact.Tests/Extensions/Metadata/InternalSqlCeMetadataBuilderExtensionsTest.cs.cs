@@ -49,13 +49,13 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity(typeof(Splot), ConfigurationSource.Convention)
                 .Property("Id", typeof(int), ConfigurationSource.Convention);
 
-            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.Convention).ColumnName("Splew"));
+            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.Convention).HasColumnName("Splew"));
             Assert.Equal("Splew", propertyBuilder.Metadata.SqlCe().ColumnName);
 
-            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.DataAnnotation).ColumnName("Splow"));
+            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.DataAnnotation).HasColumnName("Splow"));
             Assert.Equal("Splow", propertyBuilder.Metadata.SqlCe().ColumnName);
 
-            Assert.False(propertyBuilder.SqlCe(ConfigurationSource.Convention).ColumnName("Splod"));
+            Assert.False(propertyBuilder.SqlCe(ConfigurationSource.Convention).HasColumnName("Splod"));
             Assert.Equal("Splow", propertyBuilder.Metadata.SqlCe().ColumnName);
 
             Assert.Equal(1, propertyBuilder.Metadata.GetAnnotations().Count(
@@ -70,13 +70,13 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             var idProperty = entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention).Metadata;
             var keyBuilder = entityTypeBuilder.HasKey(new[] { idProperty.Name }, ConfigurationSource.Convention);
 
-            Assert.True(keyBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew"));
+            Assert.True(keyBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splew"));
             Assert.Equal("Splew", keyBuilder.Metadata.SqlCe().Name);
 
-            Assert.True(keyBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name("Splow"));
+            Assert.True(keyBuilder.SqlCe(ConfigurationSource.DataAnnotation).HasName("Splow"));
             Assert.Equal("Splow", keyBuilder.Metadata.SqlCe().Name);
 
-            Assert.False(keyBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod"));
+            Assert.False(keyBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splod"));
             Assert.Equal("Splow", keyBuilder.Metadata.SqlCe().Name);
 
             Assert.Equal(1, keyBuilder.Metadata.GetAnnotations().Count(
@@ -91,13 +91,13 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention);
             var indexBuilder = entityTypeBuilder.HasIndex(new[] { "Id" }, ConfigurationSource.Convention);
 
-            indexBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew");
+            indexBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splew");
             Assert.Equal("Splew", indexBuilder.Metadata.SqlCe().Name);
 
-            indexBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name("Splow");
+            indexBuilder.SqlCe(ConfigurationSource.DataAnnotation).HasName("Splow");
             Assert.Equal("Splow", indexBuilder.Metadata.SqlCe().Name);
 
-            indexBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod");
+            indexBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splod");
             Assert.Equal("Splow", indexBuilder.Metadata.SqlCe().Name);
 
             Assert.Equal(1, indexBuilder.Metadata.GetAnnotations().Count(
@@ -112,13 +112,13 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention);
             var relationshipBuilder = entityTypeBuilder.HasForeignKey("Splot", new[] { "Id" }, ConfigurationSource.Convention);
 
-            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name("Splew"));
+            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.Convention).HasConstraintName("Splew"));
             Assert.Equal("Splew", relationshipBuilder.Metadata.SqlCe().Name);
 
-            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.DataAnnotation).Name("Splow"));
+            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.DataAnnotation).HasConstraintName("Splow"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
 
-            Assert.False(relationshipBuilder.SqlCe(ConfigurationSource.Convention).Name("Splod"));
+            Assert.False(relationshipBuilder.SqlCe(ConfigurationSource.Convention).HasConstraintName("Splod"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
 
             Assert.Equal(1, relationshipBuilder.Metadata.GetAnnotations().Count(

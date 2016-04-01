@@ -120,7 +120,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
             if (column.DefaultValue != null)
             {
                 ((Property)propertyBuilder.Metadata).SetValueGenerated(null, ConfigurationSource.Explicit);
-                propertyBuilder.Metadata.Relational().GeneratedValueSql = null;
+                propertyBuilder.Metadata.Relational().DefaultValueSql = null;
 
                 var defaultExpression = ConvertSqlCeDefaultValue(column.DefaultValue);
                 if (defaultExpression != null)

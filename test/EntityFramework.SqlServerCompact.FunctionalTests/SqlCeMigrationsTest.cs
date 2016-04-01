@@ -28,13 +28,13 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         {
             var serviceProvider =
                 new ServiceCollection()
-                    .AddEntityFramework()
-                    .AddSqlCe()
-                    .ServiceCollection()
+                    .AddEntityFrameworkSqlCe()
                     .BuildServiceProvider();
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(testStore.Connection.ConnectionString);
+            optionsBuilder
+                .UseSqlCe(testStore.Connection.ConnectionString)
+                .UseInternalServiceProvider(serviceProvider);
 
             return new BloggingContext(serviceProvider, optionsBuilder.Options);
         }
@@ -42,7 +42,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         private class BloggingContext : DbContext
         {
             public BloggingContext(IServiceProvider serviceProvider, DbContextOptions options)
-                : base(serviceProvider, options)
+                : base(options)
             {
             }
 

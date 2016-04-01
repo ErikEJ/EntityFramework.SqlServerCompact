@@ -16,9 +16,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public GearsOfWarQuerySqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
@@ -29,9 +27,11 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(_connectionString);
+                optionsBuilder
+                    .UseSqlCe(_connectionString)
+                    .UseInternalServiceProvider(_serviceProvider);
 
-                using (var context = new GearsOfWarContext(_serviceProvider, optionsBuilder.Options))
+                using (var context = new GearsOfWarContext(optionsBuilder.Options))
                 {
                     // TODO: Delete DB if model changed
 
@@ -50,9 +50,10 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlCe(testStore.Connection);
+                .UseSqlCe(testStore.Connection)
+                .UseInternalServiceProvider(_serviceProvider);
 
-            var context = new GearsOfWarContext(_serviceProvider, optionsBuilder.Options);
+            var context = new GearsOfWarContext(optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);
             return context;
         }

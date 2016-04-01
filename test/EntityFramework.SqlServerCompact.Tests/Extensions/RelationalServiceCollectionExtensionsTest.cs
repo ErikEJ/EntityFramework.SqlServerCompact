@@ -9,13 +9,14 @@ using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Tests;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 
-namespace Microsoft.EntityFrameworkCore.Tests
+namespace Microsoft.EntityFrameworkCore.Relational.Tests
 {
-    public abstract class RelationalEntityFrameworkServicesBuilderExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
+    public abstract class RelationalServiceCollectionExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
     {
         public override void Services_wire_up_correctly()
         {
@@ -54,7 +55,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
             VerifyScoped<MigrationsSqlGenerator>();
         }
 
-        protected RelationalEntityFrameworkServicesBuilderExtensionsTest(RelationalTestHelpers testHelpers)
+        protected RelationalServiceCollectionExtensionsTest(RelationalTestHelpers testHelpers)
             : base(testHelpers)
         {
         }

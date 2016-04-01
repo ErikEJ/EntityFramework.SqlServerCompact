@@ -13,9 +13,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public async Task Can_use_two_non_generated_integers_as_composite_key_end_to_end()
         {
             var serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .BuildServiceProvider();
 
             var ticks = DateTime.UtcNow.Ticks;
@@ -58,9 +56,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public async Task Can_use_generated_values_in_composite_key_end_to_end()
         {
             var serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .BuildServiceProvider();
 
             long id1;
@@ -119,9 +115,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public async Task Only_one_part_of_a_composite_key_needs_to_vary_for_uniquness()
         {
             var serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .BuildServiceProvider();
 
             var ids = new int[3];
@@ -178,11 +172,12 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         private class BronieContext : DbContext
         {
             private readonly string _databaseName;
+            private readonly IServiceProvider _serviceProvider;
 
             public BronieContext(IServiceProvider serviceProvider, string databaseName)
-                : base(serviceProvider)
             {
                 _databaseName = databaseName;
+                _serviceProvider = serviceProvider;
             }
 
             public DbSet<Pegasus> Pegasuses { get; set; }
@@ -191,7 +186,9 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlCe(SqlCeTestStore.CreateConnectionString(_databaseName));
+                optionsBuilder
+                    .UseSqlCe(SqlCeTestStore.CreateConnectionString(_databaseName))
+                    .UseInternalServiceProvider(_serviceProvider);
             }
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)

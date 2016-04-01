@@ -18,9 +18,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             protected GraphUpdatesSqlCeFixtureBase()
             {
                 _serviceProvider = new ServiceCollection()
-                    .AddEntityFramework()
-                    .AddSqlCe()
-                    .ServiceCollection()
+                    .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .BuildServiceProvider();
             }
@@ -32,9 +30,11 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
                 return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
                 {
                     var optionsBuilder = new DbContextOptionsBuilder();
-                    optionsBuilder.UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName));
+                    optionsBuilder
+                        .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName))
+                        .UseInternalServiceProvider(_serviceProvider);
 
-                    using (var context = new GraphUpdatesContext(_serviceProvider, optionsBuilder.Options))
+                    using (var context = new GraphUpdatesContext(optionsBuilder.Options))
                     {
                         context.Database.EnsureDeleted();
                         if (context.Database.EnsureCreated())
@@ -48,9 +48,11 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             public override DbContext CreateContext(SqlCeTestStore testStore)
             {
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(testStore.Connection);
+                optionsBuilder
+                    .UseSqlCe(testStore.Connection)
+                    .UseInternalServiceProvider(_serviceProvider);
 
-                var context = new GraphUpdatesContext(_serviceProvider, optionsBuilder.Options);
+                var context = new GraphUpdatesContext(optionsBuilder.Options);
                 context.Database.UseTransaction(testStore.Transaction);
                 return context;
             }

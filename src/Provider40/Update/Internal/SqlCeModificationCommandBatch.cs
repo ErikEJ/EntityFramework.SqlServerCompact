@@ -39,7 +39,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
 #if DEBUG
                 //System.Diagnostics.Debug.WriteLine(GetCommandText());
 #endif
-                using (var reader = relationalCommand.ExecuteReader(connection))
+                using (var reader = relationalCommand.RelationalCommand.ExecuteReader(connection, relationalCommand.ParameterValues))
                 {
                     Consume(reader.DbDataReader, GetCommandText(), connection);
                 }
@@ -67,7 +67,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
                     _returnFirstCommandText = false;
                     var returningCommand = CreateStoreCommand();
 
-                    using (var returningReader = returningCommand.ExecuteReader(connection))
+                    using (var returningReader = returningCommand.RelationalCommand.ExecuteReader(connection, returningCommand.ParameterValues))
                     {
                         commandIndex = ConsumeResultSetWithPropagation(commandIndex, 
                             reader,

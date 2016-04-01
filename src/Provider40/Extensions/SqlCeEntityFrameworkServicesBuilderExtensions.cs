@@ -1,7 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -41,8 +40,8 @@ namespace Microsoft.Extensions.DependencyInjection
         ///         {
         ///             var connectionString = "connection string to database";
         /// 
-        ///             services.AddEntityFramework() 
-        ///                 .AddSqlCe()
+        ///             services
+        ///                 .AddEntityFrameworkSqlCe() 
         ///                 .AddDbContext&lt;MyContext&gt;(options => options.UseSqlCe(connectionString)); 
         ///         }
         ///     </code>
@@ -51,16 +50,16 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>
         ///     A builder that allows further Entity Framework specific setup of the <see cref="IServiceCollection" />.
         /// </returns>
-        public static EntityFrameworkServicesBuilder AddSqlCe([NotNull] this EntityFrameworkServicesBuilder builder)
+        public static IServiceCollection AddEntityFrameworkSqlCe([NotNull] this IServiceCollection services)
         {
-            Check.NotNull(builder, nameof(builder));
+            Check.NotNull(services, nameof(services));
 
-            var service = builder.AddRelational().GetInfrastructure();
+            services.AddRelational();
 
-            service.TryAddEnumerable(ServiceDescriptor
+            services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>());
 
-            service.TryAdd(new ServiceCollection()
+            services.TryAdd(new ServiceCollection()
                 .AddSingleton<SqlCeValueGeneratorCache>()                
                 .AddSingleton<SqlCeTypeMapper>()
                 .AddSingleton<SqlCeSqlGenerationHelper>()
@@ -78,7 +77,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddQuery()
                 );
 
-            return builder;
+            return services;
         }
 
         private static IServiceCollection AddQuery(this IServiceCollection serviceCollection) 

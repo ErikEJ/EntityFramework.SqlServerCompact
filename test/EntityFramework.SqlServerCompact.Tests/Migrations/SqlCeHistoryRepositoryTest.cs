@@ -62,11 +62,11 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
         public void GetInsertScript_works()
         {
             var sql = CreateHistoryRepository().GetInsertScript(
-                new HistoryRow("Migration1", "7.0.0"));
+                new HistoryRow("Migration1", "1.0.0"));
 
             Assert.Equal(
                 "INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])" + EOL +
-                "VALUES ('Migration1', '7.0.0');" + EOL,
+                "VALUES ('Migration1', '1.0.0');" + EOL,
                 sql);
         }
 

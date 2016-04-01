@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.FunctionalTests
@@ -19,14 +18,14 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             public NullKeysSqlServerCeFixture()
             {
                 _serviceProvider = new ServiceCollection()
-                    .AddEntityFramework()
-                    .AddSqlCe()
-                    .ServiceCollection()
+                    .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .BuildServiceProvider();
 
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(SqlCeTestStore.CreateConnectionString("StringsContext"));
+                optionsBuilder
+                    .UseSqlCe(SqlCeTestStore.CreateConnectionString("StringsContext"))
+                    .UseInternalServiceProvider(_serviceProvider);
                 _options = optionsBuilder.Options;
 
                 EnsureCreated();
@@ -34,7 +33,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 
             public override DbContext CreateContext()
             {
-                return new DbContext(_serviceProvider, _options);
+                return new DbContext(_options);
             }
         }
     }

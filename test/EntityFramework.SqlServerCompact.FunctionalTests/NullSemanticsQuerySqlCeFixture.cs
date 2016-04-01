@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.NullSemantics;
 using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.NullSemanticsModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -17,9 +16,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public NullSemanticsQuerySqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
@@ -28,40 +25,45 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public override SqlCeTestStore CreateTestStore()
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(_connectionString);
-
-                using (var context = new NullSemanticsContext(_serviceProvider, optionsBuilder.Options))
                 {
-                    // TODO: Delete DB if model changed
+                    var optionsBuilder = new DbContextOptionsBuilder();
+                    optionsBuilder
+                        .UseSqlCe(_connectionString)
+                        .UseInternalServiceProvider(_serviceProvider);
 
-                    if (context.Database.EnsureCreated())
+                    using (var context = new NullSemanticsContext(optionsBuilder.Options))
                     {
-                        NullSemanticsModelInitializer.Seed(context);
-                    }
+                        // TODO: Delete DB if model changed
 
-                    TestSqlLoggerFactory.SqlStatements.Clear();
-                }
-            });
+                        if (context.Database.EnsureCreated())
+                        {
+                            NullSemanticsModelInitializer.Seed(context);
+                        }
+
+                        TestSqlLoggerFactory.SqlStatements.Clear();
+                    }
+                });
         }
 
         public override NullSemanticsContext CreateContext(SqlCeTestStore testStore, bool useRelationalNulls)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var context = new NullSemanticsContext(new DbContextOptionsBuilder()
+                .EnableSensitiveDataLogging()
+                .UseInternalServiceProvider(_serviceProvider)
+                .UseSqlCe(
+                    testStore.Connection,
+                    b =>
+                        {
+                            if (useRelationalNulls)
+                            {
+                                b.UseRelationalNulls();
+                            }
+                        }).Options);
 
-            var sqlServerOptions
-                = optionsBuilder
-                    .EnableSensitiveDataLogging()
-                    .UseSqlCe(testStore.Connection);
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-            if (useRelationalNulls)
-            {
-                sqlServerOptions.UseRelationalNulls();
-            }
-
-            var context = new NullSemanticsContext(_serviceProvider, optionsBuilder.Options);
             context.Database.UseTransaction(testStore.Transaction);
+
             return context;
         }
     }

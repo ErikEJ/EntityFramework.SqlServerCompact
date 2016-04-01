@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -75,13 +74,13 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public NavigationTestFixture()
         {
             _serviceProvider = new ServiceCollection()
-                .AddEntityFramework()
-                .AddSqlCe()
-                .ServiceCollection()
+                .AddEntityFrameworkSqlCe()
                 .BuildServiceProvider();
 
             var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(@"Data Source=NavigationTest.sdf");
+            optionsBuilder
+                .UseSqlCe(@"Data Source=NavigationTest.sdf")
+                .UseInternalServiceProvider(_serviceProvider);
             _options = optionsBuilder.Options;
         }
 
@@ -90,7 +89,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         public class GoTContext : DbContext
         {
             public GoTContext(IServiceProvider serviceProvider, DbContextOptions options)
-                : base(serviceProvider, options)
+                : base(options)
             {
             }
 

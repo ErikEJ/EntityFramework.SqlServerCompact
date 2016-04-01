@@ -306,8 +306,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection
-                .AddEntityFramework()
-                .AddSqlCe();
+                .AddEntityFrameworkSqlCe();
 
             return serviceCollection.BuildServiceProvider();
         }
@@ -317,14 +316,15 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             private readonly SqlCeTestStore _testStore;
 
             public BloggingContext(SqlCeTestStore testStore)
-                : base(CreateServiceProvider())
             {
                 _testStore = testStore;
             }
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlCe(_testStore.Connection.ConnectionString);
+                optionsBuilder
+                    .UseSqlCe(_testStore.Connection.ConnectionString)
+                    .UseInternalServiceProvider(CreateServiceProvider());
             }
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)

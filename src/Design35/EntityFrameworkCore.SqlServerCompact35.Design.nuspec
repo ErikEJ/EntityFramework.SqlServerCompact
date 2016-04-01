@@ -14,7 +14,7 @@
     <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact reveng reverseengineer design</tags>
     <dependencies>
         <group targetFramework=".NETFramework4.5">
-            <dependency id="Microsoft.EntityFrameworkCore.Relational.Design" version="[1.0.0-rc2-16898]" />
+            <dependency id="Microsoft.EntityFrameworkCore.Relational.Design" version="[1.0.0-rc2-20410]" />
          </group>
     </dependencies>
   </metadata>

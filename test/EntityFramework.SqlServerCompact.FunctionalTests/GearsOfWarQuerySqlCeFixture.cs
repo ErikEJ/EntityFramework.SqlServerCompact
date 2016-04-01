@@ -7,6 +7,13 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class GearsOfWarQuerySqlCeFixture : GearsOfWarQueryRelationalFixture<SqlCeTestStore>
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<City>().Property(g => g.Location).HasColumnType("nvarchar(100)");
+        }
+
         public static readonly string DatabaseName = "GearsOfWarQueryTest";
 
         private readonly IServiceProvider _serviceProvider;

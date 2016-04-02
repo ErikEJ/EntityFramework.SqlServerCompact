@@ -76,10 +76,6 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     { typeof(byte), _tinyint },
                     { typeof(double), _double },
                     { typeof(char), _int },
-                    { typeof(sbyte), new RelationalTypeMapping("smallint", typeof(sbyte)) },
-                    { typeof(ushort), new RelationalTypeMapping("int", typeof(ushort)) },
-                    { typeof(uint), new RelationalTypeMapping("bigint", typeof(uint)) },
-                    { typeof(ulong), new RelationalTypeMapping("numeric(20, 0)", typeof(ulong)) },
                     { typeof(short), _smallint },
                     { typeof(float), _real },
                     { typeof(decimal), _decimal }
@@ -98,6 +94,8 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         {
             Check.NotNull(clrType, nameof(clrType));
 
+            clrType = clrType.UnwrapNullableType().UnwrapEnumType();
+
             return clrType == typeof(string)
                 ? _nvarchar
                 : (clrType == typeof(byte[])
@@ -109,7 +107,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         {
             Check.NotNull(property, nameof(property));
 
-            var clrType = property.ClrType.UnwrapEnumType();
+            var clrType = property.ClrType.UnwrapNullableType();
 
             return clrType == typeof(string)
                 ? GetStringMapping(
@@ -124,6 +122,6 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         }
 
         protected override bool RequiresKeyMapping(IProperty property)
-             => base.RequiresKeyMapping(property) || property.FindContainingIndexes().Any();
+            => base.RequiresKeyMapping(property) || property.IsIndex();
     }
 }

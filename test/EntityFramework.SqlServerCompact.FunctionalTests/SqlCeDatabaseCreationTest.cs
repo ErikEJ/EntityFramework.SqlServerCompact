@@ -235,34 +235,30 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 
                 var tables = testStore.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES ");
                 Assert.Equal(1, tables.Count());
-                Assert.Equal("Blog", tables.Single());
+                Assert.Equal("Blogs", tables.Single());
 
                 var columns = (testStore.Query<string>(
                     "SELECT TABLE_NAME + '.' + COLUMN_NAME + ' (' + DATA_TYPE + ')' FROM INFORMATION_SCHEMA.COLUMNS ORDER BY TABLE_NAME, COLUMN_NAME")).ToArray();
-                Assert.Equal(19, columns.Length);
+                Assert.Equal(15, columns.Length);
 
                 Assert.Equal(
                     new[]
                         {
-                            "Blog.AndChew (image)",
-                            "Blog.AndRow (rowversion)",
-                            "Blog.Cheese (nvarchar)",
-                            "Blog.CupOfChar (int)",
-                            "Blog.ErMilan (int)",
-                            "Blog.Fuse (smallint)",
-                            "Blog.George (bit)",
-                            "Blog.Key1 (nvarchar)",
-                            "Blog.Key2 (varbinary)",
-                            "Blog.NotFigTime (datetime)",
-                            "Blog.NotToEat (smallint)",
-                            "Blog.On (real)",
-                            "Blog.OrNothing (float)",
-                            "Blog.OrULong (int)",
-                            "Blog.OrUShort (numeric)",
-                            "Blog.OrUSkint (bigint)",
-                            "Blog.TheGu (uniqueidentifier)",
-                            "Blog.ToEat (tinyint)",
-                            "Blog.WayRound (bigint)"
+                            "Blogs.AndChew (image)",
+                            "Blogs.AndRow (rowversion)",
+                            "Blogs.Cheese (nvarchar)",
+                            "Blogs.CupOfChar (int)",
+                            "Blogs.ErMilan (int)",
+                            "Blogs.Fuse (smallint)",
+                            "Blogs.George (bit)",
+                            "Blogs.Key1 (nvarchar)",
+                            "Blogs.Key2 (varbinary)",
+                            "Blogs.NotFigTime (datetime)",
+                            "Blogs.On (real)",
+                            "Blogs.OrNothing (float)",
+                            "Blogs.TheGu (uniqueidentifier)",
+                            "Blogs.ToEat (tinyint)",
+                            "Blogs.WayRound (bigint)"
                         },
                     columns);
             }
@@ -353,11 +349,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
             public double OrNothing { get; set; }
             public short Fuse { get; set; }
             public long WayRound { get; set; }
-            public sbyte NotToEat { get; set; }
             public float On { get; set; }
-            public ushort OrULong { get; set; }
-            public uint OrUSkint { get; set; }
-            public ulong OrUShort { get; set; }
             public byte[] AndChew { get; set; }
             public byte[] AndRow { get; set; }
         }

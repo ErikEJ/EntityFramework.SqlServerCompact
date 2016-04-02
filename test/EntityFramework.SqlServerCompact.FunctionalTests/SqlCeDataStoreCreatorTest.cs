@@ -243,12 +243,12 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
 
                     var tables = testDatabase.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
                     Assert.Equal(1, tables.Count());
-                    Assert.Equal("Blog", tables.Single());
+                    Assert.Equal("Blogs", tables.Single());
 
                     var columns = testDatabase.Query<string>("SELECT TABLE_NAME + '.' + COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS");
                     Assert.Equal(2, columns.Count());
-                    Assert.True(columns.Any(c => c == "Blog.Id"));
-                    Assert.True(columns.Any(c => c == "Blog.Name"));
+                    Assert.True(columns.Any(c => c == "Blogs.Id"));
+                    Assert.True(columns.Any(c => c == "Blogs.Name"));
                 }
             }
         }

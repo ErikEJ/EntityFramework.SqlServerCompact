@@ -20,10 +20,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal("int", GetTypeMapping(typeof(char)).DefaultTypeName);
             Assert.Equal("tinyint", GetTypeMapping(typeof(byte)).DefaultTypeName);
             Assert.Equal("float", GetTypeMapping(typeof(double)).DefaultTypeName);
-            Assert.Equal("smallint", GetTypeMapping(typeof(sbyte)).DefaultTypeName);
-            Assert.Equal("int", GetTypeMapping(typeof(ushort)).DefaultTypeName);
-            Assert.Equal("bigint", GetTypeMapping(typeof(uint)).DefaultTypeName);
-            Assert.Equal("numeric(20, 0)", GetTypeMapping(typeof(ulong)).DefaultTypeName);
             Assert.Equal("bit", GetTypeMapping(typeof(bool)).DefaultTypeName);
             Assert.Equal("smallint", GetTypeMapping(typeof(short)).DefaultTypeName);
             Assert.Equal("bigint", GetTypeMapping(typeof(long)).DefaultTypeName);
@@ -47,10 +43,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal("int", GetTypeMapping(typeof(char?)).DefaultTypeName);
             Assert.Equal("tinyint", GetTypeMapping(typeof(byte?)).DefaultTypeName);
             Assert.Equal("float", GetTypeMapping(typeof(double?)).DefaultTypeName);
-            Assert.Equal("smallint", GetTypeMapping(typeof(sbyte?)).DefaultTypeName);
-            Assert.Equal("int", GetTypeMapping(typeof(ushort?)).DefaultTypeName);
-            Assert.Equal("bigint", GetTypeMapping(typeof(uint?)).DefaultTypeName);
-            Assert.Equal("numeric(20, 0)", GetTypeMapping(typeof(ulong?)).DefaultTypeName);
             Assert.Equal("bit", GetTypeMapping(typeof(bool?)).DefaultTypeName);
             Assert.Equal("smallint", GetTypeMapping(typeof(short?)).DefaultTypeName);
             Assert.Equal("bigint", GetTypeMapping(typeof(long?)).DefaultTypeName);
@@ -62,18 +54,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             Assert.Equal("int", GetTypeMapping(typeof(IntEnum)).DefaultTypeName);
             Assert.Equal("tinyint", GetTypeMapping(typeof(ByteEnum)).DefaultTypeName);
-            Assert.Equal("smallint", GetTypeMapping(typeof(SByteEnum)).DefaultTypeName);
-            Assert.Equal("int", GetTypeMapping(typeof(UShortEnum)).DefaultTypeName);
-            Assert.Equal("bigint", GetTypeMapping(typeof(UIntEnum)).DefaultTypeName);
-            Assert.Equal("numeric(20, 0)", GetTypeMapping(typeof(ULongEnum)).DefaultTypeName);
             Assert.Equal("smallint", GetTypeMapping(typeof(ShortEnum)).DefaultTypeName);
             Assert.Equal("bigint", GetTypeMapping(typeof(LongEnum)).DefaultTypeName);
             Assert.Equal("int", GetTypeMapping(typeof(IntEnum?)).DefaultTypeName);
             Assert.Equal("tinyint", GetTypeMapping(typeof(ByteEnum?)).DefaultTypeName);
-            Assert.Equal("smallint", GetTypeMapping(typeof(SByteEnum?)).DefaultTypeName);
-            Assert.Equal("int", GetTypeMapping(typeof(UShortEnum?)).DefaultTypeName);
-            Assert.Equal("bigint", GetTypeMapping(typeof(UIntEnum?)).DefaultTypeName);
-            Assert.Equal("numeric(20, 0)", GetTypeMapping(typeof(ULongEnum?)).DefaultTypeName);
             Assert.Equal("smallint", GetTypeMapping(typeof(ShortEnum?)).DefaultTypeName);
             Assert.Equal("bigint", GetTypeMapping(typeof(LongEnum?)).DefaultTypeName);
         }
@@ -88,10 +72,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char)).StoreType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte)).StoreType);
             Assert.Null(GetTypeMapping(typeof(double)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(sbyte)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(ushort)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(uint)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(ulong)).StoreType);
             Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool)).StoreType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long)).StoreType);
@@ -109,10 +89,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char?)).StoreType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte?)).StoreType);
             Assert.Null(GetTypeMapping(typeof(double?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(sbyte?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(ushort?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(uint?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(ulong?)).StoreType);
             Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool?)).StoreType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short?)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long?)).StoreType);
@@ -125,18 +101,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(IntEnum)).StoreType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(ByteEnum)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(SByteEnum)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(UShortEnum)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(UIntEnum)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(ULongEnum)).StoreType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(ShortEnum)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(LongEnum)).StoreType);
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(IntEnum?)).StoreType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(ByteEnum?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(SByteEnum?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(UShortEnum?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(UIntEnum?)).StoreType);
-            Assert.Null(GetTypeMapping(typeof(ULongEnum?)).StoreType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(ShortEnum?)).StoreType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(LongEnum?)).StoreType);
         }

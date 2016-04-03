@@ -115,7 +115,7 @@
     <Compile Include="Extensions\SqlCeReferenceReferenceBuilderExtensions.cs" />
     <Compile Include="Infrastructure\SqlCeDbContextOptionsBuilder.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsExtensions.cs" />
-    <Compile Include="Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs" />
+    <Compile Include="Extensions\SqlCeServiceCollectionExtensions.cs" />
     <Compile Include="MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs" />
     <Compile Include="MetaData\Internal\SqlCeAnnotationNames.cs" />
     <Compile Include="MetaData\SqlCeAnnotationProvider.cs" />

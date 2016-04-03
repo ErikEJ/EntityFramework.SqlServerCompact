@@ -115,9 +115,6 @@
     <Compile Include="..\Provider40\Extensions\SqlCeDbContextOptionsExtensions.cs">
       <Link>Extensions\SqlCeDbContextOptionsExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs">
-      <Link>Extensions\SqlCeEntityFrameworkServicesBuilderExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeEntityTypeBuilderExtensions.cs">
       <Link>Extensions\SqlCeEntityTypeBuilderExtensions.cs</Link>
     </Compile>
@@ -138,6 +135,9 @@
     </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeReferenceReferenceBuilderExtensions.cs">
       <Link>Extensions\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCeServiceCollectionExtensions.cs">
+      <Link>Extensions\SqlCeServiceCollectionExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Infrastructure\Internal\SqlCeModelSource.cs">
       <Link>Infrastructure\Internal\SqlCeModelSource.cs</Link>

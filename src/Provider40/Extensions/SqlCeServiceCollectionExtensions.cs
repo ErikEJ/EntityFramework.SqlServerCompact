@@ -19,7 +19,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class SqlCeEntityFrameworkServicesBuilderExtensions
+    public static class SqlCeServiceCollectionExtensions
     {
         /// <summary>
         ///     <para>
@@ -46,7 +46,7 @@ namespace Microsoft.Extensions.DependencyInjection
         ///         }
         ///     </code>
         /// </example>
-        /// <param name="builder"> The <see cref="IServiceCollection" /> to add services to. </param>
+        /// <param name="services"> The <see cref="IServiceCollection" /> to add services to. </param>
         /// <returns>
         ///     A builder that allows further Entity Framework specific setup of the <see cref="IServiceCollection" />.
         /// </returns>

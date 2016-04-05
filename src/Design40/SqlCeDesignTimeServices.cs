@@ -8,7 +8,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
 {
     public class SqlCeDesignTimeServices
     {
-        public virtual void ConfigureDesignTimeServices([NotNull] IServiceCollection serviceCollection) 
+        public virtual IServiceCollection ConfigureDesignTimeServices([NotNull] IServiceCollection serviceCollection) 
             => serviceCollection
                 .AddSingleton<IScaffoldingModelFactory, SqlCeScaffoldingModelFactory>()
                 .AddSingleton<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()

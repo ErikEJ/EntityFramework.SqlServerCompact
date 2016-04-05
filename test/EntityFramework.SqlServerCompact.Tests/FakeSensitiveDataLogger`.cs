@@ -14,16 +14,15 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
 
         public bool IsEnabled(LogLevel logLevel) => true;
 
-        public IDisposable BeginScope(object state)
-        {
-            return null;
-            //throw new NotImplementedException();
-        }
-
-        public IDisposable BeginScopeImpl(object state) => null;
+        public IDisposable BeginScope(object state) => null;
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
+        }
+
+        public IDisposable BeginScope<TState>(TState state)
+        {
+            throw new NotImplementedException();
         }
     }
 }

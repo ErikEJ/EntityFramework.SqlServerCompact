@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.FunctionalTests.TestUtilities.Xunit;
 using Microsoft.EntityFrameworkCore.Relational.Design.FunctionalTests.ReverseEngineering;
+using Microsoft.EntityFrameworkCore.Relational.Design.FunctionalTests.TestUtilities;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
     {
         protected override string ProviderName => "EntityFrameworkCore.SqlServerCompact40.Design";
 
-        protected override void ConfigureDesignTimeServices(IServiceCollection services)
+        protected override IServiceCollection ConfigureDesignTimeServices(IServiceCollection services)
             => new SqlCeDesignTimeServices().ConfigureDesignTimeServices(services);
 
         public virtual string TestNamespace => "E2ETest.Namespace";
@@ -47,35 +48,6 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             : base(output)
         {
         }
-
-        protected override E2ECompiler GetCompiler() => new E2ECompiler
-        {
-            NamedReferences =
-                    {
-                        "Microsoft.EntityFrameworkCore",
-                        "Microsoft.EntityFrameworkCore.Relational",
-                        "EntityFrameworkCore.SqlServerCompact40",
-#if DNXCORE50 || NETCORE50
-                        "System.Data.Common",
-                        "System.Linq.Expressions",
-                        "System.Reflection",
-                        "System.ComponentModel.Annotations",
-#else
-                    },
-            References =
-                    {
-                        MetadataReference.CreateFromFile(
-                            Assembly.Load(new AssemblyName(
-                                "System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")).Location),
-                        MetadataReference.CreateFromFile(
-                            Assembly.Load(new AssemblyName(
-                                "System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")).Location),
-                        MetadataReference.CreateFromFile(
-                            Assembly.Load(new AssemblyName(
-                                "System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91")).Location),
-#endif
-                    }
-        };
 
         private string _connectionString = @"Data Source=E2E.sdf";
 
@@ -162,5 +134,21 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }
+
+        protected override ICollection<BuildReference> References { get; } = new List<BuildReference>
+        {
+            BuildReference.ByName("System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+            BuildReference.ByName("System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+            BuildReference.ByName("System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+            BuildReference.ByName("System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
+            BuildReference.ByName("EntityFrameworkCore.SqlServerCompact40"),
+            BuildReference.ByName("System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"),
+
+            BuildReference.ByName("Microsoft.EntityFrameworkCore"),
+            BuildReference.ByName("Microsoft.EntityFrameworkCore.Relational"),
+            BuildReference.ByName("Microsoft.Extensions.Caching.Abstractions"),
+            BuildReference.ByName("Microsoft.Extensions.Logging.Abstractions")
+        };
+
     }
 }

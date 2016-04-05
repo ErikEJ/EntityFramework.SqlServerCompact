@@ -30,8 +30,8 @@ namespace Microsoft.EntityFrameworkCore.Tests
         [Fact]
         public void Breaks_Mapping_To_Unsupported()
         {
-            Assert.Throws<NotSupportedException>(() => GetTypeMapping(typeof(DateTimeOffset)).DefaultTypeName);
-            Assert.Throws<NotSupportedException>(() => GetTypeMapping(typeof(TimeSpan)).DefaultTypeName);
+            Assert.Throws<InvalidOperationException>(() => GetTypeMapping(typeof(DateTimeOffset)).DefaultTypeName);
+            Assert.Throws<InvalidOperationException>(() => GetTypeMapping(typeof(TimeSpan)).DefaultTypeName);
         }
 
         [Fact]

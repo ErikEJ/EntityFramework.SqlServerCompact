@@ -17,12 +17,12 @@ namespace Microsoft.EntityFrameworkCore.Extensions.Logging
 
         public bool IsEnabled(LogLevel logLevel) => true;
 
-        public IDisposable BeginScopeImpl(object state) => null;
-
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
             var message = $"{Environment.NewLine}{formatter(state, exception)}";
             _writeAction(message);
         }
+
+        public IDisposable BeginScope<TState>(TState state) => null;
     }
 }

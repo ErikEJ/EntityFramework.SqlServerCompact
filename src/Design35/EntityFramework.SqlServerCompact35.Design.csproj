@@ -105,9 +105,6 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Design40\Internal\SqlCeDataReaderExtensions.cs">
-      <Link>Internal\SqlCeDataReaderExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Design40\Metadata\SqlCeColumnModelAnnotations.cs">
       <Link>Metadata\SqlCeColumnModelAnnotations.cs</Link>
     </Compile>
@@ -159,6 +156,9 @@
       <Project>{d3a4e371-e8f2-4513-b14c-7c738f14ceb0}</Project>
       <Name>EntityFramework.SqlServerCompact35</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Internal\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

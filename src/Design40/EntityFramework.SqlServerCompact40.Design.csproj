@@ -117,7 +117,6 @@
     <Compile Include="..\Provider40\Utilities\SharedTypeExtensions.cs">
       <Link>Utilities\SharedTypeExtensions.cs</Link>
     </Compile>
-    <Compile Include="Internal\SqlCeDataReaderExtensions.cs" />
     <Compile Include="Metadata\SqlCeColumnModelAnnotations.cs" />
     <Compile Include="Metadata\SqlCeDatabaseModelAnnotationNames.cs" />
     <Compile Include="Metadata\SqlCeDataBaseModelExtension.cs" />
@@ -140,6 +139,9 @@
       <Project>{0bdb0cbb-c42a-45e5-8518-14e0c31119ad}</Project>
       <Name>EntityFramework.SqlServerCompact40</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Internal\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -86,7 +86,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                     var table = new TableModel
                     {
                         SchemaName = null,
-                        Name = reader.GetString(0)
+                        Name = reader.GetValueOrDefault<string>("TABLE_NAME")
                     };
 
                     if (_tableSelectionSet.Allows(table.Name))
@@ -130,16 +130,16 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
             {
                 while (reader.Read())
                 {
-                    var tableName = reader.GetString(1);
+                    var tableName = reader.GetValueOrDefault<string>("table");
                     if (!_tableSelectionSet.Allows(tableName))
                     {
                         continue;
                     }
 
-                    var dataTypeName = reader.GetString(2);
-                    var nullable = reader.GetBoolean(5);
+                    var dataTypeName = reader.GetValueOrDefault<string>("typename");
+                    var nullable = reader.GetValueOrDefault<bool>("nullable");
 
-                    var maxLength = reader.IsDBNull(10) ? default(int?) : reader.GetInt32(10);
+                    var maxLength = reader.GetValueOrDefault<int?>("max_length");
 
                     int? precision = null;
                     int? scale = null;
@@ -163,20 +163,20 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                         maxLength = null;
                     }
 
-                    var isIdentity = !reader.IsDBNull(11) && reader.GetBoolean(11);
-                    var isComputed = reader.GetBoolean(12) || (dataTypeName == "rowversion");
+                    var isIdentity = reader.GetValueOrDefault<bool>("is_identity");
+                    var isComputed = reader.GetValueOrDefault<bool>("is_computed") || (dataTypeName == "rowversion");
 
                     var table = _tables[TableKey(tableName)];
-                    var columnName = reader.GetString(3);
+                    var columnName = reader.GetValueOrDefault<string>("column_name");
                     var column = new ColumnModel
                     {
                         Table = table,
                         DataType = dataTypeName,
                         Name = columnName,
-                        Ordinal = reader.GetInt32(4) - 1,
+                        Ordinal = reader.GetValueOrDefault<int>("ordinal") - 1,
                         IsNullable = nullable,
-                        PrimaryKeyOrdinal = reader.IsDBNull(6) ? default(int?) : reader.GetInt32(6),
-                        DefaultValue = reader.IsDBNull(7) ? null : reader.GetString(7),
+                        PrimaryKeyOrdinal = reader.GetValueOrDefault<int?>("primary_key_ordinal"),
+                        DefaultValue = reader.GetValueOrDefault<string>("default_sql"),
                         Precision = precision,
                         Scale = scale,
                         MaxLength = maxLength <= 0 ? default(int?) : maxLength,
@@ -214,8 +214,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                 IndexModel index = null;
                 while (reader.Read())
                 {
-                    var indexName = reader.GetString(0);
-                    var tableName = reader.GetString(2);
+                    var indexName = reader.GetValueOrDefault<string>("index_name");
+                    var tableName = reader.GetValueOrDefault<string>("table_name");
 
                     if (!_tableSelectionSet.Allows(tableName))
                     {
@@ -235,14 +235,14 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                         {
                             Table = table,
                             Name = indexName,
-                            IsUnique = reader.GetBoolean(3)
+                            IsUnique = reader.GetValueOrDefault<bool>("is_unique")
                         };
                         table.Indexes.Add(index);
                     }
-                    var columnName = reader.GetString(4);
+                    var columnName = reader.GetValueOrDefault<string>("column_name");
                     var column = _tableColumns[ColumnKey(index.Table, columnName)];
 
-                    var indexOrdinal = reader.GetInt32(5);
+                    var indexOrdinal = reader.GetValueOrDefault<int>("ORDINAL_POSITION");
 
                     var indexColumn = new IndexColumnModel
                     {
@@ -284,8 +284,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                 ForeignKeyModel fkInfo = null;
                 while (reader.Read())
                 {
-                    var fkName = reader.GetString(0);
-                    var tableName = reader.GetString(2);
+                    var fkName = reader.GetValueOrDefault<string>("FK_CONSTRAINT_NAME");
+                    var tableName = reader.GetValueOrDefault<string>("FK_TABLE_NAME");
 
                     if (!_tableSelectionSet.Allows(tableName))
                     {
@@ -295,7 +295,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                         || (lastFkName != fkName))
                     {
                         lastFkName = fkName;
-                        var principalTableName = reader.GetString(4);
+                        var principalTableName = reader.GetValueOrDefault<string>("UQ_TABLE_NAME");
                         var table = _tables[TableKey(tableName)];
                         TableModel principalTable;
                         _tables.TryGetValue(TableKey(principalTableName), out principalTable);
@@ -305,7 +305,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                             Name = fkName,
                             Table = table,
                             PrincipalTable = principalTable,
-                            OnDelete = ConvertToReferentialAction(reader.GetStringOrNull(8))
+                            OnDelete = ConvertToReferentialAction(reader.GetValueOrDefault<string>("DELETE_RULE"))
                         };
 
                         table.ForeignKeys.Add(fkInfo);
@@ -313,10 +313,10 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
 
                     var fkColumn = new ForeignKeyColumnModel
                     {
-                        Ordinal = reader.GetInt32(10)
+                        Ordinal = reader.GetValueOrDefault<int>("ORDINAL_POSITION")
                     };
 
-                    var fromColumnName = reader.GetString(5);
+                    var fromColumnName = reader.GetValueOrDefault<string>("FK_COLUMN_NAME");
                     ColumnModel fromColumn;
                     if ((fromColumn = FindColumnForForeignKey(fromColumnName, fkInfo.Table, fkName)) != null)
                     {
@@ -325,7 +325,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
 
                     if (fkInfo.PrincipalTable != null)
                     {
-                        var toColumnName = reader.GetString(6);
+                        var toColumnName = reader.GetValueOrDefault<string>("UQ_COLUMN_NAME");
                         ColumnModel toColumn;
                         if ((toColumn = FindColumnForForeignKey(toColumnName, fkInfo.PrincipalTable, fkName)) != null)
                         {

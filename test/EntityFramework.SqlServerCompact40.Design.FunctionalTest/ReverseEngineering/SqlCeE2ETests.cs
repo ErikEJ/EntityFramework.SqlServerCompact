@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.FunctionalTests.TestUtilities.Xunit;
 using Microsoft.EntityFrameworkCore.Relational.Design.FunctionalTests.ReverseEngineering;
 using Microsoft.EntityFrameworkCore.Relational.Design.FunctionalTests.TestUtilities;
@@ -31,6 +29,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "AllDataTypes",
                 "PropertyConfiguration",
                 "Test Spaces Keywords Table",
+                "MultipleFKsDependent",
+                "MultipleFKsPrincipal",
                 "OneToManyDependent",
                 "OneToManyPrincipal",
                 "OneToOneDependent",
@@ -54,6 +54,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
         private static readonly List<string> _expectedEntityTypeFiles = new List<string>
             {
                 "AllDataTypes.expected",
+                "MultipleFKsDependent.expected",
+                "MultipleFKsPrincipal.expected",
                 "OneToManyDependent.expected",
                 "OneToManyPrincipal.expected",
                 "OneToOneDependent.expected",
@@ -127,7 +129,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 Path.Combine("ReverseEngineering", "ExpectedResults", "E2E_AllFluentApi"),
                 inputFile => inputFile.Replace("{{connectionString}}", _connectionString))
             {
-                Files = (new List<string> { "E2EContext.expected" })
+                Files = new List<string> { "E2EContext.expected" }
                     .Concat(_expectedEntityTypeFiles).ToList()
             };
 

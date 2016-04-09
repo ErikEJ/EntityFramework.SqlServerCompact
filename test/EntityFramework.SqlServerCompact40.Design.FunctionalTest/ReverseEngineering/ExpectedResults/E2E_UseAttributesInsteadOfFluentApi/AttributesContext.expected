@@ -44,6 +44,16 @@ namespace E2ETest.Namespace
                 entity.Property(e => e.varbinaryColumn).HasColumnType("varbinary");
             });
 
+            modelBuilder.Entity<MultipleFKsDependent>(entity =>
+            {
+                entity.Property(e => e.MultipleFKsDependentId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<MultipleFKsPrincipal>(entity =>
+            {
+                entity.Property(e => e.MultipleFKsPrincipalId).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<OneToManyDependent>(entity =>
             {
                 entity.HasKey(e => new { e.OneToManyDependentID1, e.OneToManyDependentID2 })
@@ -152,6 +162,8 @@ namespace E2ETest.Namespace
         }
 
         public virtual DbSet<AllDataTypes> AllDataTypes { get; set; }
+        public virtual DbSet<MultipleFKsDependent> MultipleFKsDependent { get; set; }
+        public virtual DbSet<MultipleFKsPrincipal> MultipleFKsPrincipal { get; set; }
         public virtual DbSet<OneToManyDependent> OneToManyDependent { get; set; }
         public virtual DbSet<OneToManyPrincipal> OneToManyPrincipal { get; set; }
         public virtual DbSet<OneToOneDependent> OneToOneDependent { get; set; }

@@ -15,22 +15,36 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         public override string DelimitIdentifier(string identifier)
             => $"[{EscapeIdentifier(Check.NotEmpty(identifier, nameof(identifier)))}]";
 
-        protected override string GenerateLiteralValue(byte[] value)
+        public override void DelimitIdentifier(StringBuilder builder, string identifier)
+        {
+            Check.NotEmpty(identifier, nameof(identifier));
+
+            builder.Append('[');
+            EscapeIdentifier(builder, identifier);
+            builder.Append(']');
+        }
+
+        protected override void GenerateLiteralValue(StringBuilder builder, byte[] value)
         {
             Check.NotNull(value, nameof(value));
 
-            var stringBuilder = new StringBuilder("0x");
+            builder.Append("0x");
 
             foreach (var @byte in value)
             {
-                stringBuilder.Append(@byte.ToString("X2", CultureInfo.InvariantCulture));
+                builder.Append(@byte.ToString("X2", CultureInfo.InvariantCulture));
             }
-
-            return stringBuilder.ToString();
         }
 
         protected override string GenerateLiteralValue(string value, bool unicode = true)
             => $"N'{EscapeLiteral(Check.NotNull(value, nameof(value)))}'";
+
+        protected override void GenerateLiteralValue(StringBuilder builder, string value, bool unicode = true)
+        { 
+            builder.Append("N'"); 
+            EscapeLiteral(builder, value); 
+            builder.Append("'"); 
+        }
 
         protected override string GenerateLiteralValue(DateTime value) => "'" + value.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + "'";
 

@@ -21,7 +21,8 @@ namespace Microsoft.EntityFrameworkCore
 
         private static readonly string[] _whitelist = 
         {
-            typeof(Storage.Internal.RelationalCommandBuilderFactory).FullName
+            typeof(Storage.Internal.RelationalCommandBuilderFactory).FullName,
+            typeof(Storage.Internal.SqlCeDatabaseConnection).FullName
         };
 
         public ILogger CreateLogger(string name)

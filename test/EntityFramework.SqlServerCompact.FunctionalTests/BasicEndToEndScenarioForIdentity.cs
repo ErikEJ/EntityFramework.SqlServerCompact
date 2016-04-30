@@ -1,7 +1,10 @@
-﻿using System.Data.SqlServerCe;
+﻿using System.Diagnostics;
 using System.Linq;
 using Xunit;
-
+#if SQLCE35
+#else
+using System.Data.SqlServerCe;
+#endif
 namespace Microsoft.EntityFrameworkCore.FunctionalTests
 {
     public class BasicEndToEndScenarioForIdentity
@@ -11,6 +14,7 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
         {
             using (var db = new BloggingContext())
             {
+                db.Database.Log(x => Debug.WriteLine(x));
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
                 db.Blogs.Add(new Blog { Url = "http://erikej.blogspot.com" });

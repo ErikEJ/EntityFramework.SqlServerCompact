@@ -1,11 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Data.SqlServerCe;
+using System.Diagnostics;
 using System.Linq;
 using Xunit;
 #if SQLCE35
 #else
-using System.Data.SqlServerCe;
+
 #endif
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class BasicEndToEndScenarioForIdentity
     {
@@ -19,6 +21,12 @@ namespace Microsoft.EntityFrameworkCore.FunctionalTests
                 db.Database.EnsureCreated();
                 db.Blogs.Add(new Blog { Url = "http://erikej.blogspot.com" });
                 db.SaveChanges();
+
+                foreach (var entity in db.Model.GetEntityTypes())
+                {
+                    Console.WriteLine($" {entity.ClrType.Name} => {entity.SqlCe	().TableName}");
+                }
+
 
                 var blogs = db.Blogs.ToList();
 

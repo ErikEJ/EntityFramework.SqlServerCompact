@@ -1,9 +1,7 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.FunctionalTests;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class NotificationEntitiesSqlCeTest
         : NotificationEntitiesTestBase<NotificationEntitiesSqlCeTest.NotificationEntitiesSqlCeFixture>

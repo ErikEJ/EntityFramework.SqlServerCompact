@@ -1,8 +1,7 @@
-using Microsoft.EntityFrameworkCore.FunctionalTests;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class IncludeSqlServerTest : IncludeTestBase<NorthwindQuerySqlCeFixture>
     {

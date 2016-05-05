@@ -1,9 +1,8 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class OneToOneQuerySqlCeFixture : OneToOneQueryFixtureBase
     {

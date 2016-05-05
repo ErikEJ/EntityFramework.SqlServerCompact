@@ -2,7 +2,7 @@
 using System.Data.SqlServerCe;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class MigrationsSqlCeFixture : MigrationsFixtureBase
     {

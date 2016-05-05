@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.Northwind;
+﻿using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests.TestModels
+namespace Microsoft.EntityFrameworkCore.Specification.Tests.TestModels
 {
     public class SqlCeNorthwindContext : NorthwindContext
     {

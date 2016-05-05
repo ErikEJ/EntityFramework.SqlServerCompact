@@ -1,8 +1,7 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace Microsoft.Data.Entity.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class Issue305Test
     {

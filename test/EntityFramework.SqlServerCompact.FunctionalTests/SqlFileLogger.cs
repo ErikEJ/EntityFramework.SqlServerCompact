@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     // Watch the log in PS with: "tail -f $env:userprofile\.klog\sql.log"
     public class SqlFileLogger : TestFileLogger

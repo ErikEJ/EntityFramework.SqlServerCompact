@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.FunctionalTests;
-
-namespace ErikEJ.Data.Entity.SqlServerCe.FunctionalTests
+﻿namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class GraphUpdatesWithIdentitySqlCeTest : GraphUpdatesSqlCeTestBase<GraphUpdatesWithIdentitySqlCeTest.GraphUpdatesWithIdentitySqlCeFixture>
     {

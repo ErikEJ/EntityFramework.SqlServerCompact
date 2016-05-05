@@ -1,4 +1,4 @@
-﻿namespace Microsoft.EntityFrameworkCore.FunctionalTests
+﻿namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class AsyncFromSqlQuerySqlCeTest : AsyncFromSqlQueryTestBase<NorthwindQuerySqlCeFixture>
     {

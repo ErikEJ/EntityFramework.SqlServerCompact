@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
+using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class NorthwindQuerySqlCeFixture : NorthwindQueryRelationalFixture, IDisposable
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.InheritanceRelationships;
+using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.InheritanceRelationships;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class InheritanceRelationshipsQuerySqlCeFixture : InheritanceRelationshipsQueryRelationalFixture<SqlCeTestStore>
     {

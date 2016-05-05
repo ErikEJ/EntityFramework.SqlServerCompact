@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class QueryNoClientEvalSqlCeTest : QueryNoClientEvalTestBase<QueryNoClientEvalSqlCeFixture>
     {

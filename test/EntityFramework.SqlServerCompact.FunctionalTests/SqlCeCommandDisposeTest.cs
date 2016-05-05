@@ -2,7 +2,7 @@
 using System.Data.SqlServerCe;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     class SqlCeCommandDisposeTest
     {

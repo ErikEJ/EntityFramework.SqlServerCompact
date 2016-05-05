@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.FunctionalTests;
-using Xunit;
+﻿using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class InheritanceSqlCeTest : InheritanceTestBase<InheritanceSqlCeFixture>
     {

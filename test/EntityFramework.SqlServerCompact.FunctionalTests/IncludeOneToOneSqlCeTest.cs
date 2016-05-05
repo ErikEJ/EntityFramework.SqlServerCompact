@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class IncludeOneToOneSqlCeTest : IncludeOneToOneTestBase, IClassFixture<OneToOneQuerySqlCeFixture>
     {

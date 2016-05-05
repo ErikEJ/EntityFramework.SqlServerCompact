@@ -1,3 +1,4 @@
+ // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Logging
 {
     internal static class LoggingExtensions

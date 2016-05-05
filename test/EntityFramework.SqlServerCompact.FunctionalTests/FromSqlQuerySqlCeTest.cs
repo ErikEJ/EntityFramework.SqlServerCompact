@@ -1,10 +1,10 @@
 ﻿using System.Data.Common;
 using System.Data.SqlServerCe;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.Northwind;
+using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class FromSqlQuerySqlCeTest : FromSqlQueryTestBase<NorthwindQuerySqlCeFixture>
     {

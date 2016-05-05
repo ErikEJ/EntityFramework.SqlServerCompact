@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.GearsOfWarModel;
+using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.GearsOfWarModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class GearsOfWarQuerySqlCeFixture : GearsOfWarQueryRelationalFixture<SqlCeTestStore>
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestModels.ConcurrencyModel;
+using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.ConcurrencyModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class F1SqlCeFixture : F1RelationalFixture<SqlCeTestStore>
     {

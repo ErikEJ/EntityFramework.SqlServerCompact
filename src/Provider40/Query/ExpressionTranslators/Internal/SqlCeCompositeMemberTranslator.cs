@@ -12,6 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
                 new SqlCeDateTimeNowTranslator()
             };
 
+            // ReSharper disable once VirtualMemberCallInContructor
             AddTranslators(sqlCeTranslators);
         }
     }

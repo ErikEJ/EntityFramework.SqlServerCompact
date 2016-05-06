@@ -82,7 +82,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     }));
         }
 
-        //TODO ErikEJ
+        //TODO ErikEJ implement?
         //[Fact]
         //public virtual void RenameIndexOperation()
         //{

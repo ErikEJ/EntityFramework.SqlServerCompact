@@ -7,7 +7,18 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
 {
     public class SqlCeSqlGenerationHelper : RelationalSqlGenerationHelper
     {
+        private const string DateTimeFormatConst = "yyyy-MM-ddTHH:mm:ss.fffK";
+        private const string DateTimeFormatStringConst = "'{0:" + DateTimeFormatConst + "}'";
+        private const string DateTimeOffsetFormatConst = "yyyy-MM-ddTHH:mm:ss.fff";
+        private const string DateTimeOffsetFormatStringConst = "'{0:" + DateTimeOffsetFormatConst + "}'";
+
         public override string BatchTerminator => "GO" + Environment.NewLine + Environment.NewLine;
+
+        protected override string DateTimeFormat => DateTimeFormatConst;
+        protected override string DateTimeFormatString => DateTimeFormatStringConst;
+        protected override string DateTimeOffsetFormat => DateTimeOffsetFormatConst;
+        protected override string DateTimeOffsetFormatString => DateTimeOffsetFormatStringConst;
+
 
         public override string EscapeIdentifier(string identifier)
             => Check.NotEmpty(identifier, nameof(identifier)).Replace("]", "]]");
@@ -46,8 +57,10 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
             builder.Append("'"); 
         }
 
-        protected override string GenerateLiteralValue(DateTime value) => "'" + value.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + "'";
+        protected override string GenerateLiteralValue(DateTime value)
+            => $"'{value.ToString(DateTimeFormat, CultureInfo.InvariantCulture)}'";
 
-        protected override string GenerateLiteralValue(DateTimeOffset value) => "'" + value.ToString(@"yyyy-MM-dd HH\:mm\:ss.fff") + "'";
+        protected override string GenerateLiteralValue(DateTimeOffset value)
+            => $"'{value.ToString(DateTimeOffsetFormat, CultureInfo.InvariantCulture)}'";
     }
 }

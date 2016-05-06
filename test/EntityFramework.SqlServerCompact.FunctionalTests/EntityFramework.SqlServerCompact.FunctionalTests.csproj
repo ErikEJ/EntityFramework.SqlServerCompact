@@ -196,6 +196,8 @@
     <Compile Include="TestSqlCeModelSource.cs" />
     <Compile Include="TransactionSqlCeFixture.cs" />
     <Compile Include="TransactionSqlCetest.cs" />
+    <Compile Include="Utilities\SqlServerConditionAttribute.cs" />
+    <Compile Include="Utilities\TestEnvironment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NorthwindEF7.sdf">

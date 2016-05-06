@@ -38,10 +38,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
 
         protected override bool InterpretExistsResult(object value) => value != DBNull.Value;
 
-        public override string GetCreateIfNotExistsScript()
-        {
-            return GetCreateScript();
-        }
+        public override string GetCreateIfNotExistsScript() => GetCreateScript();
 
         public override string GetBeginIfNotExistsScript(string migrationId)
         {

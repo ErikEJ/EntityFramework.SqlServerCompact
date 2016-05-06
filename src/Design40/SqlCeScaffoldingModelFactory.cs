@@ -97,8 +97,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
             {
                 if (typeof(byte) == propertyBuilder.Metadata.ClrType)
                 {
-                    Logger.LogWarning(string.Format("For column {0}. This column is set up as an Identity column, but the SQL Server data type is {1}. This will be mapped to CLR type byte which does not allow the SqlServerValueGenerationStrategy.IdentityColumn setting. Generating a matching Property but ignoring the Identity setting.",
-                            column.DisplayName, column.DataType));
+                    Logger.LogWarning($"For column {column.DisplayName}. This column is set up as an Identity column, but the SQL Server data type is {column.DataType}. This will be mapped to CLR type byte which does not allow the SqlServerValueGenerationStrategy.IdentityColumn setting. Generating a matching Property but ignoring the Identity setting.");
                 }
                 else
                 {

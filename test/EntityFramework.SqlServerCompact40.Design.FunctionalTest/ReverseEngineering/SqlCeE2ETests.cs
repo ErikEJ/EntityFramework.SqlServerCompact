@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.FunctionalTests.TestUtilities.Xunit;
-using Microsoft.EntityFrameworkCore.Relational.Design.FunctionalTests.ReverseEngineering;
-using Microsoft.EntityFrameworkCore.Relational.Design.FunctionalTests.TestUtilities;
+using Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests.ReverseEngineering;
+using Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests.TestUtilities;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -44,6 +44,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "selfReferencing",
             });
 
+        // ReSharper disable once UnusedParameter.Local
         public SqlCeE2ETests(SqlCeE2EFixture fixture, ITestOutputHelper output)
             : base(output)
         {
@@ -72,7 +73,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
 
         [Fact]
         [UseCulture("en-US")]
-        public void E2ETest_UseAttributesInsteadOfFluentApi()
+        public void E2ETestUseAttributesInsteadOfFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration
             {
@@ -96,7 +97,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 contents => contents.Replace("namespace " + TestNamespace, "namespace " + TestNamespace + "." + TestSubDir)
                     .Replace("{{connectionString}}", _connectionString))
             {
-                Files = (new List<string> { "AttributesContext.expected" })
+                Files = new List<string> { "AttributesContext.expected" }
                     .Concat(_expectedEntityTypeFiles).ToList()
             };
 
@@ -106,7 +107,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
 
         [Fact]
         [UseCulture("en-US")]
-        public void E2ETest_AllFluentApi()
+        public void E2ETestAllFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration
             {

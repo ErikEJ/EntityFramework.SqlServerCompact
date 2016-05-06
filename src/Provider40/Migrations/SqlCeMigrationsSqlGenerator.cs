@@ -167,7 +167,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             throw new NotSupportedException("SQL Server Compact does not support index renames.");
             //}
 
-            //TODO ErikEJ
+            //TODO ErikEJ implement?
             //var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.Name);
 
             //var dropIndexOperation = new DropIndexOperation

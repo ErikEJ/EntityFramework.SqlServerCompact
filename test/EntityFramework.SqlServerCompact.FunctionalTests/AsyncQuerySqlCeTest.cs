@@ -39,10 +39,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
             //base.Where_shadow_subquery_first();
         }
-        public override async Task Where_subquery_recursive_trivial()
-        {
-            //base.Where_subquery_recursive_trivial();
-        }
 
         public override async Task String_Contains_Literal()
         {

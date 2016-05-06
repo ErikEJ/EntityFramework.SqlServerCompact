@@ -1,8 +1,10 @@
-﻿using Xunit;
+﻿using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
+    [MonoVersionCondition(Min = "4.2.0", SkipReason = "Queries fail on Mono < 4.2.0 due to differences in the implementation of LINQ")]
     public class GearsOfWarQuerySqlCeTest : GearsOfWarQueryTestBase<SqlCeTestStore, GearsOfWarQuerySqlCeFixture>
     {
         public override void Include_multiple_one_to_one_and_one_to_many()
@@ -543,7 +545,7 @@ WHERE [w].[AmmunitionType] IS NULL",
                 Sql);
         }
 
-        //TODO ErikEJ Await fix for this general issue
+        //TODO ErikEJ await fix
         public override void Where_count_subquery_without_collision()
         {
 //            base.Where_count_subquery_without_collision();
@@ -827,7 +829,7 @@ ORDER BY [ct].[GearNickName], [ct].[GearSquadId]",
                 Sql);
         }
 
-        //TODO ErikEJ Await fix for this general issue
+        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_composite_key()
         {
 //            base.Join_navigation_translated_to_subquery_composite_key();
@@ -876,6 +878,52 @@ LEFT JOIN [CogTag] AS [c] ON ([c].[GearNickName] = [t].[Nickname]) AND ([c].[Gea
                 Sql);
         }
 
+        public override void Non_unicode_string_literal_is_used_for_non_unicode_column()
+        {
+            base.Non_unicode_string_literal_is_used_for_non_unicode_column();
+
+            Assert.Equal(
+                @"SELECT [c].[Name], [c].[Location]
+FROM [City] AS [c]
+WHERE [c].[Location] = N'Unknown'",
+                Sql);
+        }
+
+        public override void Non_unicode_string_literal_is_used_for_non_unicode_column_right()
+        {
+            base.Non_unicode_string_literal_is_used_for_non_unicode_column_right();
+
+            Assert.Equal(
+    @"SELECT [c].[Name], [c].[Location]
+FROM [City] AS [c]
+WHERE N'Unknown' = [c].[Location]",
+                Sql);
+        }
+
+        public override void Non_unicode_parameter_is_used_for_non_unicode_column()
+        {
+            base.Non_unicode_parameter_is_used_for_non_unicode_column();
+
+            Assert.Equal(
+                @"@__value_0: Unknown
+
+SELECT [c].[Name], [c].[Location]
+FROM [City] AS [c]
+WHERE [c].[Location] = @__value_0",
+                Sql);
+        }
+
+        public override void Non_unicode_string_literals_in_contains_is_used_for_non_unicode_column()
+        {
+            base.Non_unicode_string_literals_in_contains_is_used_for_non_unicode_column();
+
+            Assert.Equal(
+                @"SELECT [c].[Name], [c].[Location]
+FROM [City] AS [c]
+WHERE [c].[Location] IN (N'Unknown', N'Jacinto''s location', N'Ephyra''s location')",
+                Sql);
+        }
+
         //TODO ErikEJ await fix
         public override void Non_unicode_string_literals_is_used_for_non_unicode_column_with_subquery()
         {
@@ -884,11 +932,45 @@ LEFT JOIN [CogTag] AS [c] ON ([c].[GearNickName] = [t].[Nickname]) AND ([c].[Gea
 //            Assert.Equal(
 //    @"SELECT [c].[Name], [c].[Location]
 //FROM [City] AS [c]
-//WHERE ([c].[Location] = 'Unknown') AND ((
+//WHERE ([c].[Location] = N'Unknown') AND ((
 //    SELECT COUNT(*)
 //    FROM [Gear] AS [g]
 //    WHERE ((([g].[Discriminator] = N'Officer') OR ([g].[Discriminator] = N'Gear')) AND ([g].[Nickname] = N'Paduk')) AND ([c].[Name] = [g].[CityOrBirthName])
 //) = 1)", Sql);
+        }
+
+        public override void Non_unicode_string_literals_is_used_for_non_unicode_column_in_subquery()
+        {
+            base.Non_unicode_string_literals_is_used_for_non_unicode_column_in_subquery();
+
+            Assert.Equal(
+    @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Gear] AS [g]
+INNER JOIN [City] AS [g.CityOfBirth] ON [g].[CityOrBirthName] = [g.CityOfBirth].[Name]
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (([g].[Nickname] = N'Marcus') AND ([g.CityOfBirth].[Location] = N'Jacinto''s location'))",
+                Sql);
+        }
+
+        public override void Non_unicode_string_literals_is_used_for_non_unicode_column_with_contains()
+        {
+            base.Non_unicode_string_literals_is_used_for_non_unicode_column_with_contains();
+
+            Assert.Equal(
+                @"SELECT [c].[Name], [c].[Location]
+FROM [City] AS [c]
+WHERE [c].[Location] LIKE (N'%' + N'Jacinto') + N'%'",
+                Sql);
+        }
+
+        public override void Non_unicode_string_literals_is_used_for_non_unicode_column_with_concat()
+        {
+            base.Non_unicode_string_literals_is_used_for_non_unicode_column_with_concat();
+
+            Assert.Equal(
+                @"SELECT [c].[Name], [c].[Location]
+FROM [City] AS [c]
+WHERE [c].[Location] + 'Added' LIKE ('%' + 'Add') + '%'",
+                Sql);
         }
 
         public GearsOfWarQuerySqlCeTest(GearsOfWarQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)

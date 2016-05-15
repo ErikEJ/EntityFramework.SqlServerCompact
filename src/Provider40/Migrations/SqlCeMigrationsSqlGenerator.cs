@@ -27,22 +27,26 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             _commandBuilderFactory = commandBuilderFactory;
         }
 
-        public override IReadOnlyList<IRelationalCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
+        public override IReadOnlyList<MigrationCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
         {
             Check.NotNull(operations, nameof(operations));
 
-            var builder = new RelationalCommandListBuilder(_commandBuilderFactory);
+            var builder = new MigrationCommandListBuilder(_commandBuilderFactory);
             foreach (var operation in operations)
             {
                 Generate(operation, model, builder);
                 builder
                     .EndCommand();
             }
-
-            return builder.GetCommands();
+            return builder.GetCommandList();
         }
 
-        protected override void Generate(AlterColumnOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void ColumnDefinition(AddColumnOperation operation, IModel model, MigrationCommandListBuilder builder)
+        {
+            base.ColumnDefinition(operation, model, builder);
+        }
+
+        protected override void Generate(AlterColumnOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
@@ -88,7 +92,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             }
         }
 
-        protected override void ForeignKeyAction(ReferentialAction referentialAction, RelationalCommandListBuilder builder)
+        protected override void ForeignKeyAction(ReferentialAction referentialAction, MigrationCommandListBuilder builder)
         {
             Check.NotNull(builder, nameof(builder));
 
@@ -102,7 +106,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             }
         }
 
-        protected override void Generate(DropIndexOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(DropIndexOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
@@ -114,50 +118,50 @@ namespace Microsoft.EntityFrameworkCore.Migrations
         }
 
         #region Invalid schema operations
-        protected override void Generate(EnsureSchemaOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(EnsureSchemaOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
 
-        protected override void Generate(DropSchemaOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(DropSchemaOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support schemas.");
         }
         #endregion
 
         #region Sequences not supported
-        protected override void Generate(RestartSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(RestartSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(CreateSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(CreateSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(AlterSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(AlterSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(DropSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(DropSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
 
-        protected override void Generate(RenameSequenceOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(RenameSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support sequences.");
         }
         #endregion 
 
-        protected override void Generate(RenameColumnOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(RenameColumnOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             throw new NotSupportedException("SQL Server Compact does not support column renames.");
         }
 
-        protected override void Generate(RenameIndexOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(RenameIndexOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             //Check.NotNull(operation, nameof(operation));
             //Check.NotNull(builder, nameof(builder));
@@ -188,7 +192,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             //Generate(createIndexOperation, model, builder);
         }
 
-        protected override void Generate(RenameTableOperation operation, IModel model, RelationalCommandListBuilder builder)
+        protected override void Generate(RenameTableOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
@@ -216,7 +220,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             string computedColumnSql,
             IAnnotatable annotatable,
             IModel model,
-            RelationalCommandListBuilder builder)
+            MigrationCommandListBuilder builder)
         {
             var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
 
@@ -238,7 +242,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
         protected virtual void ColumnDefinition(
             [CanBeNull] string schema,
-            [CanBeNull] string table,
+            [NotNull] string table,
             [NotNull] string name,
             [NotNull] Type clrType,
             [CanBeNull] string type,
@@ -249,7 +253,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             bool identity,
             [NotNull] IAnnotatable annotatable,
             [CanBeNull] IModel model,
-            [NotNull] RelationalCommandListBuilder builder)
+            [NotNull] MigrationCommandListBuilder builder)
         {
             Check.NotEmpty(name, nameof(name));
             Check.NotNull(clrType, nameof(clrType));

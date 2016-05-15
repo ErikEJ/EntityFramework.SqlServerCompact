@@ -387,9 +387,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 ISqlCeDatabaseConnection connection,
                 IMigrationsModelDiffer modelDiffer,
                 IMigrationsSqlGenerator sqlGenerator,
+                IMigrationCommandExecutor migrationCommandExecutor,
                 IModel model,
                 IRawSqlCommandBuilder rawSqlCommandBuilder)
-                : base(connection, modelDiffer, sqlGenerator, model, rawSqlCommandBuilder)
+                : base(connection, modelDiffer, sqlGenerator, migrationCommandExecutor, model, rawSqlCommandBuilder)
             {
             }
 

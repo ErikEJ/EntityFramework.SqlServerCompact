@@ -27,7 +27,7 @@ WHERE [r].[UniqueNo] = 1
 @p3: 00000001-0000-0000-0000-000000000001
 
 UPDATE [Sample] SET [Name] = @p0, [RowVersion] = @p1
-WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3;
+WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3
 
 @p2: 1
 @p0: ChangedData
@@ -35,7 +35,7 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3;
 @p3: 00000001-0000-0000-0000-000000000001
 
 UPDATE [Sample] SET [Name] = @p0, [RowVersion] = @p1
-WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3;", Sql);
+WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3", Sql);
         }
 
         public override void DatabaseGeneratedAttribute_autogenerates_values_when_set_to_identity()
@@ -46,7 +46,7 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3;", Sql);
 @p2: 00000000-0000-0000-0000-000000000003
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
+VALUES (@p0, @p1, @p2)
 
 @p0: 
 @p1: Third
@@ -54,7 +54,7 @@ VALUES (@p0, @p1, @p2);
 
 SELECT [UniqueNo]
 FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);",
+WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)",
                 Sql);
         }
 
@@ -67,7 +67,7 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);",
 @p2: 00000000-0000-0000-0000-000000000001
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
+VALUES (@p0, @p1, @p2)
 
 @p0: Short
 @p1: ValidString
@@ -75,7 +75,7 @@ VALUES (@p0, @p1, @p2);
 
 SELECT [UniqueNo]
 FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
+WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 
 ",
                 Sql);
@@ -89,14 +89,14 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
 @p1: Book1
 
 INSERT INTO [BookDetail] ([AdditionalBookDetailId], [BookId])
-VALUES (@p0, @p1);
+VALUES (@p0, @p1)
 
 @p0: 
 @p1: Book1
 
 SELECT [Id]
 FROM [BookDetail]
-WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
+WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
 ",
                 Sql);
@@ -111,7 +111,7 @@ WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
 @p2: 00000000-0000-0000-0000-000000000001
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2);
+VALUES (@p0, @p1, @p2)
 
 @p0: 
 @p1: ValidString
@@ -119,7 +119,7 @@ VALUES (@p0, @p1, @p2);
 
 SELECT [UniqueNo]
 FROM [Sample]
-WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
+WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 
 ",
                 Sql);
@@ -134,13 +134,13 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int);
             Assert.Equal(@"@p0: ValidString
 
 INSERT INTO [Two] ([Data])
-VALUES (@p0);
+VALUES (@p0)
 
 @p0: ValidString
 
 SELECT [Id], [Timestamp]
 FROM [Two]
-WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int);
+WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
 ",
                 Sql);
@@ -163,7 +163,7 @@ WHERE [r].[Id] = 1
 @p2: System.Byte[]
 
 UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2;
+WHERE [Id] = @p1 AND [Timestamp] = @p2
 
 @p1: 1
 @p0: ModifiedData
@@ -171,14 +171,14 @@ WHERE [Id] = @p1 AND [Timestamp] = @p2;
 
 SELECT [Timestamp]
 FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1;
+WHERE 1 = 1 AND [Id] = @p1
 
 @p1: 1
 @p0: ChangedData
 @p2: System.Byte[]
 
 UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2;
+WHERE [Id] = @p1 AND [Timestamp] = @p2
 
 @p1: 1
 @p0: ChangedData
@@ -186,7 +186,7 @@ WHERE [Id] = @p1 AND [Timestamp] = @p2;
 
 SELECT [Timestamp]
 FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1;",
+WHERE 1 = 1 AND [Id] = @p1",
                 Sql);
         }
 

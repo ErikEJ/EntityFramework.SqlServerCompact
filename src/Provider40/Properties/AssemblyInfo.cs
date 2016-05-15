@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 [assembly: AssemblyTitle("EntityFrameworkCore.SqlServerCompact35")]
 [assembly: AssemblyProduct("EntityFrameworkCore.SqlServerCompact35")]
 [assembly: DesignTimeProviderServices(
-    typeName: "Microsoft.EntityFrameworkCore.Scaffolding.SqlCeDesignTimeServices",
+    typeName: "Microsoft.EntityFrameworkCore.Scaffolding.Internal.SqlCeDesignTimeServices",
     assemblyName: "EntityFrameworkCore.SqlServerCompact35.Design",
     packageName: "EntityFrameworkCore.SqlServerCompact35.Design")]
 #else
 [assembly: AssemblyTitle("EntityFrameworkCore.SqlServerCompact40")]
 [assembly: AssemblyProduct("EntityFrameworkCore.SqlServerCompact40")]
 [assembly: DesignTimeProviderServices(
-    typeName: "Microsoft.EntityFrameworkCore.Scaffolding.SqlCeDesignTimeServices",
+    typeName: "Microsoft.EntityFrameworkCore.Scaffolding.Internal.SqlCeDesignTimeServices",
     assemblyName: "EntityFrameworkCore.SqlServerCompact40.Design",
     packageName: "EntityFrameworkCore.SqlServerCompact40.Design")]
 #endif

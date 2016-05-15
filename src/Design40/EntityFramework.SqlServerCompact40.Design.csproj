@@ -117,14 +117,14 @@
     <Compile Include="..\Provider40\Utilities\SharedTypeExtensions.cs">
       <Link>Utilities\SharedTypeExtensions.cs</Link>
     </Compile>
-    <Compile Include="Metadata\SqlCeColumnModelAnnotations.cs" />
-    <Compile Include="Metadata\SqlCeDatabaseModelAnnotationNames.cs" />
-    <Compile Include="Metadata\SqlCeDataBaseModelExtension.cs" />
+    <Compile Include="Metadata\Internal\SqlCeColumnModelAnnotations.cs" />
+    <Compile Include="Metadata\Internal\SqlCeDatabaseModelAnnotationNames.cs" />
+    <Compile Include="Metadata\Internal\SqlCeDataBaseModelExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlCeDatabaseModelfactory.cs" />
-    <Compile Include="SqlCeDesignTimeServices.cs" />
-    <Compile Include="SqlCeScaffoldingModelFactory.cs" />
-    <Compile Include="SqlCeTableSelectionSetExtensions.cs" />
+    <Compile Include="Internal\SqlCeDatabaseModelfactory.cs" />
+    <Compile Include="Internal\SqlCeDesignTimeServices.cs" />
+    <Compile Include="Internal\SqlCeScaffoldingModelFactory.cs" />
+    <Compile Include="Internal\SqlCeTableSelectionSetExtensions.cs" />
     <Compile Include="Utilities\LoggingExtensions.cs" />
     <Compile Include="Utilities\StringBuilderExtensions.cs" />
   </ItemGroup>

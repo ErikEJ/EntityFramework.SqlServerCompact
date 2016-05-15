@@ -21,13 +21,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
 
-        //TODO ErikEJ Report issue on this query... (look as Sql)
-        public override void All_top_level_subquery()
-        {
-            base.All_top_level_subquery();
-            var sql = Sql;
-        }
-
         public override void Queryable_reprojection()
         {
             base.Queryable_reprojection();

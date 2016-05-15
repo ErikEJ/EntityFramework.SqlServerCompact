@@ -10,11 +10,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows SQL Server Compact 4.0 to be used with Entity Framework Core</description>
     <summary>Allows SQL Server Compact 4.0 to be used with Entity Framework Core</summary>
-    <releaseNotes>for EF Core Release Candidate 2</releaseNotes>
+    <releaseNotes>for EF Core RC3</releaseNotes>
     <tags>EntityFramework EF sqlce entity framework core provider sql server compact sqlservercompact</tags>
     <dependencies>
         <group targetFramework="net451">
-            <dependency id="Microsoft.EntityFrameworkCore.Relational" version="[1.0.0-rc2-20801]" />
+            <dependency id="Microsoft.EntityFrameworkCore.Relational" version="[1.0.0-rc3-20912]" />
             <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>
     </dependencies>

@@ -1,4 +1,4 @@
-﻿namespace Microsoft.EntityFrameworkCore.Scaffolding.Metadata
+﻿namespace Microsoft.EntityFrameworkCore.Scaffolding.Metadata.Internal
 {
     public static class SqlCeDatabaseModelAnnotationNames
     {

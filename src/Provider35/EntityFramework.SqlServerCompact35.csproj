@@ -7,7 +7,7 @@
     <ProjectGuid>{D3A4E371-E8F2-4513-B14C-7C738F14CEB0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Data.Entity</RootNamespace>
+    <RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
     <AssemblyName>EntityFrameworkCore.SqlServerCompact35</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -183,6 +183,12 @@
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeDateComponentTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeDateComponentTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeNowTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeNowTranslator.cs</Link>

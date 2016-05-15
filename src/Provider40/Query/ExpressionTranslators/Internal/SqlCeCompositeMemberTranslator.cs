@@ -10,7 +10,6 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
             {
                 new SqlCeStringLengthTranslator(),
                 new SqlCeDateTimeNowTranslator(),
-                new SqlCeDateTimeDateComponentTranslator()
                 //TODO ErikEJ Implement when support in daily build
                 //,
                 //new SqlCeDateTimeDatePartComponentTranslator(),

@@ -184,9 +184,6 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeDateComponentTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeDateComponentTranslator.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs</Link>
     </Compile>

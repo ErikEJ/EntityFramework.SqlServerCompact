@@ -40,12 +40,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             }
             return builder.GetCommandList();
         }
-
-        protected override void ColumnDefinition(AddColumnOperation operation, IModel model, MigrationCommandListBuilder builder)
-        {
-            base.ColumnDefinition(operation, model, builder);
-        }
-
+        
         protected override void Generate(AlterColumnOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));

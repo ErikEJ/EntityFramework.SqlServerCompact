@@ -105,7 +105,6 @@
     <Compile Include="Extensions\Logging\DbLoggerProvider.cs" />
     <Compile Include="Extensions\Logging\NullLogger.cs" />
     <Compile Include="MetaData\Internal\SqlCeFullAnnotationNames.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateTimeDateComponentTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs" />

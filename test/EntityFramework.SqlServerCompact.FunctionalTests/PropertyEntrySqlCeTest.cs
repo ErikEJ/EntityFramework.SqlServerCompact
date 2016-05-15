@@ -20,7 +20,7 @@ FROM [Engines] AS [e]",
 
             Assert.Contains(
                 @"UPDATE [Engines] SET [Name] = @p0
-WHERE [Id] = @p1 AND [EngineSupplierId] = @p2 AND [Name] = @p3;",
+WHERE [Id] = @p1 AND [EngineSupplierId] = @p2 AND [Name] = @p3",
                 Sql);
         }
 

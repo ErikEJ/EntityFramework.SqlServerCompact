@@ -89,7 +89,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         protected override IReadOnlyDictionary<string, RelationalTypeMapping> GetSimpleNameMappings()
             => _simpleNameMappings;
 
-        public override RelationalTypeMapping FindMapping(Type clrType, bool isUniCode = true)
+        public override RelationalTypeMapping FindMapping(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
 
@@ -102,7 +102,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     : base.FindMapping(clrType));
         }
 
-        protected override RelationalTypeMapping FindCustomMapping(IProperty property, bool unicode = true)
+        protected override RelationalTypeMapping FindCustomMapping(IProperty property)
         {
             Check.NotNull(property, nameof(property));
 

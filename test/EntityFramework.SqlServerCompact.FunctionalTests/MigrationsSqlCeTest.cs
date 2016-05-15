@@ -23,12 +23,16 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     [ProductVersion] nvarchar(32) NOT NULL,
     CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
 )
+
+
 GO
 
 CREATE TABLE [Table1] (
     [Id] int NOT NULL,
     CONSTRAINT [PK_Table1] PRIMARY KEY ([Id])
 )
+
+
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
@@ -41,6 +45,11 @@ GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES ('00000000000002_Migration2', '7.0.0-test');
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES ('00000000000003_Migration3', '7.0.0-test');
 
 GO
 
@@ -58,7 +67,12 @@ GO
             base.Can_generate_down_scripts();
 
             Assert.Equal(
-                @"sp_rename N'Table2', N'Table1'
+                @"DELETE FROM [__EFMigrationsHistory]
+WHERE [MigrationId] = '00000000000003_Migration3';
+
+GO
+
+sp_rename N'Table2', N'Table1'
 GO
 
 DELETE FROM [__EFMigrationsHistory]
@@ -67,6 +81,8 @@ WHERE [MigrationId] = '00000000000002_Migration2';
 GO
 
 DROP TABLE [Table1]
+
+
 GO
 
 DELETE FROM [__EFMigrationsHistory]

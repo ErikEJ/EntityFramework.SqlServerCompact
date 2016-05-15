@@ -232,7 +232,7 @@ WHERE [c].[Id] = 1
 @p6: North
 
 INSERT INTO [Animal] ([Species], [CountryId], [Discriminator], [Name], [EagleId], [IsFlightless], [FoundOn])
-VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
 
 SELECT TOP(2) [k].[Species], [k].[CountryId], [k].[Discriminator], [k].[Name], [k].[EagleId], [k].[IsFlightless], [k].[FoundOn]
 FROM [Animal] AS [k]
@@ -242,7 +242,7 @@ WHERE ([k].[Discriminator] = N'Kiwi') AND [k].[Species] LIKE N'%' + N'owenii'
 @p0: Aquila chrysaetos canadensis
 
 UPDATE [Animal] SET [EagleId] = @p0
-WHERE [Species] = @p1;
+WHERE [Species] = @p1
 
 SELECT TOP(2) [k].[Species], [k].[CountryId], [k].[Discriminator], [k].[Name], [k].[EagleId], [k].[IsFlightless], [k].[FoundOn]
 FROM [Animal] AS [k]
@@ -251,7 +251,7 @@ WHERE ([k].[Discriminator] = N'Kiwi') AND [k].[Species] LIKE N'%' + N'owenii'
 @p0: Apteryx owenii
 
 DELETE FROM [Animal]
-WHERE [Species] = @p0;
+WHERE [Species] = @p0
 
 SELECT COUNT(*)
 FROM [Animal] AS [k]

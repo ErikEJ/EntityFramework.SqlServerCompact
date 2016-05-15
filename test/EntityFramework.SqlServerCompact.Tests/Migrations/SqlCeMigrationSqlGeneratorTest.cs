@@ -131,7 +131,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY",
+                "ALTER TABLE [People] ADD [Id] int NOT NULL IDENTITY" + EOL + EOL,
                 Sql);
         }
 
@@ -146,7 +146,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 });
 
             Assert.Equal(
-                "ALTER TABLE [People] ADD PRIMARY KEY ([Id])",
+                "ALTER TABLE [People] ADD PRIMARY KEY ([Id])" + EOL + EOL,
                 Sql);
         }
 
@@ -171,7 +171,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 });
 
             Assert.Equal(
-                "CREATE INDEX [IX_People_Name] ON [People] ([Name])",
+                "CREATE INDEX [IX_People_Name] ON [People] ([Name])" + EOL + EOL,
                 Sql);
         }
     }

@@ -14,6 +14,8 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
 
         public override string BatchTerminator => "GO" + Environment.NewLine + Environment.NewLine;
 
+        public override string StatementTerminator => Environment.NewLine;
+
         protected override string DateTimeFormat => DateTimeFormatConst;
         protected override string DateTimeFormatString => DateTimeFormatStringConst;
         protected override string DateTimeOffsetFormat => DateTimeOffsetFormatConst;
@@ -47,10 +49,10 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
             }
         }
 
-        protected override string GenerateLiteralValue(string value, bool unicode = true)
+        protected override string GenerateLiteralValue(string value, RelationalTypeMapping typeMapping)
             => $"N'{EscapeLiteral(Check.NotNull(value, nameof(value)))}'";
 
-        protected override void GenerateLiteralValue(StringBuilder builder, string value, bool unicode = true)
+        protected override void GenerateLiteralValue(StringBuilder builder, string value, RelationalTypeMapping typeMapping)
         { 
             builder.Append("N'"); 
             EscapeLiteral(builder, value); 

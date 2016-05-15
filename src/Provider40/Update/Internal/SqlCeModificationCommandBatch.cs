@@ -111,7 +111,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
 
         private Tuple<string, string> SplitCommandText(string commandText)
         {
-            var stringToFind = ";" + Environment.NewLine + "SELECT ";
+            var stringToFind = SqlGenerationHelper.StatementTerminator + Environment.NewLine + "SELECT ";
             var stringToFindIndex = commandText.IndexOf(stringToFind, StringComparison.OrdinalIgnoreCase);
 
             if (stringToFindIndex > 0)

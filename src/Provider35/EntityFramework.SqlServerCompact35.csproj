@@ -208,6 +208,9 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringLengthTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStringLengthTranslator.cs</Link>
     </Compile>
@@ -222,6 +225,15 @@
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringToUpperTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStringToUpperTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringTrimTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringTrimTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeTrimStringEndTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeTrimStringEndTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\Internal\SqlCeQueryCompilationContext.cs">
       <Link>Query\Internal\SqlCeQueryCompilationContext.cs</Link>

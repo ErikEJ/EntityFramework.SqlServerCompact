@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
-using Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests.Utilities;
 using Xunit.Sdk;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests.Utilities

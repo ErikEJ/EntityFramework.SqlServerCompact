@@ -183,14 +183,11 @@ ORDER BY [e].[Species]
 
 SELECT [a].[Species], [a].[CountryId], [a].[Discriminator], [a].[Name], [a].[EagleId], [a].[IsFlightless], [a].[Group], [a].[FoundOn]
 FROM [Animal] AS [a]
-INNER JOIN (
-    SELECT DISTINCT TOP(2) [e].[Species]
+WHERE [a].[Discriminator] IN (N'Kiwi', N'Eagle') AND EXISTS (
+    SELECT TOP(2) 1
     FROM [Animal] AS [e]
-    WHERE [e].[Discriminator] = N'Eagle'
-    ORDER BY [e].[Species]
-) AS [e0] ON [a].[EagleId] = [e0].[Species]
-WHERE [a].[Discriminator] IN (N'Kiwi', N'Eagle')
-ORDER BY [e0].[Species]",
+    WHERE ([e].[Discriminator] = N'Eagle') AND ([a].[EagleId] = [e].[Species]))
+ORDER BY [a].[EagleId]",
                 Sql);
         }
 
@@ -223,11 +220,11 @@ ORDER BY [c0].[Name], [c0].[Id]",
 FROM [Country] AS [c]
 WHERE [c].[Id] = 1
 
-@p0: Apteryx owenii
+@p0: Apteryx owenii (Nullable = false) (Size = 100)
 @p1: 1
-@p2: Kiwi
-@p3: Little spotted kiwi
-@p4: 
+@p2: Kiwi (Nullable = false) (Size = 4000)
+@p3: Little spotted kiwi (Size = 4000)
+@p4:  (Size = 100) (DbType = String)
 @p5: True
 @p6: North
 
@@ -238,8 +235,8 @@ SELECT TOP(2) [k].[Species], [k].[CountryId], [k].[Discriminator], [k].[Name], [
 FROM [Animal] AS [k]
 WHERE ([k].[Discriminator] = N'Kiwi') AND [k].[Species] LIKE N'%' + N'owenii'
 
-@p1: Apteryx owenii
-@p0: Aquila chrysaetos canadensis
+@p1: Apteryx owenii (Nullable = false) (Size = 100)
+@p0: Aquila chrysaetos canadensis (Size = 100)
 
 UPDATE [Animal] SET [EagleId] = @p0
 WHERE [Species] = @p1
@@ -248,7 +245,7 @@ SELECT TOP(2) [k].[Species], [k].[CountryId], [k].[Discriminator], [k].[Name], [
 FROM [Animal] AS [k]
 WHERE ([k].[Discriminator] = N'Kiwi') AND [k].[Species] LIKE N'%' + N'owenii'
 
-@p0: Apteryx owenii
+@p0: Apteryx owenii (Nullable = false) (Size = 100)
 
 DELETE FROM [Animal]
 WHERE [Species] = @p0

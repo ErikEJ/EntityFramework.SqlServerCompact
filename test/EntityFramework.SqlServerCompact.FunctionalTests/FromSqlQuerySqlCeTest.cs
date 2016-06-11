@@ -69,8 +69,8 @@ WHERE [c].[CustomerID] = [o].[CustomerID]",
             base.From_sql_queryable_multiple_composed_with_closure_parameters();
 
             Assert.Equal(
-                @"@__8__locals1_startDate_1: 01/01/1997 00:00:00
-@__8__locals1_endDate_2: 01/01/1998 00:00:00
+                @"@__8__locals1_startDate_1: 01/01/1997 00:00:00 (DbType = DateTime)
+@__8__locals1_endDate_2: 01/01/1998 00:00:00 (DbType = DateTime)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region], [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM (
@@ -88,9 +88,9 @@ WHERE [c].[CustomerID] = [o].[CustomerID]",
             base.From_sql_queryable_multiple_composed_with_parameters_and_closure_parameters();
 
             Assert.Equal(
-                @"@p0: London
-@__8__locals1_startDate_1: 01/01/1997 00:00:00
-@__8__locals1_endDate_2: 01/01/1998 00:00:00
+                @"@p0: London (Size = 4000)
+@__8__locals1_startDate_1: 01/01/1997 00:00:00 (DbType = DateTime)
+@__8__locals1_endDate_2: 01/01/1998 00:00:00 (DbType = DateTime)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region], [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM (
@@ -133,8 +133,8 @@ WHERE [c].[City] = N'London'",
             base.From_sql_queryable_with_parameters();
 
             Assert.Equal(
-                @"@p0: London
-@p1: Sales Representative
+                @"@p0: London (Size = 4000)
+@p1: Sales Representative (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 Sql);
@@ -145,8 +145,8 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
             base.From_sql_queryable_with_parameters_inline();
 
             Assert.Equal(
-                @"@p0: London
-@p1: Sales Representative
+                @"@p0: London (Size = 4000)
+@p1: Sales Representative (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 Sql);
@@ -173,8 +173,8 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
             base.From_sql_queryable_with_parameters_and_closure();
 
             Assert.Equal(
-                @"@p0: London
-@__contactTitle_1: Sales Representative
+                @"@p0: London (Size = 4000)
+@__contactTitle_1: Sales Representative (Size = 4000)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM (
@@ -200,13 +200,13 @@ SELECT * FROM ""Customers"" WHERE ""City"" = 'Seattle'",
             base.From_sql_queryable_with_parameters_cache_key_includes_parameters();
 
             Assert.Equal(
-                @"@p0: London
-@p1: Sales Representative
+                @"@p0: London (Size = 4000)
+@p1: Sales Representative (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1
 
-@p0: Madrid
-@p1: Accounting Manager
+@p0: Madrid (Size = 4000)
+@p1: Accounting Manager (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 Sql);
@@ -249,13 +249,13 @@ ORDER BY [c].[CustomerID]
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
-INNER JOIN (
-    SELECT DISTINCT [c].[CustomerID]
+WHERE EXISTS (
+    SELECT 1
     FROM (
         SELECT * FROM ""Customers""
     ) AS [c]
-) AS [c0] ON [o].[CustomerID] = [c0].[CustomerID]
-ORDER BY [c0].[CustomerID]",
+    WHERE [o].[CustomerID] = [c].[CustomerID])
+ORDER BY [o].[CustomerID]",
                 Sql);
         }
 
@@ -273,14 +273,13 @@ ORDER BY [c].[CustomerID]
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
-INNER JOIN (
-    SELECT DISTINCT [c].[CustomerID]
+WHERE EXISTS (
+    SELECT 1
     FROM (
         SELECT * FROM ""Customers""
     ) AS [c]
-    WHERE [c].[City] = N'London'
-) AS [c0] ON [o].[CustomerID] = [c0].[CustomerID]
-ORDER BY [c0].[CustomerID]",
+    WHERE ([c].[City] = N'London') AND ([o].[CustomerID] = [c].[CustomerID]))
+ORDER BY [o].[CustomerID]",
                 Sql);
         }
 

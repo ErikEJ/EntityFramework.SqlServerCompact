@@ -295,8 +295,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
         [Fact]
         public virtual void CreateTableOperation()
-        {
-            Generate(
+            => Generate(
                 new CreateTableOperation
                 {
                     Name = "People",
@@ -306,18 +305,21 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                         new AddColumnOperation
                         {
                             Name = "Id",
+                            Table = "People",
                             ClrType = typeof(int),
                             IsNullable = false
                         },
                         new AddColumnOperation
                         {
                             Name = "EmployerId",
+                            Table = "People",
                             ClrType = typeof(int),
                             IsNullable = true
                         },
-                         new AddColumnOperation
+                        new AddColumnOperation
                         {
                             Name = "SSN",
+                            Table = "People",
                             ClrType = typeof(string),
                             ColumnType = "char(11)",
                             IsNullable = true
@@ -344,7 +346,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                         }
                     }
                 });
-        }
+
 
         [Fact]
         public virtual void DropColumnOperation()

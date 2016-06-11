@@ -40,7 +40,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                             NullSemanticsModelInitializer.Seed(context);
                         }
 
-                        TestSqlLoggerFactory.SqlStatements.Clear();
+                        TestSqlLoggerFactory.Reset();
                     }
                 });
         }

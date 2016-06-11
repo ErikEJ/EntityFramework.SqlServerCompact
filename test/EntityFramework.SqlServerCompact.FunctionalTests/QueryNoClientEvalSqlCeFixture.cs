@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+﻿namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class QueryNoClientEvalSqlCeFixture : NorthwindQuerySqlCeFixture
     {
-        protected override void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlCeDbContextOptionsBuilder)
-            => sqlCeDbContextOptionsBuilder.QueryClientEvaluationBehavior(QueryClientEvaluationBehavior.Throw);
+        protected override DbContextOptionsBuilder ConfigureOptions(DbContextOptionsBuilder dbContextOptionsBuilder)
+            => dbContextOptionsBuilder.ConfigureWarnings(c => c.Default(WarningBehavior.Throw));
     }
 }

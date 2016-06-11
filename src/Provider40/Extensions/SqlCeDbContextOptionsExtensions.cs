@@ -32,6 +32,8 @@ namespace Microsoft.EntityFrameworkCore
             extension.MaxBatchSize = 1;
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
+            ConfigureWarnings(optionsBuilder);
+
             sqlCeOptionsAction?.Invoke(new SqlCeDbContextOptionsBuilder(optionsBuilder));
 
             return optionsBuilder;
@@ -58,6 +60,8 @@ namespace Microsoft.EntityFrameworkCore
             extension.ConnectionString = connectionStringBuilder.ConnectionString;
             extension.MaxBatchSize = 1;
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
+
+            ConfigureWarnings(optionsBuilder);
 
             sqlCeOptionsAction?.Invoke(new SqlCeDbContextOptionsBuilder(optionsBuilder));
 
@@ -102,6 +106,8 @@ namespace Microsoft.EntityFrameworkCore
             extension.Connection = connection;
             extension.MaxBatchSize = 1;
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
+
+            ConfigureWarnings(optionsBuilder);
 
             sqlCeOptionsAction?.Invoke(new SqlCeDbContextOptionsBuilder(optionsBuilder));
 
@@ -149,6 +155,16 @@ namespace Microsoft.EntityFrameworkCore
             return existingExtension != null
                 ? new SqlCeOptionsExtension(existingExtension)
                 : new SqlCeOptionsExtension();
+        }
+
+        private static void ConfigureWarnings(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Set warnings defaults
+            optionsBuilder.ConfigureWarnings(w =>
+            {
+                w.Configuration.TryAddExplicit(
+                    RelationalEventId.AmbientTransactionWarning, WarningBehavior.Throw);
+            });
         }
     }
 }

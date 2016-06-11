@@ -36,7 +36,8 @@ CREATE TABLE [Table1] (
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES ('00000000000001_Migration1', '7.0.0-test');
+VALUES ('00000000000001_Migration1', '7.0.0-test')
+
 
 GO
 
@@ -44,12 +45,14 @@ sp_rename N'Table1', N'Table2'
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES ('00000000000002_Migration2', '7.0.0-test');
+VALUES ('00000000000002_Migration2', '7.0.0-test')
+
 
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES ('00000000000003_Migration3', '7.0.0-test');
+VALUES ('00000000000003_Migration3', '7.0.0-test')
+
 
 GO
 
@@ -68,7 +71,8 @@ GO
 
             Assert.Equal(
                 @"DELETE FROM [__EFMigrationsHistory]
-WHERE [MigrationId] = '00000000000003_Migration3';
+WHERE [MigrationId] = '00000000000003_Migration3'
+
 
 GO
 
@@ -76,7 +80,8 @@ sp_rename N'Table2', N'Table1'
 GO
 
 DELETE FROM [__EFMigrationsHistory]
-WHERE [MigrationId] = '00000000000002_Migration2';
+WHERE [MigrationId] = '00000000000002_Migration2'
+
 
 GO
 
@@ -86,7 +91,8 @@ DROP TABLE [Table1]
 GO
 
 DELETE FROM [__EFMigrationsHistory]
-WHERE [MigrationId] = '00000000000001_Migration1';
+WHERE [MigrationId] = '00000000000001_Migration1'
+
 
 GO
 

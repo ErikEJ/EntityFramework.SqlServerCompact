@@ -40,7 +40,45 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             }
             return builder.GetCommandList();
         }
-        
+
+        protected override void Generate(
+            CreateIndexOperation operation,
+            IModel model,
+            MigrationCommandListBuilder builder,
+            bool terminate)
+        {
+            Check.NotNull(operation, nameof(operation));
+            Check.NotNull(builder, nameof(builder));
+
+            builder.Append("CREATE ");
+
+            var isNullableForeignKey = operation
+                .Columns.Select(column => FindProperty(model, null, operation.Table, column))
+                .Any(property => (property != null) && property.IsColumnNullable() && property.IsForeignKey());
+
+            if (operation.IsUnique && !isNullableForeignKey)
+            {
+                builder.Append("UNIQUE ");
+            }
+
+            builder
+                .Append("INDEX ")
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
+                .Append(" ON ")
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table, operation.Schema))
+                .Append(" (")
+                .Append(ColumnList(operation.Columns))
+                .Append(")");
+
+            if (terminate)
+            {
+                builder.AppendLine(SqlGenerationHelper.StatementTerminator);
+
+                EndStatement(builder);
+            }
+        }
+
+
         protected override void Generate(AlterColumnOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
@@ -59,19 +97,25 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 .Append("ALTER TABLE ")
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ");
+
             ColumnDefinition(
-                    null,
-                    operation.Table,
-                    operation.Name,
-                    operation.ClrType,
-                    operation.ColumnType,
-                    operation.IsNullable,
-                    null /*operation.DefaultValue */,
-                    null /*operation.DefaultValueSql */,
-                    operation.ComputedColumnSql,
-                    operation,
-                    model,
-                    builder);
+                null,
+                operation.Table,
+                operation.Name,
+                operation.ClrType,
+                operation.ColumnType,
+                operation.IsUnicode,
+                operation.MaxLength,
+                operation.IsRowVersion,
+                operation.IsNullable,
+                /*defaultValue:*/ null,
+                /*defaultValueSql:*/ null,
+                operation.ComputedColumnSql,
+                /*identity:*/ false,
+                operation,
+                model,
+                builder);
+
             builder.AppendLine();
 
             if ((operation.DefaultValue != null) || (operation.DefaultValueSql != null))
@@ -158,33 +202,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
         protected override void Generate(RenameIndexOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            //Check.NotNull(operation, nameof(operation));
-            //Check.NotNull(builder, nameof(builder));
-
-            //if (model == null)
-            //{
             throw new NotSupportedException("SQL Server Compact does not support index renames.");
-            //}
-
-            //TODO ErikEJ implement?
-            //var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.Name);
-
-            //var dropIndexOperation = new DropIndexOperation
-            //{
-            //    Name = operation.Name,
-            //    IsDestructiveChange = true,
-            //    Table = operation.Table
-            //};
-            //Generate(dropIndexOperation, model, builder);
-
-            //var createIndexOperation = new CreateIndexOperation
-            //{
-            //    Columns = index.Properties.Select(p => p.Name).ToArray(),
-            //    IsUnique = index.IsUnique,
-            //    Name = operation.NewName,
-            //    Table = operation.Table
-            //};
-            //Generate(createIndexOperation, model, builder);
         }
 
         protected override void Generate(RenameTableOperation operation, IModel model, MigrationCommandListBuilder builder)
@@ -204,18 +222,21 @@ namespace Microsoft.EntityFrameworkCore.Migrations
         }
 
         protected override void ColumnDefinition(
-            string schema,
-            string table,
-            string name,
-            Type clrType,
-            string type,
-            bool nullable,
-            object defaultValue,
-            string defaultValueSql,
-            string computedColumnSql,
-            IAnnotatable annotatable,
-            IModel model,
-            MigrationCommandListBuilder builder)
+                    string schema,
+                    string table,
+                    string name,
+                    Type clrType,
+                    string type,
+                    bool? unicode,
+                    int? maxLength,
+                    bool rowVersion,
+                    bool nullable,
+                    object defaultValue,
+                    string defaultValueSql,
+                    string computedColumnSql,
+                    IAnnotatable annotatable,
+                    IModel model,
+                    MigrationCommandListBuilder builder)
         {
             var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
 
@@ -225,6 +246,9 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 name,
                 clrType,
                 type,
+                unicode,
+                maxLength,
+                rowVersion,
                 nullable,
                 defaultValue,
                 defaultValueSql,
@@ -241,6 +265,9 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             [NotNull] string name,
             [NotNull] Type clrType,
             [CanBeNull] string type,
+            [CanBeNull] bool? unicode,
+            [CanBeNull] int? maxLength,
+            bool rowVersion,
             bool nullable,
             [CanBeNull] object defaultValue,
             [CanBeNull] string defaultValueSql,
@@ -271,6 +298,9 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 name,
                 clrType,
                 type,
+                unicode,
+                maxLength,
+                rowVersion,
                 nullable,
                 defaultValue,
                 defaultValueSql,
@@ -285,11 +315,6 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             }
         }
 
-        protected override IEntityType FindEntityType(
-            IModel model,
-            string schema,
-            string tableName)
-            => model?.GetEntityTypes().FirstOrDefault(
-                t => (_annotations.For(t).TableName == tableName) && (_annotations.For(t).Schema == schema));
+        private string ColumnList(string[] columns) => string.Join(", ", columns.Select(SqlGenerationHelper.DelimitIdentifier));
     }
 }

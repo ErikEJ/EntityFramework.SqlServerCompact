@@ -3,6 +3,7 @@ using System.Threading;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -29,12 +30,20 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         protected DbContextOptions BuildOptions()
-            => new DbContextOptionsBuilder()
-                .EnableSensitiveDataLogging()
-                .UseInternalServiceProvider(_serviceProvider)
+            => ConfigureOptions(
+                new DbContextOptionsBuilder()
+                    .EnableSensitiveDataLogging()
+                    .UseInternalServiceProvider(_serviceProvider))
                 .UseSqlCe(
                     _testStore.ConnectionString,
-                    ConfigureOptions).Options;
+                    b =>
+                    {
+                        ConfigureOptions(b);
+                        b.ApplyConfiguration();
+                    }).Options;
+
+        protected virtual DbContextOptionsBuilder ConfigureOptions(DbContextOptionsBuilder dbContextOptionsBuilder)
+             => dbContextOptionsBuilder; 
 
         protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlServerDbContextOptionsBuilder)
         {

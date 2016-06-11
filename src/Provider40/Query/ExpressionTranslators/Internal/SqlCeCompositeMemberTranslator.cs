@@ -10,9 +10,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
             {
                 new SqlCeStringLengthTranslator(),
                 new SqlCeDateTimeNowTranslator(),
-                //TODO ErikEJ Implement when support in daily build
-                //,
-                //new SqlCeDateTimeDatePartComponentTranslator(),
+                new SqlCeDateTimeDatePartComponentTranslator(),
             };
 
             // ReSharper disable once VirtualMemberCallInContructor

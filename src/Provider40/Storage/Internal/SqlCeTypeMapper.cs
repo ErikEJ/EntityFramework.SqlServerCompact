@@ -8,31 +8,50 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
 { 
     public class SqlCeTypeMapper : RelationalTypeMapper
     {
-        private readonly SqlCeMaxLengthMapping _nvarcharmax = new SqlCeMaxLengthMapping("ntext", typeof(string), DbType.String);
-        private readonly SqlCeMaxLengthMapping _nvarchar256 = new SqlCeMaxLengthMapping("nvarchar(256)", typeof(string), DbType.String);
-        private readonly SqlCeMaxLengthMapping _varbinarymax = new SqlCeMaxLengthMapping("image", typeof(byte[]), DbType.Binary);
-        private readonly SqlCeMaxLengthMapping _varbinary512 = new SqlCeMaxLengthMapping("varbinary(512)", typeof(byte[]), DbType.Binary);
-        private readonly RelationalSizedTypeMapping _rowversion = new RelationalSizedTypeMapping("rowversion", typeof(byte[]), DbType.Binary, false, 8);
-        private readonly RelationalTypeMapping _int = new RelationalTypeMapping("int", typeof(int), DbType.Int32);
-        private readonly RelationalTypeMapping _bigint = new RelationalTypeMapping("bigint", typeof(long), DbType.Int64);
-        private readonly RelationalTypeMapping _bit = new RelationalTypeMapping("bit", typeof(bool), DbType.Boolean);
-        private readonly RelationalTypeMapping _smallint = new RelationalTypeMapping("smallint", typeof(short), DbType.Int16);
-        private readonly RelationalTypeMapping _tinyint = new RelationalTypeMapping("tinyint", typeof(byte), DbType.Byte);
-        private readonly SqlCeMaxLengthMapping _nchar = new SqlCeMaxLengthMapping("nchar", typeof(string), DbType.StringFixedLength);
-        private readonly SqlCeMaxLengthMapping _nvarchar = new SqlCeMaxLengthMapping("nvarchar(4000)", typeof(string), DbType.String);
-        private readonly SqlCeMaxLengthMapping _varbinary = new SqlCeMaxLengthMapping("varbinary(8000)", typeof(byte[]), DbType.Binary);
-        private readonly RelationalTypeMapping _double = new RelationalTypeMapping("float", typeof(double));
-        private readonly RelationalTypeMapping _real = new RelationalTypeMapping("real", typeof(float));
-        private readonly RelationalTypeMapping _datetime = new RelationalTypeMapping("datetime", typeof(DateTime), DbType.DateTime);
-        private readonly RelationalTypeMapping _uniqueidentifier = new RelationalTypeMapping("uniqueidentifier", typeof(Guid), DbType.Guid);
-        private readonly RelationalTypeMapping _decimal = new RelationalTypeMapping("decimal(18, 2)", typeof(decimal));
+        private readonly SqlCeMaxLengthMapping _nvarcharmax 
+            = new SqlCeMaxLengthMapping("ntext", typeof(string), DbType.String);
+        private readonly SqlCeMaxLengthMapping _nvarchar256 
+            = new SqlCeMaxLengthMapping("nvarchar(256)", typeof(string), DbType.String, 256);
+        private readonly SqlCeMaxLengthMapping _varbinarymax 
+            = new SqlCeMaxLengthMapping("image", typeof(byte[]), DbType.Binary);
+        private readonly SqlCeMaxLengthMapping _varbinary512 
+            = new SqlCeMaxLengthMapping("varbinary(512)", typeof(byte[]), DbType.Binary, 512);
+        private readonly RelationalTypeMapping _rowversion 
+            =new RelationalTypeMapping("rowversion", typeof(byte[]), dbType: DbType.Binary, unicode: false, size: 8); 
+        private readonly RelationalTypeMapping _int 
+            = new RelationalTypeMapping("int", typeof(int), DbType.Int32);
+        private readonly RelationalTypeMapping _bigint 
+            = new RelationalTypeMapping("bigint", typeof(long), DbType.Int64);
+        private readonly RelationalTypeMapping _bit 
+            = new RelationalTypeMapping("bit", typeof(bool));
+        private readonly RelationalTypeMapping _smallint 
+            = new RelationalTypeMapping("smallint", typeof(short), DbType.Int16);
+        private readonly RelationalTypeMapping _tinyint 
+            = new RelationalTypeMapping("tinyint", typeof(byte), DbType.Byte);
+        private readonly SqlCeMaxLengthMapping _nchar 
+            = new SqlCeMaxLengthMapping("nchar", typeof(string), DbType.StringFixedLength);
+        private readonly SqlCeMaxLengthMapping _nvarchar 
+            = new SqlCeMaxLengthMapping("nvarchar(4000)", typeof(string), DbType.String);
+        private readonly SqlCeMaxLengthMapping _varbinary 
+            = new SqlCeMaxLengthMapping("varbinary(8000)", typeof(byte[]), DbType.Binary, 8000);
+        private readonly RelationalTypeMapping _double 
+            = new RelationalTypeMapping("float", typeof(double));
+        private readonly RelationalTypeMapping _real 
+            = new RelationalTypeMapping("real", typeof(float));
+        private readonly RelationalTypeMapping _datetime 
+            = new RelationalTypeMapping("datetime", typeof(DateTime), DbType.DateTime);
+        private readonly RelationalTypeMapping _uniqueidentifier 
+            = new RelationalTypeMapping("uniqueidentifier", typeof(Guid), DbType.Guid);
+        private readonly RelationalTypeMapping _decimal 
+            = new RelationalTypeMapping("decimal(18, 2)", typeof(decimal));
 
-        private readonly Dictionary<string, RelationalTypeMapping> _simpleNameMappings;
-        private readonly Dictionary<Type, RelationalTypeMapping> _simpleMappings;
+        private readonly Dictionary<Type, RelationalTypeMapping> _clrTypeMappings;
+        private readonly Dictionary<string, RelationalTypeMapping> _storeTypeMappings;
+        private readonly HashSet<string> _disallowedMappings;
 
         public SqlCeTypeMapper()
         {
-            _simpleNameMappings
+            _storeTypeMappings
                 = new Dictionary<string, RelationalTypeMapping>(StringComparer.OrdinalIgnoreCase)
                     {
                     { "bigint", _bigint },
@@ -64,7 +83,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     { "varbinary", _varbinary }
                     };
 
-            _simpleMappings
+            _clrTypeMappings
                 = new Dictionary<Type, RelationalTypeMapping>
                     {
                     { typeof(int), _int },
@@ -79,15 +98,76 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     { typeof(float), _real },
                     { typeof(decimal), _decimal }
                     };
+
+            _disallowedMappings
+                = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    "binary varying",
+                    "binary",
+                    "national char varying",
+                    "national character varying",
+                    "national character",
+                    "nchar",
+                    "nvarchar",
+                    "varbinary",
+                };
+
+            ByteArrayMapper
+                = new ByteArrayRelationalTypeMapper(
+                    8000,
+                    _varbinarymax,
+                    _varbinarymax,
+                    _varbinary512,
+                    _rowversion, size => new SqlCeMaxLengthMapping(
+                        "varbinary(" + size + ")",
+                        typeof(byte[]),
+                        DbType.Binary,
+                        size: size,
+                        hasNonDefaultSize: true));
+
+            StringMapper
+                = new StringRelationalTypeMapper(
+                    4000,
+                    _nvarchar,
+                    _nvarcharmax,
+                    _nvarchar256,
+                    size => new SqlCeMaxLengthMapping(
+                        "nvarchar(" + size + ")",
+                        typeof(string),
+                        dbType: null,
+                        size: size,
+                        hasNonDefaultSize: true),
+                    4000,
+                    _nvarchar,
+                    _nvarcharmax,
+                    _nvarchar256,
+                    size => new SqlCeMaxLengthMapping(
+                        "nvarchar(" + size + ")",
+                        typeof(string),
+                        dbType: null,
+                        size: size,
+                        hasNonDefaultSize: true));
+        }
+
+        public override IByteArrayRelationalTypeMapper ByteArrayMapper { get; }
+
+        public override IStringRelationalTypeMapper StringMapper { get; }
+
+        public override void ValidateTypeName(string storeType)
+        {
+            if (_disallowedMappings.Contains(storeType))
+            {
+                throw new ArgumentException(string.Format("UnqualifiedDataType ({0})", storeType));
+            }
         }
 
         protected override string GetColumnType(IProperty property) => property.SqlCe().ColumnType;
 
-        protected override IReadOnlyDictionary<Type, RelationalTypeMapping> GetSimpleMappings()
-             => _simpleMappings;
+        protected override IReadOnlyDictionary<Type, RelationalTypeMapping> GetClrTypeMappings()
+             => _clrTypeMappings;
 
-        protected override IReadOnlyDictionary<string, RelationalTypeMapping> GetSimpleNameMappings()
-            => _simpleNameMappings;
+        protected override IReadOnlyDictionary<string, RelationalTypeMapping> GetStoreTypeMappings()
+            => _storeTypeMappings;
 
         public override RelationalTypeMapping FindMapping(Type clrType)
         {
@@ -100,24 +180,6 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                 : (clrType == typeof(byte[])
                     ? _varbinarymax
                     : base.FindMapping(clrType));
-        }
-
-        protected override RelationalTypeMapping FindCustomMapping(IProperty property)
-        {
-            Check.NotNull(property, nameof(property));
-
-            var clrType = property.ClrType.UnwrapNullableType();
-
-            return clrType == typeof(string)
-                ? GetStringMapping(
-                    property, 4000,
-                    maxLength => new SqlCeMaxLengthMapping("nvarchar(" + maxLength + ")", typeof(string)),
-                    _nvarcharmax, _nvarchar, _nvarchar256)
-                : clrType == typeof(byte[])
-                    ? GetByteArrayMapping(property, 8000,
-                        maxLength => new SqlCeMaxLengthMapping("varbinary(" + maxLength + ")", typeof(byte[]), DbType.Binary),
-                        _varbinarymax, _varbinarymax, _varbinary512, _rowversion)
-                    : base.FindCustomMapping(property);
         }
 
         protected override bool RequiresKeyMapping(IProperty property)

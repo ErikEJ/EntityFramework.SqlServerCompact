@@ -64,7 +64,7 @@ namespace Microsoft.EntityFrameworkCore.Storage
         [Fact]
         public void Can_create_required_string_parameter()
         {
-            var parameter = new RelationalSizedTypeMapping("nvarchar(23)", typeof(string), DbType.String, true, 23)
+            var parameter = new RelationalTypeMapping("nvarchar(23)", typeof(string), DbType.String, unicode: true, size: 23)
                 .CreateParameter(CreateTestCommand(), "Name", "Value", nullable: false);
 
             Assert.Equal(ParameterDirection.Input, parameter.Direction);
@@ -78,7 +78,7 @@ namespace Microsoft.EntityFrameworkCore.Storage
         [Fact]
         public void Can_create_string_parameter()
         {
-            var parameter = new RelationalSizedTypeMapping("nvarchar(23)", typeof(string), DbType.String, true, 23)
+            var parameter = new RelationalTypeMapping("nvarchar(23)", typeof(string), DbType.String, unicode: true, size: 23)
                 .CreateParameter(CreateTestCommand(), "Name", "Value", nullable: true);
 
             Assert.Equal(ParameterDirection.Input, parameter.Direction);

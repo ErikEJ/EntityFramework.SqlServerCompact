@@ -54,7 +54,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 
             Assert.Equal(
                 "DELETE FROM [__EFMigrationsHistory]" + EOL +
-                "WHERE [MigrationId] = 'Migration1';" + EOL,
+                "WHERE [MigrationId] = 'Migration1'" + EOL + EOL,
                 sql);
         }
 
@@ -66,7 +66,7 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
 
             Assert.Equal(
                 "INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])" + EOL +
-                "VALUES ('Migration1', '1.0.0');" + EOL,
+                "VALUES ('Migration1', '1.0.0')" + EOL + EOL,
                 sql);
         }
 

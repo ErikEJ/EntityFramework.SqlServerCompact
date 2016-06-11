@@ -13,7 +13,7 @@ using Remotion.Linq.Parsing;
 
 namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
 {
-    public class SqlCeQuerySqlGenerator : DefaultQuerySqlGenerator
+    public class SqlCeQuerySqlGenerator : DefaultQuerySqlGenerator, ISqlCeExpressionVisitor
     {
         public SqlCeQuerySqlGenerator(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
@@ -47,6 +47,18 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
             Sql.Append("CAST(COUNT(*) AS bigint)");
 
             return countExpression;
+        }
+
+        public virtual Expression VisitDatePartExpression(DatePartExpression datePartExpression)
+        {
+            Check.NotNull(datePartExpression, nameof(datePartExpression));
+
+            Sql.Append("DATEPART(")
+                .Append(datePartExpression.DatePart)
+                .Append(", ");
+            Visit(datePartExpression.Argument);
+            Sql.Append(")");
+            return datePartExpression;
         }
 
         protected override void GenerateLimitOffset(SelectExpression selectExpression)

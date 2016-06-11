@@ -44,15 +44,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 optionsBuilder.UseSqlCe(@"Data Source=BloggingIdentity.sdf");
             }
 #else
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            {
-                optionsBuilder.UseSqlCe(
-                    new SqlCeConnectionStringBuilder
-                    {
-                        DataSource = "BloggingIdentity.sdf"
-                    }
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlCe(
+                new SqlCeConnectionStringBuilder
+                {
+                    DataSource = "BloggingIdentity.sdf"
+                }
                     .ConnectionString);
-            }
 #endif
         }
 

@@ -39,7 +39,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                             ComplexNavigationsModelInitializer.Seed(context);
                         }
 
-                        TestSqlLoggerFactory.SqlStatements.Clear();
+                        TestSqlLoggerFactory.Reset();
                     }
                 });
 

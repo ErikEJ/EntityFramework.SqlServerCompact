@@ -1084,7 +1084,7 @@ ORDER BY [ct].[GearNickName], [ct].[GearSquadId]",
                 Sql);
         }
 
-        //TODO EEJJ await test
+        //TODO EEJJ await fix
         public override void Join_navigation_translated_to_subquery_composite_key()
         {
 //            base.Join_navigation_translated_to_subquery_composite_key();

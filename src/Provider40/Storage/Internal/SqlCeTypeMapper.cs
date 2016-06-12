@@ -8,14 +8,16 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
 { 
     public class SqlCeTypeMapper : RelationalTypeMapper
     {
-        private readonly SqlCeMaxLengthMapping _nvarcharmax 
-            = new SqlCeMaxLengthMapping("ntext", typeof(string), DbType.String);
+        private readonly SqlCeMaxLengthMapping _nvarchar4000
+            = new SqlCeMaxLengthMapping("nvarchar(4000)", typeof(string), DbType.String, unicode: true, size: 4000);
         private readonly SqlCeMaxLengthMapping _nvarchar256 
-            = new SqlCeMaxLengthMapping("nvarchar(256)", typeof(string), DbType.String, 256);
+            = new SqlCeMaxLengthMapping("nvarchar(256)", typeof(string), DbType.String, true, 256);
+        private readonly SqlCeMaxLengthMapping _varbinary512
+            = new SqlCeMaxLengthMapping("varbinary(512)", typeof(byte[]), DbType.Binary, false, 512);
         private readonly SqlCeMaxLengthMapping _varbinarymax 
-            = new SqlCeMaxLengthMapping("image", typeof(byte[]), DbType.Binary);
-        private readonly SqlCeMaxLengthMapping _varbinary512 
-            = new SqlCeMaxLengthMapping("varbinary(512)", typeof(byte[]), DbType.Binary, 512);
+            = new SqlCeMaxLengthMapping("image", typeof(byte[]), DbType.Binary, unicode: false, size: null);
+        private readonly SqlCeMaxLengthMapping _nvarcharmax
+            = new SqlCeMaxLengthMapping("ntext", typeof(string), DbType.String, unicode: true, size: null);
         private readonly RelationalTypeMapping _rowversion 
             =new RelationalTypeMapping("rowversion", typeof(byte[]), dbType: DbType.Binary, unicode: false, size: 8); 
         private readonly RelationalTypeMapping _int 
@@ -29,11 +31,11 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         private readonly RelationalTypeMapping _tinyint 
             = new RelationalTypeMapping("tinyint", typeof(byte), DbType.Byte);
         private readonly SqlCeMaxLengthMapping _nchar 
-            = new SqlCeMaxLengthMapping("nchar", typeof(string), DbType.StringFixedLength);
+            = new SqlCeMaxLengthMapping("nchar", typeof(string), DbType.StringFixedLength, unicode: true, size: null);
         private readonly SqlCeMaxLengthMapping _nvarchar 
-            = new SqlCeMaxLengthMapping("nvarchar(4000)", typeof(string), DbType.String);
+            = new SqlCeMaxLengthMapping("nvarchar", typeof(string), DbType.String, unicode: true, size: null);
         private readonly SqlCeMaxLengthMapping _varbinary 
-            = new SqlCeMaxLengthMapping("varbinary(8000)", typeof(byte[]), DbType.Binary, 8000);
+            = new SqlCeMaxLengthMapping("varbinary(8000)", typeof(byte[]), DbType.Binary, false, 8000);
         private readonly RelationalTypeMapping _double 
             = new RelationalTypeMapping("float", typeof(double));
         private readonly RelationalTypeMapping _real 
@@ -69,7 +71,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     { "national character varying", _nvarchar },
                     { "national character", _nchar },
                     { "nchar", _nchar },
-                    { "ntext", _nvarchar },
+                    { "ntext", _nvarcharmax },
                     { "numeric", _decimal },
                     { "nvarchar", _nvarchar },
                     { "real", _real },
@@ -115,36 +117,39 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
             ByteArrayMapper
                 = new ByteArrayRelationalTypeMapper(
                     8000,
-                    _varbinarymax,
+                    _varbinary,
                     _varbinarymax,
                     _varbinary512,
                     _rowversion, size => new SqlCeMaxLengthMapping(
                         "varbinary(" + size + ")",
                         typeof(byte[]),
                         DbType.Binary,
+                        unicode: false,
                         size: size,
                         hasNonDefaultSize: true));
 
             StringMapper
                 = new StringRelationalTypeMapper(
                     4000,
-                    _nvarchar,
+                    _nvarchar4000,
                     _nvarcharmax,
                     _nvarchar256,
                     size => new SqlCeMaxLengthMapping(
                         "nvarchar(" + size + ")",
                         typeof(string),
                         dbType: null,
+                        unicode: true,
                         size: size,
                         hasNonDefaultSize: true),
                     4000,
-                    _nvarchar,
+                    _nvarchar4000,
                     _nvarcharmax,
                     _nvarchar256,
                     size => new SqlCeMaxLengthMapping(
                         "nvarchar(" + size + ")",
                         typeof(string),
                         dbType: null,
+                        unicode: true,
                         size: size,
                         hasNonDefaultSize: true));
         }

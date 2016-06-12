@@ -244,7 +244,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 Assert.Equal(
                     new[]
                         {
-                            "Blogs.AndChew (image)",
+                            "Blogs.AndChew (varbinary)",
                             "Blogs.AndRow (rowversion)",
                             "Blogs.Cheese (nvarchar)",
                             "Blogs.CupOfChar (int)",

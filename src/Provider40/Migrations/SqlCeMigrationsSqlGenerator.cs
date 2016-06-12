@@ -52,11 +52,18 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
             builder.Append("CREATE ");
 
-            var isNullableForeignKey = operation
+            var isNullableKey = operation
                 .Columns.Select(column => FindProperty(model, null, operation.Table, column))
                 .Any(property => (property != null) && property.IsColumnNullable() && property.IsForeignKey());
 
-            if (operation.IsUnique && !isNullableForeignKey)
+            if (!isNullableKey && (operation.Columns.Length == 1))
+            {
+                isNullableKey = operation
+                .Columns.Select(column => FindProperty(model, null, operation.Table, column))
+                .Any(property => (property != null) && property.IsColumnNullable());
+            }
+
+            if (operation.IsUnique && !isNullableKey)
             {
                 builder.Append("UNIQUE ");
             }

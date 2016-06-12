@@ -3482,7 +3482,7 @@ WHERE (@__flag_0 = 1) AND ([p].[UnitsInStock] >= 20)",
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE ([c].[CustomerID] + CAST(@__i_0 AS nvarchar(4000))) = [c].[CompanyName]",
+WHERE ([c].[CustomerID] + CAST(@__i_0 AS nvarchar)) = [c].[CompanyName]",
                 Sql);
         }
 
@@ -3495,7 +3495,7 @@ WHERE ([c].[CustomerID] + CAST(@__i_0 AS nvarchar(4000))) = [c].[CompanyName]",
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE (CAST(@__i_0 AS nvarchar(4000)) + [c].[CustomerID]) = [c].[CompanyName]",
+WHERE (CAST(@__i_0 AS nvarchar) + [c].[CustomerID]) = [c].[CompanyName]",
                 Sql);
         }
 
@@ -3509,7 +3509,7 @@ WHERE (CAST(@__i_0 AS nvarchar(4000)) + [c].[CustomerID]) = [c].[CompanyName]",
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE (((CAST(@__i_0 + 20 AS nvarchar(4000)) + [c].[CustomerID]) + CAST(@__j_1 AS nvarchar(4000))) + CAST(42 AS nvarchar(4000))) = [c].[CompanyName]",
+WHERE (((CAST(@__i_0 + 20 AS nvarchar) + [c].[CustomerID]) + CAST(@__j_1 AS nvarchar)) + CAST(42 AS nvarchar)) = [c].[CompanyName]",
                 Sql);
         }
 

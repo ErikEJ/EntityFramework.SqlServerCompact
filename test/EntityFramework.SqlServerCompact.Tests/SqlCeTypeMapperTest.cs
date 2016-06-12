@@ -225,14 +225,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             var typeMapping = GetTypeMapping(typeof(byte[]));
 
-            //Assert.Equal(DbType.Binary, typeMapping.StoreType);
-            //Assert.Equal("image", typeMapping.StoreType);
-            
-            //TODO EEJJ!!!
-            //Assert.Equal(DbType.Binary, typeMapping.DbType);
-            //Assert.Equal("image", typeMapping.StoreType);
-            //Assert.Equal(8000, typeMapping.Size);
-            //Assert.Equal(8000, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
+            Assert.Equal(DbType.Binary, typeMapping.DbType);
+            Assert.Equal("varbinary(8000)", typeMapping.StoreType);
+            Assert.Equal(8000, typeMapping.Size);
+            Assert.Equal(8000, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
         }
 
         [Fact]
@@ -240,14 +236,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             var typeMapping = GetTypeMapping(typeof(byte[]), isNullable: false);
 
-            //Assert.Equal(DbType.Binary, typeMapping.StoreType);
-            //Assert.Equal("image", typeMapping.StoreType);
-
-            //TODO EEJJ!!!
-            //Assert.Equal(DbType.Binary, typeMapping.DbType);
-            //Assert.Equal("image", typeMapping.StoreType);
-            //Assert.Equal(8000, typeMapping.Size);
-            //Assert.Equal(8000, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
+            Assert.Equal(DbType.Binary, typeMapping.DbType);
+            Assert.Equal("varbinary(8000)", typeMapping.StoreType);
+            Assert.Equal(8000, typeMapping.Size);
+            Assert.Equal(8000, typeMapping.CreateParameter(new TestCommand(), "Name", new byte[3]).Size);
         }
 
         [Fact]
@@ -351,7 +343,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
             var typeMapping = (SqlCeMaxLengthMapping)new SqlCeTypeMapper().GetMapping(property);
 
             Assert.Equal(DbType.Binary, typeMapping.DbType);
-            Assert.Equal("image", typeMapping.StoreType);
+            Assert.Equal("varbinary(8000)", typeMapping.StoreType);
         }
 
         private static RelationalTypeMapping GetTypeMapping(Type propertyType, bool? isNullable = null)
@@ -380,14 +372,14 @@ namespace Microsoft.EntityFrameworkCore.Tests
         [Fact]
         public void Does_default_mappings_for_strings_and_byte_arrays()
         {
-            Assert.Equal("nvarchar(4000)", new SqlCeTypeMapper().GetMapping(typeof(string)).StoreType);
+            Assert.Equal("nvarchar", new SqlCeTypeMapper().GetMapping(typeof(string)).StoreType);
             Assert.Equal("image", new SqlCeTypeMapper().GetMapping(typeof(byte[])).StoreType);
         }
 
         [Fact]
         public void Does_default_mappings_for_values()
         {
-            Assert.Equal("nvarchar(4000)", new SqlCeTypeMapper().GetMappingForValue("Cheese").StoreType);
+            Assert.Equal("nvarchar", new SqlCeTypeMapper().GetMappingForValue("Cheese").StoreType);
             Assert.Equal("image", new SqlCeTypeMapper().GetMappingForValue(new byte[1]).StoreType);
             Assert.Equal("datetime", new SqlCeTypeMapper().GetMappingForValue(new DateTime()).StoreType);
         }

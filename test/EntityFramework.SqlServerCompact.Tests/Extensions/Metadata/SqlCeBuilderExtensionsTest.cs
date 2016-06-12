@@ -349,82 +349,123 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .ForSqlCeToTable("Simon");
         }
 
-        //TODO EEJJ Fix property changes
-        //[Fact]
-        //public void SqlCe_property_methods_dont_break_out_of_the_generics()
-        //{
-        //    var modelBuilder = CreateConventionModelBuilder();
+        [Fact]
+        public void SqlCe_property_methods_dont_break_out_of_the_generics2()
+        {
+            var modelBuilder = CreateConventionModelBuilder();
 
-        //    AssertIsGeneric(
-        //        modelBuilder
-        //            .Entity<Customer>()
-        //            .Property(e => e.Name)
-        //            .ForSqlCeHasColumnName("Will"));
+            AssertIsGeneric(
+                modelBuilder
+                    .Entity<Customer>()
+                    .Property(e => e.Name)
+                    .ForSqlCeHasColumnName("Will"));
 
-        //    AssertIsGeneric(
-        //        modelBuilder
-        //            .Entity<Customer>()
-        //            .Property(e => e.Name)
-        //            .ForSqlCeHasColumnType("Jay"));
+            AssertIsGeneric(
+                modelBuilder
+                    .Entity<Customer>()
+                    .Property(e => e.Name)
+                    .ForSqlCeHasColumnType("Jay"));
 
-        //    AssertIsGeneric(
-        //        modelBuilder
-        //            .Entity<Customer>()
-        //            .Property(e => e.Name)
-        //            .ForSqlCeHasDefaultValueSql("Simon"));
+            AssertIsGeneric(
+                modelBuilder
+                    .Entity<Customer>()
+                    .Property(e => e.Name)
+                    .ForSqlCeHasDefaultValue("Neil"));
+        }
 
-        //    AssertIsGeneric(
-        //        modelBuilder
-        //            .Entity<Customer>()
-        //            .Property(e => e.Name)
-        //            .ForSqlCeHasDefaultValue("Neil"));
-        //}
+        [Fact]
+        public void SqlCe_property_methods_dont_break_out_of_the_generics()
+        {
+            var modelBuilder = CreateConventionModelBuilder();
 
-        //TODO EEJJ Fix property changes
-        //[Fact]
-        //public void SqlCe_property_methods_have_non_generic_overloads()
-        //{
-        //    var modelBuilder = CreateConventionModelBuilder();
-        //    modelBuilder
-        //        .Entity(typeof(Customer))
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasColumnName("Will");
+            AssertIsGeneric(
+                modelBuilder
+                    .Entity<Customer>()
+                    .Property(e => e.Name)
+                    .ForSqlCeHasColumnName("Will"));
 
-        //    modelBuilder
-        //        .Entity<Customer>()
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasColumnName("Jay");
+            AssertIsGeneric(
+                modelBuilder
+                    .Entity<Customer>()
+                    .Property(e => e.Name)
+                    .ForSqlCeHasColumnType("Jay"));
 
-        //    modelBuilder
-        //        .Entity(typeof(Customer))
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasColumnType("Simon");
+            AssertIsGeneric(
+                modelBuilder
+                    .Entity<Customer>()
+                    .Property(e => e.Name)
+                    .ForSqlCeHasDefaultValueSql("Simon"));
+        }
 
-        //    modelBuilder
-        //        .Entity<Customer>()
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasColumnType("Neil");
+        [Fact]
+        public void SqlCe_property_methods_have_non_generic_overloads()
+        {
+            var modelBuilder = CreateConventionModelBuilder();
+            modelBuilder
+                .Entity(typeof(Customer))
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnName("Will");
 
-        //    modelBuilder
-        //        .Entity(typeof(Customer))
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasDefaultValueSql("Simon");
+            modelBuilder
+                .Entity<Customer>()
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnName("Jay");
 
-        //    modelBuilder
-        //        .Entity<Customer>()
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasDefaultValueSql("Neil");
+            modelBuilder
+                .Entity(typeof(Customer))
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnType("Simon");
 
-        //    modelBuilder
-        //        .Entity(typeof(Customer))
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasDefaultValue("Simon");
+            modelBuilder
+                .Entity<Customer>()
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnType("Neil");
 
-        //    modelBuilder
-        //        .Entity<Customer>()
-        //        .Property(typeof(string), "Name")
-        //        .ForSqlCeHasDefaultValue("Neil");
-        //}
+            modelBuilder
+                .Entity(typeof(Customer))
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasDefaultValue("Simon");
+
+            modelBuilder
+                .Entity<Customer>()
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasDefaultValue("Neil");
+        }
+
+        [Fact]
+        public void SqlCe_property_methods_have_non_generic_overloads2()
+        {
+            var modelBuilder = CreateConventionModelBuilder();
+            modelBuilder
+                .Entity(typeof(Customer))
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnName("Will");
+
+            modelBuilder
+                .Entity<Customer>()
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnName("Jay");
+
+            modelBuilder
+                .Entity(typeof(Customer))
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnType("Simon");
+
+            modelBuilder
+                .Entity<Customer>()
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasColumnType("Neil");
+
+            modelBuilder
+                .Entity(typeof(Customer))
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasDefaultValueSql("Simon");
+
+            modelBuilder
+                .Entity<Customer>()
+                .Property(typeof(string), "Name")
+                .ForSqlCeHasDefaultValueSql("Neil");
+        }
 
         [Fact]
         public void SqlCe_relationship_methods_dont_break_out_of_the_generics()

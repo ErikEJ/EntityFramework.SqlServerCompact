@@ -14,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
             [NotNull] string storeType,
             [NotNull] Type clrType,
             DbType? dbType = null)
-            : this(storeType, clrType, dbType, size: null)
+            : this(storeType, clrType, dbType, unicode: false, size: null)
         {
         }
 
@@ -22,9 +22,10 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
             [NotNull] string storeType,
             [NotNull] Type clrType,
             DbType? dbType,
+            bool unicode,
             int? size,
             bool hasNonDefaultSize = false)
-            : base(storeType, clrType, dbType, true, CalculateSize(size), false, hasNonDefaultSize)
+            : base(storeType, clrType, dbType, unicode, CalculateSize(unicode, size), false, hasNonDefaultSize)
         {
             _maxSpecificSize = 
                 dbType == System.Data.DbType.Binary
@@ -32,8 +33,10 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     : 4000;
         }
 
-        private static int CalculateSize(int? size)
-            => size.HasValue && (size.Value < 4000) ? size.Value : 4000;
+        private static int CalculateSize(bool unicode, int? size)
+            => unicode
+                ? size.HasValue && (size < 4000) ? size.Value : 4000
+                : size.HasValue && (size < 8000) ? size.Value : 8000;
 
         protected override void ConfigureParameter(DbParameter parameter)
         {

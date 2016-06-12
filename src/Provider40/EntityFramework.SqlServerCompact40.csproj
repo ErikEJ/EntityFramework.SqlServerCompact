@@ -111,7 +111,6 @@
     <Compile Include="Extensions\Logging\NullLogger.cs" />
     <Compile Include="MetaData\Internal\SqlCeFullAnnotationNames.cs" />
     <Compile Include="MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs" />
-    <Compile Include="MetaData\Internal\SqlCeModelBuilderAnnotations.cs" />
     <Compile Include="Query\Expressions\DatePartExpression.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs" />

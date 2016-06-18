@@ -13,7 +13,6 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 {
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {
-        private readonly IRelationalAnnotationProvider _annotations;
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
 
         public SqlCeMigrationsSqlGenerator(
@@ -23,7 +22,6 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             [NotNull] IRelationalAnnotationProvider annotations)
             : base(commandBuilderFactory, sqlGenerationHelper, typeMapper, annotations)
         {
-            _annotations = annotations;
             _commandBuilderFactory = commandBuilderFactory;
         }
 
@@ -163,53 +161,55 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name));
         }
 
+        private const string NotSupported = "SQL Server Compact does not support this migration operation ('{0}')."; 
+
         #region Invalid schema operations
         protected override void Generate(EnsureSchemaOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support schemas.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(DropSchemaOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support schemas.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
         #endregion
 
         #region Sequences not supported
         protected override void Generate(RestartSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support sequences.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(CreateSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support sequences.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(AlterSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support sequences.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(DropSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support sequences.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(RenameSequenceOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support sequences.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
         #endregion 
 
         protected override void Generate(RenameColumnOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support column renames.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(RenameIndexOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException("SQL Server Compact does not support index renames.");
+            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(RenameTableOperation operation, IModel model, MigrationCommandListBuilder builder)

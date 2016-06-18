@@ -7,7 +7,8 @@ namespace E2ETest.Namespace
 {
     public partial class PropertyConfiguration
     {
-        public int PropertyConfigurationID { get; set; }
+        [Column("PropertyConfigurationID")]
+        public int PropertyConfigurationId { get; set; }
         public DateTime WithDateDefaultExpression { get; set; }
         public DateTime WithDateFixedDefault { get; set; }
         public DateTime? WithDateNullDefault { get; set; }
@@ -16,10 +17,12 @@ namespace E2ETest.Namespace
         public string WithVarcharNullDefaultValue { get; set; }
         public int WithDefaultValue { get; set; }
         public short? WithNullDefaultValue { get; set; }
+        [Column(TypeName = "money")]
         public decimal WithMoneyDefaultValue { get; set; }
         public int A { get; set; }
         public int B { get; set; }
         [Required]
+        [Column(TypeName = "rowversion")]
         public byte[] RowversionColumn { get; set; }
     }
 }

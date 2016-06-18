@@ -21,12 +21,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
 
-        //TODO EEJJ Investigate why this fails
-        public override void Select_bool_closure()
-        {
-            //base.Select_bool_closure();
-        }
-
         public override void Local_array()
         {
             base.Local_array();

@@ -71,11 +71,11 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid)).DbType);
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte)).DbType);
-            Assert.Null(GetTypeMapping(typeof(double)).DbType);
-            Assert.Null(GetTypeMapping(typeof(bool)).DbType);
+            Assert.Equal(DbType.Double, GetTypeMapping(typeof(double)).DbType);
+            Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool)).DbType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short)).DbType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long)).DbType);
-            Assert.Null(GetTypeMapping(typeof(float)).DbType);
+            Assert.Equal(DbType.Single, GetTypeMapping(typeof(float)).DbType);
             Assert.Equal(DbType.DateTime, GetTypeMapping(typeof(DateTime)).DbType);
         }
 
@@ -88,11 +88,11 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid?)).DbType);
             Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char?)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte?)).DbType);
-            Assert.Null(GetTypeMapping(typeof(double?)).DbType);
-            Assert.Null(GetTypeMapping(typeof(bool?)).DbType);
+            Assert.Equal(DbType.Double, GetTypeMapping(typeof(double?)).DbType);
+            Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool?)).DbType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short?)).DbType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long?)).DbType);
-            Assert.Null(GetTypeMapping(typeof(float?)).DbType);
+            Assert.Equal(DbType.Single, GetTypeMapping(typeof(float?)).DbType);
             Assert.Equal(DbType.DateTime, GetTypeMapping(typeof(DateTime?)).DbType);
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             var typeMapping = GetTypeMapping(typeof(decimal));
 
-            Assert.Null(typeMapping.DbType);
+            Assert.Equal(DbType.Decimal, typeMapping.DbType);
             Assert.Equal("decimal(18, 2)", typeMapping.StoreType);
         }
 
@@ -123,7 +123,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             var typeMapping = GetTypeMapping(typeof(decimal?));
 
-            Assert.Null(typeMapping.DbType);
+            Assert.Equal(DbType.Decimal, typeMapping.DbType);
             Assert.Equal("decimal(18, 2)", typeMapping.StoreType);
         }
 

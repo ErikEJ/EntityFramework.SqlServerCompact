@@ -7,10 +7,12 @@ namespace E2ETest.Namespace
 {
     public partial class ReferredToByTableWithUnmappablePrimaryKeyColumn
     {
-        public int ReferredToByTableWithUnmappablePrimaryKeyColumnID { get; set; }
+        [Column("ReferredToByTableWithUnmappablePrimaryKeyColumnID")]
+        public int ReferredToByTableWithUnmappablePrimaryKeyColumnId { get; set; }
         [Required]
+        [Column("AColumn")]
         [MaxLength(20)]
-        public string AColumn { get; set; }
+        public string Acolumn { get; set; }
         public int ValueGeneratedOnAddColumn { get; set; }
     }
 }

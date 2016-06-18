@@ -72,8 +72,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             };
 
         //TODO EEJJ re-enable tests
-        //[Fact]
-        //[UseCulture("en-US")]
+        [Fact]
+        [UseCulture("en-US")]
         public void E2ETestUseAttributesInsteadOfFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration

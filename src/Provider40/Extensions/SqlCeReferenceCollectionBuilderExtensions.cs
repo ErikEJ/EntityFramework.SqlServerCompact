@@ -6,25 +6,42 @@ using Microsoft.EntityFrameworkCore.Utilities;
 
 namespace Microsoft.EntityFrameworkCore
 {
+    /// <summary>
+    ///     SQL Server Compact specific extension methods for <see cref="ReferenceCollectionBuilder"/>.
+    /// </summary>
     public static class SqlCeReferenceCollectionBuilderExtensions
     {
+        /// <summary>
+        ///     Configures the foreign key constraint name for this relationship when targeting SQL Server Compact.
+        /// </summary>
+        /// <param name="referenceCollectionBuilder"> The builder being used to configure the relationship. </param>
+        /// <param name="name"> The name of the foreign key constraint. </param>
+        /// <returns> The same builder instance so that multiple calls can be chained. </returns>
         public static ReferenceCollectionBuilder ForSqlCeHasConstraintName(
-            [NotNull] this ReferenceCollectionBuilder builder,
+            [NotNull] this ReferenceCollectionBuilder referenceCollectionBuilder,
             [CanBeNull] string name)
         {
-            Check.NotNull(builder, nameof(builder));
+            Check.NotNull(referenceCollectionBuilder, nameof(referenceCollectionBuilder));
             Check.NullButNotEmpty(name, nameof(name));
 
-            builder.Metadata.SqlCe().Name = name;
+            referenceCollectionBuilder.Metadata.SqlCe().Name = name;
 
-            return builder;
+            return referenceCollectionBuilder;
         }
 
-        public static ReferenceCollectionBuilder<TEntity, TReferencedEntity> ForSqlCeHasConstraintName<TEntity, TReferencedEntity>(
-            [NotNull] this ReferenceCollectionBuilder<TEntity, TReferencedEntity> builder,
+        /// <summary>
+        ///     Configures the foreign key constraint name for this relationship when targeting SQL Server Compact.
+        /// </summary>
+        /// <param name="referenceCollectionBuilder"> The builder being used to configure the relationship. </param>
+        /// <param name="name"> The name of the foreign key constraint. </param>
+        /// <returns> The same builder instance so that multiple calls can be chained. </returns>
+        /// <typeparam name="TEntity"> The principal entity type in this relationship. </typeparam>
+        /// <typeparam name="TRelatedEntity"> The dependent entity type in this relationship. </typeparam>
+        public static ReferenceCollectionBuilder<TEntity, TRelatedEntity> ForSqlCeHasConstraintName<TEntity, TRelatedEntity>(
+            [NotNull] this ReferenceCollectionBuilder<TEntity, TRelatedEntity> referenceCollectionBuilder,
             [CanBeNull] string name)
             where TEntity : class
-            where TReferencedEntity : class
-            => (ReferenceCollectionBuilder<TEntity, TReferencedEntity>)((ReferenceCollectionBuilder)builder).ForSqlCeHasConstraintName(name);
+            where TRelatedEntity : class
+            => (ReferenceCollectionBuilder<TEntity, TRelatedEntity>)((ReferenceCollectionBuilder)referenceCollectionBuilder).ForSqlCeHasConstraintName(name);
     }
 }

@@ -81,10 +81,6 @@
       <HintPath>..\..\packages\Microsoft.Extensions.Options.1.0.0-rtm-21424\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.PlatformAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.PlatformAbstractions.1.0.0-rc3-21233\lib\net451\Microsoft.Extensions.PlatformAbstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Primitives.1.0.0-rtm-21424\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>True</Private>

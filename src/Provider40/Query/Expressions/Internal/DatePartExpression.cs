@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Query.Sql;
+using Microsoft.EntityFrameworkCore.Query.Sql.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Query.Expressions
+namespace Microsoft.EntityFrameworkCore.Query.Expressions.Internal
 {
     public class DatePartExpression : Expression
     {

@@ -1,6 +1,7 @@
 ﻿ using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
+ using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {

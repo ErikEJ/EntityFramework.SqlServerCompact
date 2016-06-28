@@ -7,7 +7,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
 {
     public class SqlCeSqlGenerationHelper : RelationalSqlGenerationHelper
     {
-        private const string DateTimeFormatConst = "yyyy-MM-ddTHH:mm:ss.fffK";
+        private const string DateTimeFormatConst = "yyyy-MM-ddTHH:mm:ss.fff";
         private const string DateTimeFormatStringConst = "'{0:" + DateTimeFormatConst + "}'";
         private const string DateTimeOffsetFormatConst = "yyyy-MM-ddTHH:mm:ss.fff";
         private const string DateTimeOffsetFormatStringConst = "'{0:" + DateTimeOffsetFormatConst + "}'";

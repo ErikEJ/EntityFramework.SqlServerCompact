@@ -54,13 +54,6 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 .Columns.Select(column => FindProperty(model, null, operation.Table, column))
                 .Any(property => (property != null) && property.IsColumnNullable() && property.IsForeignKey());
 
-            if (!isNullableKey && (operation.Columns.Length == 1))
-            {
-                isNullableKey = operation
-                .Columns.Select(column => FindProperty(model, null, operation.Table, column))
-                .Any(property => (property != null) && property.IsColumnNullable());
-            }
-
             if (operation.IsUnique && !isNullableKey)
             {
                 builder.Append("UNIQUE ");

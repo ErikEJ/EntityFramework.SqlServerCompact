@@ -4,8 +4,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests.TestModels
 {
     public class SqlCeNorthwindContext : NorthwindContext
     {
-        public SqlCeNorthwindContext(DbContextOptions options)
-            : base(options)
+        public SqlCeNorthwindContext(DbContextOptions options,
+           QueryTrackingBehavior queryTrackingBehavior = QueryTrackingBehavior.TrackAll)
+            : base(options, queryTrackingBehavior)
         {
         }
 #if SQLCE35

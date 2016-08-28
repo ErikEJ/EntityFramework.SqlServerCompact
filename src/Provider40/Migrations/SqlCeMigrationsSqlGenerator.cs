@@ -50,8 +50,15 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
             builder.Append("CREATE ");
 
-            var isNullableKey = operation
-                .Columns.Select(column => FindProperty(model, null, operation.Table, column))
+            var properties = new List<IProperty>();
+            foreach (var column in operation.Columns)
+            {
+                var found = FindProperties(model, null, operation.Table, column);
+                if (found != null)
+                    properties.AddRange(found);
+            }
+
+            var isNullableKey = properties
                 .Any(property => (property != null) && property.IsColumnNullable() && property.IsForeignKey());
 
             if (operation.IsUnique && !isNullableKey)

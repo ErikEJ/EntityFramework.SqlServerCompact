@@ -33,12 +33,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                     using (var context = new NullSemanticsContext(optionsBuilder.Options))
                     {
-                        // TODO: Delete DB if model changed
-
-                        if (context.Database.EnsureCreated())
-                        {
-                            NullSemanticsModelInitializer.Seed(context);
-                        }
+                        context.Database.EnsureClean();
+                        NullSemanticsModelInitializer.Seed(context);
 
                         TestSqlLoggerFactory.Reset();
                     }

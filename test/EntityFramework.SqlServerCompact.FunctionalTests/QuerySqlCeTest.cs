@@ -12,7 +12,6 @@ using System.Threading;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    [MonoVersionCondition(Min = "4.2.0", SkipReason = "Queries fail on Mono < 4.2.0 due to differences in the implementation of LINQ")]
     public class QuerySqlCeTest : QueryTestBase<NorthwindQuerySqlCeFixture>
     {
         public QuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)

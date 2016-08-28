@@ -35,6 +35,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             {
                 return new DbContext(_options);
             }
+
+            protected override void EnsureClean(DbContext context)
+                => context.Database.EnsureClean();
         }
     }
 }

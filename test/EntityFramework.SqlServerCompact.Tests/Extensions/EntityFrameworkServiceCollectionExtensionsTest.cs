@@ -47,8 +47,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             VerifySingleton<IDbSetSource>();
             VerifySingleton<ICollectionTypeFactory>();
             VerifySingleton<IEntityMaterializerSource>();
-            VerifySingleton<IMemberMapper>();
-            VerifySingleton<IFieldMatcher>();
             VerifySingleton<ILoggerFactory>();
             VerifySingleton<ICoreConventionSetBuilder>();
 
@@ -104,7 +102,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
 
             Assert.Equal(sortedServices1.Count, sortedServices2.Count);
 
-            for (int i = 0; i < sortedServices1.Count; i++)
+            for (var i = 0; i < sortedServices1.Count; i++)
             {
                 Assert.Equal(sortedServices1[i].ServiceType, sortedServices2[i].ServiceType);
                 Assert.Equal(sortedServices1[i].ImplementationType, sortedServices2[i].ImplementationType);
@@ -116,7 +114,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         private readonly DbContext _firstContext;
         private readonly DbContext _secondContext;
 
-        public EntityFrameworkServiceCollectionExtensionsTest(TestHelpers testHelpers)
+        protected EntityFrameworkServiceCollectionExtensionsTest(TestHelpers testHelpers)
         {
             _testHelpers = testHelpers;
 

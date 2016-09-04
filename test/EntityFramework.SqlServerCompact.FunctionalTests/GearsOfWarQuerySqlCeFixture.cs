@@ -40,7 +40,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new GearsOfWarContext(optionsBuilder.Options))
                 {
-                    context.Database.EnsureClean();
+                    //TODO EEJJ Why is EnsureClean broken?
+                    //context.Database.EnsureClean();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                     GearsOfWarModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();

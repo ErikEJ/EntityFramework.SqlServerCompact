@@ -72,6 +72,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         protected override void EnsureClean(DbContext context)
-            => context.Database.EnsureClean();
+        {
+            //TODO EEJJ Why is EnsureClean broken?
+            //context.Database.EnsureClean();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
     }
 }

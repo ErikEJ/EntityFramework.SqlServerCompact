@@ -158,6 +158,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             builder
                 .EndCommand()
                 .Append("DROP INDEX ")
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
+                .Append(".")
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name));
         }
 

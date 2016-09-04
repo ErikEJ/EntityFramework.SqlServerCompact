@@ -33,7 +33,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new F1Context(optionsBuilder.Options))
                 {
-                    context.Database.EnsureClean();
+                    //TODO EEJJ Why is EnsureClean broken?
+                    //context.Database.EnsureClean();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                     ConcurrencyModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();
@@ -61,6 +64,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 b.Property(t => t.Id)
                     .ValueGeneratedNever();
             });
+
+            modelBuilder.Entity<Chassis>().Property<byte[]>("Version").IsRowVersion();
+            modelBuilder.Entity<Driver>().Property<byte[]>("Version").IsRowVersion();
+
+            modelBuilder.Entity<Team>().Property<byte[]>("Version")
+                .ValueGeneratedOnAddOrUpdate()
+                .IsConcurrencyToken();
         }
     }
 }

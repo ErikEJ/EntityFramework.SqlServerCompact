@@ -78,7 +78,17 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             {
                 _tableSelectionSet = tableSelectionSet;
 
-                _databaseModel.DatabaseName = _connection.Database;
+                string databaseName = null;
+                try
+                {
+                    databaseName = Path.GetFileNameWithoutExtension(_connection.DataSource);
+                }
+                catch (ArgumentException)
+                {
+                    // graceful fallback
+                }
+
+                _databaseModel.DatabaseName = !string.IsNullOrEmpty(databaseName) ? databaseName : _connection.DataSource;
 
                 GetTables();
                 GetColumns();

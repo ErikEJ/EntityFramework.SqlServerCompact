@@ -33,10 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new F1Context(optionsBuilder.Options))
                 {
-                    //TODO EEJJ Why is EnsureClean broken?
-                    //context.Database.EnsureClean();
-                    context.Database.EnsureDeleted();
-                    context.Database.EnsureCreated();
+                    context.Database.EnsureClean();
                     ConcurrencyModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();

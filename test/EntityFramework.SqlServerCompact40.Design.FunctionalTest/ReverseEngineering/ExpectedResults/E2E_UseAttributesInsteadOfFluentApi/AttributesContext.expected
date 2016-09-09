@@ -77,7 +77,7 @@ namespace E2ETest.Namespace
                     .HasPrincipalKey<OneToOneFktoUniqueKeyPrincipal>(p => new { p.OneToOneFktoUniqueKeyPrincipalUniqueKey1, p.OneToOneFktoUniqueKeyPrincipalUniqueKey2 })
                     .HasForeignKey<OneToOneFktoUniqueKeyDependent>(d => new { d.OneToOneFktoUniqueKeyDependentFk1, d.OneToOneFktoUniqueKeyDependentFk2 })
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("OneToOneFKToUniqueKeyDependent_FK_OneToOneFKToUniqueKeyDependent");
+                    .HasConstraintName("FK_OneToOneFKToUniqueKeyDependent");
             });
 
             modelBuilder.Entity<OneToOneFktoUniqueKeyPrincipal>(entity =>

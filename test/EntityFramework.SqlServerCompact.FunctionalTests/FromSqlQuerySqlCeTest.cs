@@ -8,7 +8,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class FromSqlQuerySqlCeTest : FromSqlQueryTestBase<NorthwindQuerySqlCeFixture>
     {
-        //TODO EEJJ logged https://github.com/aspnet/EntityFramework/issues/6471
+        //disabled - see https://github.com/aspnet/EntityFramework/issues/6471
         public override void Bad_data_error_handling_invalid_cast()
         {
             //base.Bad_data_error_handling_invalid_cast();
@@ -80,7 +80,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 FROM (
     SELECT * FROM ""Customers""
 ) AS [c]
-WHERE [c].[ContactName] LIKE (N'%' + N'z') + N'%'",
+WHERE CHARINDEX(N'z', [c].[ContactName]) > 0",
                 Sql);
         }
 

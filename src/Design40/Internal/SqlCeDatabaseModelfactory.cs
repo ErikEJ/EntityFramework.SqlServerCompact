@@ -69,10 +69,10 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
             _connection = connection as SqlCeConnection;
 
-            var connectionStartedOpen = _connection.State == ConnectionState.Open;
+            var connectionStartedOpen = (_connection != null) && (_connection.State == ConnectionState.Open);
             if (!connectionStartedOpen)
             {
-                _connection.Open();
+                _connection?.Open();
             }
             try
             {
@@ -81,14 +81,16 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 string databaseName = null;
                 try
                 {
-                    databaseName = Path.GetFileNameWithoutExtension(_connection.DataSource);
+                    if (_connection != null)
+                        databaseName = Path.GetFileNameWithoutExtension(_connection.DataSource);
                 }
                 catch (ArgumentException)
                 {
                     // graceful fallback
                 }
 
-                _databaseModel.DatabaseName = !string.IsNullOrEmpty(databaseName) ? databaseName : _connection.DataSource;
+                if (_connection != null)
+                    _databaseModel.DatabaseName = !string.IsNullOrEmpty(databaseName) ? databaseName : _connection.DataSource;
 
                 GetTables();
                 GetColumns();
@@ -100,7 +102,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             {
                 if (!connectionStartedOpen)
                 {
-                    _connection.Close();
+                    _connection?.Close();
                 }
             }
         }
@@ -291,7 +293,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
         {
             var command = _connection.CreateCommand();
             command.CommandText = @"SELECT 
-                KCU1.TABLE_NAME + '_' + KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
+                KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
+                --KCU1.TABLE_NAME + '_' + KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
                 NULL AS [SCHEMA_NAME],
                 KCU1.TABLE_NAME AS FK_TABLE_NAME,  
                 NULL AS [UQ_SCHEMA_NAME],

@@ -189,6 +189,9 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeCompositeMethodCallTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeCompositeMethodCallTranslator.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeContainsOptimizedTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeContainsOptimizedTranslator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs</Link>
     </Compile>
@@ -197,6 +200,9 @@
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeNowTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeNowTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeEndsWithOptimizedTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeEndsWithOptimizedTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathAbsTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeMathAbsTranslator.cs</Link>
@@ -218,6 +224,9 @@
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs</Link>

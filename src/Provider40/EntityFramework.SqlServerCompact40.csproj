@@ -112,7 +112,10 @@
     <Compile Include="MetaData\Internal\SqlCeFullAnnotationNames.cs" />
     <Compile Include="MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs" />
     <Compile Include="Query\Expressions\Internal\DatePartExpression.cs" />
+    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeContainsOptimizedTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs" />
+    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeEndsWithOptimizedTranslator.cs" />
+    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimTranslator.cs" />

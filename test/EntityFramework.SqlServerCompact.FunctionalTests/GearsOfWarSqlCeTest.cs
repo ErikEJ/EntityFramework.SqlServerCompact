@@ -879,10 +879,9 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND [g].[LeaderNickname] = N'
             Assert.Equal(
                 @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
 FROM [Gear] AS [g]
-WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND RIGHT([g].[LeaderNickname], LEN(N'us')) = N'us'",
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND [g].[LeaderNickname] LIKE N'%' + N'us'",
                 Sql);
         }
-
 
         public override void Null_propagation_optimization3()
         {
@@ -891,7 +890,7 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND RIGHT([g].[LeaderNickname
             Assert.Equal(
                 @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
 FROM [Gear] AS [g]
-WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND RIGHT([g].[LeaderNickname], LEN(N'us')) = N'us'",
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND [g].[LeaderNickname] LIKE N'%' + N'us'",
                 Sql);
         }
 

@@ -33,10 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new InheritanceRelationshipsContext(optionsBuilder.Options))
                 {
-                    //TODO EEJJ Why does EnsureClean break?
-                    //context.Database.EnsureClean();
-                    context.Database.EnsureDeleted();
-                    context.Database.EnsureCreated();
+                    context.Database.EnsureClean();
                     InheritanceRelationshipsModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();

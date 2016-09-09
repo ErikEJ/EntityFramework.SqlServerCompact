@@ -896,7 +896,7 @@ END) OR [e].[NullableStringC] IS NULL",
             Assert.Equal(
                 @"SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
-WHERE [e].[NullableStringA] LIKE (N'%' + [e].[NullableStringB]) + N'%' AND ([e].[BoolA] = 1)",
+WHERE ((CHARINDEX([e].[NullableStringB], [e].[NullableStringA]) > 0) OR ([e].[NullableStringB] = N'')) AND ([e].[BoolA] = 1)",
                 Sql);
         }
 

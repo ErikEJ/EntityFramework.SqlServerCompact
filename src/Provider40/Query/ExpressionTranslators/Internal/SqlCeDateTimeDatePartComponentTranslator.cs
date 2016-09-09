@@ -1,7 +1,6 @@
 ﻿ using System;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Query.Expressions;
- using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
+using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
@@ -10,9 +9,9 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
         public virtual Expression Translate(MemberExpression memberExpression)
         {
             string datePart;
-            if (memberExpression.Expression != null
-               && memberExpression.Expression.Type == typeof(DateTime)
-               && (datePart = GetDatePart(memberExpression.Member.Name)) != null)
+            if ((memberExpression.Expression != null)
+               && (memberExpression.Expression.Type == typeof(DateTime))
+               && ((datePart = GetDatePart(memberExpression.Member.Name)) != null))
             {
                 return new DatePartExpression(datePart,
                     memberExpression.Type,

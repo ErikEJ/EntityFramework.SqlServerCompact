@@ -37,7 +37,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         public virtual void Services_wire_up_correctly()
         {
             // Listeners
-            VerifyScoped<IEntityStateListener>(isExistingReplaced: true);
+            VerifyScoped<IEntityStateListener>(2, isExistingReplaced: true);
             VerifyScoped<INavigationListener>(isExistingReplaced: true);
             VerifyScoped<IKeyListener>(isExistingReplaced: true);
             VerifyScoped<IPropertyListener>(isExistingReplaced: true);
@@ -47,8 +47,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             VerifySingleton<IDbSetSource>();
             VerifySingleton<ICollectionTypeFactory>();
             VerifySingleton<IEntityMaterializerSource>();
-            VerifySingleton<IMemberMapper>();
-            VerifySingleton<IFieldMatcher>();
             VerifySingleton<ILoggerFactory>();
             VerifySingleton<ICoreConventionSetBuilder>();
 
@@ -104,7 +102,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
 
             Assert.Equal(sortedServices1.Count, sortedServices2.Count);
 
-            for (int i = 0; i < sortedServices1.Count; i++)
+            for (var i = 0; i < sortedServices1.Count; i++)
             {
                 Assert.Equal(sortedServices1[i].ServiceType, sortedServices2[i].ServiceType);
                 Assert.Equal(sortedServices1[i].ImplementationType, sortedServices2[i].ImplementationType);
@@ -116,7 +114,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         private readonly DbContext _firstContext;
         private readonly DbContext _secondContext;
 
-        public EntityFrameworkServiceCollectionExtensionsTest(TestHelpers testHelpers)
+        protected EntityFrameworkServiceCollectionExtensionsTest(TestHelpers testHelpers)
         {
             _testHelpers = testHelpers;
 
@@ -140,10 +138,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
             return VerifyService<TService>(isExistingReplaced, isSingleton: true, isRequired: true);
         }
 
-        protected TService VerifyScoped<TService>(bool isExistingReplaced = false)
+        protected TService VerifyScoped<TService>(int count = 1, bool isExistingReplaced = false)
             where TService : class
         {
-            return VerifyService<TService>(isExistingReplaced, isSingleton: false, isRequired: true);
+            return VerifyService<TService>(isExistingReplaced, isSingleton: false, isRequired: true, count: count);
         }
 
         protected TService VerifyOptionalSingleton<TService>()
@@ -161,7 +159,8 @@ namespace Microsoft.EntityFrameworkCore.Tests
         private TService VerifyService<TService>(
             bool isExistingReplaced,
             bool isSingleton,
-            bool isRequired)
+            bool isRequired,
+            int count = 1)
             where TService : class
         {
             var provider = ((IInfrastructure<IServiceProvider>)_firstContext).Instance;
@@ -179,7 +178,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
             {
                 Assert.Same(service, otherScopeService);
             }
-            Assert.Equal(1, ((IInfrastructure<IServiceProvider>)_firstContext).Instance.GetServices<TService>().Count());
+            Assert.Equal(count, ((IInfrastructure<IServiceProvider>)_firstContext).Instance.GetServices<TService>().Count());
 
             if (typeof(TService) != typeof(IDbContextServices))
             {
@@ -191,7 +190,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
                     if (isExistingReplaced)
                     {
                         Assert.NotSame(service, serviceProviderWithCustomService.GetService<TService>());
-                        Assert.Equal(2, serviceProviderWithCustomService.GetServices<TService>().Count());
+                        Assert.Equal(count + 1, serviceProviderWithCustomService.GetServices<TService>().Count());
                     }
                     else
                     {

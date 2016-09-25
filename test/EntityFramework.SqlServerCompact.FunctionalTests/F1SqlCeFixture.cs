@@ -33,12 +33,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new F1Context(optionsBuilder.Options))
                 {
-                    // TODO: Delete DB if model changed
-                    context.Database.EnsureDeleted();
-                    if (context.Database.EnsureCreated())
-                    {
-                        ConcurrencyModelInitializer.Seed(context);
-                    }
+                    context.Database.EnsureClean();
+                    ConcurrencyModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();
                 }
@@ -65,6 +61,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 b.Property(t => t.Id)
                     .ValueGeneratedNever();
             });
+
+            modelBuilder.Entity<Chassis>().Property<byte[]>("Version").IsRowVersion();
+            modelBuilder.Entity<Driver>().Property<byte[]>("Version").IsRowVersion();
+
+            modelBuilder.Entity<Team>().Property<byte[]>("Version")
+                .ValueGeneratedOnAddOrUpdate()
+                .IsConcurrencyToken();
         }
     }
 }

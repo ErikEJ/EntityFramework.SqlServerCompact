@@ -6,6 +6,22 @@ namespace E2ETest.Namespace
 {
     public partial class AttributesContext : DbContext
     {
+        public virtual DbSet<AllDataTypes> AllDataTypes { get; set; }
+        public virtual DbSet<MultipleFksDependent> MultipleFksDependent { get; set; }
+        public virtual DbSet<MultipleFksPrincipal> MultipleFksPrincipal { get; set; }
+        public virtual DbSet<OneToManyDependent> OneToManyDependent { get; set; }
+        public virtual DbSet<OneToManyPrincipal> OneToManyPrincipal { get; set; }
+        public virtual DbSet<OneToOneDependent> OneToOneDependent { get; set; }
+        public virtual DbSet<OneToOneFktoUniqueKeyDependent> OneToOneFktoUniqueKeyDependent { get; set; }
+        public virtual DbSet<OneToOneFktoUniqueKeyPrincipal> OneToOneFktoUniqueKeyPrincipal { get; set; }
+        public virtual DbSet<OneToOnePrincipal> OneToOnePrincipal { get; set; }
+        public virtual DbSet<OneToOneSeparateFkdependent> OneToOneSeparateFkdependent { get; set; }
+        public virtual DbSet<OneToOneSeparateFkprincipal> OneToOneSeparateFkprincipal { get; set; }
+        public virtual DbSet<PropertyConfiguration> PropertyConfiguration { get; set; }
+        public virtual DbSet<ReferredToByTableWithUnmappablePrimaryKeyColumn> ReferredToByTableWithUnmappablePrimaryKeyColumn { get; set; }
+        public virtual DbSet<SelfReferencing> SelfReferencing { get; set; }
+        public virtual DbSet<TestSpacesKeywordsTable> TestSpacesKeywordsTable { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
@@ -61,7 +77,7 @@ namespace E2ETest.Namespace
                     .HasPrincipalKey<OneToOneFktoUniqueKeyPrincipal>(p => new { p.OneToOneFktoUniqueKeyPrincipalUniqueKey1, p.OneToOneFktoUniqueKeyPrincipalUniqueKey2 })
                     .HasForeignKey<OneToOneFktoUniqueKeyDependent>(d => new { d.OneToOneFktoUniqueKeyDependentFk1, d.OneToOneFktoUniqueKeyDependentFk2 })
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("OneToOneFKToUniqueKeyDependent_FK_OneToOneFKToUniqueKeyDependent");
+                    .HasConstraintName("FK_OneToOneFKToUniqueKeyDependent");
             });
 
             modelBuilder.Entity<OneToOneFktoUniqueKeyPrincipal>(entity =>
@@ -131,21 +147,5 @@ namespace E2ETest.Namespace
                 entity.Property(e => e.TestSpacesKeywordsTableId).ValueGeneratedNever();
             });
         }
-
-        public virtual DbSet<AllDataTypes> AllDataTypes { get; set; }
-        public virtual DbSet<MultipleFksDependent> MultipleFksDependent { get; set; }
-        public virtual DbSet<MultipleFksPrincipal> MultipleFksPrincipal { get; set; }
-        public virtual DbSet<OneToManyDependent> OneToManyDependent { get; set; }
-        public virtual DbSet<OneToManyPrincipal> OneToManyPrincipal { get; set; }
-        public virtual DbSet<OneToOneDependent> OneToOneDependent { get; set; }
-        public virtual DbSet<OneToOneFktoUniqueKeyDependent> OneToOneFktoUniqueKeyDependent { get; set; }
-        public virtual DbSet<OneToOneFktoUniqueKeyPrincipal> OneToOneFktoUniqueKeyPrincipal { get; set; }
-        public virtual DbSet<OneToOnePrincipal> OneToOnePrincipal { get; set; }
-        public virtual DbSet<OneToOneSeparateFkdependent> OneToOneSeparateFkdependent { get; set; }
-        public virtual DbSet<OneToOneSeparateFkprincipal> OneToOneSeparateFkprincipal { get; set; }
-        public virtual DbSet<PropertyConfiguration> PropertyConfiguration { get; set; }
-        public virtual DbSet<ReferredToByTableWithUnmappablePrimaryKeyColumn> ReferredToByTableWithUnmappablePrimaryKeyColumn { get; set; }
-        public virtual DbSet<SelfReferencing> SelfReferencing { get; set; }
-        public virtual DbSet<TestSpacesKeywordsTable> TestSpacesKeywordsTable { get; set; }
     }
 }

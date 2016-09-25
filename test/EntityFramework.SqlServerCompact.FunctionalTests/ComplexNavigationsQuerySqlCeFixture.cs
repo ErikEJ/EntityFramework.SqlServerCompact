@@ -34,10 +34,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                     using (var context = new ComplexNavigationsContext(optionsBuilder.Options))
                     {
-                        if (context.Database.EnsureCreated())
-                        {
-                            ComplexNavigationsModelInitializer.Seed(context);
-                        }
+                        context.Database.EnsureClean();
+                        ComplexNavigationsModelInitializer.Seed(context);
 
                         TestSqlLoggerFactory.Reset();
                     }

@@ -1,6 +1,10 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -21,6 +25,28 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 .BuildServiceProvider();
         }
 
+        public override ModelValidator ThrowingValidator
+            => new ThrowingModelValidator(
+                _serviceProvider.GetService<ILogger<RelationalModelValidator>>(),
+                new SqlCeAnnotationProvider(),
+                new SqlCeTypeMapper());
+
+        private class ThrowingModelValidator : RelationalModelValidator
+        {
+            public ThrowingModelValidator(
+                ILogger<RelationalModelValidator> loggerFactory,
+                IRelationalAnnotationProvider relationalExtensions,
+                IRelationalTypeMapper typeMapper)
+                : base(loggerFactory, relationalExtensions, typeMapper)
+            {
+            }
+
+            protected override void ShowWarning(string message)
+            {
+                throw new InvalidOperationException(message);
+            }
+        }
+
         public override SqlCeTestStore CreateTestStore()
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
@@ -32,12 +58,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new DataAnnotationContext(optionsBuilder.Options))
                 {
-                    // TODO: Delete DB if model changed
-                    context.Database.EnsureDeleted();
-                    if (context.Database.EnsureCreated())
-                    {
-                        DataAnnotationModelInitializer.Seed(context);
-                    }
+                    context.Database.EnsureClean();
+                    DataAnnotationModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();
                 }

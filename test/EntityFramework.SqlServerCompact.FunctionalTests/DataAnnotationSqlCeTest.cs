@@ -150,44 +150,8 @@ WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
         {
             base.TimestampAttribute_throws_if_value_in_database_changed();
 
-            Assert.Equal(@"SELECT TOP(1) [r].[Id], [r].[Data], [r].[Timestamp]
-FROM [Two] AS [r]
-WHERE [r].[Id] = 1
-
-SELECT TOP(1) [r].[Id], [r].[Data], [r].[Timestamp]
-FROM [Two] AS [r]
-WHERE [r].[Id] = 1
-
-@p1: 1
-@p0: ModifiedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2
-
-@p1: 1
-@p0: ModifiedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-SELECT [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1
-
-@p1: 1
-@p0: ChangedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2
-
-@p1: 1
-@p0: ChangedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-SELECT [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1",
-                Sql);
+            // Not validating SQL because not significantly different from other tests and 
+            // row version value is not stable. 
         }
 
         private static string Sql => TestSqlLoggerFactory.Sql;

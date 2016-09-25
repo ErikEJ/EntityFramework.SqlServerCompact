@@ -71,7 +71,6 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "Test_Spaces_Keywords_Table.expected"
             };
 
-        //TODO EEJJ re-enable tests
         [Fact]
         [UseCulture("en-US")]
         public void E2ETestUseAttributesInsteadOfFluentApi()
@@ -153,6 +152,5 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             BuildReference.ByName("Microsoft.Extensions.Caching.Abstractions"),
             BuildReference.ByName("Microsoft.Extensions.Logging.Abstractions")
         };
-
     }
 }

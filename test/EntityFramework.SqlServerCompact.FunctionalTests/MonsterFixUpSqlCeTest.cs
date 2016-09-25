@@ -54,8 +54,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 {
                     using (var context = createContext())
                     {
-                        context.Database.EnsureDeleted();
-                        context.Database.EnsureCreated();
+                        EnsureClean(context);
                         context.SeedUsingFKs();
                     }
 
@@ -70,6 +69,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             builder.Entity<TMessage>().HasKey(e => e.MessageId);
             builder.Entity<TProductPhoto>().HasKey(e => e.PhotoId);
             builder.Entity<TProductReview>().HasKey(e => e.ReviewId);
+        }
+
+        protected override void EnsureClean(DbContext context)
+        {
+            context.Database.EnsureClean();
         }
     }
 }

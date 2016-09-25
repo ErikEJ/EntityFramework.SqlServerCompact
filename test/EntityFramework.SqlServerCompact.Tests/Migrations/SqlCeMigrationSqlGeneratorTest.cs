@@ -69,7 +69,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             base.DropIndexOperation();
 
             Assert.Equal(
-                "DROP INDEX [IX_People_Name]",
+                "DROP INDEX [People].[IX_People_Name]",
                 Sql);
         }
 

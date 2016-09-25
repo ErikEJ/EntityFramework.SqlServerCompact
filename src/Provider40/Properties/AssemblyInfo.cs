@@ -16,6 +16,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
     assemblyName: "EntityFrameworkCore.SqlServerCompact40.Design",
     packageName: "EntityFrameworkCore.SqlServerCompact40.Design")]
 #endif
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0-rc2-final")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyInformationalVersion("1.1.0.0-alpha1")]

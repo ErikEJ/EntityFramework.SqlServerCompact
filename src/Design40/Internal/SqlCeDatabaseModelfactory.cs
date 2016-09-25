@@ -9,10 +9,12 @@ using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.Logging;
+using System.Data.Common;
+using System.Data;
 
 namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 {
-    public class SqlCeDatabaseModelFactory : IDatabaseModelFactory
+    public class SqlCeDatabaseModelFactory : IInternalDatabaseModelFactory
     {
         private SqlCeConnection _connection;
         private TableSelectionSet _tableSelectionSet;
@@ -42,35 +44,66 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             _tableColumns = new Dictionary<string, ColumnModel>(StringComparer.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         public virtual DatabaseModel Create(string connectionString, TableSelectionSet tableSelectionSet)
         {
             Check.NotEmpty(connectionString, nameof(connectionString));
             Check.NotNull(tableSelectionSet, nameof(tableSelectionSet));
 
+            using (var connection = new SqlCeConnection(connectionString))
+            {
+                return Create(connection, tableSelectionSet);
+            }
+        }
+
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public virtual DatabaseModel Create(DbConnection connection, TableSelectionSet tableSelectionSet)
+        {
             ResetState();
 
-            using (_connection = new SqlCeConnection(connectionString))
+            _connection = connection as SqlCeConnection;
+
+            var connectionStartedOpen = (_connection != null) && (_connection.State == ConnectionState.Open);
+            if (!connectionStartedOpen)
             {
-                _connection.Open();
+                _connection?.Open();
+            }
+            try
+            {
                 _tableSelectionSet = tableSelectionSet;
 
                 string databaseName = null;
                 try
                 {
-                    databaseName = Path.GetFileNameWithoutExtension(_connection.DataSource);
+                    if (_connection != null)
+                        databaseName = Path.GetFileNameWithoutExtension(_connection.DataSource);
                 }
                 catch (ArgumentException)
                 {
                     // graceful fallback
                 }
 
-                _databaseModel.DatabaseName = !string.IsNullOrEmpty(databaseName) ? databaseName : _connection.DataSource;
+                if (_connection != null)
+                    _databaseModel.DatabaseName = !string.IsNullOrEmpty(databaseName) ? databaseName : _connection.DataSource;
 
                 GetTables();
                 GetColumns();
                 GetIndexes();
                 GetForeignKeys();
                 return _databaseModel;
+            }
+            finally
+            {
+                if (!connectionStartedOpen)
+                {
+                    _connection?.Close();
+                }
             }
         }
 
@@ -260,7 +293,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
         {
             var command = _connection.CreateCommand();
             command.CommandText = @"SELECT 
-                KCU1.TABLE_NAME + '_' + KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
+                KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
+                --KCU1.TABLE_NAME + '_' + KCU1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME,
                 NULL AS [SCHEMA_NAME],
                 KCU1.TABLE_NAME AS FK_TABLE_NAME,  
                 NULL AS [UQ_SCHEMA_NAME],

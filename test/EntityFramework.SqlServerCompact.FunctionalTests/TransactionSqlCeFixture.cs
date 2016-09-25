@@ -22,7 +22,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             using (var context = CreateContext(db))
             {
-                Seed(context);
+                context.Database.EnsureClean();
             }
 
             return db;

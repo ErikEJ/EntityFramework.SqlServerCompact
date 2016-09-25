@@ -50,15 +50,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
             builder.Append("CREATE ");
 
-            var properties = new List<IProperty>();
-            foreach (var column in operation.Columns)
-            {
-                var found = FindProperties(model, null, operation.Table, column);
-                if (found != null)
-                    properties.AddRange(found);
-            }
-
-            var isNullableKey = properties
+            var isNullableKey = operation
+                .Columns.Select(column => FindProperty(model, null, operation.Table, column))
                 .Any(property => (property != null) && property.IsColumnNullable() && property.IsForeignKey());
 
             if (operation.IsUnique && !isNullableKey)
@@ -323,7 +316,5 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 builder.Append(" IDENTITY");
             }
         }
-
-        private string ColumnList(string[] columns) => string.Join(", ", columns.Select(SqlGenerationHelper.DelimitIdentifier));
     }
 }

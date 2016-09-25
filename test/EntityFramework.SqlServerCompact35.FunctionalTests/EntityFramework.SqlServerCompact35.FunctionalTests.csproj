@@ -165,7 +165,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="NWforEF7.sqlce" />
     <None Include="packages.config" />
   </ItemGroup>

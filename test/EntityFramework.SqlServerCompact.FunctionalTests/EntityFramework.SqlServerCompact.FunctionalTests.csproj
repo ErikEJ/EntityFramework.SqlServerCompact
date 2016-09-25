@@ -215,7 +215,6 @@
     <Compile Include="Utilities\TestEnvironment.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="NorthwindEF7.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

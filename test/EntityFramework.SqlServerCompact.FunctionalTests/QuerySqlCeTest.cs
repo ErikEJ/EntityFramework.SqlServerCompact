@@ -21,6 +21,7 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
 
+        //TODO ErikEJ await fix
         public override void SelectMany_primitive_select_subquery()
         {
             //base.SelectMany_primitive_select_subquery();
@@ -168,6 +169,7 @@ LEFT JOIN (
                 Sql);
         }
 
+        //TODO EriEJ await fix
         public override void Where_query_composition()
         {
 //            base.Where_query_composition();
@@ -279,6 +281,7 @@ WHERE [e20].[EmployeeID] IS NULL",
                 Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void Where_query_composition_entity_equality_one_element_FirstOrDefault()
         {
 //            base.Where_query_composition_entity_equality_one_element_FirstOrDefault();
@@ -307,6 +310,7 @@ FROM [Employees] AS [e20]
 WHERE [e20].[EmployeeID] = 42", Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void Where_query_composition_entity_equality_no_elements_FirstOrDefault()
         {
 //            base.Where_query_composition_entity_equality_no_elements_FirstOrDefault();
@@ -322,6 +326,7 @@ WHERE [e20].[EmployeeID] = 42", Sql);
 //                Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void Where_query_composition_entity_equality_multiple_elements_FirstOrDefault()
         {
 //            base.Where_query_composition_entity_equality_multiple_elements_FirstOrDefault();
@@ -351,6 +356,7 @@ ORDER BY [e].[EmployeeID]",
                 Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void Where_shadow_subquery_first()
         {
 //            base.Where_shadow_subquery_first();
@@ -415,6 +421,7 @@ WHERE @_outer_CustomerID1 = [c2].[CustomerID]",
                 Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void Select_Where_Subquery_Deep_First()
         {
 //            base.Select_Where_Subquery_Deep_First();
@@ -1130,6 +1137,7 @@ END, [p].[ProductID]",
                 Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void OrderBy_any()
         {
 //            base.OrderBy_any();
@@ -3573,6 +3581,7 @@ END",
                 Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void OrderBy_correlated_subquery_lol()
         {
 //            base.OrderBy_correlated_subquery_lol();
@@ -3592,6 +3601,7 @@ END",
 //                Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void OrderBy_correlated_subquery_lol2()
         {
 //            base.OrderBy_correlated_subquery_lol2();
@@ -5613,6 +5623,7 @@ ORDER BY COALESCE([c].[Region], N'ZZ')",
                 Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void Does_not_change_ordering_of_projection_with_complex_projections()
         {
 //            base.Does_not_change_ordering_of_projection_with_complex_projections();

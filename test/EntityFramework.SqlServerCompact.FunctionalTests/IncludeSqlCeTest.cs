@@ -264,7 +264,7 @@ ORDER BY [o0].[OrderID]",
                 Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Include_collection_order_by_collection_column(bool useString)
         {
 //            base.Include_collection_order_by_collection_column(useString);
@@ -412,7 +412,7 @@ ORDER BY [c0].[CompanyName] DESC, [c0].[CustomerID]",
                 Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Include_collection_order_by_subquery(bool useString)
         {
 //            base.Include_collection_order_by_subquery(useString);
@@ -1246,7 +1246,7 @@ ORDER BY [c0].[ContactName], [c0].[CustomerID]",
             }
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Then_include_collection_order_by_collection_column(bool useString)
         {
 //            base.Then_include_collection_order_by_collection_column(useString);

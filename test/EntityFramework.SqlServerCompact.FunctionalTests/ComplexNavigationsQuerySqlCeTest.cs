@@ -276,7 +276,7 @@ ORDER BY [c3].[ComplexNavigationStringDefaultText]",
                 Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Join_navigation_key_access_optional()
         {
 //            base.Join_navigation_key_access_optional();
@@ -490,7 +490,7 @@ ORDER BY [e3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id]",
                 Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Join_navigation_in_inner_selector_translated_to_subquery()
         {
 //            base.Join_navigation_in_inner_selector_translated_to_subquery();
@@ -506,7 +506,7 @@ ORDER BY [e3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id]",
 //                Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision()
         {
 //            base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision();
@@ -527,7 +527,7 @@ ORDER BY [e3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id]",
 //                Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_non_key_join()
         {
 //            base.Join_navigation_translated_to_subquery_non_key_join();
@@ -543,7 +543,7 @@ ORDER BY [e3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id]",
 //                Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_self_ref()
         {
 //            base.Join_navigation_translated_to_subquery_self_ref();
@@ -1488,7 +1488,7 @@ FROM [Level3] AS [l0]",
                 Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Where_navigation_property_to_collection2()
         {
 //            base.Where_navigation_property_to_collection2();
@@ -1505,7 +1505,7 @@ FROM [Level3] AS [l0]",
 //                Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Where_navigation_property_to_collection_of_original_entity_type()
         {
 //            base.Where_navigation_property_to_collection_of_original_entity_type();
@@ -1718,7 +1718,7 @@ WHERE EXISTS (
                 Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Correlated_subquery_doesnt_project_unnecessary_columns_in_top_level_join()
         {
 //            base.Correlated_subquery_doesnt_project_unnecessary_columns_in_top_level_join();

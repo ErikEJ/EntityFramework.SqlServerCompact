@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    //TODO EEJJ Investigate enabling!
+    //TODO ErikEJ Investigate enabling!
     //public class TransactionSqlCeTest : TransactionTestBase<SqlCeTestStore, TransactionSqlCeFixture>
     //{
     //    public TransactionSqlCeTest(TransactionSqlCeFixture fixture)

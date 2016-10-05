@@ -6,7 +6,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class QueryNavigationsSqlCeTest : QueryNavigationsTestBase<NorthwindQuerySqlCeFixture>
     {
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Project_single_scalar_value_subquery_in_query_with_optional_navigation_works()
         {
             //base.Project_single_scalar_value_subquery_in_query_with_optional_navigation_works();
@@ -16,19 +16,19 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
             //base.Project_single_scalar_value_subquery_is_properly_inlined();
         }
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Select_collection_FirstOrDefault_project_single_column2()
         {
             //base.Select_collection_FirstOrDefault_project_single_column2();
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Select_collection_FirstOrDefault_project_single_column1()
         {
             //base.Select_collection_FirstOrDefault_project_single_column1();
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Select_count_plus_sum()
         {
             //base.Select_count_plus_sum();
@@ -62,7 +62,7 @@ ORDER BY [od].[OrderID], [od].[ProductID], [od.Order].[CustomerID]",
         public override void Select_Where_Navigation_Included()
         {
             base.Select_Where_Navigation_Included();
-            //TODO erikej Investigate diff
+            //TODO ErikEJ Investigate diff
             Assert.Equal(
                 @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate], [o.Customer].[CustomerID], [o.Customer].[Address], [o.Customer].[City], [o.Customer].[CompanyName], [o.Customer].[ContactName], [o.Customer].[ContactTitle], [o.Customer].[Country], [o.Customer].[Fax], [o.Customer].[Phone], [o.Customer].[PostalCode], [o.Customer].[Region], [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Orders] AS [o]
@@ -498,7 +498,7 @@ WHERE EXISTS (
 
         public override void Navigation_in_subquery_referencing_outer_query()
         {
-            //TODO EEJJ report strange query
+            //TODO ErikEJ report strange query
             //base.Navigation_in_subquery_referencing_outer_query();
 
 //            Assert.Equal(
@@ -515,7 +515,7 @@ WHERE EXISTS (
 //                Sql);
         }
 
-        //TODO ErikEJ Wait for fix for https://github.com/aspnet/EntityFramework/issues/3038 
+        //TODO ErikEJ await fix for https://github.com/aspnet/EntityFramework/issues/3038 
         public override void Collection_orderby_nav_prop_count()
         {
             //base.Collection_orderby_nav_prop_count();

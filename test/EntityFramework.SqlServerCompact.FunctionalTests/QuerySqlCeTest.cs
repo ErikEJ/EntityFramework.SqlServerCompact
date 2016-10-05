@@ -169,7 +169,7 @@ LEFT JOIN (
                 Sql);
         }
 
-        //TODO EriEJ await fix
+        //TODO ErikEJ await fix
         public override void Where_query_composition()
         {
 //            base.Where_query_composition();
@@ -4106,7 +4106,7 @@ FROM [Orders] AS [o]",
                 Sql);
         }
 
-        // TODO: Complex projection translation.
+        // TODO Complex projection translation.
 
         //        public override void Projection_when_arithmetic_expressions()
         //        {

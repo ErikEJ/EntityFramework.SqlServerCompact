@@ -104,7 +104,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }
-        //TODO EEJJ re-enable tests
+        //TODO ErikEJ re-enable tests
         //[Fact]
         //[UseCulture("en-US")]
         public void E2ETestAllFluentApi()

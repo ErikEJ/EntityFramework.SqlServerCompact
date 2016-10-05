@@ -8,7 +8,7 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
 {
     public class GearsOfWarQuerySqlCeTest : GearsOfWarQueryTestBase<SqlCeTestStore, GearsOfWarQuerySqlCeFixture>
     {
-        //TODO EEJJ Await fix
+        //TODO ErikEJ Await fix
         public override void Where_enum_has_flag_subquery()
         {
             //base.Where_enum_has_flag_subquery();
@@ -703,7 +703,7 @@ WHERE (([g].[Discriminator] = N'Officer') OR ([g].[Discriminator] = N'Gear')) AN
                 Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Where_count_subquery_without_collision()
         {
 //            base.Where_count_subquery_without_collision();
@@ -1095,7 +1095,7 @@ LEFT JOIN [Weapon] AS [w.SynergyWith] ON [w].[SynergyWithId] = [w.SynergyWith].[
 ORDER BY [w].[SynergyWithId]", Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Where_subquery_boolean()
         {
 //            base.Where_subquery_boolean();
@@ -1133,7 +1133,7 @@ INNER JOIN [Gear] AS [g] ON ([ct].[GearNickName] = [g].[Nickname]) AND ([ct].[Ge
             Sql);
         }
 
-        //TODO EEJJ await fix
+        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_composite_key()
         {
 //            base.Join_navigation_translated_to_subquery_composite_key();
@@ -1874,7 +1874,7 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear')",
         }
 
 
-        // TODO: See issue#6145 - Incorrect query generated
+        // TODO See issue #6145 - Incorrect query generated
         public override void Left_join_predicate_value_equals_condition()
         {
 //            base.Left_join_predicate_value_equals_condition();

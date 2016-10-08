@@ -304,7 +304,9 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 maxLength,
                 rowVersion,
                 nullable,
-                defaultValue,
+                identity
+                    ? null     
+                    : defaultValue,
                 defaultValueSql,
                 computedColumnSql,
                 annotatable,

@@ -112,6 +112,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Name = "Id",
                     ClrType = typeof(int),
                     ColumnType = "int",
+                    DefaultValue = 0,
                     IsNullable = false,
                     [SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration] =
                         SqlCeAnnotationNames.Identity

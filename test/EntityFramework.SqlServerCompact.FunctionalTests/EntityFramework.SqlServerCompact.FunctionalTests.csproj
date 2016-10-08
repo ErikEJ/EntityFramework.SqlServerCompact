@@ -152,8 +152,11 @@
     <Compile Include="CompositeKeyEndToEndTest.cs" />
     <Compile Include="DataAnnotationSqlCeFixture.cs" />
     <Compile Include="DataAnnotationSqlCeTest.cs" />
+    <Compile Include="DataBindingSqlCeTest.cs" />
     <Compile Include="DefaultValuesTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
+    <Compile Include="FieldMappingSqlCeTest.cs" />
+    <Compile Include="FindSqlCeTest.cs" />
     <Compile Include="FromSqlQuerySqlCeTest.cs" />
     <Compile Include="FunkyDataQuerySqlCeFixture.cs" />
     <Compile Include="FunkyDataQuerySqlCeTest.cs" />

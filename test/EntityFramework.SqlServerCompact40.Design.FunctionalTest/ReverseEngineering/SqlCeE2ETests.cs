@@ -105,8 +105,8 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertCompile(actualFileSet);
         }
         //TODO ErikEJ re-enable tests
-        //[Fact]
-        //[UseCulture("en-US")]
+        [Fact]
+        [UseCulture("en-US")]
         public void E2ETestAllFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration

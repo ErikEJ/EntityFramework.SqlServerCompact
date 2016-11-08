@@ -35,7 +35,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         private SqlCeConnection _connection;
-        private SqlCeTransaction _transaction;
+        //private SqlCeTransaction _transaction;
         private readonly string _name;
         private string _connectionString;
         private bool _deleteDatabase;
@@ -49,14 +49,17 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         private SqlCeTestStore CreateShared(Action initializeDatabase)
         {
-            CreateShared(typeof(SqlCeTestStore).Name + _name, initializeDatabase);
-
             _connectionString = CreateConnectionString(_name);
-
             _connection = new SqlCeConnection(_connectionString);
 
-            _connection.Open();
-            _transaction = _connection.BeginTransaction();
+            CreateShared(typeof(SqlCeTestStore).Name + _name,
+                () =>
+                {
+                    if (!Exists())
+                    {
+                        initializeDatabase?.Invoke();
+                    }
+                });
 
             return this;
         }
@@ -79,7 +82,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         public override DbConnection Connection => _connection;
-        public override DbTransaction Transaction => _transaction;
+        public override DbTransaction Transaction => null;
 
         public int ExecuteNonQuery(string sql, params object[] parameters)
         {
@@ -115,11 +118,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         private DbCommand CreateCommand(string commandText, object[] parameters)
         {
             var command = _connection.CreateCommand();
-
-            if (_transaction != null)
-            {
-                command.Transaction = _transaction;
-            }
 
             command.CommandText = commandText;
 

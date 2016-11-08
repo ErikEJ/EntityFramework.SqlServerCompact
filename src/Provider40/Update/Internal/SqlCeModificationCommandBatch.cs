@@ -27,7 +27,6 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
         {
         }
 
-
         public override void Execute(IRelationalConnection connection)
         {
             Check.NotNull(connection, nameof(connection));

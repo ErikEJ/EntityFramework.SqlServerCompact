@@ -16,7 +16,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
     {
         protected override string ProviderName => "EntityFrameworkCore.SqlServerCompact40.Design";
 
-        protected override IServiceCollection ConfigureDesignTimeServices(IServiceCollection services)
+        protected override void ConfigureDesignTimeServices(IServiceCollection services)
             => new SqlCeDesignTimeServices().ConfigureDesignTimeServices(services);
 
         public virtual string TestNamespace => "E2ETest.Namespace";
@@ -104,7 +104,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }
-        //TODO ErikEJ re-enable tests
+
         [Fact]
         [UseCulture("en-US")]
         public void E2ETestAllFluentApi()

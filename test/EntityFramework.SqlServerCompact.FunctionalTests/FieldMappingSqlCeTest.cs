@@ -1,8 +1,10 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class FieldMappingSqlCeTest
         : FieldMappingTestBase<SqlCeTestStore, FieldMappingSqlCeTest.FieldMappingSqlCeFixture>
@@ -11,6 +13,9 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
             : base(fixture)
         {
         }
+
+        protected override void UseTransaction(DatabaseFacade facade, IDbContextTransaction transaction)
+            => facade.UseTransaction(transaction.GetDbTransaction());
 
         public class FieldMappingSqlCeFixture : FieldMappingFixtureBase
         {
@@ -31,7 +36,7 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
                 return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
                 {
                     var optionsBuilder = new DbContextOptionsBuilder()
-                        .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName))
+                        .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
                         .UseInternalServiceProvider(_serviceProvider);
 
                     using (var context = new FieldMappingContext(optionsBuilder.Options))
@@ -45,7 +50,7 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
             public override DbContext CreateContext(SqlCeTestStore testStore)
             {
                 var optionsBuilder = new DbContextOptionsBuilder()
-                    .UseSqlCe(testStore.Connection)
+                    .UseSqlCe(testStore.Connection, b => b.ApplyConfiguration())
                     .UseInternalServiceProvider(_serviceProvider);
 
                 var context = new FieldMappingContext(optionsBuilder.Options);

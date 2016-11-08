@@ -45,7 +45,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             }.ConnectionString;
         }
 
-        protected override void CreateAndSeedDatabase(string databaseName, Func<MonsterContext> createContext)
+        protected override void CreateAndSeedDatabase(string databaseName, Func<MonsterContext> createContext, Action<MonsterContext> seed)
         {
             var creationLock = _creationLocks.GetOrAdd(databaseName, n => new object());
             lock (creationLock)
@@ -54,11 +54,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 {
                     using (var context = createContext())
                     {
-                        EnsureClean(context);
-                        context.SeedUsingFKs();
+                        context.Database.EnsureClean();
+                        seed(context);
+                        //context.SeedUsingFKs();
                     }
 
                     _createdDatabases.Add(databaseName);
+                    TestSqlLoggerFactory.Reset();
                 }
             }
         }
@@ -66,14 +68,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public override void OnModelCreating<TMessage, TProductPhoto, TProductReview>(ModelBuilder builder)
         {
             base.OnModelCreating<TMessage, TProductPhoto, TProductReview>(builder);
+
             builder.Entity<TMessage>().HasKey(e => e.MessageId);
             builder.Entity<TProductPhoto>().HasKey(e => e.PhotoId);
             builder.Entity<TProductReview>().HasKey(e => e.ReviewId);
-        }
-
-        protected override void EnsureClean(DbContext context)
-        {
-            context.Database.EnsureClean();
         }
     }
 }

@@ -389,8 +389,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 IMigrationsSqlGenerator sqlGenerator,
                 IMigrationCommandExecutor migrationCommandExecutor,
                 IModel model,
-                IRawSqlCommandBuilder rawSqlCommandBuilder)
-                : base(connection, modelDiffer, sqlGenerator, migrationCommandExecutor, model, rawSqlCommandBuilder)
+                IRawSqlCommandBuilder rawSqlCommandBuilder,
+                IExecutionStrategyFactory executionStrategyFactory)
+                : base(connection, modelDiffer, sqlGenerator, migrationCommandExecutor, model, rawSqlCommandBuilder, executionStrategyFactory)
             {
             }
 

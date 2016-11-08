@@ -10,7 +10,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
         }
 
-        [Fact]
         public override ModelBuilder Non_public_annotations_are_enabled()
         {
             var modelBuilder = base.Non_public_annotations_are_enabled();
@@ -22,7 +21,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return modelBuilder;
         }
 
-        [Fact]
         public override ModelBuilder Key_and_column_work_together()
         {
             var modelBuilder = base.Key_and_column_work_together();
@@ -34,7 +32,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return modelBuilder;
         }
 
-        [Fact]
         public override ModelBuilder Key_and_MaxLength_64_produce_nvarchar_64()
         {
             var modelBuilder = base.Key_and_MaxLength_64_produce_nvarchar_64();
@@ -45,7 +42,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return modelBuilder;
         }
 
-        [Fact]
         public override ModelBuilder Timestamp_takes_precedence_over_MaxLength()
         {
             var modelBuilder = base.Timestamp_takes_precedence_over_MaxLength();
@@ -56,7 +52,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return modelBuilder;
         }
 
-        [Fact]
         public override ModelBuilder Timestamp_takes_precedence_over_MaxLength_with_value()
         {
             var modelBuilder = base.Timestamp_takes_precedence_over_MaxLength_with_value();
@@ -67,7 +62,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return modelBuilder;
         }
 
-        [Fact]
         public override ModelBuilder TableNameAttribute_affects_table_name_in_TPH()
         {
             var modelBuilder = base.TableNameAttribute_affects_table_name_in_TPH();
@@ -78,8 +72,18 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return modelBuilder;
         }
 
+        //TODO ErikEJ investigate failure!
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
+            //TODO ErikEJ Why is fixture not running?
+            using (var context = CreateContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                DataAnnotationModelInitializer.Seed(context);
+
+                TestSqlLoggerFactory.Reset();
+            }
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();
 
             Assert.Equal(@"SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion]
@@ -194,7 +198,6 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
                 Sql);
         }
 
-
         public override void StringLengthAttribute_throws_while_inserting_value_longer_than_max_length()
         {
             TestSqlLoggerFactory.Reset();
@@ -217,6 +220,15 @@ WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
         public override void TimestampAttribute_throws_if_value_in_database_changed()
         {
+            using (var context = CreateContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                DataAnnotationModelInitializer.Seed(context);
+
+                Assert.True(context.Model.FindEntityType(typeof(Two)).FindProperty("Timestamp").IsConcurrencyToken);
+            }
+
             base.TimestampAttribute_throws_if_value_in_database_changed();
 
             // Not validating SQL because not significantly different from other tests and 

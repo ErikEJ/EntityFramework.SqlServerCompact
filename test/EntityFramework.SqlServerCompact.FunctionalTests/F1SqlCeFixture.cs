@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.ConcurrencyModel;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -26,9 +27,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
-                var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder
-                    .UseSqlCe(_connectionString)
+                var optionsBuilder = new DbContextOptionsBuilder()
+                    .UseSqlCe(_connectionString, b => b.ApplyConfiguration())
                     .UseInternalServiceProvider(_serviceProvider);
 
                 using (var context = new F1Context(optionsBuilder.Options))
@@ -43,9 +43,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override F1Context CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
-                .UseSqlCe(testStore.Connection)
+            var optionsBuilder = new DbContextOptionsBuilder()
+                .UseSqlCe(testStore.Connection, b => b.ApplyConfiguration())
                 .UseInternalServiceProvider(_serviceProvider);
 
             var context = new F1Context(optionsBuilder.Options);
@@ -54,13 +53,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
+        {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Team>(b =>
-            {
-                b.Property(t => t.Id)
-                    .ValueGeneratedNever();
-            });
 
             modelBuilder.Entity<Chassis>().Property<byte[]>("Version").IsRowVersion();
             modelBuilder.Entity<Driver>().Property<byte[]>("Version").IsRowVersion();

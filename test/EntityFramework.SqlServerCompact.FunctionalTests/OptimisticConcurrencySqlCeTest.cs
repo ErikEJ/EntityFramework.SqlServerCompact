@@ -1,4 +1,7 @@
-﻿namespace Microsoft.EntityFrameworkCore.Specification.Tests
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class OptimisticConcurrencySqlCeTest : OptimisticConcurrencyTestBase<SqlCeTestStore, F1SqlCeFixture>
     {
@@ -6,5 +9,8 @@
             : base(fixture)
         {
         }
+
+        protected override void UseTransaction(DatabaseFacade facade, IDbContextTransaction transaction)
+            => facade.UseTransaction(transaction.GetDbTransaction());
     }
 }

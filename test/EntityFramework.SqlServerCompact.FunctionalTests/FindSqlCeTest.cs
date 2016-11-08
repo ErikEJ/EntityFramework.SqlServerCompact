@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
+namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public abstract class FindSqlCeTest :  FindTestBase<FindSqlCeTest.FindSqlCeFixture>
+    public abstract class FindSqlCeTest :  FindTestBase<SqlCeTestStore, FindSqlCeTest.FindSqlCeFixture>
     {
         protected FindSqlCeTest(FindSqlCeFixture fixture)
             : base(fixture)
@@ -322,33 +322,40 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
 
         public class FindSqlCeFixture : FindFixtureBase
         {
-            private readonly IServiceProvider _serviceProvider;
+            private const string DatabaseName = "FindTest";
+            private readonly DbContextOptions _options;
 
             public FindSqlCeFixture()
             {
-                _serviceProvider = new ServiceCollection()
+                var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                     .AddSingleton<ILoggerFactory, TestSqlLoggerFactory>()
                     .BuildServiceProvider();
-            }
 
-            public override void CreateTestStore()
-            {
-                using (var context = CreateContext())
-                {
-                    context.Database.EnsureClean();
-                    Seed(context);
-                    TestSqlLoggerFactory.Reset();
-                }
-            }
-
-            public override DbContext CreateContext()
-                => new FindContext(new DbContextOptionsBuilder()
-                    .UseSqlCe(SqlCeTestStore.CreateConnectionString("FindTest"))
-                    .UseInternalServiceProvider(_serviceProvider)
+                _options = new DbContextOptionsBuilder()
+                    .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
+                    .UseInternalServiceProvider(serviceProvider)
                     .EnableSensitiveDataLogging()
-                    .Options);
+                    .Options;
+            }
+
+            public override SqlCeTestStore CreateTestStore()
+            {
+                return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
+                {
+                    using (var context = new FindContext(_options))
+                    {
+                        context.Database.EnsureClean();
+                        Seed(context);
+
+                        TestSqlLoggerFactory.Reset();
+                    }
+                });
+            }
+
+            public override DbContext CreateContext(SqlCeTestStore testStore)
+                => new FindContext(_options);
         }
     }
 }

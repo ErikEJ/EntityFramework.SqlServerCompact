@@ -1,4 +1,7 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
@@ -11,9 +14,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
         }
 
+        protected override void UseTransaction(DatabaseFacade facade, IDbContextTransaction transaction)
+            => facade.UseTransaction(transaction.GetDbTransaction());
+
         public abstract class GraphUpdatesSqlCeFixtureBase : GraphUpdatesFixtureBase
         {
             private readonly IServiceProvider _serviceProvider;
+            private DbContextOptions _options;
 
             protected GraphUpdatesSqlCeFixtureBase()
             {
@@ -27,35 +34,39 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             public override SqlCeTestStore CreateTestStore()
             {
-                return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
-                {
-                    var optionsBuilder = new DbContextOptionsBuilder();
-                    optionsBuilder
-                        .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName))
-                        .UseInternalServiceProvider(_serviceProvider);
+                var testStore = SqlCeTestStore.CreateScratch(true);
 
-                    using (var context = new GraphUpdatesContext(optionsBuilder.Options))
-                    {
-                        context.Database.EnsureDeleted();
-                        if (context.Database.EnsureCreated())
-                        {
-                            Seed(context);
-                        }
-                    }
-                });
+                _options = new DbContextOptionsBuilder()
+                    .UseSqlCe(testStore.Connection, b => b.ApplyConfiguration())
+                    .UseInternalServiceProvider(_serviceProvider)
+                    .Options;
+
+                using (var context = new GraphUpdatesContext(_options))
+                {
+                    context.Database.EnsureClean();
+                    Seed(context);
+                }
+
+                //var testStore = SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
+                //{
+                //    var options = new DbContextOptionsBuilder()
+                //        .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
+                //        .UseInternalServiceProvider(_serviceProvider)
+                //        .Options;
+
+                //    using (var context = new GraphUpdatesContext(options))
+                //    {
+                //        context.Database.EnsureDeleted();
+                //        Seed(context);
+                //    }
+                //});
+
+
+                return testStore;
             }
 
             public override DbContext CreateContext(SqlCeTestStore testStore)
-            {
-                var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder
-                    .UseSqlCe(testStore.Connection)
-                    .UseInternalServiceProvider(_serviceProvider);
-
-                var context = new GraphUpdatesContext(optionsBuilder.Options);
-                context.Database.UseTransaction(testStore.Transaction);
-                return context;
-            }
+                => new GraphUpdatesContext(_options);
         }
     }
 }

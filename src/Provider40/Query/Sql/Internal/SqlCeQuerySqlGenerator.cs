@@ -82,8 +82,8 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
 
         protected override void GenerateOrdering(Ordering ordering)
         {
-            if ((ordering.Expression.NodeType == ExpressionType.Parameter)
-                || (ordering.Expression.NodeType == ExpressionType.Constant))
+            if (ordering.Expression is ParameterExpression
+                || ordering.Expression is ConstantExpression)
             {
                 Sql.Append("GETDATE()");
             }

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
+using Remotion.Linq.Clauses;
 using Remotion.Linq.Parsing;
 
 namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
@@ -77,6 +78,19 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
             }
 
             base.GenerateLimitOffset(selectExpression);
+        }
+
+        protected override void GenerateOrdering(Ordering ordering)
+        {
+            if ((ordering.Expression.NodeType == ExpressionType.Parameter)
+                || (ordering.Expression.NodeType == ExpressionType.Constant))
+            {
+                Sql.Append("GETDATE()");
+            }
+            else
+            {
+                base.GenerateOrdering(ordering);
+            }
         }
 
         protected override void VisitProjection(IReadOnlyList<Expression> projections)

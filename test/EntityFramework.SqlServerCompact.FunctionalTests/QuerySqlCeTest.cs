@@ -3675,40 +3675,37 @@ ORDER BY [c].[CustomerID]",
                 Sql);
         }
 
-        //TODO ErikEJ implement fix as per issue discussion (after 1.1)
         public override void OrderBy_true()
         {
-//            base.OrderBy_true();
+            base.OrderBy_true();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY (SELECT 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY GETDATE()",
+                Sql);
         }
 
-        //TODO ErikEJ implement fix as per issue discussion (after 1.1)
         public override void OrderBy_integer()
         {
-//            base.OrderBy_integer();
+            base.OrderBy_integer();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY (SELECT 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY GETDATE()",
+                Sql);
         }
 
-        //TODO ErikEJ implement fix as per issue discussion (after 1.1)
         public override void OrderBy_parameter()
         {
-//            base.OrderBy_parameter();
+            base.OrderBy_parameter();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY (SELECT 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY GETDATE()",
+                Sql);
         }
 
         public override void OrderBy_anon()

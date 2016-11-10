@@ -12,10 +12,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             //base.Project_single_scalar_value_subquery_in_query_with_optional_navigation_works();
         }
 
-        public override void Project_single_scalar_value_subquery_is_properly_inlined()
-        {
-            //base.Project_single_scalar_value_subquery_is_properly_inlined();
-        }
         //TODO ErikEJ await fix
         public override void Select_collection_FirstOrDefault_project_single_column2()
         {
@@ -499,6 +495,7 @@ WHERE EXISTS (
         {
             //base.Collection_orderby_nav_prop_count();
         }
+
         public override void Collection_select_nav_prop_all()
         {
             //base.Collection_select_nav_prop_all();

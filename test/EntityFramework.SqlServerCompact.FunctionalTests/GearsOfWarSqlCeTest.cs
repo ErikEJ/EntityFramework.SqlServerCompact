@@ -1015,7 +1015,7 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND ([g].[LeaderNickname] = N
             Assert.Equal(
                 @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
 FROM [Gear] AS [g]
-WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND [g].[LeaderNickname] LIKE N'%' + N'us'",
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (SUBSTRING([g].[LeaderNickname], (LEN([g].[LeaderNickname]) + 1) - LEN(N'us'), LEN(N'us')) = N'us')",
                 Sql);
         }
 
@@ -1252,21 +1252,20 @@ INNER JOIN [Gear] AS [g] ON ([ct].[GearNickName] = [g].[Nickname]) AND ([ct].[Ge
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_composite_key()
         {
-//            base.Join_navigation_translated_to_subquery_composite_key();
+            base.Join_navigation_translated_to_subquery_composite_key();
 
-//            Assert.Equal(
-//                @"SELECT [g].[FullName], [t].[Note]
-//FROM [Gear] AS [g]
-//INNER JOIN [CogTag] AS [t] ON [g].[FullName] = (
-//    SELECT TOP(1) [subQuery0].[FullName]
-//    FROM [Gear] AS [subQuery0]
-//    WHERE (([subQuery0].[Discriminator] = N'Officer') OR ([subQuery0].[Discriminator] = N'Gear')) AND (([subQuery0].[Nickname] = [t].[GearNickName]) AND ([subQuery0].[SquadId] = [t].[GearSquadId]))
-//)
-//WHERE ([g].[Discriminator] = N'Officer') OR ([g].[Discriminator] = N'Gear')",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [g].[FullName], [t].[Note]
+FROM [Gear] AS [g]
+INNER JOIN [CogTag] AS [t] ON [g].[FullName] IN (
+    SELECT TOP(1) [subQuery0].[FullName]
+    FROM [Gear] AS [subQuery0]
+    WHERE (([subQuery0].[Discriminator] = N'Officer') OR ([subQuery0].[Discriminator] = N'Gear')) AND (([subQuery0].[Nickname] = [t].[GearNickName]) AND ([subQuery0].[SquadId] = [t].[GearSquadId]))
+)
+WHERE ([g].[Discriminator] = N'Officer') OR ([g].[Discriminator] = N'Gear')",
+                Sql);
         }
 
         public override void Collection_with_inheritance_and_join_include_joined()
@@ -1988,18 +1987,17 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear')",
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Left_join_predicate_value_equals_condition()
         {
-//            base.Left_join_predicate_value_equals_condition();
+            base.Left_join_predicate_value_equals_condition();
 
-//            Assert.Equal(
-//                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank], [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
-//FROM [Gear] AS [g]
-//LEFT JOIN [Weapon] AS [w] ON [w].[SynergyWithId] IS NOT NULL
-//WHERE [g].[Discriminator] IN (N'Officer', N'Gear')
-//ORDER BY (SELECT 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank], [w].[Id], [w].[AmmunitionType], [w].[IsAutomatic], [w].[Name], [w].[OwnerFullName], [w].[SynergyWithId]
+FROM [Gear] AS [g]
+LEFT JOIN [Weapon] AS [w] ON [w].[SynergyWithId] IS NOT NULL
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear')
+ORDER BY GETDATE()",
+                Sql);
         }
 
         public override void Left_join_predicate_value()

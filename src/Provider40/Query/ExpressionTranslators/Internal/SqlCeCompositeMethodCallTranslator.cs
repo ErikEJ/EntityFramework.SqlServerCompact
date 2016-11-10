@@ -9,7 +9,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
         {
                 new SqlCeContainsOptimizedTranslator(),
                 new SqlCeConvertTranslator(),
-                //new SqlCeEndsWithOptimizedTranslator(),
+                new SqlCeEndsWithOptimizedTranslator(),
                 new SqlCeMathAbsTranslator(),
                 new SqlCeMathCeilingTranslator(),
                 new SqlCeMathFloorTranslator(),

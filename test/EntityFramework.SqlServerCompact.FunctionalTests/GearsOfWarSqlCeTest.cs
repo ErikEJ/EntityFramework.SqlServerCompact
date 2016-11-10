@@ -869,8 +869,8 @@ WHERE [w].[Discriminator] IN (N'Officer', N'Gear') AND EXISTS (
 
             Assert.Equal(
                 @"SELECT [w].[Id], CASE
-    WHEN [w].[IsAutomatic] = 0
-    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+    WHEN [w].[IsAutomatic] = 1
+    THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT)
 END
 FROM [Weapon] AS [w]
 WHERE [w].[IsAutomatic] = 1",
@@ -1026,7 +1026,7 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (SUBSTRING([g].[LeaderNic
             Assert.Equal(
                 @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
 FROM [Gear] AS [g]
-WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND [g].[LeaderNickname] LIKE N'%' + N'us'",
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (SUBSTRING([g].[LeaderNickname], (LEN([g].[LeaderNickname]) + 1) - LEN(N'us'), LEN(N'us')) = N'us')",
                 Sql);
         }
 

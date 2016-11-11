@@ -1296,21 +1296,20 @@ OFFSET @__p_0 ROWS",
                 Sql);
         }
 
-        //TODO ErikEJ implement fix as per issue discussion (after 1.1)
         [ConditionalFact]
         [SqlServerCondition(SqlServerCondition.SupportsOffset)]
         public override void Skip_no_orderby()
         {
-//            base.Skip_no_orderby();
+            base.Skip_no_orderby();
 
-//            Assert.Equal(
-//                @"@__p_0: 5
+            Assert.Equal(
+                @"@__p_0: 5
 
-//SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY (SELECT 1)
-//OFFSET @__p_0 ROWS",
-//                Sql);
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY GETDATE()
+OFFSET @__p_0 ROWS",
+                Sql);
         }
 
         [ConditionalFact]
@@ -3669,10 +3668,9 @@ ORDER BY [c].[CustomerID]",
                 Sql);
         }
 
-        //TODO ErikEJ implement fix as per issue discussion (after 1.1)
         public override void OrderBy_true()
         {
-//            base.OrderBy_true();
+            base.OrderBy_true();
 
             Assert.Equal(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -3681,10 +3679,9 @@ ORDER BY GETDATE()",
                 Sql);
         }
 
-        //TODO ErikEJ implement fix as per issue discussion (after 1.1)
         public override void OrderBy_integer()
         {
-//            base.OrderBy_integer();
+            base.OrderBy_integer();
 
             Assert.Equal(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -5672,7 +5669,6 @@ WHERE [c].[Region] IS NULL OR ([c].[Region] = N'')",
                 Sql);
         }
 
-        //TODO ErikEJ Why is SQL different?
         public override void IsNullOrEmpty_in_projection()
         {
             base.IsNullOrEmpty_in_projection();

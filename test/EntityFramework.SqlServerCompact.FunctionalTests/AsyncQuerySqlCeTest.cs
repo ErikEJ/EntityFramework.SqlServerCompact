@@ -10,11 +10,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     public class AsyncQuerySqlServerTest : AsyncQueryTestBase<NorthwindQuerySqlCeFixture>
     {
         //TODO ErikEJ await fix
-        public override async Task All_top_level_subquery()
-        {
-            //return base.All_top_level_subquery();
-        }
-
         public override async Task OrderBy_correlated_subquery_lol()
         {
             //return base.OrderBy_correlated_subquery_lol();

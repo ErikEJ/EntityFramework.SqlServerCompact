@@ -13,15 +13,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         //TODO ErikEJ await fix
-        public override void Project_single_scalar_value_subquery_in_query_with_optional_navigation_works()
-        {
-            //base.Project_single_scalar_value_subquery_in_query_with_optional_navigation_works();
-        }
-
-        //TODO ErikEJ await fix
         public override void Select_collection_FirstOrDefault_project_single_column2()
         {
-            //base.Select_collection_FirstOrDefault_project_single_column2();
+          //base.Select_collection_FirstOrDefault_project_single_column2();
         }
 
         //TODO ErikEJ await fix
@@ -477,9 +471,9 @@ WHERE EXISTS (
                 Sql);
         }
 
+        //TODO ErikEJ await fix
         public override void Navigation_in_subquery_referencing_outer_query()
         {
-            //TODO ErikEJ report strange query
 //            base.Navigation_in_subquery_referencing_outer_query();
 
 //            Assert.Equal(

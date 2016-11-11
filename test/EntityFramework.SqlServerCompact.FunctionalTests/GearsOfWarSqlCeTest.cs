@@ -833,20 +833,19 @@ WHERE (([g].[Discriminator] = N'Officer') OR ([g].[Discriminator] = N'Gear')) AN
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Where_count_subquery_without_collision()
         {
-//            base.Where_count_subquery_without_collision();
+            base.Where_count_subquery_without_collision();
 
-//            Assert.Equal(
-//                @"SELECT [w].[Nickname], [w].[SquadId], [w].[AssignedCityName], [w].[CityOrBirthName], [w].[Discriminator], [w].[FullName], [w].[HasSoulPatch], [w].[LeaderNickname], [w].[LeaderSquadId], [w].[Rank]
-//FROM [Gear] AS [w]
-//WHERE [w].[Discriminator] IN (N'Officer', N'Gear') AND ((
-//    SELECT COUNT(*)
-//    FROM [Weapon] AS [w0]
-//    WHERE [w].[FullName] = [w0].[OwnerFullName]
-//) = 2)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [w].[Nickname], [w].[SquadId], [w].[AssignedCityName], [w].[CityOrBirthName], [w].[Discriminator], [w].[FullName], [w].[HasSoulPatch], [w].[LeaderNickname], [w].[LeaderSquadId], [w].[Rank]
+FROM [Gear] AS [w]
+WHERE [w].[Discriminator] IN (N'Officer', N'Gear') AND (2 IN (
+    SELECT COUNT(*)
+    FROM [Weapon] AS [w0]
+    WHERE [w].[FullName] = [w0].[OwnerFullName]
+))",
+                Sql);
         }
 
         public override void Where_any_subquery_without_collision()
@@ -1212,20 +1211,19 @@ ORDER BY [w].[SynergyWithId]",
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Where_subquery_boolean()
         {
-//            base.Where_subquery_boolean();
+            base.Where_subquery_boolean();
 
-//            Assert.Equal(
-//                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
-//FROM [Gear] AS [g]
-//WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND ((
-//    SELECT TOP(1) [w].[IsAutomatic]
-//    FROM [Weapon] AS [w]
-//    WHERE [g].[FullName] = [w].[OwnerFullName]
-//) = 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Gear] AS [g]
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (1 IN (
+    SELECT TOP(1) [w].[IsAutomatic]
+    FROM [Weapon] AS [w]
+    WHERE [g].[FullName] = [w].[OwnerFullName]
+))",
+                Sql);
         }
 
         public override void Singleton_Navigation_With_Member_Access()
@@ -1346,19 +1344,18 @@ WHERE [c].[Location] IN (N'Unknown', N'Jacinto''s location', N'Ephyra''s locatio
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Non_unicode_string_literals_is_used_for_non_unicode_column_with_subquery()
         {
-//            base.Non_unicode_string_literals_is_used_for_non_unicode_column_with_subquery();
+            base.Non_unicode_string_literals_is_used_for_non_unicode_column_with_subquery();
 
-//            Assert.Equal(
-//                @"SELECT [c].[Name], [c].[Location]
-//FROM [City] AS [c]
-//WHERE ([c].[Location] = 'Unknown') AND ((
-//    SELECT COUNT(*)
-//    FROM [Gear] AS [g]
-//    WHERE ((([g].[Discriminator] = N'Officer') OR ([g].[Discriminator] = N'Gear')) AND ([g].[Nickname] = N'Paduk')) AND ([c].[Name] = [g].[CityOrBirthName])
-//) = 1)", Sql);
+            Assert.Equal(
+                @"SELECT [c].[Name], [c].[Location]
+FROM [City] AS [c]
+WHERE ([c].[Location] = N'Unknown') AND (1 IN (
+    SELECT COUNT(*)
+    FROM [Gear] AS [g]
+    WHERE ((([g].[Discriminator] = N'Officer') OR ([g].[Discriminator] = N'Gear')) AND ([g].[Nickname] = N'Paduk')) AND ([c].[Name] = [g].[CityOrBirthName])
+))", Sql);
         }
 
         public override void Non_unicode_string_literals_is_used_for_non_unicode_column_in_subquery()

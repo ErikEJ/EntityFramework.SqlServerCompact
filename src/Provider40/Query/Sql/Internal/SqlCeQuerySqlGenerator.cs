@@ -1,7 +1,6 @@
 ﻿#if SQLCE35
 using System;
 #endif
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
@@ -11,7 +10,6 @@ using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Remotion.Linq.Clauses;
-using Remotion.Linq.Parsing;
 
 namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
 {
@@ -95,22 +93,24 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
 
         protected override Expression VisitBinary(BinaryExpression expression)
         {
-            if (expression.NodeType == ExpressionType.Equal
-                || expression.NodeType == ExpressionType.NotEqual)
+            if ((expression.NodeType == ExpressionType.Equal)
+                || (expression.NodeType == ExpressionType.NotEqual))
             {
+                var left = expression.Left.RemoveConvert();
+                var right = expression.Right.RemoveConvert();
                 Expression replacedExpression = null;
-                var leftSelect = expression.Left as SelectExpression;
-                var rightAlias = expression.Right as AliasExpression;
-                if (leftSelect != null && rightAlias != null)
+                var leftSelect = left as SelectExpression;
+                var rightSelect = right as SelectExpression;
+                if ((leftSelect != null) && (rightSelect == null))
                 {
-                    replacedExpression = new InExpression(rightAlias, leftSelect);
+                    replacedExpression = new InExpression(
+                        right as AliasExpression ?? new AliasExpression(right), leftSelect);
                 }
 
-                var rightSelect = expression.Right as SelectExpression;
-                var leftAlias = expression.Left as AliasExpression;
-                if (rightSelect != null && leftAlias != null)
+                if ((rightSelect != null) && (leftSelect == null))
                 {
-                    replacedExpression = new InExpression(leftAlias, rightSelect);
+                    replacedExpression = new InExpression(
+                        left as AliasExpression ?? new AliasExpression(left), rightSelect);
                 }
 
                 if (replacedExpression != null)

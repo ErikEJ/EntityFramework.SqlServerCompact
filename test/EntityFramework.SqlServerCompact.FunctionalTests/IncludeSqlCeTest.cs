@@ -297,7 +297,7 @@ ORDER BY [o0].[OrderID]",
         //TODO ErikEJ await fix
         public override void Include_collection_order_by_collection_column(bool useString)
         {
-//            base.Include_collection_order_by_collection_column(useString);
+           //base.Include_collection_order_by_collection_column(useString);
 
 //            Assert.Equal(
 //                @"SELECT TOP(1) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -445,7 +445,7 @@ ORDER BY [c0].[CompanyName] DESC, [c0].[CustomerID]",
         //TODO ErikEJ await fix
         public override void Include_collection_order_by_subquery(bool useString)
         {
-//            base.Include_collection_order_by_subquery(useString);
+            //base.Include_collection_order_by_subquery(useString);
 
 //            Assert.Equal(
 //                @"SELECT TOP(1) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]

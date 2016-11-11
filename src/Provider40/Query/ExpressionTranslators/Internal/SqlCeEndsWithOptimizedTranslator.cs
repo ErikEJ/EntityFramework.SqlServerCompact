@@ -19,18 +19,24 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
             {
                 var patternExpression = methodCallExpression.Arguments[0];
                 var patternConstantExpression = patternExpression as ConstantExpression;
-                //SUBSTRING(@sHex,LEN(@sHex) + 1 - LEN(@search), LEN(@search))
+                //SUBSTRING(a, LEN(a) - LEN(b) + 1, LEN(b))
+                //RIGHT(a, LEN(b)) = b
                 var endsWithExpression = Expression.Equal(
                     new SqlFunctionExpression(
-                        "RIGHT",
-                        // ReSharper disable once PossibleNullReferenceException
-                        methodCallExpression.Object.Type,
+                        "SUBSTRING",
+                        typeof(string),
                         new[]
                         {
                             methodCallExpression.Object,
+                            Expression.Subtract( 
+                                Expression.Add(
+                                    new SqlFunctionExpression("LEN", typeof(int), 
+                                        new[] { methodCallExpression.Object }),
+                                    Expression.Constant(1)),
+                                new SqlFunctionExpression("LEN", typeof(int), new[] { patternExpression })),
                             new SqlFunctionExpression("LEN", typeof(int), new[] { patternExpression })
                         }),
-                    patternExpression);
+                        patternExpression);
 
                 return new NotNullableExpression(
                         patternConstantExpression != null

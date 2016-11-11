@@ -1,7 +1,6 @@
 ﻿#if SQLCE35
 using System;
 #endif
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
@@ -10,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
-using Remotion.Linq.Parsing;
+using Remotion.Linq.Clauses;
 
 namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
 {
@@ -41,7 +40,7 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
         {
             Check.NotNull(countExpression, nameof(countExpression));
 
-            if (countExpression.Type != typeof (long))
+            if (countExpression.Type != typeof(long))
             {
                 return base.VisitCount(countExpression);
             }
@@ -79,73 +78,50 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
             base.GenerateLimitOffset(selectExpression);
         }
 
-        protected override void VisitProjection(IReadOnlyList<Expression> projections)
+        protected override void GenerateOrdering(Ordering ordering)
         {
-            var comparisonTransformer = new ProjectionComparisonTransformingVisitor();
-            var transformedProjections = projections.Select(comparisonTransformer.Visit).ToList();
-
-            base.VisitProjection(transformedProjections);
+            if (ordering.Expression is ParameterExpression
+                || ordering.Expression is ConstantExpression)
+            {
+                Sql.Append("GETDATE()");
+            }
+            else
+            {
+                base.GenerateOrdering(ordering);
+            }
         }
 
-        private class ProjectionComparisonTransformingVisitor : RelinqExpressionVisitor
+        protected override Expression VisitBinary(BinaryExpression expression)
         {
-            private bool _insideConditionalTest;
-
-            protected override Expression VisitUnary(UnaryExpression node)
+            if ((expression.NodeType == ExpressionType.Equal)
+                || (expression.NodeType == ExpressionType.NotEqual))
             {
-                if (!_insideConditionalTest
-                    && (node.NodeType == ExpressionType.Not)
-                    && node.Operand is AliasExpression)
+                var left = expression.Left.RemoveConvert();
+                var right = expression.Right.RemoveConvert();
+                Expression replacedExpression = null;
+                var leftSelect = left as SelectExpression;
+                var rightSelect = right as SelectExpression;
+                if ((leftSelect != null) && (rightSelect == null))
                 {
-                    return Expression.Condition(
-                        node,
-                        Expression.Constant(true, typeof(bool)),
-                        Expression.Constant(false, typeof(bool)));
+                    replacedExpression = new InExpression(
+                        right as AliasExpression ?? new AliasExpression(right), leftSelect);
                 }
 
-                return base.VisitUnary(node);
+                if ((rightSelect != null) && (leftSelect == null))
+                {
+                    replacedExpression = new InExpression(
+                        left as AliasExpression ?? new AliasExpression(left), rightSelect);
+                }
+
+                if (replacedExpression != null)
+                {
+                    replacedExpression = expression.NodeType == ExpressionType.Equal
+                        ? replacedExpression
+                        : Expression.Not(replacedExpression);
+                    return Visit(replacedExpression);
+                }
             }
-
-            protected override Expression VisitBinary(BinaryExpression node)
-            {
-                if (!_insideConditionalTest
-                    && (node.IsComparisonOperation()
-                        || node.IsLogicalOperation()))
-                {
-                    return Expression.Condition(
-                        node,
-                        Expression.Constant(true, typeof(bool)),
-                        Expression.Constant(false, typeof(bool)));
-                }
-
-                return base.VisitBinary(node);
-            }
-
-            protected override Expression VisitConditional(ConditionalExpression node)
-            {
-                _insideConditionalTest = true;
-                var test = Visit(node.Test);
-                _insideConditionalTest = false;
-                if (test is AliasExpression)
-                {
-                    return Expression.Condition(
-                        Expression.Equal(test, Expression.Constant(true, typeof(bool))),
-                        Visit(node.IfTrue),
-                        Visit(node.IfFalse));
-                }
-
-                var condition = test as ConditionalExpression;
-                if (condition != null)
-                {
-                    return Expression.Condition(
-                        condition.Test,
-                        Visit(node.IfTrue),
-                        Visit(node.IfFalse));
-                }
-                return Expression.Condition(test,
-                    Visit(node.IfTrue),
-                    Visit(node.IfFalse));
-            }
+            return base.VisitBinary(expression);
         }
     }
 }

@@ -280,20 +280,19 @@ ORDER BY [c3].[ComplexNavigationStringDefaultText]",
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Join_navigation_key_access_optional()
         {
-//            base.Join_navigation_key_access_optional();
+            base.Join_navigation_key_access_optional();
 
-//            Assert.Equal(
-//                @"SELECT [e1].[Id], [e2].[Id]
-//FROM [Level1] AS [e1]
-//INNER JOIN [Level2] AS [e2] ON [e1].[Id] = (
-//    SELECT TOP(1) [subQuery0].[Id]
-//    FROM [Level1] AS [subQuery0]
-//    WHERE [subQuery0].[Id] = [e2].[Level1_Optional_Id]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e1].[Id], [e2].[Id]
+FROM [Level1] AS [e1]
+INNER JOIN [Level2] AS [e2] ON [e1].[Id] IN (
+    SELECT TOP(1) [subQuery0].[Id]
+    FROM [Level1] AS [subQuery0]
+    WHERE [subQuery0].[Id] = [e2].[Level1_Optional_Id]
+)",
+                Sql);
         }
 
         public override void Join_navigation_key_access_required()
@@ -484,73 +483,69 @@ ORDER BY [e3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id]",
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Join_navigation_in_inner_selector_translated_to_subquery()
         {
-//            base.Join_navigation_in_inner_selector_translated_to_subquery();
+            base.Join_navigation_in_inner_selector_translated_to_subquery();
 
-//            Assert.Equal(
-//                @"SELECT [e2].[Id], [e1].[Id]
-//FROM [Level2] AS [e2]
-//INNER JOIN [Level1] AS [e1] ON [e2].[Id] = (
-//    SELECT TOP(1) [subQuery0].[Id]
-//    FROM [Level2] AS [subQuery0]
-//    WHERE [subQuery0].[Level1_Optional_Id] = [e1].[Id]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e2].[Id], [e1].[Id]
+FROM [Level2] AS [e2]
+INNER JOIN [Level1] AS [e1] ON [e2].[Id] IN (
+    SELECT TOP(1) [subQuery0].[Id]
+    FROM [Level2] AS [subQuery0]
+    WHERE [subQuery0].[Level1_Optional_Id] = [e1].[Id]
+)",
+                Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision()
         {
-//            base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision();
+            base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision();
 
-//            Assert.Equal(
-//                @"SELECT [e2].[Id], [e1].[Id], [e3].[Id]
-//FROM [Level2] AS [e2]
-//INNER JOIN [Level1] AS [e1] ON [e2].[Id] = (
-//    SELECT TOP(1) [subQuery0].[Id]
-//    FROM [Level2] AS [subQuery0]
-//    WHERE [subQuery0].[Level1_Optional_Id] = [e1].[Id]
-//)
-//INNER JOIN [Level3] AS [e3] ON [e2].[Id] = (
-//    SELECT TOP(1) [subQuery2].[Id]
-//    FROM [Level2] AS [subQuery2]
-//    WHERE [subQuery2].[Id] = [e3].[Level2_Optional_Id]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e2].[Id], [e1].[Id], [e3].[Id]
+FROM [Level2] AS [e2]
+INNER JOIN [Level1] AS [e1] ON [e2].[Id] IN (
+    SELECT TOP(1) [subQuery0].[Id]
+    FROM [Level2] AS [subQuery0]
+    WHERE [subQuery0].[Level1_Optional_Id] = [e1].[Id]
+)
+INNER JOIN [Level3] AS [e3] ON [e2].[Id] IN (
+    SELECT TOP(1) [subQuery2].[Id]
+    FROM [Level2] AS [subQuery2]
+    WHERE [subQuery2].[Id] = [e3].[Level2_Optional_Id]
+)",
+                Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_non_key_join()
         {
-//            base.Join_navigation_translated_to_subquery_non_key_join();
+            base.Join_navigation_translated_to_subquery_non_key_join();
 
-//            Assert.Equal(
-//                @"SELECT [e2].[Id], [e2].[Name], [e1].[Id], [e1].[Name]
-//FROM [Level2] AS [e2]
-//INNER JOIN [Level1] AS [e1] ON [e2].[Name] = (
-//    SELECT TOP(1) [subQuery0].[Name]
-//    FROM [Level2] AS [subQuery0]
-//    WHERE [subQuery0].[Level1_Optional_Id] = [e1].[Id]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e2].[Id], [e2].[Name], [e1].[Id], [e1].[Name]
+FROM [Level2] AS [e2]
+INNER JOIN [Level1] AS [e1] ON [e2].[Name] IN (
+    SELECT TOP(1) [subQuery0].[Name]
+    FROM [Level2] AS [subQuery0]
+    WHERE [subQuery0].[Level1_Optional_Id] = [e1].[Id]
+)",
+                Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_self_ref()
         {
-//            base.Join_navigation_translated_to_subquery_self_ref();
+            base.Join_navigation_translated_to_subquery_self_ref();
 
-//            Assert.Equal(
-//                @"SELECT [e1].[Id], [e2].[Id]
-//FROM [Level1] AS [e1]
-//INNER JOIN [Level1] AS [e2] ON [e1].[Id] = (
-//    SELECT TOP(1) [subQuery0].[Id]
-//    FROM [Level1] AS [subQuery0]
-//    WHERE [subQuery0].[Id] = [e2].[OneToMany_Optional_Self_InverseId]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e1].[Id], [e2].[Id]
+FROM [Level1] AS [e1]
+INNER JOIN [Level1] AS [e2] ON [e1].[Id] IN (
+    SELECT TOP(1) [subQuery0].[Id]
+    FROM [Level1] AS [subQuery0]
+    WHERE [subQuery0].[Id] = [e2].[OneToMany_Optional_Self_InverseId]
+)",
+                Sql);
         }
 
         public override void Join_navigation_translated_to_subquery_nested()
@@ -595,22 +590,21 @@ ORDER BY [subQuery].[Id], [subQuery.OneToOne_Optional_FK].[Id]",
                 Sql);
         }
         
-        //TODO ErikEJ await fix
         public override void Join_navigation_translated_to_subquery_deeply_nested_required()
         {
-//            base.Join_navigation_translated_to_subquery_deeply_nested_required();
+            base.Join_navigation_translated_to_subquery_deeply_nested_required();
 
-//            Assert.Equal(
-//                @"SELECT [e4].[Id], [e4].[Name], [e1].[Id], [e1].[Name]
-//FROM [Level1] AS [e1]
-//INNER JOIN [Level4] AS [e4] ON [e1].[Name] = (
-//    SELECT TOP(1) [subQuery.OneToOne_Required_FK_Inverse.OneToOne_Required_PK_Inverse0].[Name]
-//    FROM [Level3] AS [subQuery0]
-//    INNER JOIN [Level2] AS [subQuery.OneToOne_Required_FK_Inverse0] ON [subQuery0].[Level2_Required_Id] = [subQuery.OneToOne_Required_FK_Inverse0].[Id]
-//    INNER JOIN [Level1] AS [subQuery.OneToOne_Required_FK_Inverse.OneToOne_Required_PK_Inverse0] ON [subQuery.OneToOne_Required_FK_Inverse0].[Id] = [subQuery.OneToOne_Required_FK_Inverse.OneToOne_Required_PK_Inverse0].[Id]
-//    WHERE [subQuery0].[Id] = [e4].[Level3_Required_Id]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e4].[Id], [e4].[Name], [e1].[Id], [e1].[Name]
+FROM [Level1] AS [e1]
+INNER JOIN [Level4] AS [e4] ON [e1].[Name] IN (
+    SELECT TOP(1) [subQuery.OneToOne_Required_FK_Inverse.OneToOne_Required_PK_Inverse0].[Name]
+    FROM [Level3] AS [subQuery0]
+    INNER JOIN [Level2] AS [subQuery.OneToOne_Required_FK_Inverse0] ON [subQuery0].[Level2_Required_Id] = [subQuery.OneToOne_Required_FK_Inverse0].[Id]
+    INNER JOIN [Level1] AS [subQuery.OneToOne_Required_FK_Inverse.OneToOne_Required_PK_Inverse0] ON [subQuery.OneToOne_Required_FK_Inverse0].[Id] = [subQuery.OneToOne_Required_FK_Inverse.OneToOne_Required_PK_Inverse0].[Id]
+    WHERE [subQuery0].[Id] = [e4].[Level3_Required_Id]
+)",
+                Sql);
         }
 
         public override void Multiple_complex_includes()
@@ -1657,24 +1651,23 @@ WHERE EXISTS (
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Correlated_subquery_doesnt_project_unnecessary_columns_in_top_level_join()
         {
-//            base.Correlated_subquery_doesnt_project_unnecessary_columns_in_top_level_join();
+            base.Correlated_subquery_doesnt_project_unnecessary_columns_in_top_level_join();
 
-//            Assert.Equal(
-//                @"SELECT [e1].[Name], [e2].[Id]
-//FROM [Level1] AS [e1]
-//INNER JOIN [Level2] AS [e2] ON [e1].[Id] = (
-//    SELECT TOP(1) [subQuery0].[Id]
-//    FROM [Level1] AS [subQuery0]
-//    WHERE [subQuery0].[Id] = [e2].[Level1_Optional_Id]
-//)
-//WHERE EXISTS (
-//    SELECT 1
-//    FROM [Level2] AS [l2]
-//    WHERE [l2].[Level1_Required_Id] = [e1].[Id])",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e1].[Name], [e2].[Id]
+FROM [Level1] AS [e1]
+INNER JOIN [Level2] AS [e2] ON [e1].[Id] IN (
+    SELECT TOP(1) [subQuery0].[Id]
+    FROM [Level1] AS [subQuery0]
+    WHERE [subQuery0].[Id] = [e2].[Level1_Optional_Id]
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM [Level2] AS [l2]
+    WHERE [l2].[Level1_Required_Id] = [e1].[Id])",
+                Sql);
         }
 
         public override void Correlated_nested_subquery_doesnt_project_unnecessary_columns_in_top_level()

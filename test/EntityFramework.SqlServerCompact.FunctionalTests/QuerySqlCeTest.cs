@@ -189,20 +189,19 @@ LEFT JOIN (
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Where_query_composition()
         {
-//            base.Where_query_composition();
+            base.Where_query_composition();
 
-//            Assert.Equal(
-//                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
-//FROM [Employees] AS [e1]
-//WHERE [e1].[FirstName] = (
-//    SELECT TOP(1) [e].[FirstName]
-//    FROM [Employees] AS [e]
-//    ORDER BY [e].[EmployeeID]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+FROM [Employees] AS [e1]
+WHERE [e1].[FirstName] IN (
+    SELECT TOP(1) [e].[FirstName]
+    FROM [Employees] AS [e]
+    ORDER BY [e].[EmployeeID]
+)",
+                Sql);
         }
 
         public override void Where_query_composition_is_null()
@@ -301,20 +300,19 @@ WHERE [e20].[EmployeeID] IS NULL",
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Where_query_composition_entity_equality_one_element_FirstOrDefault()
         {
-//            base.Where_query_composition_entity_equality_one_element_FirstOrDefault();
+            base.Where_query_composition_entity_equality_one_element_FirstOrDefault();
 
-//            Assert.Equal(
-//                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
-//FROM [Employees] AS [e1]
-//WHERE (
-//    SELECT TOP(1) [e2].[EmployeeID]
-//    FROM [Employees] AS [e2]
-//    WHERE [e2].[EmployeeID] = [e1].[ReportsTo]
-//) = 0",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+FROM [Employees] AS [e1]
+WHERE 0 IN (
+    SELECT TOP(1) [e2].[EmployeeID]
+    FROM [Employees] AS [e2]
+    WHERE [e2].[EmployeeID] = [e1].[ReportsTo]
+)",
+                Sql);
         }
 
         public override void Where_query_composition_entity_equality_no_elements_SingleOrDefault()
@@ -330,36 +328,34 @@ FROM [Employees] AS [e20]
 WHERE [e20].[EmployeeID] = 42", Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Where_query_composition_entity_equality_no_elements_FirstOrDefault()
         {
-//            base.Where_query_composition_entity_equality_no_elements_FirstOrDefault();
+            base.Where_query_composition_entity_equality_no_elements_FirstOrDefault();
 
-//            Assert.Equal(
-//                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
-//FROM [Employees] AS [e1]
-//WHERE (
-//    SELECT TOP(1) [e2].[EmployeeID]
-//    FROM [Employees] AS [e2]
-//    WHERE [e2].[EmployeeID] = 42
-//) = 0",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+FROM [Employees] AS [e1]
+WHERE 0 IN (
+    SELECT TOP(1) [e2].[EmployeeID]
+    FROM [Employees] AS [e2]
+    WHERE [e2].[EmployeeID] = 42
+)",
+                Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Where_query_composition_entity_equality_multiple_elements_FirstOrDefault()
         {
-//            base.Where_query_composition_entity_equality_multiple_elements_FirstOrDefault();
+            base.Where_query_composition_entity_equality_multiple_elements_FirstOrDefault();
 
-//            Assert.Equal(
-//                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
-//FROM [Employees] AS [e1]
-//WHERE (
-//    SELECT TOP(1) [e2].[EmployeeID]
-//    FROM [Employees] AS [e2]
-//    WHERE ([e2].[EmployeeID] <> [e1].[ReportsTo]) OR [e1].[ReportsTo] IS NULL
-//) = 0",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
+FROM [Employees] AS [e1]
+WHERE 0 IN (
+    SELECT TOP(1) [e2].[EmployeeID]
+    FROM [Employees] AS [e2]
+    WHERE ([e2].[EmployeeID] <> [e1].[ReportsTo]) OR [e1].[ReportsTo] IS NULL
+)",
+                Sql);
         }
 
         public override void Where_query_composition2()
@@ -376,20 +372,19 @@ ORDER BY [e].[EmployeeID]",
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Where_shadow_subquery_FirstOrDefault()
         {
-//            base.Where_shadow_subquery_FirstOrDefault();
+            base.Where_shadow_subquery_FirstOrDefault();
 
-//            Assert.Equal(
-//                @"SELECT [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
-//FROM [Employees] AS [e]
-//WHERE [e].[Title] = (
-//    SELECT TOP(1) [e2].[Title]
-//    FROM [Employees] AS [e2]
-//    ORDER BY [e2].[Title]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
+FROM [Employees] AS [e]
+WHERE [e].[Title] IN (
+    SELECT TOP(1) [e2].[Title]
+    FROM [Employees] AS [e2]
+    ORDER BY [e2].[Title]
+)",
+                Sql);
         }
 
         public override void Select_Subquery_Single()
@@ -1301,21 +1296,20 @@ OFFSET @__p_0 ROWS",
                 Sql);
         }
 
-        //TODO ErikEJ implement fix as per issue discussion (after 1.1)
         [ConditionalFact]
         [SqlServerCondition(SqlServerCondition.SupportsOffset)]
         public override void Skip_no_orderby()
         {
-//            base.Skip_no_orderby();
+            base.Skip_no_orderby();
 
-//            Assert.Equal(
-//                @"@__p_0: 5
+            Assert.Equal(
+                @"@__p_0: 5
 
-//SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY (SELECT 1)
-//OFFSET @__p_0 ROWS",
-//                Sql);
+SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY GETDATE()
+OFFSET @__p_0 ROWS",
+                Sql);
         }
 
         [ConditionalFact]
@@ -2114,20 +2108,19 @@ ORDER BY [c].[CustomerID]",
                 Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void FirstOrDefault_inside_subquery_gets_server_evaluated()
         {
-//            base.FirstOrDefault_inside_subquery_gets_server_evaluated();
+            base.FirstOrDefault_inside_subquery_gets_server_evaluated();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE ([c].[CustomerID] = N'ALFKI') AND ((
-//    SELECT TOP(1) [o].[CustomerID]
-//    FROM [Orders] AS [o]
-//    WHERE ([o].[CustomerID] = N'ALFKI') AND ([c].[CustomerID] = [o].[CustomerID])
-//) = N'ALFKI')",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE ([c].[CustomerID] = N'ALFKI') AND (N'ALFKI' IN (
+    SELECT TOP(1) [o].[CustomerID]
+    FROM [Orders] AS [o]
+    WHERE ([o].[CustomerID] = N'ALFKI') AND ([c].[CustomerID] = [o].[CustomerID])
+))",
+                Sql);
         }
 
         public override void First_inside_subquery_gets_client_evaluated()
@@ -4285,7 +4278,7 @@ WHERE [p].[UnitsInStock] > 10",
             Assert.Equal(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[CustomerID] LIKE N'%' + N'KI'",
+WHERE SUBSTRING([c].[CustomerID], (LEN([c].[CustomerID]) + 1) - LEN(N'KI'), LEN(N'KI')) = N'KI'",
                 Sql);
         }
 
@@ -4466,7 +4459,7 @@ WHERE ([c].[ContactName] LIKE @__LocalMethod1_0 + N'%' AND (CHARINDEX(@__LocalMe
             Assert.Equal(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[ContactName] LIKE N'%' + N'b'",
+WHERE SUBSTRING([c].[ContactName], (LEN([c].[ContactName]) + 1) - LEN(N'b'), LEN(N'b')) = N'b'",
                 Sql);
         }
 
@@ -4477,7 +4470,7 @@ WHERE [c].[ContactName] LIKE N'%' + N'b'",
             Assert.Equal(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[ContactName] LIKE N'%' + [c].[ContactName]",
+WHERE (SUBSTRING([c].[ContactName], (LEN([c].[ContactName]) + 1) - LEN([c].[ContactName]), LEN([c].[ContactName])) = [c].[ContactName]) OR ([c].[ContactName] = N'')",
                 Sql);
         }
 
@@ -4488,7 +4481,7 @@ WHERE [c].[ContactName] LIKE N'%' + [c].[ContactName]",
             Assert.Equal(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[ContactName] LIKE N'%' + [c].[ContactName]",
+WHERE (SUBSTRING([c].[ContactName], (LEN([c].[ContactName]) + 1) - LEN([c].[ContactName]), LEN([c].[ContactName])) = [c].[ContactName]) OR ([c].[ContactName] = N'')",
                 Sql);
         }
 
@@ -4501,7 +4494,7 @@ WHERE [c].[ContactName] LIKE N'%' + [c].[ContactName]",
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[ContactName] LIKE N'%' + @__LocalMethod2_0",
+WHERE (SUBSTRING([c].[ContactName], (LEN([c].[ContactName]) + 1) - LEN(@__LocalMethod2_0), LEN(@__LocalMethod2_0)) = @__LocalMethod2_0) OR (@__LocalMethod2_0 = N'')",
                 Sql);
         }
 
@@ -5676,7 +5669,6 @@ WHERE [c].[Region] IS NULL OR ([c].[Region] = N'')",
                 Sql);
         }
 
-        //TODO ErikEJ Why is SQL different?
         public override void IsNullOrEmpty_in_projection()
         {
             base.IsNullOrEmpty_in_projection();
@@ -5696,11 +5688,8 @@ FROM [Customers] AS [c]",
 
             Assert.Equal(
                 @"SELECT [c].[CustomerID], CASE
-    WHEN CASE
-        WHEN [c].[Region] IS NULL OR (([c].[Region] = N'') AND [c].[Region] IS NOT NULL)
-        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-    END = 1
-    THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT)
+    WHEN [c].[Region] IS NOT NULL AND (([c].[Region] <> N'') OR [c].[Region] IS NULL)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END
 FROM [Customers] AS [c]",
                 Sql);

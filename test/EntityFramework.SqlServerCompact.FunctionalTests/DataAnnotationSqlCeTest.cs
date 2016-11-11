@@ -72,7 +72,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return modelBuilder;
         }
 
-        //TODO ErikEJ investigate failure!
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
             //TODO ErikEJ Why is fixture not running?

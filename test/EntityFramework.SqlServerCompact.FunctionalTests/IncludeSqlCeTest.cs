@@ -297,7 +297,7 @@ ORDER BY [o0].[OrderID]",
         //TODO ErikEJ await fix
         public override void Include_collection_order_by_collection_column(bool useString)
         {
-//            base.Include_collection_order_by_collection_column(useString);
+           //base.Include_collection_order_by_collection_column(useString);
 
 //            Assert.Equal(
 //                @"SELECT TOP(1) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -327,24 +327,23 @@ ORDER BY [o0].[OrderID]",
 //                Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Include_collection_order_by_key(bool useString)
         {
-//            base.Include_collection_order_by_key(useString);
+            base.Include_collection_order_by_key(useString);
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY [c].[CustomerID]
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY [c].[CustomerID]
 
-//SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-//FROM [Orders] AS [o]
-//WHERE EXISTS (
-//    SELECT 1
-//    FROM [Customers] AS [c]
-//    WHERE [o].[CustomerID] = [c].[CustomerID])
-//ORDER BY [o].[CustomerID]",
-//                Sql);
+SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Orders] AS [o]
+WHERE EXISTS (
+    SELECT 1
+    FROM [Customers] AS [c]
+    WHERE [o].[CustomerID] = [c].[CustomerID])
+ORDER BY [o].[CustomerID]",
+                Sql);
         }
 
         public override void Include_collection_order_by_non_key(bool useString)
@@ -445,7 +444,7 @@ ORDER BY [c0].[CompanyName] DESC, [c0].[CustomerID]",
         //TODO ErikEJ await fix
         public override void Include_collection_order_by_subquery(bool useString)
         {
-//            base.Include_collection_order_by_subquery(useString);
+            //base.Include_collection_order_by_subquery(useString);
 
 //            Assert.Equal(
 //                @"SELECT TOP(1) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]

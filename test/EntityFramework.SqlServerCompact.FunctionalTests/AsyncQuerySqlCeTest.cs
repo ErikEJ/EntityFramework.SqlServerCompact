@@ -9,31 +9,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class AsyncQuerySqlServerTest : AsyncQueryTestBase<NorthwindQuerySqlCeFixture>
     {
-        //TODO ErikEJ await fix Broken by recent query update in core
-        public override async Task All_top_level_subquery()
-        {
-            //return base.All_top_level_subquery();
-        }
-
-        //TODO ErikEJ await fix Broken by recent query update in core https://github.com/aspnet/EntityFramework/issues/2626
+        //TODO ErikEJ await fix
         public override async Task OrderBy_correlated_subquery_lol()
         {
-            //base.OrderBy_correlated_subquery_lol();
+            //return base.OrderBy_correlated_subquery_lol();
         }
 
-        //TODO ErikEJ await fix Broken by recent query update in core
-        public override async Task Where_query_composition()
-        {
-            //base.Where_query_composition();
-        }
-
-        //TODO ErikEJ await fix Broken by recent query update in core
-        public override async Task Where_shadow_subquery_first()
-        {
-            //base.Where_shadow_subquery_first();
-        }
-
-        //TODO ErikEJ await fix Broken by recent query update in core
         public override async Task SelectMany_primitive_select_subquery()
         {
             //return base.SelectMany_primitive_select_subquery();

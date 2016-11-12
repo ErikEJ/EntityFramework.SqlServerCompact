@@ -33,12 +33,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new InheritanceRelationshipsContext(optionsBuilder.Options))
                 {
-                    // TODO: Delete DB if model changed
-                    context.Database.EnsureDeleted();
-                    if (context.Database.EnsureCreated())
-                    {
-                        InheritanceRelationshipsModelInitializer.Seed(context);
-                    }
+                    context.Database.EnsureClean();
+                    InheritanceRelationshipsModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();
                 }

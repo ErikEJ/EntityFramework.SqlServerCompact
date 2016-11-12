@@ -11,7 +11,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class NorthwindQuerySqlCeFixture : NorthwindQueryRelationalFixture, IDisposable
     {
-        private readonly IServiceProvider _serviceProvider;
         private readonly DbContextOptions _options;
 
         private readonly SqlCeTestStore _testStore = SqlCeNorthwindContext.GetSharedStore();
@@ -19,21 +18,18 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public NorthwindQuerySqlCeFixture()
         {
-            _serviceProvider
-                = new ServiceCollection()
-                    .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
-                    .AddSingleton<ILoggerFactory>(_testSqlLoggerFactory)
-                    .BuildServiceProvider();
-
             _options = BuildOptions();
         }
 
-        protected DbContextOptions BuildOptions()
+        public override DbContextOptions BuildOptions(IServiceCollection additionalServices = null)
             => ConfigureOptions(
                 new DbContextOptionsBuilder()
                     .EnableSensitiveDataLogging()
-                    .UseInternalServiceProvider(_serviceProvider))
+                    .UseInternalServiceProvider((additionalServices ?? new ServiceCollection())
+                        .AddEntityFrameworkSqlCe()
+                        .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                        .AddSingleton<ILoggerFactory>(_testSqlLoggerFactory)
+                        .BuildServiceProvider()))
                 .UseSqlCe(
                     _testStore.ConnectionString,
                     b =>
@@ -43,14 +39,15 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     }).Options;
 
         protected virtual DbContextOptionsBuilder ConfigureOptions(DbContextOptionsBuilder dbContextOptionsBuilder)
-             => dbContextOptionsBuilder; 
+            => dbContextOptionsBuilder;
 
         protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlServerDbContextOptionsBuilder)
         {
         }
 
-        public override NorthwindContext CreateContext()
-            => new SqlCeNorthwindContext(_options);
+        public override NorthwindContext CreateContext(
+            QueryTrackingBehavior queryTrackingBehavior = QueryTrackingBehavior.TrackAll)
+            => new SqlCeNorthwindContext(_options, queryTrackingBehavior);
 
         public void Dispose() => _testStore.Dispose();
 

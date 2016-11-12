@@ -151,6 +151,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             builder
                 .EndCommand()
                 .Append("DROP INDEX ")
+                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
+                .Append(".")
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name));
         }
 
@@ -302,7 +304,9 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 maxLength,
                 rowVersion,
                 nullable,
-                defaultValue,
+                identity
+                    ? null     
+                    : defaultValue,
                 defaultValueSql,
                 computedColumnSql,
                 annotatable,
@@ -314,7 +318,5 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 builder.Append(" IDENTITY");
             }
         }
-
-        private string ColumnList(string[] columns) => string.Join(", ", columns.Select(SqlGenerationHelper.DelimitIdentifier));
     }
 }

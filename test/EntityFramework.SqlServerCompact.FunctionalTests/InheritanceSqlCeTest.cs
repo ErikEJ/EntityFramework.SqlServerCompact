@@ -183,11 +183,14 @@ ORDER BY [e].[Species]
 
 SELECT [a].[Species], [a].[CountryId], [a].[Discriminator], [a].[Name], [a].[EagleId], [a].[IsFlightless], [a].[Group], [a].[FoundOn]
 FROM [Animal] AS [a]
-WHERE [a].[Discriminator] IN (N'Kiwi', N'Eagle') AND EXISTS (
-    SELECT TOP(2) 1
+INNER JOIN (
+    SELECT DISTINCT TOP(2) [e].[Species]
     FROM [Animal] AS [e]
-    WHERE ([e].[Discriminator] = N'Eagle') AND ([a].[EagleId] = [e].[Species]))
-ORDER BY [a].[EagleId]",
+    WHERE [e].[Discriminator] = N'Eagle'
+    ORDER BY [e].[Species]
+) AS [e0] ON [a].[EagleId] = [e0].[Species]
+WHERE [a].[Discriminator] IN (N'Kiwi', N'Eagle')
+ORDER BY [e0].[Species]",
                 Sql);
         }
 
@@ -233,7 +236,7 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
 
 SELECT TOP(2) [k].[Species], [k].[CountryId], [k].[Discriminator], [k].[Name], [k].[EagleId], [k].[IsFlightless], [k].[FoundOn]
 FROM [Animal] AS [k]
-WHERE ([k].[Discriminator] = N'Kiwi') AND [k].[Species] LIKE N'%' + N'owenii'
+WHERE ([k].[Discriminator] = N'Kiwi') AND (SUBSTRING([k].[Species], (LEN([k].[Species]) + 1) - LEN(N'owenii'), LEN(N'owenii')) = N'owenii')
 
 @p1: Apteryx owenii (Nullable = false) (Size = 100)
 @p0: Aquila chrysaetos canadensis (Size = 100)
@@ -243,7 +246,7 @@ WHERE [Species] = @p1
 
 SELECT TOP(2) [k].[Species], [k].[CountryId], [k].[Discriminator], [k].[Name], [k].[EagleId], [k].[IsFlightless], [k].[FoundOn]
 FROM [Animal] AS [k]
-WHERE ([k].[Discriminator] = N'Kiwi') AND [k].[Species] LIKE N'%' + N'owenii'
+WHERE ([k].[Discriminator] = N'Kiwi') AND (SUBSTRING([k].[Species], (LEN([k].[Species]) + 1) - LEN(N'owenii'), LEN(N'owenii')) = N'owenii')
 
 @p0: Apteryx owenii (Nullable = false) (Size = 100)
 
@@ -252,7 +255,7 @@ WHERE [Species] = @p0
 
 SELECT COUNT(*)
 FROM [Animal] AS [k]
-WHERE ([k].[Discriminator] = N'Kiwi') AND [k].[Species] LIKE N'%' + N'owenii'",
+WHERE ([k].[Discriminator] = N'Kiwi') AND (SUBSTRING([k].[Species], (LEN([k].[Species]) + 1) - LEN(N'owenii'), LEN(N'owenii')) = N'owenii')",
                 Sql);
         }
 

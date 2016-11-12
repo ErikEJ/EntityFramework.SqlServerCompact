@@ -16,7 +16,7 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
     {
         protected override string ProviderName => "EntityFrameworkCore.SqlServerCompact40.Design";
 
-        protected override IServiceCollection ConfigureDesignTimeServices(IServiceCollection services)
+        protected override void ConfigureDesignTimeServices(IServiceCollection services)
             => new SqlCeDesignTimeServices().ConfigureDesignTimeServices(services);
 
         public virtual string TestNamespace => "E2ETest.Namespace";
@@ -71,7 +71,6 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "Test_Spaces_Keywords_Table.expected"
             };
 
-        //TODO EEJJ re-enable tests
         [Fact]
         [UseCulture("en-US")]
         public void E2ETestUseAttributesInsteadOfFluentApi()
@@ -105,9 +104,9 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             AssertCompile(actualFileSet);
         }
-        //TODO EEJJ re-enable tests
-        //[Fact]
-        //[UseCulture("en-US")]
+
+        [Fact]
+        [UseCulture("en-US")]
         public void E2ETestAllFluentApi()
         {
             var configuration = new ReverseEngineeringConfiguration
@@ -153,6 +152,5 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             BuildReference.ByName("Microsoft.Extensions.Caching.Abstractions"),
             BuildReference.ByName("Microsoft.Extensions.Logging.Abstractions")
         };
-
     }
 }

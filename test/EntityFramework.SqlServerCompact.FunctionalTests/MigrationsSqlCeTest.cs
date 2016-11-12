@@ -70,13 +70,7 @@ GO
             base.Can_generate_down_scripts();
 
             Assert.Equal(
-                @"DELETE FROM [__EFMigrationsHistory]
-WHERE [MigrationId] = '00000000000003_Migration3'
-
-
-GO
-
-sp_rename N'Table2', N'Table1'
+                @"sp_rename N'Table2', N'Table1'
 GO
 
 DELETE FROM [__EFMigrationsHistory]

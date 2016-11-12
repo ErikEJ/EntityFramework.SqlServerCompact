@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore.SqlCe.Specification.Tests
 {
     public class NavigationTest : IClassFixture<NavigationTestFixture>
     {
@@ -15,16 +15,21 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             {
                 context.ConfigAction = modelBuilder =>
                 {
-                    modelBuilder.Entity<GoTPerson>().HasMany(p => p.Siblings).WithOne(p => p.SiblingReverse).IsRequired(false);
-                    modelBuilder.Entity<GoTPerson>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).IsRequired(false);
+                    modelBuilder.Entity<Person>().HasMany(p => p.Siblings).WithOne(p => p.SiblingReverse).IsRequired(false);
+                    modelBuilder.Entity<Person>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).IsRequired(false);
                     return 0;
                 };
 
                 var model = context.Model;
                 var entityType = model.GetEntityTypes().First();
 
-                Assert.Equal("'GoTPerson' {'LoverId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().First().ToString());
-                Assert.Equal("'GoTPerson' {'SiblingReverseId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().Skip(1).First().ToString());
+                Assert.Equal(
+                    "ForeignKey: Person.LoverId -> Person.Id Unique ToDependent: LoverReverse ToPrincipal: Lover",
+                    entityType.GetForeignKeys().First().ToString());
+
+                Assert.Equal(
+                    "ForeignKey: Person.SiblingReverseId -> Person.Id ToDependent: Siblings ToPrincipal: SiblingReverse",
+                    entityType.GetForeignKeys().Skip(1).First().ToString());
             }
         }
 
@@ -35,16 +40,21 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             {
                 context.ConfigAction = modelBuilder =>
                 {
-                    modelBuilder.Entity<GoTPerson>().HasOne(p => p.SiblingReverse).WithMany(p => p.Siblings).IsRequired(false);
-                    modelBuilder.Entity<GoTPerson>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).IsRequired(false);
+                    modelBuilder.Entity<Person>().HasOne(p => p.SiblingReverse).WithMany(p => p.Siblings).IsRequired(false);
+                    modelBuilder.Entity<Person>().HasOne(p => p.Lover).WithOne(p => p.LoverReverse).IsRequired(false);
                     return 0;
                 };
 
                 var model = context.Model;
                 var entityType = model.GetEntityTypes().First();
 
-                Assert.Equal("'GoTPerson' {'LoverId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().First().ToString());
-                Assert.Equal("'GoTPerson' {'SiblingReverseId'} -> 'GoTPerson' {'Id'}", entityType.GetForeignKeys().Skip(1).First().ToString());
+                Assert.Equal(
+                     "ForeignKey: Person.LoverId -> Person.Id Unique ToDependent: LoverReverse ToPrincipal: Lover",
+                     entityType.GetForeignKeys().First().ToString());
+
+                Assert.Equal(
+                    "ForeignKey: Person.SiblingReverseId -> Person.Id ToDependent: Siblings ToPrincipal: SiblingReverse",
+                    entityType.GetForeignKeys().Skip(1).First().ToString());
             }
         }
 
@@ -56,14 +66,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
     }
 
-    public class GoTPerson
+    public class Person
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<GoTPerson> Siblings { get; set; }
-        public GoTPerson Lover { get; set; }
-        public GoTPerson LoverReverse { get; set; }
-        public GoTPerson SiblingReverse { get; set; }
+        public List<Person> Siblings { get; set; }
+        public Person Lover { get; set; }
+        public Person LoverReverse { get; set; }
+        public Person SiblingReverse { get; set; }
     }
 
     public class NavigationTestFixture
@@ -93,7 +103,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             {
             }
 
-            public DbSet<GoTPerson> People { get; set; }
+            public DbSet<Person> People { get; set; }
             public Func<ModelBuilder, int> ConfigAction { get; set; }
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)

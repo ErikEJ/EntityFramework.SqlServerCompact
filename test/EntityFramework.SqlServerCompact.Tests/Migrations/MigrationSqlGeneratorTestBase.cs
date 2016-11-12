@@ -213,7 +213,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 new RenameTableOperation
                 {
                     Name = "People",
-                    Schema = "dbo",
+                    Schema = null,
                     NewName = "Personas",
                     NewSchema = "dbo"
                 });
@@ -227,7 +227,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 {
                     Name = "IX_People_Name",
                     Table = "People",
-                    Schema = "dbo",
+                    Schema = null,
                     Columns = new[] { "FirstName", "LastName" },
                     IsUnique = true
                 });
@@ -241,6 +241,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 {
                     Name = "IX_People_Name",
                     Table = "People",
+                    Schema = "dbo",
                     Columns = new[] { "Name" },
                     IsUnique = false
                 });

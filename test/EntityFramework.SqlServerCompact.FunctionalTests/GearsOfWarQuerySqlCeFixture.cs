@@ -40,12 +40,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (var context = new GearsOfWarContext(optionsBuilder.Options))
                 {
-                    // TODO: Delete DB if model changed
-
-                    if (context.Database.EnsureCreated())
-                    {
-                        GearsOfWarModelInitializer.Seed(context);
-                    }
+                    context.Database.EnsureClean();
+                    GearsOfWarModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();
                 }

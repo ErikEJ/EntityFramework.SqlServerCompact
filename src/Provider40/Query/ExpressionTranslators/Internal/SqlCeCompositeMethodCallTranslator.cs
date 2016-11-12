@@ -7,6 +7,9 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
     {
         private static readonly IMethodCallTranslator[] _methodCallTranslators =
         {
+                new SqlCeContainsOptimizedTranslator(),
+                new SqlCeConvertTranslator(),
+                new SqlCeEndsWithOptimizedTranslator(),
                 new SqlCeMathAbsTranslator(),
                 new SqlCeMathCeilingTranslator(),
                 new SqlCeMathFloorTranslator(),
@@ -14,6 +17,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
                 new SqlCeMathRoundTranslator(),
                 new SqlCeMathTruncateTranslator(),
                 new SqlCeNewGuidTranslator(),
+                new SqlCeStartsWithOptimizedTranslator(),
                 new SqlCeStringIsNullOrWhiteSpaceTranslator(),
                 new SqlCeStringReplaceTranslator(),
                 new SqlCeStringSubstringTranslator(),
@@ -22,7 +26,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
                 new SqlCeStringTrimEndTranslator(),
                 new SqlCeStringTrimStartTranslator(),
                 new SqlCeStringTrimTranslator(),
-                new SqlCeConvertTranslator()
+                
         };
 
         public SqlCeCompositeMethodCallTranslator([NotNull] ILogger<SqlCeCompositeMethodCallTranslator> logger)

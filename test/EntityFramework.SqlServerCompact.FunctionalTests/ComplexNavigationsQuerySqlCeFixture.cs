@@ -1,17 +1,22 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.ComplexNavigationsModel;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class ComplexNavigationsQuerySqlCeFixture : ComplexNavigationsQueryRelationalFixture<SqlCeTestStore>
+    public class ComplexNavigationsQuerySqlCeFixture
+        : ComplexNavigationsQueryRelationalFixture<SqlCeTestStore>
     {
         public static readonly string DatabaseName = "ComplexNavigations";
 
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
+        private readonly DbContextOptions _options;
+
+        private readonly string _connectionString
+            = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
         public ComplexNavigationsQuerySqlCeFixture()
         {
@@ -20,41 +25,36 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
+
+            _options = new DbContextOptionsBuilder()
+                .EnableSensitiveDataLogging()
+                .UseSqlCe(_connectionString, b => b.ApplyConfiguration())
+                .UseInternalServiceProvider(_serviceProvider).Options;
         }
 
-        public override SqlCeTestStore CreateTestStore() =>
-            SqlCeTestStore.GetOrCreateShared(
-                DatabaseName,
-                () =>
+        public override SqlCeTestStore CreateTestStore()
+        {
+            return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
+            {
+                using (var context = new ComplexNavigationsContext(_options))
                 {
-                    var optionsBuilder = new DbContextOptionsBuilder();
-                    optionsBuilder
-                        .UseSqlCe(_connectionString)
-                        .UseInternalServiceProvider(_serviceProvider);
+                    context.Database.EnsureCreated();
+                    ComplexNavigationsModelInitializer.Seed(context);
 
-                    using (var context = new ComplexNavigationsContext(optionsBuilder.Options))
-                    {
-                        if (context.Database.EnsureCreated())
-                        {
-                            ComplexNavigationsModelInitializer.Seed(context);
-                        }
-
-                        TestSqlLoggerFactory.Reset();
-                    }
-                });
+                    TestSqlLoggerFactory.Reset();
+                }
+            });
+        }
 
         public override ComplexNavigationsContext CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
-                .UseSqlCe(testStore.Connection)
-                .UseInternalServiceProvider(_serviceProvider);
+            var context = new ComplexNavigationsContext(_options);
 
-            var context = new ComplexNavigationsContext(optionsBuilder.Options);
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
             context.Database.UseTransaction(testStore.Transaction);
 
             return context;
         }
     }
 }
-

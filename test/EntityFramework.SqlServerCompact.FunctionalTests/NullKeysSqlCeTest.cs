@@ -1,40 +1,41 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class NullKeysSqlServerCeTest : NullKeysTestBase<NullKeysSqlServerCeTest.NullKeysSqlServerCeFixture>
+    public class NullKeysSqlCeTest : NullKeysTestBase<NullKeysSqlCeTest.NullKeysSqlCeFixture>
     {
-        public NullKeysSqlServerCeTest(NullKeysSqlServerCeFixture fixture)
+        public NullKeysSqlCeTest(NullKeysSqlCeFixture fixture)
             : base(fixture)
         {
         }
 
-        public class NullKeysSqlServerCeFixture : NullKeysFixtureBase
+        public class NullKeysSqlCeFixture : NullKeysFixtureBase, IDisposable
         {
-            private readonly IServiceProvider _serviceProvider;
             private readonly DbContextOptions _options;
+            private readonly SqlCeTestStore _testStore;
 
-            public NullKeysSqlServerCeFixture()
+            public NullKeysSqlCeFixture()
             {
-                _serviceProvider = new ServiceCollection()
-                    .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
-                    .BuildServiceProvider();
+                var name = "StringsContext";
+                var connectionString = SqlCeTestStore.CreateConnectionString(name);
 
-                var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder
-                    .UseSqlCe(SqlCeTestStore.CreateConnectionString("StringsContext"))
-                    .UseInternalServiceProvider(_serviceProvider);
-                _options = optionsBuilder.Options;
+                _options = new DbContextOptionsBuilder()
+                    .UseSqlCe(connectionString, b => b.ApplyConfiguration())
+                    .UseInternalServiceProvider(new ServiceCollection()
+                        .AddEntityFrameworkSqlCe()
+                        .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                        .BuildServiceProvider())
+                    .Options;
 
-                EnsureCreated();
+                _testStore = SqlCeTestStore.GetOrCreateShared(name, EnsureCreated);
             }
 
             public override DbContext CreateContext()
-            {
-                return new DbContext(_options);
-            }
+                => new DbContext(_options);
+
+            public void Dispose() => _testStore.Dispose();
         }
     }
 }

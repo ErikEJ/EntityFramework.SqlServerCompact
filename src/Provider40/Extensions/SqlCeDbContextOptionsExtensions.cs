@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Common;
+// ReSharper disable once RedundantUsingDirective
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;

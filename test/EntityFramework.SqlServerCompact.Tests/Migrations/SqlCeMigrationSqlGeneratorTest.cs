@@ -69,7 +69,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             base.DropIndexOperation();
 
             Assert.Equal(
-                "DROP INDEX [IX_People_Name]",
+                "DROP INDEX [People].[IX_People_Name]",
                 Sql);
         }
 
@@ -112,6 +112,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Name = "Id",
                     ClrType = typeof(int),
                     ColumnType = "int",
+                    DefaultValue = 0,
                     IsNullable = false,
                     [SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration] =
                         SqlCeAnnotationNames.Identity

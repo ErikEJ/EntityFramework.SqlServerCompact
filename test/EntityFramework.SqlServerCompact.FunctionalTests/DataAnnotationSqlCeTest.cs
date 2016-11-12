@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -9,8 +10,79 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
         }
 
+        public override ModelBuilder Non_public_annotations_are_enabled()
+        {
+            var modelBuilder = base.Non_public_annotations_are_enabled();
+
+            var relational = GetProperty<PrivateMemberAnnotationClass>(modelBuilder, "PersonFirstName").Relational();
+            Assert.Equal("dsdsd", relational.ColumnName);
+            Assert.Equal("nvarchar(128)", relational.ColumnType);
+
+            return modelBuilder;
+        }
+
+        public override ModelBuilder Key_and_column_work_together()
+        {
+            var modelBuilder = base.Key_and_column_work_together();
+
+            var relational = GetProperty<ColumnKeyAnnotationClass1>(modelBuilder, "PersonFirstName").Relational();
+            Assert.Equal("dsdsd", relational.ColumnName);
+            Assert.Equal("nvarchar(128)", relational.ColumnType);
+
+            return modelBuilder;
+        }
+
+        public override ModelBuilder Key_and_MaxLength_64_produce_nvarchar_64()
+        {
+            var modelBuilder = base.Key_and_MaxLength_64_produce_nvarchar_64();
+
+            var property = GetProperty<ColumnKeyAnnotationClass2>(modelBuilder, "PersonFirstName");
+            Assert.Equal("nvarchar(64)", new SqlCeTypeMapper().FindMapping(property).StoreType);
+
+            return modelBuilder;
+        }
+
+        public override ModelBuilder Timestamp_takes_precedence_over_MaxLength()
+        {
+            var modelBuilder = base.Timestamp_takes_precedence_over_MaxLength();
+
+            var property = GetProperty<TimestampAndMaxlen>(modelBuilder, "MaxTimestamp");
+            Assert.Equal("rowversion", new SqlCeTypeMapper().FindMapping(property).StoreType);
+
+            return modelBuilder;
+        }
+
+        public override ModelBuilder Timestamp_takes_precedence_over_MaxLength_with_value()
+        {
+            var modelBuilder = base.Timestamp_takes_precedence_over_MaxLength_with_value();
+
+            var property = GetProperty<TimestampAndMaxlen>(modelBuilder, "NonMaxTimestamp");
+            Assert.Equal("rowversion", new SqlCeTypeMapper().FindMapping(property).StoreType);
+
+            return modelBuilder;
+        }
+
+        public override ModelBuilder TableNameAttribute_affects_table_name_in_TPH()
+        {
+            var modelBuilder = base.TableNameAttribute_affects_table_name_in_TPH();
+
+            var relational = modelBuilder.Model.FindEntityType(typeof(TNAttrBase)).Relational();
+            Assert.Equal("A", relational.TableName);
+
+            return modelBuilder;
+        }
+
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
+            //TODO ErikEJ Why is fixture not running?
+            using (var context = CreateContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                DataAnnotationModelInitializer.Seed(context);
+
+                TestSqlLoggerFactory.Reset();
+            }
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();
 
             Assert.Equal(@"SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion]
@@ -125,7 +197,6 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
                 Sql);
         }
 
-
         public override void StringLengthAttribute_throws_while_inserting_value_longer_than_max_length()
         {
             TestSqlLoggerFactory.Reset();
@@ -148,46 +219,19 @@ WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
         public override void TimestampAttribute_throws_if_value_in_database_changed()
         {
+            using (var context = CreateContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                DataAnnotationModelInitializer.Seed(context);
+
+                Assert.True(context.Model.FindEntityType(typeof(Two)).FindProperty("Timestamp").IsConcurrencyToken);
+            }
+
             base.TimestampAttribute_throws_if_value_in_database_changed();
 
-            Assert.Equal(@"SELECT TOP(1) [r].[Id], [r].[Data], [r].[Timestamp]
-FROM [Two] AS [r]
-WHERE [r].[Id] = 1
-
-SELECT TOP(1) [r].[Id], [r].[Data], [r].[Timestamp]
-FROM [Two] AS [r]
-WHERE [r].[Id] = 1
-
-@p1: 1
-@p0: ModifiedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2
-
-@p1: 1
-@p0: ModifiedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-SELECT [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1
-
-@p1: 1
-@p0: ChangedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-UPDATE [Two] SET [Data] = @p0
-WHERE [Id] = @p1 AND [Timestamp] = @p2
-
-@p1: 1
-@p0: ChangedData (Size = 16)
-@p2: 0x0000000000000044 (Size = 8)
-
-SELECT [Timestamp]
-FROM [Two]
-WHERE 1 = 1 AND [Id] = @p1",
-                Sql);
+            // Not validating SQL because not significantly different from other tests and 
+            // row version value is not stable. 
         }
 
         private static string Sql => TestSqlLoggerFactory.Sql;

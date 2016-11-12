@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class NotificationEntitiesSqlCeTest
-        : NotificationEntitiesTestBase<NotificationEntitiesSqlCeTest.NotificationEntitiesSqlCeFixture>
+        : NotificationEntitiesTestBase<SqlCeTestStore, NotificationEntitiesSqlCeTest.NotificationEntitiesSqlCeFixture>
     {
         public NotificationEntitiesSqlCeTest(NotificationEntitiesSqlCeFixture fixture)
             : base(fixture)
@@ -13,27 +13,27 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public class NotificationEntitiesSqlCeFixture : NotificationEntitiesFixtureBase
         {
-            private readonly IServiceProvider _serviceProvider;
+            private const string DatabaseName = "NotificationEntities";
             private readonly DbContextOptions _options;
 
             public NotificationEntitiesSqlCeFixture()
             {
-                _serviceProvider = new ServiceCollection()
-                    .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
-                    .BuildServiceProvider();
-
-                var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder
-                    .UseSqlCe(SqlCeTestStore.CreateConnectionString("NotificationEntities"))
-                    .UseInternalServiceProvider(_serviceProvider);
-                _options = optionsBuilder.Options;
-
-                EnsureCreated();
+                _options = new DbContextOptionsBuilder()
+                    .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
+                    .UseInternalServiceProvider(new ServiceCollection()
+                        .AddEntityFrameworkSqlCe()
+                        .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                        .BuildServiceProvider())
+                    .Options;
             }
 
             public override DbContext CreateContext()
                 => new DbContext(_options);
+
+            public override SqlCeTestStore CreateTestStore()
+                => SqlCeTestStore.GetOrCreateShared(DatabaseName, EnsureCreated);
+
+
         }
     }
 }

@@ -1,5 +1,5 @@
-using System;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using System;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -297,7 +297,7 @@ ORDER BY [o0].[OrderID]",
         //TODO ErikEJ await fix
         public override void Include_collection_order_by_collection_column(bool useString)
         {
-           //base.Include_collection_order_by_collection_column(useString);
+//            base.Include_collection_order_by_collection_column(useString);
 
 //            Assert.Equal(
 //                @"SELECT TOP(1) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -327,24 +327,23 @@ ORDER BY [o0].[OrderID]",
 //                Sql);
         }
 
-        //TODO ErikEJ await fix
         public override void Include_collection_order_by_key(bool useString)
         {
-//            base.Include_collection_order_by_key(useString);
+            base.Include_collection_order_by_key(useString);
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY [c].[CustomerID]
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY [c].[CustomerID]
 
-//SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-//FROM [Orders] AS [o]
-//WHERE EXISTS (
-//    SELECT 1
-//    FROM [Customers] AS [c]
-//    WHERE [o].[CustomerID] = [c].[CustomerID])
-//ORDER BY [o].[CustomerID]",
-//                Sql);
+SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Orders] AS [o]
+WHERE EXISTS (
+    SELECT 1
+    FROM [Customers] AS [c]
+    WHERE [o].[CustomerID] = [c].[CustomerID])
+ORDER BY [o].[CustomerID]",
+                Sql);
         }
 
         public override void Include_collection_order_by_non_key(bool useString)
@@ -445,7 +444,7 @@ ORDER BY [c0].[CompanyName] DESC, [c0].[CustomerID]",
         //TODO ErikEJ await fix
         public override void Include_collection_order_by_subquery(bool useString)
         {
-            //base.Include_collection_order_by_subquery(useString);
+//            base.Include_collection_order_by_subquery(useString);
 
 //            Assert.Equal(
 //                @"SELECT TOP(1) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -685,7 +684,7 @@ FROM (
     ORDER BY [c0].[CustomerID]
 ) AS [t]
 CROSS JOIN [Customers] AS [c2]
-ORDER BY [c2].[CustomerID]
+ORDER BY [t].[CustomerID], [c2].[CustomerID]
 
 @__p_0: 5
 
@@ -898,7 +897,8 @@ FROM (
     FROM [Customers] AS [c0]
     ORDER BY [c0].[CustomerID]
 ) AS [t]
-CROSS JOIN [Customers] AS [c2]",
+CROSS JOIN [Customers] AS [c2]
+ORDER BY [t].[CustomerID]",
                 Sql);
         }
 
@@ -920,7 +920,8 @@ FROM (
     ORDER BY [od0].[OrderID], [od0].[ProductID]
     OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
 ) AS [t]
-INNER JOIN [Orders] AS [od.Order] ON [t].[OrderID] = [od.Order].[OrderID]",
+INNER JOIN [Orders] AS [od.Order] ON [t].[OrderID] = [od.Order].[OrderID]
+ORDER BY [t].[OrderID], [t].[ProductID]",
                     Sql);
             }
         }
@@ -1029,7 +1030,8 @@ CROSS JOIN (
     OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
 ) AS [t0]
 LEFT JOIN [Customers] AS [c] ON [t].[CustomerID] = [c].[CustomerID]
-LEFT JOIN [Customers] AS [c0] ON [t0].[CustomerID] = [c0].[CustomerID]",
+LEFT JOIN [Customers] AS [c0] ON [t0].[CustomerID] = [c0].[CustomerID]
+ORDER BY [t].[CustomerID]",
                     Sql);
             }
         }
@@ -1055,7 +1057,8 @@ CROSS JOIN (
     ORDER BY [o2].[OrderID]
     OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
 ) AS [t0]
-LEFT JOIN [Customers] AS [c] ON [t].[CustomerID] = [c].[CustomerID]",
+LEFT JOIN [Customers] AS [c] ON [t].[CustomerID] = [c].[CustomerID]
+ORDER BY [t].[OrderID]",
                     Sql);
             }
         }
@@ -1081,7 +1084,8 @@ CROSS JOIN (
     ORDER BY [o2].[OrderID]
     OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
 ) AS [t0]
-LEFT JOIN [Customers] AS [c] ON [t0].[CustomerID] = [c].[CustomerID]",
+LEFT JOIN [Customers] AS [c] ON [t0].[CustomerID] = [c].[CustomerID]
+ORDER BY [t].[OrderID]",
                     Sql);
             }
         }

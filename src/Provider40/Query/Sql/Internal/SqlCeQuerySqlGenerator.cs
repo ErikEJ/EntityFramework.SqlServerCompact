@@ -1,6 +1,4 @@
-﻿#if SQLCE35
-using System;
-#endif
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
@@ -36,17 +34,24 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
             return lateralJoinExpression;
         }
 
-        public override Expression VisitCount(CountExpression countExpression)
+        public override Expression VisitSqlFunction(SqlFunctionExpression sqlFunctionExpression)
         {
-            Check.NotNull(countExpression, nameof(countExpression));
-
-            if (countExpression.Type != typeof(long))
+            if (sqlFunctionExpression.FunctionName.StartsWith("@@", StringComparison.Ordinal))
             {
-                return base.VisitCount(countExpression);
-            }
-            Sql.Append("CAST(COUNT(*) AS bigint)");
+                Sql.Append(sqlFunctionExpression.FunctionName);
 
-            return countExpression;
+                return sqlFunctionExpression;
+            }
+
+            if ((sqlFunctionExpression.FunctionName == "COUNT")
+                && (sqlFunctionExpression.Type == typeof(long)))
+            {
+                Sql.Append("CAST(COUNT(*) AS bigint)");
+
+                return sqlFunctionExpression;
+            }
+
+            return base.VisitSqlFunction(sqlFunctionExpression);
         }
 
         public virtual Expression VisitDatePartExpression(DatePartExpression datePartExpression)

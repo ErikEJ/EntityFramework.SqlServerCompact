@@ -41,7 +41,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         protected virtual DbContextOptionsBuilder ConfigureOptions(DbContextOptionsBuilder dbContextOptionsBuilder)
             => dbContextOptionsBuilder;
 
-        protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlServerDbContextOptionsBuilder)
+        protected virtual void ConfigureOptions(SqlCeDbContextOptionsBuilder sqlCeDbContextOptionsBuilder)
         {
         }
 

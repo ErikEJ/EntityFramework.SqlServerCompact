@@ -12,6 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<City>().Property(g => g.Location).HasColumnType("nvarchar(100)");
+            modelBuilder.Entity<Mission>().Ignore(m => m.Timeline);
         }
 
         public static readonly string DatabaseName = "GearsOfWarQueryTest";

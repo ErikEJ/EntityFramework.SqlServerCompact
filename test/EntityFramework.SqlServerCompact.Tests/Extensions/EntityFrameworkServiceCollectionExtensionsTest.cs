@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -12,7 +11,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore.Specification.Tests;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,21 +49,25 @@ namespace Microsoft.EntityFrameworkCore.Tests
             VerifySingleton<IEntityMaterializerSource>();
             VerifySingleton<ILoggerFactory>();
             VerifySingleton<ICoreConventionSetBuilder>();
+            VerifySingleton<ExecutionStrategyFactory>();
+            VerifySingleton<IInternalEntityEntryFactory>();
+            VerifySingleton<IInternalEntityEntrySubscriber>();
+            VerifySingleton<IEntityEntryGraphIterator>();
+            VerifySingleton<IEntityGraphAttacher>();
+            VerifySingleton<NoopModelValidator>();
 
-            VerifyScoped<LoggingModelValidator>();
+            VerifyScoped<CoreModelValidator>();
             VerifyScoped<IKeyPropagator>();
             VerifyScoped<INavigationFixer>();
             VerifyScoped<IStateManager>();
-            VerifyScoped<IInternalEntityEntryFactory>();
             VerifyScoped<IInternalEntityEntryNotifier>();
-            VerifyScoped<IInternalEntityEntrySubscriber>();
             VerifyScoped<IValueGenerationManager>();
             VerifyScoped<IChangeTrackerFactory>();
             VerifyScoped<IChangeDetector>();
-            VerifyScoped<IEntityEntryGraphIterator>();
             VerifyScoped<IDbContextServices>();
             VerifyScoped<IDatabaseProviderSelector>();
             VerifyScoped<ValueGeneratorSelector>();
+            VerifyScoped<IExecutionStrategyFactory>();
 
             VerifyScoped<IModel>();
             VerifyScoped<ICurrentDbContext>();

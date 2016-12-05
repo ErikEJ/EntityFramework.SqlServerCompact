@@ -10,11 +10,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Design-time Entity Framework Core Functionality for SQL Server Compact data store</description>
     <summary>Design-time Entity Framework Core Functionality for SQL Server Compact data store</summary>
-    <releaseNotes>for EF Core 1.1.0</releaseNotes>
+    <releaseNotes>for EF Core 1.2.0</releaseNotes>
     <tags>EntityFramework EF sqlce entity framework provider sql server compact sqlservercompact reveng reverseengineer design</tags>
     <dependencies>
         <group targetFramework=".NETFramework4.5">
-            <dependency id="Microsoft.EntityFrameworkCore.Relational.Design" version="1.1.0" />
+            <dependency id="Microsoft.EntityFrameworkCore.Relational.Design" version="1.2.0-preview1" />
          </group>
     </dependencies>
   </metadata>

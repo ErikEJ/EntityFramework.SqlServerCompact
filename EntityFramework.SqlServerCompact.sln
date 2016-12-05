@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact35.Design", "src\Design35\EntityFramework.SqlServerCompact35.Design.csproj", "{5056E1D2-C5F0-4613-AB74-1E470734D8EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact40.Design.FunctionalTest", "test\EntityFramework.SqlServerCompact40.Design.FunctionalTest\EntityFramework.SqlServerCompact40.Design.FunctionalTest.csproj", "{543477FB-CF81-446D-AB02-1E41382DED5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,14 @@ Global
 		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Release|x86.ActiveCfg = Release|Any CPU
 		{5056E1D2-C5F0-4613-AB74-1E470734D8EA}.Release|x86.Build.0 = Release|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Debug|x86.Build.0 = Debug|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|x86.ActiveCfg = Release|Any CPU
+		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +105,6 @@ Global
 		{54867677-196E-4C26-832B-3846A937E649} = {237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}
 		{38B6C219-941A-4DCF-A087-673616418E36} = {0F224063-E959-433C-88BD-B2414CF74B96}
 		{5056E1D2-C5F0-4613-AB74-1E470734D8EA} = {0F224063-E959-433C-88BD-B2414CF74B96}
+		{543477FB-CF81-446D-AB02-1E41382DED5B} = {0F224063-E959-433C-88BD-B2414CF74B96}
 	EndGlobalSection
 EndGlobal

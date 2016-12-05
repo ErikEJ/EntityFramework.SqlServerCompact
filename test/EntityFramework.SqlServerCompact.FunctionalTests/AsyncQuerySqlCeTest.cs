@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class AsyncQuerySqlServerTest : AsyncQueryTestBase<NorthwindQuerySqlCeFixture>
+    public class AsyncQuerySqlCeTest : AsyncQueryTestBase<NorthwindQuerySqlCeFixture>
     {
         //TODO ErikEJ await fix
         public override async Task OrderBy_correlated_subquery_lol()
@@ -44,7 +44,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 await Single_Predicate_Cancellation(Fixture.CancelQuery()));
         }
 
-        public AsyncQuerySqlServerTest(NorthwindQuerySqlCeFixture fixture)
+        public AsyncQuerySqlCeTest(NorthwindQuerySqlCeFixture fixture)
             : base(fixture)
         {
         }

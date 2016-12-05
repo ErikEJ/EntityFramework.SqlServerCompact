@@ -28,9 +28,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 => context.Set<TEntity>().FindAsync(keyValues);
         }
 
-        public class FindSqlServerTestContext : FindSqlCeTest
+        public class FindSqlCeTestContext : FindSqlCeTest
         {
-            public FindSqlServerTestContext(FindSqlCeFixture fixture)
+            public FindSqlCeTestContext(FindSqlCeFixture fixture)
                 : base(fixture)
             {
             }

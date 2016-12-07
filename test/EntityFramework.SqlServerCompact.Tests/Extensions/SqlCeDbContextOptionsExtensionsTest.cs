@@ -90,5 +90,19 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             Assert.Equal(1, extension.MaxBatchSize);
             Assert.Null(extension.Connection);
         }
+
+        [Fact]
+
+        public void Can_add_extension_with_legacy_paging()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
+
+            optionsBuilder.UseSqlCe("Data Source=C:\\data\\Multicorn.sdf", b => b.UseClientEvalForUnsupportedSqlConstructs());
+
+            var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
+
+            Assert.True(extension.ClientEvalForUnsupportedSqlConstructs.HasValue);
+            Assert.True(extension.ClientEvalForUnsupportedSqlConstructs.Value);
+        }
     }
 }

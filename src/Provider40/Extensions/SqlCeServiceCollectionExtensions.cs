@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.Sql.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -90,6 +91,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<SqlCeQueryCompilationContextFactory>()
                 .AddScoped<SqlCeCompositeMemberTranslator>()
                 .AddScoped<SqlCeCompositeMethodCallTranslator>()
+                .AddScoped<SqlCeTranslatingExpressionVisitorFactory>()
                 .AddScoped<SqlCeQuerySqlGeneratorFactory>();
     }
 }

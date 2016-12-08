@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.Sql.Internal;
 using Microsoft.EntityFrameworkCore.Relational.Tests;
@@ -47,6 +48,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             VerifyScoped<SqlCeCompositeMemberTranslator>();
             VerifyScoped<SqlCeCompositeMethodCallTranslator>();
             VerifyScoped<SqlCeQuerySqlGeneratorFactory>();
+            VerifyScoped<SqlCeTranslatingExpressionVisitorFactory>();
 
             // Migrations
             VerifyScoped<IMigrationsAssembly>();

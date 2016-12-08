@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.Sql;
 using Microsoft.EntityFrameworkCore.Query.Sql.Internal;
@@ -46,5 +47,6 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         public override IMemberTranslator CompositeMemberTranslator => GetService<SqlCeCompositeMemberTranslator>();
         public override IQueryCompilationContextFactory QueryCompilationContextFactory => GetService<SqlCeQueryCompilationContextFactory>();
         public override IQuerySqlGeneratorFactory QuerySqlGeneratorFactory => GetService<SqlCeQuerySqlGeneratorFactory>();
+        public override ISqlTranslatingExpressionVisitorFactory SqlTranslatingExpressionVisitorFactory => GetService<SqlCeTranslatingExpressionVisitorFactory>();
     }
 }

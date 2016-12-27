@@ -9,6 +9,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class BasicEndToEndScenario
     {
+        private string _log;
         [Fact]
         public void Can_run_end_to_end_scenario()
         {
@@ -21,19 +22,32 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 using (diag.Subscribe(observer))
                 {
-                    db.Database.Log(s => { Debug.WriteLine(s); });
+                    db.Database.Log(AppendLog);
                     db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
-                    db.Blogs.Add(new Blog { BlogId = Guid.NewGuid(), Url = "http://erikej.blogspot.com" });
+                    db.Blogs.Add(new Blog { BlogId = new Guid("b3279372-78f5-4c13-93c9-e9b281a5ed5b"), Url = "http://erikej.blogspot.com" });
                     db.SaveChanges();
                 }
                 var blogs = db.Blogs.ToList();
 
                 Assert.Equal(9, result.Count);
 
-                Assert.Equal(blogs.Count, 1);
-                Assert.Equal(blogs[0].Url, "http://erikej.blogspot.com");
+                Assert.True(_log.Contains(@"[Parameters=[@p0='b3279372-78f5-4c13-93c9-e9b281a5ed5b', @p1='http://erikej.blogspot.com' (Size = 4000)], CommandType='Text', CommandTimeout='0']
+INSERT INTO [Blogs] ([BlogId], [Url])
+VALUES (@p0, @p1)"));
+
+                Assert.True(_log.Contains(@"[Parameters=[], CommandType='Text', CommandTimeout='0']
+SELECT [b].[BlogId], [b].[Url]
+FROM [Blogs] AS [b]"));
+                
+                Assert.Equal(1, blogs.Count);
+                Assert.Equal("http://erikej.blogspot.com", blogs[0].Url);
             }
+        }
+
+        private void AppendLog(string s)
+        {
+            _log += s;
         }
 
         public class BloggingContext : DbContext

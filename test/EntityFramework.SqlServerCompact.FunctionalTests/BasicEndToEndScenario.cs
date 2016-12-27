@@ -29,7 +29,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 }
                 var blogs = db.Blogs.ToList();
 
-                Assert.Equal(result.Count, 8);
+                Assert.Equal(9, result.Count);
 
                 Assert.Equal(blogs.Count, 1);
                 Assert.Equal(blogs[0].Url, "http://erikej.blogspot.com");

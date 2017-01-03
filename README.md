@@ -11,4 +11,4 @@ You can find the latest build on the [MyGet feed](https://www.myget.org/gallery/
 
 Testing, comments, questions, pull requests are most welcome!
 
-[[https://github.com/ErikEJ/EntityFramework.SqlServerCompact/blob/master/Bitmap-MEDIUM_Entity-Framework-Core-Logo_2colors_Square_Boxed_RGB.png|alt=efcore]]
+![EF Core](https://github.com/ErikEJ/EntityFramework.SqlServerCompact/blob/master/Bitmap-MEDIUM_Entity-Framework-Core-Logo_2colors_Square_Boxed_RGB.png)

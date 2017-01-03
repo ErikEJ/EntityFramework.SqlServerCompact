@@ -10,4 +10,5 @@ See the [Wiki pages](https://github.com/ErikEJ/EntityFramework.SqlServerCompact/
 You can find the latest build on the [MyGet feed](https://www.myget.org/gallery/ef7-sqlce)
 
 Testing, comments, questions, pull requests are most welcome!
-https://github.com/ErikEJ/EntityFramework.SqlServerCompact/blob/master/Bitmap-MEDIUM_Entity-Framework-Core-Logo_2colors_Square_Boxed_RGB.png
+
+[[https://github.com/ErikEJ/EntityFramework.SqlServerCompact/blob/master/Bitmap-MEDIUM_Entity-Framework-Core-Logo_2colors_Square_Boxed_RGB.png|alt=efcore]]

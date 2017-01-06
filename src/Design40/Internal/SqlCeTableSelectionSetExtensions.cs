@@ -13,7 +13,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 return true;
             }
 
-            //TODO: look into performance for large selection sets and numbers of tables
             var result = false;
             var matchingTableSelections = tableSet.Tables.Where(
                 t => t.Text.Equals(tableName, StringComparison.OrdinalIgnoreCase)).ToList();

@@ -478,7 +478,7 @@ WHERE EXISTS (
 //                Sql);
         }
 
-        //TODO ErikEJ await fix for https://github.com/aspnet/EntityFramework/issues/3038 
+        //TODO ErikEJ await fix
         public override void Collection_orderby_nav_prop_count()
         {
             //base.Collection_orderby_nav_prop_count();

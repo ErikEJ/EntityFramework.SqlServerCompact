@@ -4367,8 +4367,6 @@ FROM [Orders] AS [o]",
                 Sql);
         }
 
-        // TODO: Complex projection translation.
-
         //        public override void Projection_when_arithmetic_expressions()
         //        {
         //            base.Projection_when_arithmetic_expressions();

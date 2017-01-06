@@ -67,7 +67,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             // not have Identity set then we need to set to ValueGeneratedNever() to
             // override this behavior.
 
-            // TODO use KeyConvention directly to detect when it will be applied
             var pkColumns = table.Columns.Where(c => c.PrimaryKeyOrdinal.HasValue).ToList();
             if ((pkColumns.Count != 1)
                 || pkColumns[0].SqlCe().IsIdentity
@@ -77,7 +76,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 return keyBuilder;
             }
 
-            // TODO 
             var property = builder.Metadata.FindProperty(GetPropertyName(pkColumns[0]));
             var propertyType = property?.ClrType?.UnwrapNullableType();
 

@@ -956,7 +956,6 @@ FROM [Weapon] AS [w]",
 
         public override void Select_ternary_operation_with_has_value_not_null()
         {
-            // TODO: Optimize this query (See #4267)
             base.Select_ternary_operation_with_has_value_not_null();
 
             Assert.Equal(
@@ -2037,7 +2036,7 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear')",
                 Sql);
         }
 
-        //TODO Ignored
+        //HACK ErikEJ Ignored
         public override void DateTimeOffset_Date_works()
         {
 //            base.DateTimeOffset_Date_works();
@@ -2051,7 +2050,7 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear')",
 //                Sql);
         }
 
-        //TODO Ignored
+        //HACK ErikEJ Ignored
         public override void DateTimeOffset_Datepart_works()
         {
 //            base.DateTimeOffset_Datepart_works();

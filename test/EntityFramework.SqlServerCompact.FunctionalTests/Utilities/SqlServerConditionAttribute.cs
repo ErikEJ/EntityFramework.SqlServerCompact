@@ -53,6 +53,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests.Utilities
     {
         SupportsSequences = 1 << 0,
         SupportsOffset = 1 << 1,
-        IsSqlAzure = 1 << 2
+        IsSqlAzure = 1 << 2,
+        IsNotSqlAzure = 1 << 3,
+        SupportsMemoryOptimized = 1 << 4,
+        SupportsAttach = 1 << 5
     }
 }

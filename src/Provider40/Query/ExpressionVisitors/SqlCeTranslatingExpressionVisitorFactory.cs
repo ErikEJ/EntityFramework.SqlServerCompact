@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
@@ -17,6 +18,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
         private readonly IExpressionFragmentTranslator _compositeExpressionFragmentTranslator;
         private readonly IMethodCallTranslator _methodCallTranslator;
         private readonly IMemberTranslator _memberTranslator;
+        private readonly IDbContextOptions _contextOptions;
         private readonly IRelationalTypeMapper _relationalTypeMapper;
 
         /// <summary>
@@ -32,18 +34,21 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
             [NotNull] IExpressionFragmentTranslator compositeExpressionFragmentTranslator,
             [NotNull] IMethodCallTranslator methodCallTranslator,
             [NotNull] IMemberTranslator memberTranslator,
+            [NotNull] IDbContextOptions contextOptions,
             [NotNull] IRelationalTypeMapper relationalTypeMapper)
         {
             Check.NotNull(relationalAnnotationProvider, nameof(relationalAnnotationProvider));
             Check.NotNull(compositeExpressionFragmentTranslator, nameof(compositeExpressionFragmentTranslator));
             Check.NotNull(methodCallTranslator, nameof(methodCallTranslator));
             Check.NotNull(memberTranslator, nameof(memberTranslator));
+            Check.NotNull(contextOptions, nameof(contextOptions));
             Check.NotNull(relationalTypeMapper, nameof(relationalTypeMapper));
 
             _relationalAnnotationProvider = relationalAnnotationProvider;
             _compositeExpressionFragmentTranslator = compositeExpressionFragmentTranslator;
             _methodCallTranslator = methodCallTranslator;
             _memberTranslator = memberTranslator;
+            _contextOptions = contextOptions;
             _relationalTypeMapper = relationalTypeMapper;
         }
 
@@ -70,6 +75,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
                 _methodCallTranslator,
                 _memberTranslator,
                 _relationalTypeMapper,
+                _contextOptions,
                 Check.NotNull(queryModelVisitor, nameof(queryModelVisitor)),
                 targetSelectExpression,
                 topLevelPredicate,

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
@@ -11,11 +13,19 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
 {
     public class SqlCeTranslatingExpressionVisitor : SqlTranslatingExpressionVisitor
     {
-        private readonly IExpressionFragmentTranslator _compositeExpressionFragmentTranslator;
+        private readonly IDbContextOptions _contextOptions;
 
         public override Expression Visit(Expression expression)
         {
-            return base.Visit(expression);
+            if (_contextOptions.FindExtension<SqlCeOptionsExtension>()?.ClientEvalForUnsupportedSqlConstructs != true)
+                return base.Visit(expression);
+
+            var evaluatedExpression = base.Visit(expression);
+            if (evaluatedExpression is SelectExpression)
+            {
+                return null;
+            }
+            return evaluatedExpression;
         }
 
         protected override Exception CreateUnhandledItemException<T>(T unhandledItem, string visitMethod)
@@ -27,6 +37,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
             [NotNull] IMethodCallTranslator methodCallTranslator, 
             [NotNull] IMemberTranslator memberTranslator, 
             [NotNull] IRelationalTypeMapper relationalTypeMapper, 
+            [NotNull] IDbContextOptions contextOptions,
             [NotNull] RelationalQueryModelVisitor queryModelVisitor, 
             [CanBeNull] SelectExpression targetSelectExpression = null, 
             [CanBeNull] Expression topLevelPredicate = null, 
@@ -34,7 +45,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
             bool inProjection = false)
             : base(relationalAnnotationProvider, compositeExpressionFragmentTranslator, methodCallTranslator, memberTranslator, relationalTypeMapper, queryModelVisitor, targetSelectExpression, topLevelPredicate, bindParentQueries, inProjection)
         {
-            _compositeExpressionFragmentTranslator = compositeExpressionFragmentTranslator;
+            _contextOptions = contextOptions;
         }
     }
 }

@@ -153,7 +153,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             var entityType = modelBuilder.Entity<TEntity>().Metadata;
 
             foreach (var propertyInfo in entityType.ClrType.GetTypeInfo().DeclaredProperties
-                .Where(p => p.Name != "Id" && p.Name != "Int"))
+                .Where(p => p.Name != "Id" && p.Name != "Int" && p.Name != "Float"))
             {
                 entityType.GetOrAddProperty(propertyInfo).Relational().ColumnType = propertyInfo.Name.Replace('_', ' ') + "(3)";
             }
@@ -188,14 +188,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public double Float { get; set; }
         public float Real { get; set; }
         public DateTime Datetime { get; set; }
-        public string VarcharMax { get; set; }
         public string NvarcharMax { get; set; }
         public string National_char_varyingMax { get; set; }
         public string National_character_varyingMax { get; set; }
-        public string Text { get; set; }
         public string Ntext { get; set; }
         public byte[] VarbinaryMax { get; set; }
-        public byte[] Binary_varyingMax { get; set; }
         public byte[] Image { get; set; }
         public decimal Decimal { get; set; }
         public decimal Dec { get; set; }
@@ -205,7 +202,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     public class MappedSizedDataTypes
     {
         public int Id { get; set; }
-        public string Varchar { get; set; }
         public string Nchar { get; set; }
         public string National_character { get; set; }
         public string Nvarchar { get; set; }
@@ -213,7 +209,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public string National_character_varying { get; set; }
         public byte[] Binary { get; set; }
         public byte[] Varbinary { get; set; }
-        public byte[] Binary_varying { get; set; }
     }
 
     public class MappedScaledDataTypes
@@ -244,14 +239,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public double? Float { get; set; }
         public float? Real { get; set; }
         public DateTime? Datetime { get; set; }
-        public string VarcharMax { get; set; }
         public string NvarcharMax { get; set; }
         public string National_char_varyingMax { get; set; }
         public string National_character_varyingMax { get; set; }
-        public string Text { get; set; }
         public string Ntext { get; set; }
         public byte[] VarbinaryMax { get; set; }
-        public byte[] Binary_varyingMax { get; set; }
         public byte[] Image { get; set; }
         public decimal? Decimal { get; set; }
         public decimal? Dec { get; set; }
@@ -271,11 +263,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public double Float { get; set; }
         public float Real { get; set; }
         public DateTime Datetime { get; set; }
-        public string VarcharMax { get; set; }
         public string NvarcharMax { get; set; }
         public string National_char_varyingMax { get; set; }
         public string National_character_varyingMax { get; set; }
-        public string Text { get; set; }
         public string Ntext { get; set; }
         public byte[] VarbinaryMax { get; set; }
         public byte[] Binary_varyingMax { get; set; }
@@ -290,7 +280,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public int Id { get; set; }
         public int Int { get; set; }
 
-        public string Varchar { get; set; }
         public string Nchar { get; set; }
         public string National_character { get; set; }
         public string Nvarchar { get; set; }
@@ -298,7 +287,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public string National_character_varying { get; set; }
         public byte[] Binary { get; set; }
         public byte[] Varbinary { get; set; }
-        public byte[] Binary_varying { get; set; }
     }
 
     public class MappedScaledDataTypesWithIdentity
@@ -335,14 +323,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public double? Float { get; set; }
         public float? Real { get; set; }
         public DateTime? Datetime { get; set; }
-        public string VarcharMax { get; set; }
         public string NvarcharMax { get; set; }
         public string National_char_varyingMax { get; set; }
         public string National_character_varyingMax { get; set; }
-        public string Text { get; set; }
         public string Ntext { get; set; }
         public byte[] VarbinaryMax { get; set; }
-        public byte[] Binary_varyingMax { get; set; }
         public byte[] Image { get; set; }
         public decimal? Decimal { get; set; }
         public decimal? Dec { get; set; }

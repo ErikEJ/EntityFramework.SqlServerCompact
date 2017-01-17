@@ -24,7 +24,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 foreach (var entity in db.Model.GetEntityTypes())
                 {
-                    Console.WriteLine($" {entity.ClrType.Name} => {entity.SqlCe	().TableName}");
+                    Console.WriteLine($" {entity.ClrType.Name} => {entity.SqlCe().TableName}");
                 }
 
 

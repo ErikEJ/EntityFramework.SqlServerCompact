@@ -238,6 +238,9 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeObjectToStringTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeObjectToStringTranslator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs</Link>
     </Compile>

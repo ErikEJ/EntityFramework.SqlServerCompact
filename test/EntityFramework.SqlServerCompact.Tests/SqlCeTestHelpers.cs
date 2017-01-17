@@ -1,15 +1,16 @@
 ﻿using System.Data.SqlServerCe;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Specification.Tests;
 
 namespace Microsoft.EntityFrameworkCore.Tests
 {
-    public class SqlCeTestHelpers : RelationalTestHelpers
+    public class SqlCeTestHelpers : TestHelpers
     {
         protected SqlCeTestHelpers()
         {
         }
 
-        public new static SqlCeTestHelpers Instance { get; } = new SqlCeTestHelpers();
+        public static SqlCeTestHelpers Instance { get; } = new SqlCeTestHelpers();
 
         public override IServiceCollection AddProviderServices(IServiceCollection services) 
             => services.AddEntityFrameworkSqlCe();

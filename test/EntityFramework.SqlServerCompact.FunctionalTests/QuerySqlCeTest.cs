@@ -6224,12 +6224,72 @@ WHERE [c0].[CustomerID] = @_outer_CustomerID",
                 Sql);
         }
 
+        public override void Query_expression_with_to_string_and_contains()
+        {
+            base.Query_expression_with_to_string_and_contains();
+
+            Assert.Equal(
+                @"SELECT [o].[CustomerID]
+FROM [Orders] AS [o]
+WHERE [o].[OrderDate] IS NOT NULL AND (CHARINDEX(N'10', CONVERT(NVARCHAR(11), [o].[EmployeeID])) > 0)",
+                Sql);
+        }
+
+        public override void Select_expression_long_to_string()
+        {
+            base.Select_expression_long_to_string();
+
+            Assert.Equal(
+                @"SELECT CONVERT(NVARCHAR(20), [o].[OrderID])
+FROM [Orders] AS [o]
+WHERE [o].[OrderDate] IS NOT NULL",
+                Sql);
+        }
+
+        public override void Select_expression_int_to_string()
+        {
+            base.Select_expression_int_to_string();
+
+            Assert.Equal(
+                @"SELECT CONVERT(NVARCHAR(11), [o].[OrderID])
+FROM [Orders] AS [o]
+WHERE [o].[OrderDate] IS NOT NULL",
+                Sql);
+        }
+
+
+        public override void ToString_with_formatter_is_evaluated_on_the_client()
+        {
+            base.ToString_with_formatter_is_evaluated_on_the_client();
+
+            Assert.Equal(
+                @"SELECT [o].[OrderID]
+FROM [Orders] AS [o]
+WHERE [o].[OrderDate] IS NOT NULL
+
+SELECT [o].[OrderID]
+FROM [Orders] AS [o]
+WHERE [o].[OrderDate] IS NOT NULL",
+                Sql);
+        }
+
+        public override void Select_expression_other_to_string()
+        {
+            base.Select_expression_other_to_string();
+
+            Assert.Equal(
+                @"SELECT CONVERT(NVARCHAR(100), [o].[OrderDate])
+FROM [Orders] AS [o]
+WHERE [o].[OrderDate] IS NOT NULL",
+                Sql);
+        }
+
         public override void Select_expression_references_are_updated_correctly_with_subquery()
         {
             base.Select_expression_references_are_updated_correctly_with_subquery();
 
             Assert.Equal(
-                @"@__nextYear_0: 2018
+                @"@__nextYear_0: 2017
 
 SELECT [t].[c0]
 FROM (

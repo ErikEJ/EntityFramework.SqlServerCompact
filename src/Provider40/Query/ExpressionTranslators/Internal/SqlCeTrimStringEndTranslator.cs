@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
@@ -8,7 +9,8 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
     public class SqlCeStringTrimEndTranslator : IMethodCallTranslator
     {
         private static readonly MethodInfo _trimEnd = typeof(string).GetTypeInfo()
-            .GetDeclaredMethod(nameof(string.TrimEnd));
+            .GetDeclaredMethods(nameof(string.TrimEnd))
+            .Single(m => m.GetParameters().Count() == 1 && m.GetParameters()[0].ParameterType == typeof(char[]));
 
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
         {

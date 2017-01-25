@@ -59,11 +59,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             Assert.Throws<NotSupportedException>(() => base.DropSequenceOperation());
         }
 
-        public override void CreateTableOperation()
-        {
-            base.CreateTableOperation();
-        }
-
         public override void DropIndexOperation()
         {
             base.DropIndexOperation();

@@ -14,6 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
+        private readonly IRelationalAnnotationProvider _annotations;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
@@ -23,6 +24,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             : base(commandBuilderFactory, sqlGenerationHelper, typeMapper, annotations)
         {
             _commandBuilderFactory = commandBuilderFactory;
+            _annotations = annotations;
         }
 
         public override IReadOnlyList<MigrationCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
@@ -204,7 +206,32 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
         protected override void Generate(RenameIndexOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
+            Check.NotNull(operation, nameof(operation));
+            Check.NotNull(builder, nameof(builder));
+
+            if (model == null)
+            {
+                throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
+            }
+
+            var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.Name);
+
+            var dropIndexOperation = new DropIndexOperation
+            {
+                Name = operation.Name,
+                IsDestructiveChange = true,
+                Table = operation.Table
+            };
+            Generate(dropIndexOperation, model, builder);
+
+            var createIndexOperation = new CreateIndexOperation
+            {
+                Columns = index.Properties.Select(p => p.Name).ToArray(),
+                IsUnique = index.IsUnique,
+                Name = operation.NewName,
+                Table = operation.Table
+            };
+            Generate(createIndexOperation, model, builder);
         }
 
         protected override void Generate(RenameTableOperation operation, IModel model, MigrationCommandListBuilder builder)
@@ -318,5 +345,12 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 builder.Append(" IDENTITY");
             }
         }
+
+       private IEntityType FindEntityType(
+       IModel model,
+       string schema,
+       string tableName)
+       => model?.GetEntityTypes().FirstOrDefault(
+           t => (_annotations.For(t).TableName == tableName) && (_annotations.For(t).Schema == schema));
     }
 }

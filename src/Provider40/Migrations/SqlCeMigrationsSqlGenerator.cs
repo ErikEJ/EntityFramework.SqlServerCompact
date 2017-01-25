@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlServerCe;
+using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -7,7 +9,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
+
 
 namespace Microsoft.EntityFrameworkCore.Migrations
 {
@@ -15,16 +19,19 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
         private readonly IRelationalAnnotationProvider _annotations;
+        private readonly ISensitiveDataLogger<SqlCeMigrationsSqlGenerator> _logger;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
             [NotNull] ISqlGenerationHelper sqlGenerationHelper,
             [NotNull] IRelationalTypeMapper typeMapper,
-            [NotNull] IRelationalAnnotationProvider annotations)
+            [NotNull] IRelationalAnnotationProvider annotations,
+            [NotNull] ISensitiveDataLogger<SqlCeMigrationsSqlGenerator> logger)
             : base(commandBuilderFactory, sqlGenerationHelper, typeMapper, annotations)
         {
             _commandBuilderFactory = commandBuilderFactory;
             _annotations = annotations;
+            _logger = logger;
         }
 
         public override IReadOnlyList<MigrationCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
@@ -38,7 +45,14 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 builder
                     .EndCommand();
             }
-            return builder.GetCommandList();
+            var list = builder.GetCommandList();
+
+            //HACK to force logging of migration SQL
+            foreach (var migrationCommand in list)
+            {
+                _logger.LogCommandExecuted(new SqlCeCommand(migrationCommand.CommandText), Stopwatch.GetTimestamp(), Stopwatch.GetTimestamp());
+            }
+            return list;
         }
 
         protected override void Generate(
@@ -158,7 +172,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name));
         }
 
-        private const string NotSupported = "SQL Server Compact does not support this migration operation ('{0}')."; 
+        private const string NotSupported = "SQL Server Compact does not support this migration operation ('{0}').";
 
         #region Invalid schema operations
         protected override void Generate(EnsureSchemaOperation operation, IModel model, MigrationCommandListBuilder builder)

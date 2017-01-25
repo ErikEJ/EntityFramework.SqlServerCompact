@@ -2,6 +2,7 @@
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.Logging;
 
@@ -21,7 +22,8 @@ namespace Microsoft.EntityFrameworkCore
 
         private static readonly string[] _whitelist = 
         {
-            typeof(Storage.IRelationalCommandBuilderFactory).FullName
+            typeof(Storage.IRelationalCommandBuilderFactory).FullName,
+            typeof(SqlCeMigrationsSqlGenerator).FullName
         };
 
         public ILogger CreateLogger(string name)

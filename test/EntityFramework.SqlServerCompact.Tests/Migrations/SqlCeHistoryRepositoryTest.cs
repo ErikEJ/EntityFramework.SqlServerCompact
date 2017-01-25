@@ -116,7 +116,8 @@ namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
                     commandBuilderFactory,
                     new SqlCeSqlGenerationHelper(),
                     typeMapper,
-                    annotationsProvider),
+                    annotationsProvider,
+                    new FakeSensitiveDataLogger<SqlCeMigrationsSqlGenerator>()),
                 annotationsProvider,
                 sqlGenerator);
         }

@@ -50,7 +50,10 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             //HACK to force logging of migration SQL
             foreach (var migrationCommand in list)
             {
-                _logger.LogCommandExecuted(new SqlCeCommand(migrationCommand.CommandText), Stopwatch.GetTimestamp(), Stopwatch.GetTimestamp());
+                if (!string.IsNullOrEmpty(migrationCommand.CommandText))
+                {
+                    _logger.LogCommandExecuted(new SqlCeCommand(migrationCommand.CommandText), Stopwatch.GetTimestamp(), Stopwatch.GetTimestamp());
+                }
             }
             return list;
         }
@@ -228,7 +231,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
             }
 
-            var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.Name);
+            var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.NewName);
 
             var dropIndexOperation = new DropIndexOperation
             {
@@ -236,6 +239,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 IsDestructiveChange = true,
                 Table = operation.Table
             };
+            builder.EndCommand();
             Generate(dropIndexOperation, model, builder);
 
             var createIndexOperation = new CreateIndexOperation
@@ -245,6 +249,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 Name = operation.NewName,
                 Table = operation.Table
             };
+            builder.EndCommand();
             Generate(createIndexOperation, model, builder);
         }
 

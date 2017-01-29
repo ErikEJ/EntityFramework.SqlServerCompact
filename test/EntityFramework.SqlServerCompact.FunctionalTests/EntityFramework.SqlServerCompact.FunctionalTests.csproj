@@ -241,6 +241,7 @@
     <Compile Include="InheritanceRelationshipsQuerySqlCeFixture.cs" />
     <Compile Include="InheritanceSqlCeFixture.cs" />
     <Compile Include="InheritanceSqlCeTest.cs" />
+    <Compile Include="Issue398Test.cs" />
     <Compile Include="Issue305Test.cs" />
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
@@ -254,6 +255,15 @@
     <Compile Include="Migrations\20160215092329_Migration02.Designer.cs">
       <DependentUpon>20160215092329_Migration02.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20170129135547_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20170129135547_MyFirstMigration.Designer.cs">
+      <DependentUpon>20170129135547_MyFirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20170129140932_MySecondMigration.cs" />
+    <Compile Include="Migrations\20170129140932_MySecondMigration.Designer.cs">
+      <DependentUpon>20170129140932_MySecondMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\BloggingContextModelSnapshot.cs" />
     <Compile Include="Migrations\TiffFilesContextModelSnapshot.cs" />
     <Compile Include="MonsterFixUpSqlCeTest.cs" />
     <Compile Include="NavigationTest.cs" />

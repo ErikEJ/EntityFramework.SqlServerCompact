@@ -5,11 +5,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
@@ -359,7 +362,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     .UseSqlCe(testStore.ConnectionString)
                     .UseInternalServiceProvider(new ServiceCollection()
                         .AddEntityFrameworkSqlCe()
-                        .AddScoped<SqlCeDatabaseCreator, TestDatabaseCreator>().BuildServiceProvider()).Options))
+                        .AddScoped<IRelationalDatabaseCreator, TestDatabaseCreator>().BuildServiceProvider()).Options))
                 .Instance;
 
         private static IRelationalDatabaseCreator GetDatabaseCreator(SqlCeTestStore testStore)

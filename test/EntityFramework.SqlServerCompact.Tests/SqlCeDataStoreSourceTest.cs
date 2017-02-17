@@ -14,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseSqlCe("Data Source=Crunchie");
 
-            Assert.True(new DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>().IsConfigured(optionsBuilder.Options));
+            Assert.True(new DatabaseProvider<SqlCeOptionsExtension>().IsConfigured(optionsBuilder.Options));
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder();
 
-            Assert.False(new DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>().IsConfigured(optionsBuilder.Options));
+            Assert.False(new DatabaseProvider<SqlCeOptionsExtension>().IsConfigured(optionsBuilder.Options));
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             Assert.Equal(
                 typeof(SqlCeDatabaseConnection).GetTypeInfo().Assembly.GetName().Name,
-                new SqlCeDatabaseProviderServices(SqlCeTestHelpers.Instance.CreateServiceProvider()).InvariantName);
+                new DatabaseProvider<SqlCeOptionsExtension>().InvariantName);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             {
                 _serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                    .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                     .BuildServiceProvider();
             }
 

@@ -27,7 +27,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     .EnableSensitiveDataLogging()
                     .UseInternalServiceProvider((additionalServices ?? new ServiceCollection())
                         .AddEntityFrameworkSqlCe()
-                        .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                        .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                         .AddSingleton<ILoggerFactory>(_testSqlLoggerFactory)
                         .BuildServiceProvider()))
                 .UseSqlCe(

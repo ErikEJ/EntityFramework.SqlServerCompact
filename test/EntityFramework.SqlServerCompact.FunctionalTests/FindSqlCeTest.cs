@@ -329,7 +329,7 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
             {
                 var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                    .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                     .AddSingleton<ILoggerFactory, TestSqlLoggerFactory>()
                     .BuildServiceProvider();
 

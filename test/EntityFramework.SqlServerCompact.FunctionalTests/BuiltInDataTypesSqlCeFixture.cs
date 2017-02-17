@@ -19,7 +19,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
-                .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(_testSqlLoggerFactory)
                 .BuildServiceProvider();
 

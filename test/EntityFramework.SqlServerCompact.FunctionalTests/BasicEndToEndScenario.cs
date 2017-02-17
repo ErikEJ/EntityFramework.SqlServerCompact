@@ -30,7 +30,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 }
                 var blogs = db.Blogs.ToList();
 
-                Assert.Equal(9, result.Count);
+                Assert.Equal(23, result.Count);
 
                 Assert.True(_log.Contains(@"[Parameters=[@p0='b3279372-78f5-4c13-93c9-e9b281a5ed5b', @p1='http://erikej.blogspot.com' (Size = 4000)], CommandType='Text', CommandTimeout='0']
 INSERT INTO [Blogs] ([BlogId], [Url])

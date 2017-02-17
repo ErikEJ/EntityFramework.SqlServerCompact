@@ -25,7 +25,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     .UseSqlCe(connectionString, b => b.ApplyConfiguration())
                     .UseInternalServiceProvider(new ServiceCollection()
                         .AddEntityFrameworkSqlCe()
-                        .AddSingleton(TestSqlCeModelSource.GetFactory(OnModelCreating))
+                        .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                         .BuildServiceProvider())
                     .Options;
 

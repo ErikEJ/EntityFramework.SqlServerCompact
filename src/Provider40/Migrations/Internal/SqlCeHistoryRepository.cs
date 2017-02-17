@@ -15,8 +15,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
             [NotNull] ISqlCeDatabaseConnection connection,
             [NotNull] IDbContextOptions options,
             [NotNull] IMigrationsModelDiffer modelDiffer,
-            [NotNull] SqlCeMigrationsSqlGenerator migrationSqlGenerator,
-            [NotNull] SqlCeAnnotationProvider annotations,
+            [NotNull] IMigrationsSqlGenerator migrationSqlGenerator,
+            [NotNull] IRelationalAnnotationProvider annotations,
             [NotNull] ISqlGenerationHelper sqlGenerationHelper)
             : base(
                   databaseCreator,

@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlServerCe;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -11,18 +12,20 @@ namespace Microsoft.EntityFrameworkCore.Tests
         [Fact]
         public void Creates_SQL_ServerCe_connection_string()
         {
-            using (var connection = new SqlCeDatabaseConnection(CreateOptions(), new Logger<SqlCeDatabaseConnection>(new LoggerFactory())))
+            using (var connection = new SqlCeDatabaseConnection(CreateDependencies()))
             {
                 Assert.IsType<SqlCeConnection>(connection.DbConnection);
             }
         }
 
-        public static IDbContextOptions CreateOptions()
+        public static RelationalConnectionDependencies CreateDependencies(DbContextOptions options = null)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder.UseSqlCe(@"Data Source=C:\data\EF7SQLCE.sdf;");
+            options = options
+                      ?? new DbContextOptionsBuilder()
+                          .UseSqlCe(@"Data Source=C:\data\EF7SQLCE.sdf;")
+                          .Options;
 
-            return optionsBuilder.Options;
+            return new RelationalConnectionDependencies(options, new Logger<SqlCeDatabaseConnection>(new LoggerFactory()), new DiagnosticListener("Fake"));
         }
     }
 }

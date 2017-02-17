@@ -5,16 +5,18 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore.Query.Sql;
 using Microsoft.EntityFrameworkCore.Query.Sql.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 // ReSharper disable CheckNamespace
 
@@ -52,46 +54,39 @@ namespace Microsoft.Extensions.DependencyInjection
         ///         }
         ///     </code>
         /// </example>
-        /// <param name="services"> The <see cref="IServiceCollection" /> to add services to. </param>
+        /// <param name="serviceCollection"> The <see cref="IServiceCollection" /> to add services to. </param>
         /// <returns>
         ///     The same service collection so that multiple calls can be chained.
         /// </returns>
-        public static IServiceCollection AddEntityFrameworkSqlCe([NotNull] this IServiceCollection services)
+        public static IServiceCollection AddEntityFrameworkSqlCe([NotNull] this IServiceCollection serviceCollection)
         {
-            Check.NotNull(services, nameof(services));
+            Check.NotNull(serviceCollection, nameof(serviceCollection));
 
-            services.AddRelational();
+            var serviceCollectionMap = new ServiceCollectionMap(serviceCollection)
+                .TryAddSingletonEnumerable<IDatabaseProvider, DatabaseProvider<SqlCeOptionsExtension>>()
+                .TryAddSingleton<IRelationalTypeMapper, SqlCeTypeMapper>()
+                .TryAddSingleton<ISqlGenerationHelper, SqlCeSqlGenerationHelper>()
+                .TryAddSingleton<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
+                .TryAddSingleton<IMigrationsAnnotationProvider, SqlCeMigrationsAnnotationProvider>()
+                .TryAddScoped<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
+                .TryAddScoped<IConventionSetBuilder, SqlCeConventionSetBuilder>()
+                .TryAddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
+                .TryAddScoped<IUpdateSqlGenerator>(p => p.GetService<ISqlCeUpdateSqlGenerator>())
+                .TryAddScoped<IModificationCommandBatchFactory, SqlCeModificationCommandBatchFactory>()
+                .TryAddScoped<ISqlCeDatabaseConnection, SqlCeDatabaseConnection>()
+                .TryAddScoped<IRelationalConnection>(p => p.GetService<ISqlCeDatabaseConnection>())
+                .TryAddScoped<IHistoryRepository, SqlCeHistoryRepository>()
+                .TryAddScoped<IMigrationsSqlGenerator, SqlCeMigrationsSqlGenerator>()
+                .TryAddScoped<IRelationalDatabaseCreator, SqlCeDatabaseCreator>()
+                .TryAddScoped<IQueryCompilationContextFactory, SqlCeQueryCompilationContextFactory>()
+                .TryAddScoped<IMemberTranslator, SqlCeCompositeMemberTranslator>()
+                .TryAddScoped<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
+                .TryAddScoped<ISqlTranslatingExpressionVisitorFactory, SqlCeTranslatingExpressionVisitorFactory>()
+                .TryAddScoped<IQuerySqlGeneratorFactory, SqlCeQuerySqlGeneratorFactory>();
 
-            services.TryAddEnumerable(ServiceDescriptor
-                .Singleton<IDatabaseProvider, DatabaseProvider<SqlCeDatabaseProviderServices, SqlCeOptionsExtension>>());
+            ServiceCollectionRelationalProviderInfrastructure.TryAddDefaultRelationalServices(serviceCollectionMap);
 
-            services.TryAdd(new ServiceCollection()
-                .AddSingleton<SqlCeValueGeneratorCache>()                
-                .AddSingleton<SqlCeTypeMapper>()
-                .AddSingleton<SqlCeSqlGenerationHelper>()
-                .AddSingleton<SqlCeModelSource>()
-                .AddSingleton<SqlCeAnnotationProvider>()
-                .AddSingleton<SqlCeMigrationsAnnotationProvider>()
-                .AddScoped<SqlCeConventionSetBuilder>()
-                .AddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
-                .AddScoped<SqlCeModificationCommandBatchFactory>()
-                .AddScoped<SqlCeDatabaseProviderServices>()
-                .AddScoped<ISqlCeDatabaseConnection, SqlCeDatabaseConnection>()
-                .AddScoped<SqlCeMigrationsSqlGenerator>()
-                .AddScoped<SqlCeDatabaseCreator>()                
-                .AddScoped<SqlCeHistoryRepository>()
-                .AddQuery()
-                );
-
-            return services;
+            return serviceCollection;
         }
-
-        private static IServiceCollection AddQuery(this IServiceCollection serviceCollection) 
-            => serviceCollection
-                .AddScoped<SqlCeQueryCompilationContextFactory>()
-                .AddScoped<SqlCeCompositeMemberTranslator>()
-                .AddScoped<SqlCeCompositeMethodCallTranslator>()
-                .AddScoped<SqlCeTranslatingExpressionVisitorFactory>()
-                .AddScoped<SqlCeQuerySqlGeneratorFactory>();
     }
 }

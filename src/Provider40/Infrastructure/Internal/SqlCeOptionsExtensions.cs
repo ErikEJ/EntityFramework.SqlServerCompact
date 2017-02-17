@@ -6,8 +6,6 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
 {
     public class SqlCeOptionsExtension : RelationalOptionsExtension
     {
-        private bool? _clientEvalForUnsupportedSqlConstructs;
-
         public SqlCeOptionsExtension()
         {
         }
@@ -17,13 +15,15 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
         {
         }
 
-        public virtual bool? ClientEvalForUnsupportedSqlConstructs
-        {
-            get { return _clientEvalForUnsupportedSqlConstructs; }
-            set { _clientEvalForUnsupportedSqlConstructs = value; }
-        }
+        public virtual bool? ClientEvalForUnsupportedSqlConstructs { get; set; }
 
-        public override void ApplyServices(IServiceCollection services)
-            => Check.NotNull(services, nameof(services)).AddEntityFrameworkSqlCe();
+        public override bool ApplyServices(IServiceCollection services)
+        {
+            Check.NotNull(services, nameof(services));
+
+            services.AddEntityFrameworkSqlCe();
+
+            return true;
+        }
     }
 }

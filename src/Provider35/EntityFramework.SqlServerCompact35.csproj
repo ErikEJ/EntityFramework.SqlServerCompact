@@ -214,23 +214,8 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeEndsWithOptimizedTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeEndsWithOptimizedTranslator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathAbsTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeMathAbsTranslator.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathCeilingTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeMathCeilingTranslator.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathFloorTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeMathFloorTranslator.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathPowerTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeMathPowerTranslator.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathRoundTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeMathRoundTranslator.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathTruncateTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeMathTruncateTranslator.cs</Link>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeMathTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeMathTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs</Link>

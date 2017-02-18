@@ -128,6 +128,7 @@
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeContainsOptimizedTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeEndsWithOptimizedTranslator.cs" />
+    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeObjectToStringTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs" />
@@ -157,12 +158,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeConvertTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateTimeNowTranslator.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathAbsTranslator.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathCeilingTranslator.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathFloorTranslator.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathPowerTranslator.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathRoundTranslator.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathTruncateTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeNewGuidTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringLengthTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringReplaceTranslator.cs" />

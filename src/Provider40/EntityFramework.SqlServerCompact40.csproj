@@ -133,7 +133,7 @@
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimTranslator.cs" />
-    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeTrimStringEndTranslator.cs" />
+    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimEndTranslator.cs" />
     <Compile Include="Query\ExpressionVisitors\SqlCeTranslatingExpressionVisitor.cs" />
     <Compile Include="Query\ExpressionVisitors\SqlCeTranslatingExpressionVisitorFactory.cs" />
     <Compile Include="Query\Sql\Internal\ISqlCeExpressionVisitor.cs" />

@@ -12,7 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
             .Single(m => m.GetParameters()[0].ParameterType == typeof(string));
 
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
-            => methodCallExpression.Method == _methodInfo
+            => _methodInfo.Equals(methodCallExpression.Method)
                 ? new SqlFunctionExpression(
                     "REPLACE",
                     methodCallExpression.Type,

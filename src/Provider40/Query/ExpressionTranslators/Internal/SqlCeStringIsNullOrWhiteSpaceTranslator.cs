@@ -11,7 +11,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
         {
-            if (_methodInfo == methodCallExpression.Method)
+            if (methodCallExpression.Method.Equals(_methodInfo))
             {
                 var argument = methodCallExpression.Arguments[0];
 

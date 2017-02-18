@@ -12,7 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
            .Single(m => m.GetParameters().Length == 2);
 
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
-            => methodCallExpression.Method == _methodInfo
+            => _methodInfo.Equals(methodCallExpression.Method)
                 ? new SqlFunctionExpression(
                     "SUBSTRING",
                     methodCallExpression.Type,

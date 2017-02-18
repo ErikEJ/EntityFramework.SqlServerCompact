@@ -259,14 +259,14 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringToUpperTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStringToUpperTranslator.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringTrimEndTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringTrimEndTranslator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringTrimTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStringTrimTranslator.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeTrimStringEndTranslator.cs">
-      <Link>Query\ExpressionTranslators\Internal\SqlCeTrimStringEndTranslator.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Query\ExpressionVisitors\SqlCeTranslatingExpressionVisitor.cs">
       <Link>Query\ExpressionVisitors\SqlCeTranslatingExpressionVisitor.cs</Link>

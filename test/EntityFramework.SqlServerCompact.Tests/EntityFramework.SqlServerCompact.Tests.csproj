@@ -226,9 +226,11 @@
     <Compile Include="Extensions\Metadata\SqlCeMetadataExtensionsTest.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsExtensionsTest.cs" />
     <Compile Include="FakeSensitiveDataLogger`.cs" />
+    <Compile Include="Migrations\MigrationsModelDifferTestBase.cs" />
     <Compile Include="Migrations\MigrationSqlGeneratorTestBase.cs" />
     <Compile Include="Migrations\SqlCeHistoryRepositoryTest.cs" />
     <Compile Include="Migrations\SqlCeMigrationSqlGeneratorTest.cs" />
+    <Compile Include="Migrations\SqlCeModelDifferTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlCeDataStoreConnectionTest.cs" />
     <Compile Include="SqlCeDataStoreSourceTest.cs" />
@@ -237,6 +239,8 @@
     <Compile Include="SqlCeTypeMapperTest.cs" />
     <Compile Include="Storage\RelationalTypeMappingTest.cs" />
     <Compile Include="Storage\SqlCeTypeMappingTest.cs" />
+    <Compile Include="Utilities\TestAnnotationProvider.cs" />
+    <Compile Include="Utilities\TestRelationalMetadataExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

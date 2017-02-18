@@ -243,6 +243,7 @@
     <Compile Include="InheritanceSqlCeTest.cs" />
     <Compile Include="Issue398Test.cs" />
     <Compile Include="Issue305Test.cs" />
+    <Compile Include="LoadSqlCeTest.cs" />
     <Compile Include="MappingQuerySqlCeFixture.cs" />
     <Compile Include="MappingQuerySqlCeTest.cs" />
     <Compile Include="MigrationsSqlCeFixture.cs" />
@@ -282,11 +283,14 @@
     <Compile Include="QueryNoClientEvalSqlCeTest.cs" />
     <Compile Include="QuerySqlCeTest.cs" />
     <Compile Include="SqlCeCommandDisposeTest.cs" />
+    <Compile Include="SqlCeConfigPatternsTest.cs" />
     <Compile Include="SqlCeDatabaseCleaner.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />
     <Compile Include="SqlCeDatabaseFacadeExtensions.cs" />
     <Compile Include="SqlCeDataStoreCreatorTest.cs" />
     <Compile Include="SqlCeMigrationsTest.cs" />
+    <Compile Include="SqlCeServiceCollectionExtensionsTest.cs" />
+    <Compile Include="SqlCeTestHelpers.cs" />
     <Compile Include="SqlCeTestStore.cs" />
     <Compile Include="SqlFileLogger.cs" />
     <Compile Include="TestModels\SqlCeNorthwindContext.cs" />

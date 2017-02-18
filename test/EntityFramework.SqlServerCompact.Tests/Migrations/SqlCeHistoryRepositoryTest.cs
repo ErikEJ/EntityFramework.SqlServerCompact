@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -13,7 +12,7 @@ using Microsoft.EntityFrameworkCore.TestUtilities;
 using Moq;
 using Xunit;
 
-namespace ErikEJ.Data.Entity.SqlServerCe.Tests.Migrations
+namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 {
     public class SqlCeHistoryRepositoryTest
     {

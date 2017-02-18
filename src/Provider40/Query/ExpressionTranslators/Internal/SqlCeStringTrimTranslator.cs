@@ -9,11 +9,11 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
     {
         private static readonly MethodInfo _trim = typeof(string).GetTypeInfo()
             .GetDeclaredMethods(nameof(string.Trim))
-            .SingleOrDefault(m => !m.GetParameters().Any());
+            .Single(m => !m.GetParameters().Any());
 
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
         {
-            if (_trim == methodCallExpression.Method)
+            if (_trim.Equals(methodCallExpression.Method))
             {
                 var sqlArguments = new[] { methodCallExpression.Object };
                 return new SqlFunctionExpression(

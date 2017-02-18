@@ -14,9 +14,9 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
         {
-            if ((_trimEnd == methodCallExpression.Method)
+            if (_trimEnd.Equals(methodCallExpression.Method)
                 // SqlCe RTRIM does not take arguments
-                && (((methodCallExpression.Arguments[0] as ConstantExpression)?.Value as Array)?.Length == 0))
+                && ((methodCallExpression.Arguments[0] as ConstantExpression)?.Value as Array)?.Length == 0)
             {
                 var sqlArguments = new[] { methodCallExpression.Object };
                 return new SqlFunctionExpression("RTRIM", methodCallExpression.Type, sqlArguments);

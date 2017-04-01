@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Text;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Update.Internal
 {
     public class SqlCeUpdateSqlGenerator : UpdateSqlGenerator, ISqlCeUpdateSqlGenerator
     {
-        public SqlCeUpdateSqlGenerator([NotNull] ISqlGenerationHelper sqlGenerationHelper)
-            : base(sqlGenerationHelper)
+        public SqlCeUpdateSqlGenerator(
+            [NotNull] UpdateSqlGeneratorDependencies dependencies)
+            : base(dependencies)
         {
         }
 

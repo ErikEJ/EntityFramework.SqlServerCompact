@@ -97,7 +97,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
         {
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
 
-            optionsBuilder.UseSqlCe("Data Source=C:\\data\\Multicorn.sdf", b => b.UseClientEvalForUnsupportedSqlConstructs());
+            optionsBuilder.UseSqlCe("Data Source=C:\\data\\Multicorn.sdf", b => b.UseClientEvalForUnsupportedSqlConstructs(clientEvalForUnsupportedSqlConstructs: true));
 
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
 

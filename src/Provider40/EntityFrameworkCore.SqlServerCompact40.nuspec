@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFrameworkCore.SqlServerCompact40.dll" target="lib\net451\" />
+    <file src="bin\Release\EntityFrameworkCore.SqlServerCompact40.dll" target="lib\net46\" />
   </files>
 </package>

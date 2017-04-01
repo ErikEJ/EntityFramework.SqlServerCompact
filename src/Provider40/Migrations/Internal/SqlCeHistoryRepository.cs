@@ -1,32 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Migrations.Internal
 {
     public class SqlCeHistoryRepository : HistoryRepository
     {
-        public SqlCeHistoryRepository(
-            [NotNull] IDatabaseCreator databaseCreator,
-            [NotNull] IRawSqlCommandBuilder sqlCommandBuilder,
-            [NotNull] ISqlCeDatabaseConnection connection,
-            [NotNull] IDbContextOptions options,
-            [NotNull] IMigrationsModelDiffer modelDiffer,
-            [NotNull] IMigrationsSqlGenerator migrationSqlGenerator,
-            [NotNull] IRelationalAnnotationProvider annotations,
-            [NotNull] ISqlGenerationHelper sqlGenerationHelper)
-            : base(
-                  databaseCreator,
-                  sqlCommandBuilder,
-                  connection,
-                  options,
-                  modelDiffer,
-                  migrationSqlGenerator,
-                  annotations,
-                  sqlGenerationHelper)
+        public SqlCeHistoryRepository([NotNull] HistoryRepositoryDependencies dependencies)
+            : base(dependencies)
         {
         }
 

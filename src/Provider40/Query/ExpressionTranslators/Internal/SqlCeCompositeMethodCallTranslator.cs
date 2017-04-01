@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Extensions.Logging;
 
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
@@ -24,8 +23,9 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
                 new SqlCeStringTrimTranslator()
         };
 
-        public SqlCeCompositeMethodCallTranslator([NotNull] ILogger<SqlCeCompositeMethodCallTranslator> logger)
-            : base(logger)
+        public SqlCeCompositeMethodCallTranslator(
+            [NotNull] RelationalCompositeMethodCallTranslatorDependencies dependencies)
+            : base(dependencies)
         {
             // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             AddTranslators(_methodCallTranslators);

@@ -31,9 +31,9 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(optionsBuilder, nameof(optionsBuilder));
             Check.NotEmpty(connectionString, nameof(connectionString));
 
-            var extension = GetOrCreateExtension(optionsBuilder);
-            extension.ConnectionString = connectionString;
-            extension.MaxBatchSize = 1;
+            var extension = GetOrCreateExtension(optionsBuilder)
+            .WithConnectionString(connectionString)
+            .WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);
@@ -60,9 +60,9 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(optionsBuilder, nameof(optionsBuilder));
             Check.NotNull(connectionStringBuilder, nameof(connectionStringBuilder));
 
-            var extension = GetOrCreateExtension(optionsBuilder);
-            extension.ConnectionString = connectionStringBuilder.ConnectionString;
-            extension.MaxBatchSize = 1;
+            var extension = GetOrCreateExtension(optionsBuilder)
+            .WithConnectionString(connectionStringBuilder.ConnectionString)
+            .WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);
@@ -106,9 +106,9 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(optionsBuilder, nameof(optionsBuilder));
             Check.NotNull(connection, nameof(connection));
 
-            var extension = GetOrCreateExtension(optionsBuilder);
-            extension.Connection = connection;
-            extension.MaxBatchSize = 1;
+            var extension = GetOrCreateExtension(optionsBuilder)
+            .WithConnection(connection)
+            .WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);
@@ -163,12 +163,15 @@ namespace Microsoft.EntityFrameworkCore
 
         private static void ConfigureWarnings(DbContextOptionsBuilder optionsBuilder)
         {
-            // Set warnings defaults
-            optionsBuilder.ConfigureWarnings(w =>
-            {
-                w.Configuration.TryAddExplicit(
-                    RelationalEventId.AmbientTransactionWarning, WarningBehavior.Throw);
-            });
+            var coreOptionsExtension
+                = optionsBuilder.Options.FindExtension<CoreOptionsExtension>()
+                  ?? new CoreOptionsExtension();
+
+            coreOptionsExtension = coreOptionsExtension.WithWarningsConfiguration(
+                coreOptionsExtension.WarningsConfiguration.TryWithExplicit(
+                    RelationalEventId.AmbientTransactionWarning, WarningBehavior.Throw));
+
+            ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(coreOptionsExtension);
         }
     }
 }

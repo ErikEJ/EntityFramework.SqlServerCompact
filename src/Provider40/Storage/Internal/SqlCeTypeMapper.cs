@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Utilities;
 
@@ -51,7 +52,8 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         private readonly Dictionary<string, RelationalTypeMapping> _storeTypeMappings;
         private readonly HashSet<string> _disallowedMappings;
 
-        public SqlCeTypeMapper()
+        public SqlCeTypeMapper([NotNull] RelationalTypeMapperDependencies dependencies)
+            : base(dependencies)
         {
             _storeTypeMappings
                 = new Dictionary<string, RelationalTypeMapping>(StringComparer.OrdinalIgnoreCase)

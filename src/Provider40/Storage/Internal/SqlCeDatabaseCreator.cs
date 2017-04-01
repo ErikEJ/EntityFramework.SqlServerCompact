@@ -2,8 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Storage.Internal
@@ -14,19 +12,13 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         private readonly IRawSqlCommandBuilder _rawSqlCommandBuilder;
 
         public SqlCeDatabaseCreator(
+            [NotNull] RelationalDatabaseCreatorDependencies dependencies,
             [NotNull] ISqlCeDatabaseConnection connection,
-            [NotNull] IMigrationsModelDiffer modelDiffer,
-            [NotNull] IMigrationsSqlGenerator migrationsSqlGenerator,
-            [NotNull] IMigrationCommandExecutor migrationCommandExecutor,
-            [NotNull] IModel model,
-            [NotNull] IRawSqlCommandBuilder rawSqlCommandBuilder,
-            [NotNull] IExecutionStrategyFactory executionStrategyFactory)
-            : base(model, connection, modelDiffer, migrationsSqlGenerator, migrationCommandExecutor, executionStrategyFactory)
+            [NotNull] IRawSqlCommandBuilder rawSqlCommandBuilder)
+            : base(dependencies)
         {
-            Check.NotNull(rawSqlCommandBuilder, nameof(rawSqlCommandBuilder));
-
-            _rawSqlCommandBuilder = rawSqlCommandBuilder;
             _connection = connection;
+            _rawSqlCommandBuilder = rawSqlCommandBuilder;
         }
 
         public override void Create()

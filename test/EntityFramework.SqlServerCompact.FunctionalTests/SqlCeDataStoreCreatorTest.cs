@@ -5,14 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
@@ -387,14 +382,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public class TestDatabaseCreator : SqlCeDatabaseCreator
         {
             public TestDatabaseCreator(
+                RelationalDatabaseCreatorDependencies dependencies,
                 ISqlCeDatabaseConnection connection,
-                IMigrationsModelDiffer modelDiffer,
-                IMigrationsSqlGenerator sqlGenerator,
-                IMigrationCommandExecutor migrationCommandExecutor,
-                IModel model,
-                IRawSqlCommandBuilder rawSqlCommandBuilder,
-                IExecutionStrategyFactory executionStrategyFactory)
-                : base(connection, modelDiffer, sqlGenerator, migrationCommandExecutor, model, rawSqlCommandBuilder, executionStrategyFactory)
+                IRawSqlCommandBuilder rawSqlCommandBuilder)
+                : base(dependencies, connection, rawSqlCommandBuilder)
             {
             }
 
@@ -402,6 +393,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             public Task<bool> HasTablesAsyncBase(CancellationToken cancellationToken = default(CancellationToken))
                 => HasTablesAsync(cancellationToken);
+
+            public IExecutionStrategyFactory ExecutionStrategyFactory => Dependencies.ExecutionStrategyFactory;
         }
     }
 }

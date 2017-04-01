@@ -51,6 +51,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
         }
 
         protected ISqlGenerationHelper CreateSqlGenerator()
-            => new SqlCeSqlGenerationHelper();
+            => new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies());
     }
 }

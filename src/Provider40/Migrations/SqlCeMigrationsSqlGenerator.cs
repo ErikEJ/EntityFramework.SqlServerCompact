@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-
 namespace Microsoft.EntityFrameworkCore.Migrations
 {
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
@@ -22,15 +21,12 @@ namespace Microsoft.EntityFrameworkCore.Migrations
         private readonly ISensitiveDataLogger<SqlCeMigrationsSqlGenerator> _logger;
 
         public SqlCeMigrationsSqlGenerator(
-            [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
-            [NotNull] ISqlGenerationHelper sqlGenerationHelper,
-            [NotNull] IRelationalTypeMapper typeMapper,
-            [NotNull] IRelationalAnnotationProvider annotations,
+            [NotNull] MigrationsSqlGeneratorDependencies dependencies,
             [NotNull] ISensitiveDataLogger<SqlCeMigrationsSqlGenerator> logger)
-            : base(commandBuilderFactory, sqlGenerationHelper, typeMapper, annotations)
+            : base(dependencies)
         {
-            _commandBuilderFactory = commandBuilderFactory;
-            _annotations = annotations;
+            _commandBuilderFactory = dependencies.CommandBuilderFactory;
+            _annotations = dependencies.Annotations;
             _logger = logger;
         }
 
@@ -80,16 +76,16 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
             builder
                 .Append("INDEX ")
-                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
+                .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Name))
                 .Append(" ON ")
-                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table, operation.Schema))
+                .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Table, operation.Schema))
                 .Append(" (")
                 .Append(ColumnList(operation.Columns))
                 .Append(")");
 
             if (terminate)
             {
-                builder.AppendLine(SqlGenerationHelper.StatementTerminator);
+                builder.AppendLine(Dependencies.SqlGenerationHelper.StatementTerminator);
 
                 EndStatement(builder);
             }
@@ -104,15 +100,15 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             builder
                 .EndCommand()
                 .Append("ALTER TABLE ")
-                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
+                .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ")
-                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
+                .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Name))
                 .Append(" DROP DEFAULT")
                 .AppendLine();
             builder
                 .EndCommand()
                 .Append("ALTER TABLE ")
-                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
+                .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(" ALTER COLUMN ");
 
             ColumnDefinition(
@@ -140,9 +136,9 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 builder
                     .EndCommand()
                     .Append("ALTER TABLE ")
-                    .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
+                    .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Table))
                     .Append(" ALTER COLUMN ")
-                    .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name))
+                    .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Name))
                     .Append(" SET ");
                 DefaultValue(operation.DefaultValue, operation.DefaultValueSql, builder);
             }
@@ -170,9 +166,9 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             builder
                 .EndCommand()
                 .Append("DROP INDEX ")
-                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Table))
+                .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Table))
                 .Append(".")
-                .Append(SqlGenerationHelper.DelimitIdentifier(operation.Name));
+                .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(operation.Name));
         }
 
         private const string NotSupported = "SQL Server Compact does not support this migration operation ('{0}').";
@@ -333,7 +329,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             if (computedColumnSql != null)
             {
                 builder
-                    .Append(SqlGenerationHelper.DelimitIdentifier(name))
+                    .Append(Dependencies.SqlGenerationHelper.DelimitIdentifier(name))
                     .Append(" AS ")
                     .Append(computedColumnSql);
 

@@ -13,25 +13,26 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
 {
     public class SqlCeQuerySqlGenerator : DefaultQuerySqlGenerator, ISqlCeExpressionVisitor
     {
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         public SqlCeQuerySqlGenerator(
-            [NotNull] IRelationalCommandBuilderFactory commandBuilderFactory,
-            [NotNull] ISqlGenerationHelper sqlGenerationHelper,
-            [NotNull] IParameterNameGeneratorFactory parameterNameGeneratorFactory,
-            [NotNull] IRelationalTypeMapper relationalTypeMapper,
+            [NotNull] QuerySqlGeneratorDependencies dependencies,
             [NotNull] SelectExpression selectExpression)
-            : base(commandBuilderFactory, sqlGenerationHelper, parameterNameGeneratorFactory, relationalTypeMapper, selectExpression)
+            : base(dependencies, selectExpression)
         {
         }
 
-        public override Expression VisitLateralJoin(LateralJoinExpression lateralJoinExpression)
+        public override Expression VisitCrossJoinLateral(CrossJoinLateralExpression crossJoinLateralExpression)
         {
-            Check.NotNull(lateralJoinExpression, nameof(lateralJoinExpression));
+            Check.NotNull(crossJoinLateralExpression, nameof(crossJoinLateralExpression));
 
             Sql.Append("CROSS APPLY ");
 
-            Visit(lateralJoinExpression.TableExpression);
+            Visit(crossJoinLateralExpression.TableExpression);
 
-            return lateralJoinExpression;
+            return crossJoinLateralExpression;
         }
 
         public override Expression VisitSqlFunction(SqlFunctionExpression sqlFunctionExpression)
@@ -108,14 +109,12 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
                 var rightSelect = right as SelectExpression;
                 if ((leftSelect != null) && (rightSelect == null))
                 {
-                    replacedExpression = new InExpression(
-                        right as AliasExpression ?? new AliasExpression(right), leftSelect);
+                    replacedExpression = new InExpression(right, leftSelect);
                 }
 
                 if ((rightSelect != null) && (leftSelect == null))
                 {
-                    replacedExpression = new InExpression(
-                        left as AliasExpression ?? new AliasExpression(left), rightSelect);
+                    replacedExpression = new InExpression(left, rightSelect);
                 }
 
                 if (replacedExpression != null)

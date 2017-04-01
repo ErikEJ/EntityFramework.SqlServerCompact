@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Relational.Tests.Migrations.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
@@ -562,8 +564,8 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
         protected override MigrationsModelDiffer CreateModelDiffer()
             => new MigrationsModelDiffer(
-                new SqlCeTypeMapper(),
+                new SqlCeTypeMapper(new RelationalTypeMapperDependencies()),
                 new SqlCeAnnotationProvider(),
-                new SqlCeMigrationsAnnotationProvider());
+                new SqlCeMigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies()));
     }
 }

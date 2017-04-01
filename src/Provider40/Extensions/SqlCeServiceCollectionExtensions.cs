@@ -62,29 +62,35 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             Check.NotNull(serviceCollection, nameof(serviceCollection));
 
-            var serviceCollectionMap = new ServiceCollectionMap(serviceCollection)
-                .TryAddSingletonEnumerable<IDatabaseProvider, DatabaseProvider<SqlCeOptionsExtension>>()
-                .TryAddSingleton<IRelationalTypeMapper, SqlCeTypeMapper>()
-                .TryAddSingleton<ISqlGenerationHelper, SqlCeSqlGenerationHelper>()
-                .TryAddSingleton<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
-                .TryAddSingleton<IMigrationsAnnotationProvider, SqlCeMigrationsAnnotationProvider>()
-                .TryAddScoped<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
-                .TryAddScoped<IConventionSetBuilder, SqlCeConventionSetBuilder>()
-                .TryAddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
-                .TryAddScoped<IUpdateSqlGenerator>(p => p.GetService<ISqlCeUpdateSqlGenerator>())
-                .TryAddScoped<IModificationCommandBatchFactory, SqlCeModificationCommandBatchFactory>()
-                .TryAddScoped<ISqlCeDatabaseConnection, SqlCeDatabaseConnection>()
-                .TryAddScoped<IRelationalConnection>(p => p.GetService<ISqlCeDatabaseConnection>())
-                .TryAddScoped<IHistoryRepository, SqlCeHistoryRepository>()
-                .TryAddScoped<IMigrationsSqlGenerator, SqlCeMigrationsSqlGenerator>()
-                .TryAddScoped<IRelationalDatabaseCreator, SqlCeDatabaseCreator>()
-                .TryAddScoped<IQueryCompilationContextFactory, SqlCeQueryCompilationContextFactory>()
-                .TryAddScoped<IMemberTranslator, SqlCeCompositeMemberTranslator>()
-                .TryAddScoped<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
-                .TryAddScoped<ISqlTranslatingExpressionVisitorFactory, SqlCeTranslatingExpressionVisitorFactory>()
-                .TryAddScoped<IQuerySqlGeneratorFactory, SqlCeQuerySqlGeneratorFactory>();
+            var builder = new EntityFrameworkRelationalServicesBuilder(serviceCollection)
+                .TryAdd<IDatabaseProvider, DatabaseProvider<SqlCeOptionsExtension>>()
+                .TryAdd<IRelationalTypeMapper, SqlCeTypeMapper>()
+                .TryAdd<ISqlGenerationHelper, SqlCeSqlGenerationHelper>()
+                .TryAdd<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
+                .TryAdd<IMigrationsAnnotationProvider, SqlCeMigrationsAnnotationProvider>()
+                .TryAdd<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
+                //TODO ErikEJ Add ModelVaildator?
+                //.TryAdd<IModelValidator, SqlCeModelValidator>()
+                .TryAdd<IConventionSetBuilder, SqlCeConventionSetBuilder>()
+                .TryAdd<IUpdateSqlGenerator>(p => p.GetService<ISqlCeUpdateSqlGenerator>())
+                .TryAdd<IModificationCommandBatchFactory, SqlCeModificationCommandBatchFactory>()
+                .TryAdd<IRelationalConnection>(p => p.GetService<ISqlCeDatabaseConnection>())
+                .TryAdd<IMigrationsSqlGenerator, SqlCeMigrationsSqlGenerator>()
+                .TryAdd<IRelationalDatabaseCreator, SqlCeDatabaseCreator>()
+                .TryAdd<IHistoryRepository, SqlCeHistoryRepository>()
+                //TODO ErikEJ Add these?
+                //.TryAdd<IEntityQueryModelVisitorFactory, SqlCeQueryModelVisitorFactory>()
+                //.TryAdd<ICompiledQueryCacheKeyGenerator, SqlCeCompiledQueryCacheKeyGenerator>()
+                .TryAdd<IQueryCompilationContextFactory, SqlCeQueryCompilationContextFactory>()
+                .TryAdd<IMemberTranslator, SqlCeCompositeMemberTranslator>()
+                .TryAdd<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
+                .TryAdd<IQuerySqlGeneratorFactory, SqlCeQuerySqlGeneratorFactory>()
+                .TryAdd<ISqlTranslatingExpressionVisitorFactory, SqlCeTranslatingExpressionVisitorFactory>()
+                .TryAddProviderSpecificServices(b => b
+                    .TryAddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
+                    .TryAddScoped<ISqlCeDatabaseConnection, SqlCeDatabaseConnection>());
 
-            ServiceCollectionRelationalProviderInfrastructure.TryAddDefaultRelationalServices(serviceCollectionMap);
+            builder.TryAddCoreServices();
 
             return serviceCollection;
         }

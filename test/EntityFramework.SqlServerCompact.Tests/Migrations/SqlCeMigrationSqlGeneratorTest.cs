@@ -1,36 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.EntityFrameworkCore.Relational.Specification.Tests;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
-        protected override IMigrationsSqlGenerator SqlGenerator
-        {
-            get
-            {
-                var typeMapper = new SqlCeTypeMapper();
-
-                return new SqlCeMigrationsSqlGenerator(
-                    new RelationalCommandBuilderFactory(
-                        new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
-                        new DiagnosticListener("Fake"),
-                        typeMapper),
-                    new SqlCeSqlGenerationHelper(),
-                    typeMapper,
-                    new SqlCeAnnotationProvider(),
-                    new FakeSensitiveDataLogger<SqlCeMigrationsSqlGenerator>());
-            }
-        }
 
         public override void AlterSequenceOperation_without_minValue_and_maxValue()
         {
@@ -159,6 +136,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             Assert.Equal(
                 "CREATE INDEX [IX_People_Name] ON [People] ([Name])" + EOL + EOL,
                 Sql);
+        }
+
+        public SqlCeMigrationSqlGeneratorTest()
+            : base(SqlCeTestHelpers.Instance)
+        {
         }
     }
 }

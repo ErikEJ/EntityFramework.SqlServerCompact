@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Storage.Internal
@@ -11,6 +12,11 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
         private const string DateTimeFormatStringConst = "'{0:" + DateTimeFormatConst + "}'";
         private const string DateTimeOffsetFormatConst = "yyyy-MM-ddTHH:mm:ss.fff";
         private const string DateTimeOffsetFormatStringConst = "'{0:" + DateTimeOffsetFormatConst + "}'";
+
+        public SqlCeSqlGenerationHelper([NotNull] RelationalSqlGenerationHelperDependencies dependencies)
+            : base(dependencies)
+        {
+        }
 
         public override string BatchTerminator => "GO" + Environment.NewLine + Environment.NewLine;
 

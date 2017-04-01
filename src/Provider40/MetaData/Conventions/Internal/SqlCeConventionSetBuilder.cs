@@ -8,15 +8,21 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal
     public class SqlCeConventionSetBuilder : RelationalConventionSetBuilder
     {
         public SqlCeConventionSetBuilder(
-            [NotNull] IRelationalTypeMapper typeMapper,
-            [CanBeNull] ICurrentDbContext currentContext,
-            [CanBeNull] IDbSetFinder setFinder)
-            : base(typeMapper, currentContext, setFinder)
+            [NotNull] RelationalConventionSetBuilderDependencies dependencies,
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper)
+            : base(dependencies)
         {
         }
 
         public static ConventionSet Build()
-            => new SqlCeConventionSetBuilder(new SqlCeTypeMapper(), null, null)
+            => new SqlCeConventionSetBuilder(
+                    new RelationalConventionSetBuilderDependencies(
+                        new SqlCeTypeMapper(
+                            new RelationalTypeMapperDependencies()),
+                        null,
+                        null),
+                    new SqlCeSqlGenerationHelper(
+                        new RelationalSqlGenerationHelperDependencies()))
                 .AddConventions(new CoreConventionSetBuilder().CreateConventionSet());
     }
 }

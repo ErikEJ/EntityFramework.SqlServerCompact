@@ -3,10 +3,7 @@ using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
-using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
-using Microsoft.EntityFrameworkCore.Storage;
 
 // ReSharper disable AssignNullToNotNullAttribute
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
@@ -32,20 +29,17 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
             => null; // Never called
 
         public SqlCeTranslatingExpressionVisitor(
-            [NotNull] IRelationalAnnotationProvider relationalAnnotationProvider, 
-            [NotNull] IExpressionFragmentTranslator compositeExpressionFragmentTranslator, 
-            [NotNull] IMethodCallTranslator methodCallTranslator, 
-            [NotNull] IMemberTranslator memberTranslator, 
-            [NotNull] IRelationalTypeMapper relationalTypeMapper, 
+            [NotNull] SqlTranslatingExpressionVisitorDependencies dependencies,
             [NotNull] IDbContextOptions contextOptions,
             [NotNull] RelationalQueryModelVisitor queryModelVisitor, 
             [CanBeNull] SelectExpression targetSelectExpression = null, 
             [CanBeNull] Expression topLevelPredicate = null, 
-            bool bindParentQueries = false, 
             bool inProjection = false)
-            : base(relationalAnnotationProvider, compositeExpressionFragmentTranslator, methodCallTranslator, memberTranslator, relationalTypeMapper, queryModelVisitor, targetSelectExpression, topLevelPredicate, bindParentQueries, inProjection)
+            : base(dependencies, queryModelVisitor, targetSelectExpression, topLevelPredicate, inProjection)
         {
             _contextOptions = contextOptions;
         }
+
+
     }
 }

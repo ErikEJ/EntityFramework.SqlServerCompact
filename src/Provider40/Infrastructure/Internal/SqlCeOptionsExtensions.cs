@@ -15,7 +15,19 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
         {
         }
 
-        public virtual bool? ClientEvalForUnsupportedSqlConstructs { get; set; }
+        public virtual SqlCeOptionsExtension WithClientEvalForUnsupportedSqlConstructs(bool clientEvalForUnsupportedSqlConstructs)
+        {
+            var clone = (SqlCeOptionsExtension)Clone();
+            clone._clientEvalForUnsupportedSqlConstructs = clientEvalForUnsupportedSqlConstructs;
+            return clone;
+        }
+
+        private bool? _clientEvalForUnsupportedSqlConstructs;
+
+        public virtual bool? ClientEvalForUnsupportedSqlConstructs => _clientEvalForUnsupportedSqlConstructs;
+
+        protected override RelationalOptionsExtension Clone()
+            => new SqlCeOptionsExtension(this);
 
         public override bool ApplyServices(IServiceCollection services)
         {

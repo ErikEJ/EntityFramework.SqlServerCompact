@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
     public class SqlCeCompositeMemberTranslator : RelationalCompositeMemberTranslator
     {
-        public SqlCeCompositeMemberTranslator()
+        public SqlCeCompositeMemberTranslator([NotNull] RelationalCompositeMemberTranslatorDependencies dependencies)
+            : base(dependencies)
         {
             var sqlCeTranslators = new List<IMemberTranslator>
             {

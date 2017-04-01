@@ -87,38 +87,43 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             Assert.Throws<NotSupportedException>(() => CreateHistoryRepository().GetEndIfScript());
         }
 
-        private static IHistoryRepository CreateHistoryRepository()
+        private static IHistoryRepository CreateHistoryRepository(string schema = null)
         {
             var annotationsProvider = new SqlCeAnnotationProvider();
-            var sqlGenerator = new SqlCeSqlGenerationHelper();
-            var typeMapper = new SqlCeTypeMapper();
+            var sqlGenerator = new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies());
+            var typeMapper = new SqlCeTypeMapper(new RelationalTypeMapperDependencies());
 
             var commandBuilderFactory = new RelationalCommandBuilderFactory(
                 new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
-                new DiagnosticListener("Fake"), 
+                new DiagnosticListener("Fake"),
                 typeMapper);
 
             return new SqlCeHistoryRepository(
-                Mock.Of<IRelationalDatabaseCreator>(),
-                Mock.Of<IRawSqlCommandBuilder>(),
-                Mock.Of<ISqlCeDatabaseConnection>(),
-                new DbContextOptions<DbContext>(
-                    new Dictionary<Type, IDbContextOptionsExtension>
-                    {
-                        { typeof(SqlCeOptionsExtension), new SqlCeOptionsExtension() }
-                    }),
-                new MigrationsModelDiffer(
-                    new SqlCeTypeMapper(),
+                new HistoryRepositoryDependencies(
+                    Mock.Of<IRelationalDatabaseCreator>(),
+                    Mock.Of<IRawSqlCommandBuilder>(),
+                    Mock.Of<ISqlCeDatabaseConnection>(),
+                    new DbContextOptions<DbContext>(
+                        new Dictionary<Type, IDbContextOptionsExtension>
+                        {
+                            {
+                                typeof(SqlCeOptionsExtension),
+                                new SqlCeOptionsExtension().WithMigrationsHistoryTableSchema(schema)
+                            }
+                        }),
+                    new MigrationsModelDiffer(
+                        new SqlCeTypeMapper(new RelationalTypeMapperDependencies()),
+                        annotationsProvider,
+                        new SqlCeMigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies())),
+                    new SqlCeMigrationsSqlGenerator(
+                        new MigrationsSqlGeneratorDependencies(
+                            commandBuilderFactory,
+                            new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()),
+                            typeMapper,
+                            annotationsProvider),
+                        new FakeSensitiveDataLogger<SqlCeMigrationsSqlGenerator>()),
                     annotationsProvider,
-                    new SqlCeMigrationsAnnotationProvider()),
-                new SqlCeMigrationsSqlGenerator(
-                    commandBuilderFactory,
-                    new SqlCeSqlGenerationHelper(),
-                    typeMapper,
-                    annotationsProvider,
-                    new FakeSensitiveDataLogger<SqlCeMigrationsSqlGenerator>()),
-                annotationsProvider,
-                sqlGenerator);
+                    sqlGenerator));
         }
 
         private class Context : DbContext

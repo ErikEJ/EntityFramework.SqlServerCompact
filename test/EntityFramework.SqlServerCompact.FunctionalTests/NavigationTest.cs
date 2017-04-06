@@ -6,7 +6,6 @@ using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.SqlCe.Specification.Tests
 {
-
     public class NavigationTest : IClassFixture<NavigationTestFixture>
     {
         [Fact]

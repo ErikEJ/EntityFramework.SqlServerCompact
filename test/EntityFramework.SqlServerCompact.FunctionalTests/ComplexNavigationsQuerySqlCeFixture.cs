@@ -11,8 +11,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     {
         public static readonly string DatabaseName = "ComplexNavigations";
 
-        private readonly IServiceProvider _serviceProvider;
-
         private readonly DbContextOptions _options;
 
         private readonly string _connectionString
@@ -20,7 +18,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public ComplexNavigationsQuerySqlCeFixture()
         {
-            _serviceProvider = new ServiceCollection()
+             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
@@ -29,7 +27,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             _options = new DbContextOptionsBuilder()
                 .EnableSensitiveDataLogging()
                 .UseSqlCe(_connectionString, b => b.ApplyConfiguration())
-                .UseInternalServiceProvider(_serviceProvider).Options;
+                .UseInternalServiceProvider(serviceProvider).Options;
         }
 
         public override SqlCeTestStore CreateTestStore()

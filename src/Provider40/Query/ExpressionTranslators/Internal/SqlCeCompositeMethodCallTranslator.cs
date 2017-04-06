@@ -8,6 +8,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
         {
                 new SqlCeContainsOptimizedTranslator(),
                 new SqlCeConvertTranslator(),
+                new SqlCeDateAddTranslator(),
                 new SqlCeEndsWithOptimizedTranslator(),
                 new SqlCeMathTranslator(),
                 new SqlCeNewGuidTranslator(),

@@ -24,11 +24,11 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.Specification.Tests
                 var entityType = model.GetEntityTypes().First();
 
                 Assert.Equal(
-                    "ForeignKey: Person.LoverId -> Person.Id Unique ToDependent: LoverReverse ToPrincipal: Lover",
+                    "ForeignKey: Person {'LoverId'} -> Person {'Id'} Unique ToDependent: LoverReverse ToPrincipal: Lover",
                     entityType.GetForeignKeys().First().ToString());
 
                 Assert.Equal(
-                    "ForeignKey: Person.SiblingReverseId -> Person.Id ToDependent: Siblings ToPrincipal: SiblingReverse",
+                    "ForeignKey: Person {'SiblingReverseId'} -> Person {'Id'} ToDependent: Siblings ToPrincipal: SiblingReverse",
                     entityType.GetForeignKeys().Skip(1).First().ToString());
             }
         }
@@ -49,12 +49,13 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.Specification.Tests
                 var entityType = model.GetEntityTypes().First();
 
                 Assert.Equal(
-                     "ForeignKey: Person.LoverId -> Person.Id Unique ToDependent: LoverReverse ToPrincipal: Lover",
-                     entityType.GetForeignKeys().First().ToString());
+                    "ForeignKey: Person {'LoverId'} -> Person {'Id'} Unique ToDependent: LoverReverse ToPrincipal: Lover",
+                    entityType.GetForeignKeys().First().ToString());
 
                 Assert.Equal(
-                    "ForeignKey: Person.SiblingReverseId -> Person.Id ToDependent: Siblings ToPrincipal: SiblingReverse",
+                    "ForeignKey: Person {'SiblingReverseId'} -> Person {'Id'} ToDependent: Siblings ToPrincipal: SiblingReverse",
                     entityType.GetForeignKeys().Skip(1).First().ToString());
+
             }
         }
 

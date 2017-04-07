@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.NullSemanticsModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -9,30 +10,31 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     {
         public static readonly string DatabaseName = "NullSemanticsQueryTest";
 
-        private readonly IServiceProvider _serviceProvider;
+        private readonly DbContextOptions _options;
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
         public NullSemanticsQuerySqlCeFixture()
         {
-            _serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
+
+            _options = new DbContextOptionsBuilder()
+                .EnableSensitiveDataLogging()
+                .UseInternalServiceProvider(serviceProvider)
+                .Options;
         }
 
         public override SqlCeTestStore CreateTestStore()
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
                 {
-                    var optionsBuilder = new DbContextOptionsBuilder();
-                    optionsBuilder
-                        .UseSqlCe(_connectionString)
-                        .UseInternalServiceProvider(_serviceProvider);
-
-                    using (var context = new NullSemanticsContext(optionsBuilder.Options))
-                    {
+                    using (var context = new NullSemanticsContext(new DbContextOptionsBuilder(_options)
+                        .UseSqlCe(_connectionString, b => b.ApplyConfiguration()).Options))
+                    { 
                         context.Database.EnsureClean();
                         NullSemanticsModelInitializer.Seed(context);
 
@@ -43,18 +45,19 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override NullSemanticsContext CreateContext(SqlCeTestStore testStore, bool useRelationalNulls)
         {
-            var context = new NullSemanticsContext(new DbContextOptionsBuilder()
-                .EnableSensitiveDataLogging()
-                .UseInternalServiceProvider(_serviceProvider)
+            var options = new DbContextOptionsBuilder(_options)
                 .UseSqlCe(
                     testStore.Connection,
                     b =>
+                    {
+                        b.ApplyConfiguration();
+                        if (useRelationalNulls)
                         {
-                            if (useRelationalNulls)
-                            {
-                                b.UseRelationalNulls();
-                            }
-                        }).Options);
+                            b.UseRelationalNulls();
+                        }
+                    }).Options;
+
+            var context = new NullSemanticsContext(options);
 
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 

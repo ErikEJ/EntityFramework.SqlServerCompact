@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact40.Design.FunctionalTest", "test\EntityFramework.SqlServerCompact40.Design.FunctionalTest\EntityFramework.SqlServerCompact40.Design.FunctionalTest.csproj", "{543477FB-CF81-446D-AB02-1E41382DED5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.SqlServerCompact.FunctionalTests", "test\EntityFramework.SqlServerCompact.FunctionalTests\EntityFramework.SqlServerCompact.FunctionalTests.csproj", "{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,14 @@ Global
 		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|x86.ActiveCfg = Release|Any CPU
 		{543477FB-CF81-446D-AB02-1E41382DED5B}.Release|x86.Build.0 = Release|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +105,6 @@ Global
 		{38B6C219-941A-4DCF-A087-673616418E36} = {0F224063-E959-433C-88BD-B2414CF74B96}
 		{5056E1D2-C5F0-4613-AB74-1E470734D8EA} = {0F224063-E959-433C-88BD-B2414CF74B96}
 		{543477FB-CF81-446D-AB02-1E41382DED5B} = {237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}
+		{3C88D49A-7EF2-42BA-A8D7-9DF7D358FD24} = {237FAC75-B0BD-4EEA-8826-5D9BD213A5E7}
 	EndGlobalSection
 EndGlobal

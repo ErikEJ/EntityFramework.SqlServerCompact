@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
+﻿using Microsoft.EntityFrameworkCore.Specification.Tests;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.FunkyDataModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
 {
@@ -10,26 +10,30 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
     {
         public const string DatabaseName = "FunkyDataQueryTest";
 
-        private readonly IServiceProvider _serviceProvider;
+        private readonly DbContextOptions _options;
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
         public FunkyDataQuerySqlCeFixture()
         {
-            _serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
+
+            _options = new DbContextOptionsBuilder()
+               .EnableSensitiveDataLogging()
+               .UseInternalServiceProvider(serviceProvider)
+               .Options;
         }
 
         public override SqlCeTestStore CreateTestStore()
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
-                var optionsBuilder = new DbContextOptionsBuilder()
-                    .UseSqlCe(_connectionString)
-                    .UseInternalServiceProvider(_serviceProvider);
+                var optionsBuilder = new DbContextOptionsBuilder(_options)
+                    .UseSqlCe(_connectionString, b => b.ApplyConfiguration());
 
                 using (var context = new FunkyDataContext(optionsBuilder.Options))
                 {
@@ -43,14 +47,11 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
 
         public override FunkyDataContext CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var options = new DbContextOptionsBuilder(_options)
+                    .UseSqlCe(testStore.Connection, b => b.ApplyConfiguration())
+                    .Options;
 
-            optionsBuilder
-                .EnableSensitiveDataLogging()
-                .UseInternalServiceProvider(_serviceProvider)
-                .UseSqlCe(testStore.Connection);
-
-            var context = new FunkyDataContext(optionsBuilder.Options);
+            var context = new FunkyDataContext(options);
 
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 

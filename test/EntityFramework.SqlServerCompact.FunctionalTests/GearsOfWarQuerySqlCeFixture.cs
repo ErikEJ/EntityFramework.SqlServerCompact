@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.GearsOfWarModel;
+﻿using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.GearsOfWarModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -17,31 +17,34 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public static readonly string DatabaseName = "GearsOfWarQueryTest";
 
-        private readonly IServiceProvider _serviceProvider;
+        private readonly DbContextOptions _options;
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
         public GearsOfWarQuerySqlCeFixture()
         {
-            _serviceProvider = new ServiceCollection()
+             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
+
+            _options = new DbContextOptionsBuilder()
+                .EnableSensitiveDataLogging()
+                .UseInternalServiceProvider(serviceProvider)
+                .Options;
         }
 
         public override SqlCeTestStore CreateTestStore()
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
-                var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder
-                    .UseSqlCe(_connectionString)
-                    .UseInternalServiceProvider(_serviceProvider);
-
-                using (var context = new GearsOfWarContext(optionsBuilder.Options))
+                using (var context = new GearsOfWarContext(
+                        new DbContextOptionsBuilder(_options)
+                            .UseSqlCe(_connectionString, b => b.ApplyConfiguration())
+                            .Options))
                 {
-                    context.Database.EnsureClean();
+                    context.Database.EnsureCreated();
                     GearsOfWarModelInitializer.Seed(context);
 
                     TestSqlLoggerFactory.Reset();
@@ -51,14 +54,15 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override GearsOfWarContext CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
-                .EnableSensitiveDataLogging()
-                .UseSqlCe(testStore.Connection)
-                .UseInternalServiceProvider(_serviceProvider);
+            var context = new GearsOfWarContext(
+                new DbContextOptionsBuilder(_options)
+                    .UseSqlCe(testStore.Connection, b => b.ApplyConfiguration())
+                    .Options);
 
-            var context = new GearsOfWarContext(optionsBuilder.Options);
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
             context.Database.UseTransaction(testStore.Transaction);
+
             return context;
         }
     }

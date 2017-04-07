@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -9,28 +10,36 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     {
         public static readonly string DatabaseName = "DataAnnotations";
 
-        private readonly IServiceProvider _serviceProvider;
+        private readonly DbContextOptions _options;
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
         public DataAnnotationSqlCeFixture()
         {
-            _serviceProvider = new ServiceCollection()
+             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
                 .BuildServiceProvider();
+
+            _options = new DbContextOptionsBuilder()
+                .EnableSensitiveDataLogging()
+                .UseInternalServiceProvider(serviceProvider)
+                .ConfigureWarnings(w =>
+                {
+                    w.Default(WarningBehavior.Throw);
+                    w.Ignore(CoreEventId.SensitiveDataLoggingEnabledWarning);
+                }).Options;
         }
 
         public override SqlCeTestStore CreateTestStore()
             => SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
                 {
-                    var optionsBuilder = new DbContextOptionsBuilder();
-                    optionsBuilder
+                    var options = new DbContextOptionsBuilder(_options)
                         .UseSqlCe(_connectionString, b => b.ApplyConfiguration())
-                        .UseInternalServiceProvider(_serviceProvider);
+                        .Options;
 
-                    using (var context = new DataAnnotationContext(optionsBuilder.Options))
+                    using (var context = new DataAnnotationContext(options))
                     {
                         context.Database.EnsureClean();
                         DataAnnotationModelInitializer.Seed(context);
@@ -41,13 +50,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override DataAnnotationContext CreateContext(SqlCeTestStore testStore)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
-                .EnableSensitiveDataLogging()
-                .UseSqlCe(testStore.Connection)
-                .UseInternalServiceProvider(_serviceProvider);
+            var options = new DbContextOptionsBuilder(_options)
+                .UseSqlCe(testStore.Connection, b => b.ApplyConfiguration())
+                .Options;
 
-            var context = new DataAnnotationContext(optionsBuilder.Options);
+            var context = new DataAnnotationContext(options);
             //context.Database.UseTransaction(testStore.Transaction);
             return context;
         }

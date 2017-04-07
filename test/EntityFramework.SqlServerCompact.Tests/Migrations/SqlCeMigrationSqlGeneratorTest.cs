@@ -39,6 +39,22 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             Assert.Throws<NotSupportedException>(() => base.DropSequenceOperation());
         }
 
+        [Fact]
+        public void CreateSchemaOperation_is_ignored()
+        {
+            Generate(new EnsureSchemaOperation());
+
+            Assert.Empty(Sql);
+        }
+
+        [Fact]
+        public void DropSchemaOperation_is_ignored()
+        {
+            Generate(new DropSchemaOperation());
+
+            Assert.Empty(Sql);
+        }
+
         public override void DropIndexOperation()
         {
             base.DropIndexOperation();

@@ -173,15 +173,13 @@ namespace Microsoft.EntityFrameworkCore.Migrations
 
         private const string NotSupported = "SQL Server Compact does not support this migration operation ('{0}').";
 
-        #region Invalid schema operations
+        #region Ignored schema operations
         protected override void Generate(EnsureSchemaOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
 
         protected override void Generate(DropSchemaOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
         }
         #endregion
 

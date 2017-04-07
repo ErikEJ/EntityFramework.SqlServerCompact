@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -69,8 +70,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
                 .TryAdd<IMigrationsAnnotationProvider, SqlCeMigrationsAnnotationProvider>()
                 .TryAdd<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
-                //TODO ErikEJ Add ModelVaildator?
-                //.TryAdd<IModelValidator, SqlCeModelValidator>()
+                .TryAdd<IModelValidator, SqlCeModelValidator>()
                 .TryAdd<IConventionSetBuilder, SqlCeConventionSetBuilder>()
                 .TryAdd<IUpdateSqlGenerator>(p => p.GetService<ISqlCeUpdateSqlGenerator>())
                 .TryAdd<IModificationCommandBatchFactory, SqlCeModificationCommandBatchFactory>()
@@ -78,9 +78,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IMigrationsSqlGenerator, SqlCeMigrationsSqlGenerator>()
                 .TryAdd<IRelationalDatabaseCreator, SqlCeDatabaseCreator>()
                 .TryAdd<IHistoryRepository, SqlCeHistoryRepository>()
-                //TODO ErikEJ Add these?
-                //.TryAdd<IEntityQueryModelVisitorFactory, SqlCeQueryModelVisitorFactory>()
-                //.TryAdd<ICompiledQueryCacheKeyGenerator, SqlCeCompiledQueryCacheKeyGenerator>()
                 .TryAdd<IQueryCompilationContextFactory, SqlCeQueryCompilationContextFactory>()
                 .TryAdd<IMemberTranslator, SqlCeCompositeMemberTranslator>()
                 .TryAdd<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()

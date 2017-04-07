@@ -230,6 +230,15 @@
     <Compile Include="..\Provider40\Infrastructure\SqlCeDbContextOptionsBuilder.cs">
       <Link>Infrastructure\SqlCeDbContextOptionsBuilder.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Infrastructure\SqlCeEventId.cs">
+      <Link>Infrastructure\SqlCeEventId.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Internal\SqlCeLoggerExtensions.cs">
+      <Link>Internal\SqlCeLoggerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Internal\SqlCeModelValidator.cs">
+      <Link>Internal\SqlCeModelValidator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs">
       <Link>MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs</Link>
     </Compile>

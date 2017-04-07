@@ -2,36 +2,34 @@
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Inheritance;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class InheritanceSqlCeFixture : InheritanceRelationalFixture
     {
         private readonly DbContextOptions _options;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly SqlCeTestStore _testStore;
 
         public InheritanceSqlCeFixture()
         {
-            _serviceProvider
-                = new ServiceCollection()
-                    .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                    .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
-                    .BuildServiceProvider();
+            var serviceProvider = new ServiceCollection()
+                            .AddEntityFrameworkSqlCe()
+                            .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
+                            .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                            .BuildServiceProvider();
 
-            var testStore = SqlCeTestStore.CreateScratch(createDatabase: true);
+            _testStore = SqlCeTestStore.CreateScratch(createDatabase: true);
 
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
+            _options = new DbContextOptionsBuilder()
                 .EnableSensitiveDataLogging()
-                .UseSqlCe(testStore.Connection)
-                .UseInternalServiceProvider(_serviceProvider);
-
-            _options = optionsBuilder.Options;
+                .UseSqlCe(_testStore.Connection, b => b.ApplyConfiguration())
+                .UseInternalServiceProvider(serviceProvider)
+                .Options;
 
             using (var context = CreateContext())
             {
-                context.Database.EnsureClean();
+                context.Database.EnsureCreated();
                 SeedData(context);
             }
         }

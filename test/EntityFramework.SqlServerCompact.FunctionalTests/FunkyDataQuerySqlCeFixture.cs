@@ -32,7 +32,7 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
         {
             return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
             {
-                var optionsBuilder = new DbContextOptionsBuilder()
+                var optionsBuilder = new DbContextOptionsBuilder(_options)
                     .UseSqlCe(_connectionString, b => b.ApplyConfiguration());
 
                 using (var context = new FunkyDataContext(optionsBuilder.Options))

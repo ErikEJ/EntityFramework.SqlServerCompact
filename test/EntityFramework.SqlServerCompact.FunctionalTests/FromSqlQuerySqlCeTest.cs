@@ -10,45 +10,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class FromSqlQuerySqlCeTest : FromSqlQueryTestBase<NorthwindQuerySqlCeFixture>
     {
-
         private readonly ITestOutputHelper _testOutputHelper;
-
-        //disabled - see https://github.com/aspnet/EntityFramework/issues/6471
-        public override void Bad_data_error_handling_invalid_cast()
-        {
-            //base.Bad_data_error_handling_invalid_cast();
-        }
-
-        public override void Bad_data_error_handling_invalid_cast_key()
-        {
-            //base.Bad_data_error_handling_invalid_cast_key();
-        }
-
-        public override void Bad_data_error_handling_invalid_cast_no_tracking()
-        {
-            //base.Bad_data_error_handling_invalid_cast_no_tracking();
-        }
-
-        public override void Bad_data_error_handling_invalid_cast_projection()
-        {
-            //base.Bad_data_error_handling_invalid_cast_projection();
-        }
-
-        public override void Bad_data_error_handling_null()
-        {
-            //base.Bad_data_error_handling_null();
-        }
-
-        public override void Bad_data_error_handling_null_no_tracking()
-        {
-            //base.Bad_data_error_handling_null_no_tracking();
-        }
-
-        public override void Bad_data_error_handling_null_projection()
-        {
-            //base.Bad_data_error_handling_null_projection();
-        }
-
+        
         public override void From_sql_queryable_simple()
         {
             base.From_sql_queryable_simple();

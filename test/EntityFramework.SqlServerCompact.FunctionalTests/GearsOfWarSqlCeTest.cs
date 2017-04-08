@@ -778,39 +778,40 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND ((1 & [g].[Rank]) = [g].[
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Where_enum_has_flag_subquery()
         {
-            //base.Where_enum_has_flag_subquery();
+            base.Where_enum_has_flag_subquery();
 
-//            AssertSql(
-//                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
-//FROM [Gear] AS [g]
-//WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (([g].[Rank] & (
-//    SELECT TOP(1) [x].[Rank]
-//    FROM [Gear] AS [x]
-//    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
-//    ORDER BY [x].[Nickname], [x].[SquadId]
-//)) = (
-//    SELECT TOP(1) [x].[Rank]
-//    FROM [Gear] AS [x]
-//    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
-//    ORDER BY [x].[Nickname], [x].[SquadId]
-//))
+            AssertSql(
+                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Gear] AS [g]
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (([g].[Rank] & (
+    SELECT TOP(1) [x].[Rank]
+    FROM [Gear] AS [x]
+    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
+    ORDER BY [x].[Nickname], [x].[SquadId]
+)) = (
+    SELECT TOP(1) [x].[Rank]
+    FROM [Gear] AS [x]
+    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
+    ORDER BY [x].[Nickname], [x].[SquadId]
+))
 
-//SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
-//FROM [Gear] AS [g]
-//WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND ((1 & (
-//    SELECT TOP(1) [x].[Rank]
-//    FROM [Gear] AS [x]
-//    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
-//    ORDER BY [x].[Nickname], [x].[SquadId]
-//)) = (
-//    SELECT TOP(1) [x].[Rank]
-//    FROM [Gear] AS [x]
-//    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
-//    ORDER BY [x].[Nickname], [x].[SquadId]
-//))",
-//                Sql);
+SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Gear] AS [g]
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND ((1 & (
+    SELECT TOP(1) [x].[Rank]
+    FROM [Gear] AS [x]
+    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
+    ORDER BY [x].[Nickname], [x].[SquadId]
+)) = (
+    SELECT TOP(1) [x].[Rank]
+    FROM [Gear] AS [x]
+    WHERE [x].[Discriminator] IN (N'Officer', N'Gear')
+    ORDER BY [x].[Nickname], [x].[SquadId]
+))",
+                Sql);
         }
 
         public override void Where_enum_has_flag_with_non_nullable_parameter()
@@ -1252,16 +1253,16 @@ WHERE ([t].[Nickname] = [t0].[Nickname]) OR ([t].[Nickname] IS NULL AND [t0].[Ni
                 Sql);
         }
 
-        //TODO ErikEJ invesitiage fial
+        [Fact(Skip = "Investigate!")]
         public override void Optional_Navigation_Null_Coalesce_To_Clr_Type()
         {
-//            base.Optional_Navigation_Null_Coalesce_To_Clr_Type();
+            base.Optional_Navigation_Null_Coalesce_To_Clr_Type();
 
-//            AssertSql(
-//                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
-//FROM [Gear] AS [g]
-//WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (SUBSTRING([g].[LeaderNickname], (LEN([g].[LeaderNickname]) + 1) - LEN(N'us'), LEN(N'us')) = N'us')",
-//                Sql);
+            AssertSql(
+                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
+FROM [Gear] AS [g]
+WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND (SUBSTRING([g].[LeaderNickname], (LEN([g].[LeaderNickname]) + 1) - LEN(N'us'), LEN(N'us')) = N'us')",
+                Sql);
         }
 
         public override void Where_subquery_boolean()
@@ -2180,28 +2181,30 @@ WHERE [g].[Discriminator] IN (N'Officer', N'Gear')",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void DateTimeOffset_Date_works()
         {
-//            base.DateTimeOffset_Date_works();
+            base.DateTimeOffset_Date_works();
 
-//            AssertSql(
-//                @"@__Date_0: 01/01/0001 00:00:00
+            AssertSql(
+                @"@__Date_0: 01/01/0001 00:00:00
 
-//SELECT [m].[Id], [m].[CodeName], [m].[Timeline]
-//FROM [Mission] AS [m]
-//WHERE CONVERT(date, [m].[Timeline]) > @__Date_0",
-//                Sql);
+SELECT [m].[Id], [m].[CodeName], [m].[Timeline]
+FROM [Mission] AS [m]
+WHERE CONVERT(date, [m].[Timeline]) > @__Date_0",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void DateTimeOffset_Datepart_works()
         {
-            //base.DateTimeOffset_Datepart_works();
+            base.DateTimeOffset_Datepart_works();
 
-//            AssertSql(
-//                @"SELECT [m].[Id], [m].[CodeName], [m].[Timeline]
-//FROM [Mission] AS [m]
-//WHERE DATEPART(month, [m].[Timeline]) = 5",
-//                Sql);
+            AssertSql(
+                @"SELECT [m].[Id], [m].[CodeName], [m].[Timeline]
+FROM [Mission] AS [m]
+WHERE DATEPART(month, [m].[Timeline]) = 5",
+                Sql);
         }
 
         public override void Orderby_added_for_client_side_GroupJoin_composite_dependent_to_principal_LOJ_when_incomplete_key_is_used()

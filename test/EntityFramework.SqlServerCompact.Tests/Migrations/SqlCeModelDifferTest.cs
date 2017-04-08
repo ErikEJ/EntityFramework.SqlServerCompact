@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
@@ -215,8 +216,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Assert.Equal("bah", operation.Schema);
                     Assert.Equal("Lamb", operation.Table);
                     Assert.Equal("Id", operation.Name);
-                    //TODO ErikEJ Check this asser
-                    //Assert.Equal(SqlCeValueGenerationStrategy SqlCeValueGenerationStrategy.IdentityColumn, operation["SqlServer:ValueGenerationStrategy"]);
+                    Assert.Equal(SqlCeFullAnnotationNames.Instance.ValueGeneration, "SqlCe:ValueGeneration");
                 });
         }
 

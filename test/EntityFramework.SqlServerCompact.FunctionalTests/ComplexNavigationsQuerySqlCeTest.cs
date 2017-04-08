@@ -1383,52 +1383,55 @@ ORDER BY [l20].[Id], [l20].[Id0]",
             }
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Where_navigation_property_to_collection()
         {
-//            base.Where_navigation_property_to_collection();
+            base.Where_navigation_property_to_collection();
 
-//            AssertSql(
-//                @"SELECT [l1].[Id], [l1].[Date], [l1].[Name], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_SelfId], [l1.OneToOne_Required_FK].[Id], [l1.OneToOne_Required_FK].[Date], [l1.OneToOne_Required_FK].[Level1_Optional_Id], [l1.OneToOne_Required_FK].[Level1_Required_Id], [l1.OneToOne_Required_FK].[Name], [l1.OneToOne_Required_FK].[OneToMany_Optional_InverseId], [l1.OneToOne_Required_FK].[OneToMany_Optional_Self_InverseId], [l1.OneToOne_Required_FK].[OneToMany_Required_InverseId], [l1.OneToOne_Required_FK].[OneToMany_Required_Self_InverseId], [l1.OneToOne_Required_FK].[OneToOne_Optional_PK_InverseId], [l1.OneToOne_Required_FK].[OneToOne_Optional_SelfId]
-//FROM [Level1] AS [l1]
-//LEFT JOIN [Level2] AS [l1.OneToOne_Required_FK] ON [l1].[Id] = [l1.OneToOne_Required_FK].[Level1_Required_Id]
-//WHERE (
-//    SELECT COUNT(*)
-//    FROM [Level3] AS [l]
-//    WHERE [l1.OneToOne_Required_FK].[Id] = [l].[OneToMany_Optional_InverseId]
-//) > 0",
-//                Sql);
+            AssertSql(
+                @"SELECT [l1].[Id], [l1].[Date], [l1].[Name], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_SelfId], [l1.OneToOne_Required_FK].[Id], [l1.OneToOne_Required_FK].[Date], [l1.OneToOne_Required_FK].[Level1_Optional_Id], [l1.OneToOne_Required_FK].[Level1_Required_Id], [l1.OneToOne_Required_FK].[Name], [l1.OneToOne_Required_FK].[OneToMany_Optional_InverseId], [l1.OneToOne_Required_FK].[OneToMany_Optional_Self_InverseId], [l1.OneToOne_Required_FK].[OneToMany_Required_InverseId], [l1.OneToOne_Required_FK].[OneToMany_Required_Self_InverseId], [l1.OneToOne_Required_FK].[OneToOne_Optional_PK_InverseId], [l1.OneToOne_Required_FK].[OneToOne_Optional_SelfId]
+FROM [Level1] AS [l1]
+LEFT JOIN [Level2] AS [l1.OneToOne_Required_FK] ON [l1].[Id] = [l1.OneToOne_Required_FK].[Level1_Required_Id]
+WHERE (
+    SELECT COUNT(*)
+    FROM [Level3] AS [l]
+    WHERE [l1.OneToOne_Required_FK].[Id] = [l].[OneToMany_Optional_InverseId]
+) > 0",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Where_navigation_property_to_collection2()
         {
-//            base.Where_navigation_property_to_collection2();
+            base.Where_navigation_property_to_collection2();
 
-//            AssertSql(
-//                @"SELECT [l1].[Id], [l1].[Level2_Optional_Id], [l1].[Level2_Required_Id], [l1].[Name], [l1].[OneToMany_Optional_InverseId], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_PK_InverseId], [l1].[OneToOne_Optional_SelfId]
-//FROM [Level3] AS [l1]
-//INNER JOIN [Level2] AS [l1.OneToOne_Required_FK_Inverse] ON [l1].[Level2_Required_Id] = [l1.OneToOne_Required_FK_Inverse].[Id]
-//WHERE (
-//    SELECT COUNT(*)
-//    FROM [Level3] AS [l]
-//    WHERE [l1.OneToOne_Required_FK_Inverse].[Id] = [l].[OneToMany_Optional_InverseId]
-//) > 0",
-//                Sql);
+            AssertSql(
+                @"SELECT [l1].[Id], [l1].[Level2_Optional_Id], [l1].[Level2_Required_Id], [l1].[Name], [l1].[OneToMany_Optional_InverseId], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_PK_InverseId], [l1].[OneToOne_Optional_SelfId]
+FROM [Level3] AS [l1]
+INNER JOIN [Level2] AS [l1.OneToOne_Required_FK_Inverse] ON [l1].[Level2_Required_Id] = [l1.OneToOne_Required_FK_Inverse].[Id]
+WHERE (
+    SELECT COUNT(*)
+    FROM [Level3] AS [l]
+    WHERE [l1.OneToOne_Required_FK_Inverse].[Id] = [l].[OneToMany_Optional_InverseId]
+) > 0",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Where_navigation_property_to_collection_of_original_entity_type()
         {
-//            base.Where_navigation_property_to_collection_of_original_entity_type();
+            base.Where_navigation_property_to_collection_of_original_entity_type();
 
-//            AssertSql(
-//                @"SELECT [l2].[Id], [l2].[Date], [l2].[Level1_Optional_Id], [l2].[Level1_Required_Id], [l2].[Name], [l2].[OneToMany_Optional_InverseId], [l2].[OneToMany_Optional_Self_InverseId], [l2].[OneToMany_Required_InverseId], [l2].[OneToMany_Required_Self_InverseId], [l2].[OneToOne_Optional_PK_InverseId], [l2].[OneToOne_Optional_SelfId]
-//FROM [Level2] AS [l2]
-//INNER JOIN [Level1] AS [l2.OneToMany_Required_Inverse] ON [l2].[OneToMany_Required_InverseId] = [l2.OneToMany_Required_Inverse].[Id]
-//WHERE (
-//    SELECT COUNT(*)
-//    FROM [Level2] AS [l]
-//    WHERE [l2.OneToMany_Required_Inverse].[Id] = [l].[OneToMany_Optional_InverseId]
-//) > 0",
-//                Sql);
+            AssertSql(
+                @"SELECT [l2].[Id], [l2].[Date], [l2].[Level1_Optional_Id], [l2].[Level1_Required_Id], [l2].[Name], [l2].[OneToMany_Optional_InverseId], [l2].[OneToMany_Optional_Self_InverseId], [l2].[OneToMany_Required_InverseId], [l2].[OneToMany_Required_Self_InverseId], [l2].[OneToOne_Optional_PK_InverseId], [l2].[OneToOne_Optional_SelfId]
+FROM [Level2] AS [l2]
+INNER JOIN [Level1] AS [l2.OneToMany_Required_Inverse] ON [l2].[OneToMany_Required_InverseId] = [l2.OneToMany_Required_Inverse].[Id]
+WHERE (
+    SELECT COUNT(*)
+    FROM [Level2] AS [l]
+    WHERE [l2.OneToMany_Required_Inverse].[Id] = [l].[OneToMany_Optional_InverseId]
+) > 0",
+                Sql);
         }
 
         public override void Complex_multi_include_with_order_by_and_paging()
@@ -2501,22 +2504,23 @@ LEFT JOIN (
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void GroupJoin_in_subquery_with_client_result_operator()
         {
-//            base.GroupJoin_in_subquery_with_client_result_operator();
+            base.GroupJoin_in_subquery_with_client_result_operator();
 
-//            AssertSql(
-//                @"SELECT [l1].[Name]
-//FROM [Level1] AS [l1]
-//WHERE ((
-//    SELECT COUNT(*)
-//    FROM (
-//        SELECT DISTINCT [l1_inner].*
-//        FROM [Level1] AS [l1_inner]
-//        LEFT JOIN [Level2] AS [l2_inner] ON [l1_inner].[Id] = [l2_inner].[Level1_Optional_Id]
-//    ) AS [t]
-//) > 7) AND ([l1].[Id] < 3)",
-//                Sql);
+            AssertSql(
+                @"SELECT [l1].[Name]
+FROM [Level1] AS [l1]
+WHERE ((
+    SELECT COUNT(*)
+    FROM (
+        SELECT DISTINCT [l1_inner].*
+        FROM [Level1] AS [l1_inner]
+        LEFT JOIN [Level2] AS [l2_inner] ON [l1_inner].[Id] = [l2_inner].[Level1_Optional_Id]
+    ) AS [t]
+) > 7) AND ([l1].[Id] < 3)",
+                Sql);
         }
 
         public override void GroupJoin_in_subquery_with_client_projection()
@@ -2561,24 +2565,25 @@ LEFT JOIN [Level2] AS [l2_inner2] ON [l1_inner2].[Id] = [l2_inner2].[Level1_Opti
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void GroupJoin_in_subquery_with_client_projection_nested2()
         {
-//            base.GroupJoin_in_subquery_with_client_projection_nested2();
+            base.GroupJoin_in_subquery_with_client_projection_nested2();
 
-//            AssertSql(
-//                @"SELECT [l1_outer].[Id], [l1_outer].[Name]
-//FROM [Level1] AS [l1_outer]
-//WHERE [l1_outer].[Id] < 2
+            AssertSql(
+                @"SELECT [l1_outer].[Id], [l1_outer].[Name]
+FROM [Level1] AS [l1_outer]
+WHERE [l1_outer].[Id] < 2
 
-//SELECT COUNT(*)
-//FROM [Level1] AS [l1_middle0]
-//LEFT JOIN [Level2] AS [l2_middle0] ON [l1_middle0].[Id] = [l2_middle0].[Level1_Optional_Id]
-//WHERE (
-//    SELECT COUNT(*)
-//    FROM [Level1] AS [l1_inner0]
-//    LEFT JOIN [Level2] AS [l2_inner0] ON [l1_inner0].[Id] = [l2_inner0].[Level1_Optional_Id]
-//) > 7",
-//                Sql);
+SELECT COUNT(*)
+FROM [Level1] AS [l1_middle0]
+LEFT JOIN [Level2] AS [l2_middle0] ON [l1_middle0].[Id] = [l2_middle0].[Level1_Optional_Id]
+WHERE (
+    SELECT COUNT(*)
+    FROM [Level1] AS [l1_inner0]
+    LEFT JOIN [Level2] AS [l2_inner0] ON [l1_inner0].[Id] = [l2_inner0].[Level1_Optional_Id]
+) > 7",
+                Sql);
         }
 
         public override void GroupJoin_reference_to_group_in_OrderBy()
@@ -2725,37 +2730,39 @@ WHERE ([l2].[Name] <> N'Foo') OR [l2].[Name] IS NULL",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Explicit_GroupJoin_in_subquery_with_scalar_result_operator()
         {
-//            base.Explicit_GroupJoin_in_subquery_with_scalar_result_operator();
+            base.Explicit_GroupJoin_in_subquery_with_scalar_result_operator();
 
-//            AssertSql(
-//                @"SELECT [l1].[Id], [l1].[Date], [l1].[Name], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_SelfId]
-//FROM [Level1] AS [l1]
-//WHERE (
-//    SELECT COUNT(*)
-//    FROM [Level1] AS [l1_inner]
-//    LEFT JOIN [Level2] AS [l2] ON [l1_inner].[Id] = [l2].[Level1_Optional_Id]
-//) > 4",
-//                Sql);
+            AssertSql(
+                @"SELECT [l1].[Id], [l1].[Date], [l1].[Name], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_SelfId]
+FROM [Level1] AS [l1]
+WHERE (
+    SELECT COUNT(*)
+    FROM [Level1] AS [l1_inner]
+    LEFT JOIN [Level2] AS [l2] ON [l1_inner].[Id] = [l2].[Level1_Optional_Id]
+) > 4",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause()
         {
-//            base.Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause();
+            base.Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause();
 
-//            AssertSql(
-//                @"SELECT [l1].[Id], [l1].[Date], [l1].[Name], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_SelfId]
-//FROM [Level1] AS [l1]
-//WHERE (
-//    SELECT COUNT(*)
-//    FROM (
-//        SELECT DISTINCT [l1_inner].*
-//        FROM [Level1] AS [l1_inner]
-//        LEFT JOIN [Level2] AS [l2] ON [l1_inner].[Id] = [l2].[Level1_Optional_Id]
-//    ) AS [t]
-//) > 4",
-//                Sql);
+            AssertSql(
+                @"SELECT [l1].[Id], [l1].[Date], [l1].[Name], [l1].[OneToMany_Optional_Self_InverseId], [l1].[OneToMany_Required_Self_InverseId], [l1].[OneToOne_Optional_SelfId]
+FROM [Level1] AS [l1]
+WHERE (
+    SELECT COUNT(*)
+    FROM (
+        SELECT DISTINCT [l1_inner].*
+        FROM [Level1] AS [l1_inner]
+        LEFT JOIN [Level2] AS [l2] ON [l1_inner].[Id] = [l2].[Level1_Optional_Id]
+    ) AS [t]
+) > 4",
+                Sql);
         }
 
         public override void Where_on_multilevel_reference_in_subquery_with_outer_projection()

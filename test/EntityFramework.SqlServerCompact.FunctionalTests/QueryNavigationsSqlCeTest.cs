@@ -21,9 +21,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             await Task.CompletedTask;
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Navigation_in_subquery_referencing_outer_query_with_client_side_result_operator_and_count()
         {
-            //base.Navigation_in_subquery_referencing_outer_query_with_client_side_result_operator_and_count();
+            base.Navigation_in_subquery_referencing_outer_query_with_client_side_result_operator_and_count();
         }
 
         public override void Join_with_nav_projected_in_subquery_when_client_eval()
@@ -223,38 +224,40 @@ WHERE @_outer_CustomerID = [o].[CustomerID]",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Select_collection_FirstOrDefault_project_single_column1()
         {
-//            base.Select_collection_FirstOrDefault_project_single_column1();
+            base.Select_collection_FirstOrDefault_project_single_column1();
 
-//            Assert.Equal(
-//                @"@__p_0: 2
+            Assert.Equal(
+                @"@__p_0: 2
 
-//SELECT TOP(@__p_0) (
-//    SELECT TOP(1) [o].[CustomerID]
-//    FROM [Orders] AS [o]
-//    WHERE [c].[CustomerID] = [o].[CustomerID]
-//)
-//FROM [Customers] AS [c]
-//ORDER BY [c].[CustomerID]",
-//                Sql);
+SELECT TOP(@__p_0) (
+    SELECT TOP(1) [o].[CustomerID]
+    FROM [Orders] AS [o]
+    WHERE [c].[CustomerID] = [o].[CustomerID]
+)
+FROM [Customers] AS [c]
+ORDER BY [c].[CustomerID]",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Select_collection_FirstOrDefault_project_single_column2()
         {
-//            base.Select_collection_FirstOrDefault_project_single_column2();
+            base.Select_collection_FirstOrDefault_project_single_column2();
 
-//            Assert.Equal(
-//                @"@__p_0: 2
+            Assert.Equal(
+                @"@__p_0: 2
 
-//SELECT TOP(@__p_0) (
-//    SELECT TOP(1) [o].[CustomerID]
-//    FROM [Orders] AS [o]
-//    WHERE [c].[CustomerID] = [o].[CustomerID]
-//)
-//FROM [Customers] AS [c]
-//ORDER BY [c].[CustomerID]",
-//                Sql);
+SELECT TOP(@__p_0) (
+    SELECT TOP(1) [o].[CustomerID]
+    FROM [Orders] AS [o]
+    WHERE [c].[CustomerID] = [o].[CustomerID]
+)
+FROM [Customers] AS [c]
+ORDER BY [c].[CustomerID]",
+                Sql);
         }
 
         public override void Select_collection_FirstOrDefault_project_anonymous_type()
@@ -432,22 +435,23 @@ WHERE ([o.Customer].[City] = N'Seattle') AND (([o.Customer].[Phone] <> N'555 555
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Select_count_plus_sum()
         {
-//            base.Select_count_plus_sum();
+            base.Select_count_plus_sum();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT SUM([od0].[Quantity])
-//    FROM [Order Details] AS [od0]
-//    WHERE [o].[OrderID] = [od0].[OrderID]
-//) + (
-//    SELECT COUNT(*)
-//    FROM [Order Details] AS [o1]
-//    WHERE [o].[OrderID] = [o1].[OrderID]
-//)
-//FROM [Orders] AS [o]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT SUM([od0].[Quantity])
+    FROM [Order Details] AS [od0]
+    WHERE [o].[OrderID] = [od0].[OrderID]
+) + (
+    SELECT COUNT(*)
+    FROM [Order Details] AS [o1]
+    WHERE [o].[OrderID] = [o1].[OrderID]
+)
+FROM [Orders] AS [o]",
+                Sql);
         }
 
         public override void Singleton_Navigation_With_Member_Access()
@@ -620,39 +624,41 @@ WHERE @_outer_CustomerID = [o0].[CustomerID]",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_any()
         {
-//            base.Collection_select_nav_prop_any();
+            base.Collection_select_nav_prop_any();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT CASE
-//        WHEN EXISTS (
-//            SELECT 1
-//            FROM [Orders] AS [o0]
-//            WHERE [c].[CustomerID] = [o0].[CustomerID])
-//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//    END
-//)
-//FROM [Customers] AS [c]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM [Orders] AS [o0]
+            WHERE [c].[CustomerID] = [o0].[CustomerID])
+        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+    END
+)
+FROM [Customers] AS [c]",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_predicate()
         {
-//            base.Collection_select_nav_prop_predicate();
+            base.Collection_select_nav_prop_predicate();
 
-//            Assert.Equal(
-//                @"SELECT CASE
-//    WHEN (
-//        SELECT COUNT(*)
-//        FROM [Orders] AS [o]
-//        WHERE [c].[CustomerID] = [o].[CustomerID]
-//    ) > 0
-//    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//END
-//FROM [Customers] AS [c]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT CASE
+    WHEN (
+        SELECT COUNT(*)
+        FROM [Orders] AS [o]
+        WHERE [c].[CustomerID] = [o].[CustomerID]
+    ) > 0
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+FROM [Customers] AS [c]",
+                Sql);
         }
 
         public override void Collection_where_nav_prop_any()
@@ -683,22 +689,23 @@ WHERE EXISTS (
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_all()
         {
-//            base.Collection_select_nav_prop_all();
+            base.Collection_select_nav_prop_all();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT CASE
-//        WHEN NOT EXISTS (
-//            SELECT 1
-//            FROM [Orders] AS [o0]
-//            WHERE ([c].[CustomerID] = [o0].[CustomerID]) AND (([o0].[CustomerID] <> N'ALFKI') OR [o0].[CustomerID] IS NULL))
-//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//    END
-//)
-//FROM [Customers] AS [c]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT CASE
+        WHEN NOT EXISTS (
+            SELECT 1
+            FROM [Orders] AS [o0]
+            WHERE ([c].[CustomerID] = [o0].[CustomerID]) AND (([o0].[CustomerID] <> N'ALFKI') OR [o0].[CustomerID] IS NULL))
+        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+    END
+)
+FROM [Customers] AS [c]",
+                Sql);
         }
 
         public override void Collection_select_nav_prop_all_client()
@@ -761,144 +768,152 @@ WHERE @_outer_CustomerID = [o].[CustomerID]",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_count()
         {
-//            base.Collection_select_nav_prop_count();
+            base.Collection_select_nav_prop_count();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT COUNT(*)
-//    FROM [Orders] AS [o0]
-//    WHERE [c].[CustomerID] = [o0].[CustomerID]
-//)
-//FROM [Customers] AS [c]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT COUNT(*)
+    FROM [Orders] AS [o0]
+    WHERE [c].[CustomerID] = [o0].[CustomerID]
+)
+FROM [Customers] AS [c]",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_where_nav_prop_count()
         {
-//            base.Collection_where_nav_prop_count();
+            base.Collection_where_nav_prop_count();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE (
-//    SELECT COUNT(*)
-//    FROM [Orders] AS [o]
-//    WHERE [c].[CustomerID] = [o].[CustomerID]
-//) > 5",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE (
+    SELECT COUNT(*)
+    FROM [Orders] AS [o]
+    WHERE [c].[CustomerID] = [o].[CustomerID]
+) > 5",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_where_nav_prop_count_reverse()
         {
-//            base.Collection_where_nav_prop_count_reverse();
+            base.Collection_where_nav_prop_count_reverse();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE 5 < (
-//    SELECT COUNT(*)
-//    FROM [Orders] AS [o]
-//    WHERE [c].[CustomerID] = [o].[CustomerID]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE 5 < (
+    SELECT COUNT(*)
+    FROM [Orders] AS [o]
+    WHERE [c].[CustomerID] = [o].[CustomerID]
+)",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_orderby_nav_prop_count()
         {
-//            base.Collection_orderby_nav_prop_count();
+            base.Collection_orderby_nav_prop_count();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//ORDER BY (
-//    SELECT COUNT(*)
-//    FROM [Orders] AS [o]
-//    WHERE [c].[CustomerID] = [o].[CustomerID]
-//)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+ORDER BY (
+    SELECT COUNT(*)
+    FROM [Orders] AS [o]
+    WHERE [c].[CustomerID] = [o].[CustomerID]
+)",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_long_count()
         {
-//            base.Collection_select_nav_prop_long_count();
+            base.Collection_select_nav_prop_long_count();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT COUNT_BIG(*)
-//    FROM [Orders] AS [o0]
-//    WHERE [c].[CustomerID] = [o0].[CustomerID]
-//)
-//FROM [Customers] AS [c]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT COUNT_BIG(*)
+    FROM [Orders] AS [o0]
+    WHERE [c].[CustomerID] = [o0].[CustomerID]
+)
+FROM [Customers] AS [c]",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Select_multiple_complex_projections()
         {
-//            base.Select_multiple_complex_projections();
+            base.Select_multiple_complex_projections();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT COUNT(*)
-//    FROM [Order Details] AS [o2]
-//    WHERE [o].[OrderID] = [o2].[OrderID]
-//), [o].[OrderDate], (
-//    SELECT CASE
-//        WHEN EXISTS (
-//            SELECT 1
-//            FROM [Order Details] AS [od1]
-//            WHERE ([od1].[UnitPrice] > 10.0) AND ([o].[OrderID] = [od1].[OrderID]))
-//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//    END
-//), CASE
-//    WHEN [o].[CustomerID] = N'ALFKI'
-//    THEN N'50' ELSE N'10'
-//END, [o].[OrderID], (
-//    SELECT CASE
-//        WHEN NOT EXISTS (
-//            SELECT 1
-//            FROM [Order Details] AS [od2]
-//            WHERE ([o].[OrderID] = [od2].[OrderID]) AND ([od2].[OrderID] <> 42))
-//        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//    END
-//), (
-//    SELECT COUNT_BIG(*)
-//    FROM [Order Details] AS [o3]
-//    WHERE [o].[OrderID] = [o3].[OrderID]
-//)
-//FROM [Orders] AS [o]
-//WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [o].[CustomerID]) = 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT COUNT(*)
+    FROM [Order Details] AS [o2]
+    WHERE [o].[OrderID] = [o2].[OrderID]
+), [o].[OrderDate], (
+    SELECT CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM [Order Details] AS [od1]
+            WHERE ([od1].[UnitPrice] > 10.0) AND ([o].[OrderID] = [od1].[OrderID]))
+        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+    END
+), CASE
+    WHEN [o].[CustomerID] = N'ALFKI'
+    THEN N'50' ELSE N'10'
+END, [o].[OrderID], (
+    SELECT CASE
+        WHEN NOT EXISTS (
+            SELECT 1
+            FROM [Order Details] AS [od2]
+            WHERE ([o].[OrderID] = [od2].[OrderID]) AND ([od2].[OrderID] <> 42))
+        THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+    END
+), (
+    SELECT COUNT_BIG(*)
+    FROM [Order Details] AS [o3]
+    WHERE [o].[OrderID] = [o3].[OrderID]
+)
+FROM [Orders] AS [o]
+WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [o].[CustomerID]) = 1)",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_sum()
         {
-//            base.Collection_select_nav_prop_sum();
+            base.Collection_select_nav_prop_sum();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT SUM([o0].[OrderID])
-//    FROM [Orders] AS [o0]
-//    WHERE [c].[CustomerID] = [o0].[CustomerID]
-//)
-//FROM [Customers] AS [c]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT SUM([o0].[OrderID])
+    FROM [Orders] AS [o0]
+    WHERE [c].[CustomerID] = [o0].[CustomerID]
+)
+FROM [Customers] AS [c]",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_where_nav_prop_sum()
         {
-//            base.Collection_where_nav_prop_sum();
+            base.Collection_where_nav_prop_sum();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-//FROM [Customers] AS [c]
-//WHERE (
-//    SELECT SUM([o].[OrderID])
-//    FROM [Orders] AS [o]
-//    WHERE [c].[CustomerID] = [o].[CustomerID]
-//) > 1000",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE (
+    SELECT SUM([o].[OrderID])
+    FROM [Orders] AS [o]
+    WHERE [c].[CustomerID] = [o].[CustomerID]
+) > 1000",
+                Sql);
         }
 
         public override void Collection_select_nav_prop_first_or_default()
@@ -950,20 +965,21 @@ WHERE [e0].[OrderID] IN (10643, 10692, 10702, 10835, 10952, 11011) AND (@_outer_
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_first_or_default_then_nav_prop_nested()
         {
-//            base.Collection_select_nav_prop_first_or_default_then_nav_prop_nested();
+            base.Collection_select_nav_prop_first_or_default_then_nav_prop_nested();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT TOP(1) [o.Customer].[City]
-//    FROM [Orders] AS [o]
-//    LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
-//    WHERE [o].[CustomerID] = N'ALFKI'
-//)
-//FROM [Customers] AS [e]
-//WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT TOP(1) [o.Customer].[City]
+    FROM [Orders] AS [o]
+    LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
+    WHERE [o].[CustomerID] = N'ALFKI'
+)
+FROM [Customers] AS [e]
+WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)",
+                Sql);
         }
 
         public override void Collection_select_nav_prop_single_or_default_then_nav_prop_nested()
@@ -982,37 +998,39 @@ WHERE [o0].[OrderID] = 10643",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_first_or_default_then_nav_prop_nested_using_property_method()
         {
-//            base.Collection_select_nav_prop_first_or_default_then_nav_prop_nested_using_property_method();
+            base.Collection_select_nav_prop_first_or_default_then_nav_prop_nested_using_property_method();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT TOP(1) [oo.Customer].[City]
-//    FROM [Orders] AS [oo]
-//    LEFT JOIN [Customers] AS [oo.Customer] ON [oo].[CustomerID] = [oo.Customer].[CustomerID]
-//    WHERE [oo].[CustomerID] = N'ALFKI'
-//)
-//FROM [Customers] AS [e]
-//WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT TOP(1) [oo.Customer].[City]
+    FROM [Orders] AS [oo]
+    LEFT JOIN [Customers] AS [oo.Customer] ON [oo].[CustomerID] = [oo.Customer].[CustomerID]
+    WHERE [oo].[CustomerID] = N'ALFKI'
+)
+FROM [Customers] AS [e]
+WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)",
+                Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Collection_select_nav_prop_first_or_default_then_nav_prop_nested_with_orderby()
         {
-//            base.Collection_select_nav_prop_first_or_default_then_nav_prop_nested_with_orderby();
+            base.Collection_select_nav_prop_first_or_default_then_nav_prop_nested_with_orderby();
 
-//            Assert.Equal(
-//                @"SELECT (
-//    SELECT TOP(1) [o.Customer].[City]
-//    FROM [Orders] AS [o]
-//    LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
-//    WHERE [o].[CustomerID] = N'ALFKI'
-//    ORDER BY [o].[CustomerID]
-//)
-//FROM [Customers] AS [e]
-//WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT (
+    SELECT TOP(1) [o.Customer].[City]
+    FROM [Orders] AS [o]
+    LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
+    WHERE [o].[CustomerID] = N'ALFKI'
+    ORDER BY [o].[CustomerID]
+)
+FROM [Customers] AS [e]
+WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)",
+                Sql);
         }
 
         public override void Navigation_fk_based_inside_contains()
@@ -1132,22 +1150,23 @@ FROM [Orders] AS [o4]",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Navigation_in_subquery_referencing_outer_query()
         {
-//            base.Navigation_in_subquery_referencing_outer_query();
+            base.Navigation_in_subquery_referencing_outer_query();
 
-//            Assert.Equal(
-//                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-//FROM [Orders] AS [o]
-//LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
-//WHERE ((
-//    SELECT COUNT(*)
-//    FROM [Order Details] AS [od]
-//    INNER JOIN [Orders] AS [od.Order] ON [od].[OrderID] = [od.Order].[OrderID]
-//    LEFT JOIN [Customers] AS [od.Order.Customer] ON [od.Order].[CustomerID] = [od.Order.Customer].[CustomerID]
-//    WHERE ([o.Customer].[Country] = [od.Order.Customer].[Country]) OR ([o.Customer].[Country] IS NULL AND [od.Order.Customer].[Country] IS NULL)
-//) > 0) AND [o].[OrderID] IN (10643, 10692)",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Orders] AS [o]
+LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
+WHERE ((
+    SELECT COUNT(*)
+    FROM [Order Details] AS [od]
+    INNER JOIN [Orders] AS [od.Order] ON [od].[OrderID] = [od.Order].[OrderID]
+    LEFT JOIN [Customers] AS [od.Order.Customer] ON [od.Order].[CustomerID] = [od.Order.Customer].[CustomerID]
+    WHERE ([o.Customer].[Country] = [od.Order.Customer].[Country]) OR ([o.Customer].[Country] IS NULL AND [od.Order.Customer].[Country] IS NULL)
+) > 0) AND [o].[OrderID] IN (10643, 10692)",
+                Sql);
         }
 
         public override void GroupBy_on_nav_prop()
@@ -1196,19 +1215,20 @@ ORDER BY [od.Order].[CustomerID]",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Project_single_scalar_value_subquery_is_properly_inlined()
         {
-//            base.Project_single_scalar_value_subquery_is_properly_inlined();
+            base.Project_single_scalar_value_subquery_is_properly_inlined();
 
-//            Assert.Equal(
-//                @"SELECT [c].[CustomerID], (
-//    SELECT TOP(1) [o0].[OrderID]
-//    FROM [Orders] AS [o0]
-//    WHERE [c].[CustomerID] = [o0].[CustomerID]
-//    ORDER BY [o0].[OrderID]
-//)
-//FROM [Customers] AS [c]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[CustomerID], (
+    SELECT TOP(1) [o0].[OrderID]
+    FROM [Orders] AS [o0]
+    WHERE [c].[CustomerID] = [o0].[CustomerID]
+    ORDER BY [o0].[OrderID]
+)
+FROM [Customers] AS [c]",
+                Sql);
         }
 
         public override void Project_single_entity_value_subquery_works()
@@ -1251,23 +1271,24 @@ ORDER BY [o].[OrderID]",
                 Sql);
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void Project_single_scalar_value_subquery_in_query_with_optional_navigation_works()
         {
-//            base.Project_single_scalar_value_subquery_in_query_with_optional_navigation_works();
+            base.Project_single_scalar_value_subquery_in_query_with_optional_navigation_works();
 
-//            Assert.Equal(
-//                @"@__p_0: 3
+            Assert.Equal(
+                @"@__p_0: 3
 
-//SELECT TOP(@__p_0) [o].[OrderID], (
-//    SELECT TOP(1) [od0].[OrderID]
-//    FROM [Order Details] AS [od0]
-//    WHERE [o].[OrderID] = [od0].[OrderID]
-//    ORDER BY [od0].[OrderID], [od0].[ProductID]
-//), [o.Customer].[City]
-//FROM [Orders] AS [o]
-//LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
-//ORDER BY [o].[OrderID]",
-//                Sql);
+SELECT TOP(@__p_0) [o].[OrderID], (
+    SELECT TOP(1) [od0].[OrderID]
+    FROM [Order Details] AS [od0]
+    WHERE [o].[OrderID] = [od0].[OrderID]
+    ORDER BY [od0].[OrderID], [od0].[ProductID]
+), [o.Customer].[City]
+FROM [Orders] AS [o]
+LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
+ORDER BY [o].[OrderID]",
+                Sql);
         }
 
         public override void GroupJoin_with_complex_subquery_and_LOJ_gets_flattened()

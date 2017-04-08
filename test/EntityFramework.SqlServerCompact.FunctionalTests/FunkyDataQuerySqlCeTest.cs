@@ -43,6 +43,7 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
             }
         }
 
+        [Fact(Skip = "SQL CE limitation")]
         public override void String_starts_with_on_argument_with_wildcard_constant()
         {
             //base.String_starts_with_on_argument_with_wildcard_constant();
@@ -50,62 +51,38 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
 
         public override void String_ends_with_equals_nullable_column()
         {
-//            base.String_ends_with_equals_nullable_column();
+            base.String_ends_with_equals_nullable_column();
 
-//            Assert.Equal(
-//                @"SELECT [c].[Id], [c].[FirstName], [c].[LastName], [c].[NullableBool], [c2].[Id], [c2].[FirstName], [c2].[LastName], [c2].[NullableBool]
-//FROM [FunkyCustomer] AS [c]
-//CROSS JOIN [FunkyCustomer] AS [c2]
-//WHERE CASE
-//    WHEN (RIGHT([c].[FirstName], LEN([c2].[LastName])) = [c2].[LastName]) OR ([c2].[LastName] = N'')
-//    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//END = [c].[NullableBool]",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[Id], [c].[FirstName], [c].[LastName], [c].[NullableBool], [c2].[Id], [c2].[FirstName], [c2].[LastName], [c2].[NullableBool]
+FROM [FunkyCustomer] AS [c]
+CROSS JOIN [FunkyCustomer] AS [c2]
+WHERE CASE
+    WHEN (SUBSTRING([c].[FirstName], (LEN([c].[FirstName]) + 1) - LEN([c2].[LastName]), LEN([c2].[LastName])) = [c2].[LastName]) OR ([c2].[LastName] = N'')
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END = [c].[NullableBool]",
+                Sql);
         }
 
         public override void String_ends_with_not_equals_nullable_column()
         {
-//            base.String_ends_with_not_equals_nullable_column();
+            base.String_ends_with_not_equals_nullable_column();
 
-//            Assert.Equal(
-//                @"SELECT [c].[Id], [c].[FirstName], [c].[LastName], [c].[NullableBool], [c2].[Id], [c2].[FirstName], [c2].[LastName], [c2].[NullableBool]
-//FROM [FunkyCustomer] AS [c]
-//CROSS JOIN [FunkyCustomer] AS [c2]
-//WHERE (CASE
-//    WHEN (RIGHT([c].[FirstName], LEN([c2].[LastName])) = [c2].[LastName]) OR ([c2].[LastName] = N'')
-//    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-//END <> [c].[NullableBool]) OR [c].[NullableBool] IS NULL",
-//                Sql);
+            Assert.Equal(
+                @"SELECT [c].[Id], [c].[FirstName], [c].[LastName], [c].[NullableBool], [c2].[Id], [c2].[FirstName], [c2].[LastName], [c2].[NullableBool]
+FROM [FunkyCustomer] AS [c]
+CROSS JOIN [FunkyCustomer] AS [c2]
+WHERE (CASE
+    WHEN (SUBSTRING([c].[FirstName], (LEN([c].[FirstName]) + 1) - LEN([c2].[LastName]), LEN([c2].[LastName])) = [c2].[LastName]) OR ([c2].[LastName] = N'')
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END <> [c].[NullableBool]) OR [c].[NullableBool] IS NULL",
+                Sql);
         }
 
-        public override void String_ends_with_inside_conditional()
-        {
-            //base.String_ends_with_inside_conditional();
-        }
-
-        public override void String_ends_with_inside_conditional_negated()
-        {
-            //base.String_ends_with_inside_conditional_negated();
-        }
-
-        public override void String_ends_with_on_argument_with_wildcard_column()
-        {
-            //base.String_ends_with_on_argument_with_wildcard_column();
-        }
-
-        public override void String_ends_with_on_argument_with_wildcard_column_negated()
-        {
-            //base.String_ends_with_on_argument_with_wildcard_column_negated();
-        }
-
+        [Fact(Skip = "Investigate why!")]
         public override void String_ends_with_on_argument_with_wildcard_constant()
         {
             //base.String_ends_with_on_argument_with_wildcard_constant();
-        }
-
-        public override void String_ends_with_on_argument_with_wildcard_parameter()
-        {
-            //base.String_ends_with_on_argument_with_wildcard_parameter();
         }
 
         protected override void ClearLog() => TestSqlLoggerFactory.Reset();

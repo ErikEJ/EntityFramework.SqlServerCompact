@@ -55,7 +55,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 .Options;
 
             var context = new DataAnnotationContext(options);
-            //context.Database.UseTransaction(testStore.Transaction);
+            context.Database.UseTransaction(testStore.Transaction);
             return context;
         }
     }

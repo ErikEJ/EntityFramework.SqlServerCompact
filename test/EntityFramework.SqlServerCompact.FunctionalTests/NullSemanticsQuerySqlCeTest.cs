@@ -9,16 +9,16 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
         }
 
-        //TODO ErikEJ investigate invalid cast exception
+        [Fact(Skip = "investigate invalid cast exception")]
         public override void Projecting_nullable_bool_with_coalesce()
         {
-            //base.Projecting_nullable_bool_with_coalesce();
+            base.Projecting_nullable_bool_with_coalesce();
         }
 
-        //TODO ErikEJ investigate invalid cast exception
+        [Fact(Skip = "investigate invalid cast exception")]
         public override void Projecting_nullable_bool_with_coalesce_nested()
         {
-            //base.Projecting_nullable_bool_with_coalesce_nested();
+            base.Projecting_nullable_bool_with_coalesce_nested();
         }
 
         public override void Compare_bool_with_bool_equal()

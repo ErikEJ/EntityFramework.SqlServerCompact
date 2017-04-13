@@ -267,7 +267,7 @@ ORDER BY [e].[Species]
 SELECT [e.Prey].[Species], [e.Prey].[CountryId], [e.Prey].[Discriminator], [e.Prey].[Name], [e.Prey].[EagleId], [e.Prey].[IsFlightless], [e.Prey].[Group], [e.Prey].[FoundOn]
 FROM [Animal] AS [e.Prey]
 INNER JOIN (
-    SELECT TOP(1) [e0].*
+    SELECT TOP(1) [e0].[Species]
     FROM [Animal] AS [e0]
     WHERE [e0].[Discriminator] = N'Eagle'
     ORDER BY [e0].[Species]
@@ -288,9 +288,12 @@ ORDER BY [c].[Name], [c].[Id]
 
 SELECT [c.Animals].[Species], [c.Animals].[CountryId], [c.Animals].[Discriminator], [c.Animals].[Name], [c.Animals].[EagleId], [c.Animals].[IsFlightless], [c.Animals].[Group], [c.Animals].[FoundOn]
 FROM [Animal] AS [c.Animals]
-INNER JOIN [Country] AS [c0] ON [c.Animals].[CountryId] = [c0].[Id]
+INNER JOIN (
+    SELECT [c0].[Id], [c0].[Name]
+    FROM [Country] AS [c0]
+) AS [t] ON [c.Animals].[CountryId] = [t].[Id]
 WHERE [c.Animals].[Discriminator] IN (N'Kiwi', N'Eagle')
-ORDER BY [c0].[Name], [c0].[Id]",
+ORDER BY [t].[Name], [t].[Id]",
                 Sql);
         }
 

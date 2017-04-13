@@ -244,7 +244,8 @@ FROM (
         {
             base.From_sql_queryable_simple_include();
 
-            AssertSql(@"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+            AssertSql(
+              @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM (
     SELECT * FROM ""Customers""
 ) AS [c]
@@ -253,10 +254,13 @@ ORDER BY [c].[CustomerID]
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
 INNER JOIN (
-    SELECT * FROM ""Customers""
-) AS [c0] ON [c.Orders].[CustomerID] = [c0].[CustomerID]
-ORDER BY [c0].[CustomerID]",
-            Sql);
+    SELECT [c0].[CustomerID]
+    FROM (
+        SELECT * FROM ""Customers""
+    ) AS [c0]
+) AS [t] ON [c.Orders].[CustomerID] = [t].[CustomerID]
+ORDER BY [t].[CustomerID]",
+              Sql);
         }
 
         public override void From_sql_queryable_simple_composed_include()
@@ -264,7 +268,7 @@ ORDER BY [c0].[CustomerID]",
             base.From_sql_queryable_simple_composed_include();
 
             AssertSql(
-                          @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+              @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM (
     SELECT * FROM ""Customers""
 ) AS [c]
@@ -274,14 +278,14 @@ ORDER BY [c].[CustomerID]
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
 INNER JOIN (
-    SELECT [c0].*
+    SELECT [c0].[CustomerID]
     FROM (
         SELECT * FROM ""Customers""
     ) AS [c0]
     WHERE [c0].[City] = N'London'
 ) AS [t] ON [c.Orders].[CustomerID] = [t].[CustomerID]
 ORDER BY [t].[CustomerID]",
-            Sql);
+              Sql);
         }
 
         public override void From_sql_annotations_do_not_affect_successive_calls()

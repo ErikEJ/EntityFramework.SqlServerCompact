@@ -188,8 +188,8 @@ WHERE ([e].[Name] <> N'Bar') OR [e].[Name] IS NULL",
         {
             base.Include_collection_with_inheritance1();
 
-            AssertSql(
-                @"SELECT [e].[Id], [e].[Discriminator], [e].[Name], [e].[BaseId]
+          AssertSql(
+              @"SELECT [e].[Id], [e].[Discriminator], [e].[Name], [e].[BaseId]
 FROM [BaseInheritanceRelationshipEntity] AS [e]
 WHERE [e].[Discriminator] IN (N'DerivedInheritanceRelationshipEntity', N'BaseInheritanceRelationshipEntity')
 ORDER BY [e].[Id]
@@ -197,14 +197,14 @@ ORDER BY [e].[Id]
 SELECT [e.BaseCollectionOnBase].[Id], [e.BaseCollectionOnBase].[BaseParentId], [e.BaseCollectionOnBase].[Discriminator], [e.BaseCollectionOnBase].[Name], [e.BaseCollectionOnBase].[DerivedProperty]
 FROM [BaseCollectionOnBase] AS [e.BaseCollectionOnBase]
 INNER JOIN (
-    SELECT [e0].*
+    SELECT [e0].[Id]
     FROM [BaseInheritanceRelationshipEntity] AS [e0]
     WHERE [e0].[Discriminator] IN (N'DerivedInheritanceRelationshipEntity', N'BaseInheritanceRelationshipEntity')
 ) AS [t] ON [e.BaseCollectionOnBase].[BaseParentId] = [t].[Id]
 WHERE [e.BaseCollectionOnBase].[Discriminator] IN (N'DerivedCollectionOnBase', N'BaseCollectionOnBase')
 ORDER BY [t].[Id]",
-                Sql);
-        }
+              Sql);
+      }
 
         public override void Include_collection_with_inheritance2()
         {
@@ -244,7 +244,7 @@ ORDER BY [e].[Id]
 SELECT [e.BaseCollectionOnBase].[Id], [e.BaseCollectionOnBase].[BaseParentId], [e.BaseCollectionOnBase].[Discriminator], [e.BaseCollectionOnBase].[Name], [e.BaseCollectionOnBase].[DerivedProperty]
 FROM [BaseCollectionOnBase] AS [e.BaseCollectionOnBase]
 INNER JOIN (
-    SELECT [e0].*
+    SELECT [e0].[Id]
     FROM [BaseInheritanceRelationshipEntity] AS [e0]
     WHERE [e0].[Discriminator] IN (N'DerivedInheritanceRelationshipEntity', N'BaseInheritanceRelationshipEntity') AND (([e0].[Name] <> N'Bar') OR [e0].[Name] IS NULL)
 ) AS [t] ON [e.BaseCollectionOnBase].[BaseParentId] = [t].[Id]
@@ -291,7 +291,7 @@ ORDER BY [e].[Id]
 SELECT [e.CollectionOnBase].[Id], [e.CollectionOnBase].[Name], [e.CollectionOnBase].[ParentId]
 FROM [CollectionOnBase] AS [e.CollectionOnBase]
 INNER JOIN (
-    SELECT [e0].*
+    SELECT [e0].[Id]
     FROM [BaseInheritanceRelationshipEntity] AS [e0]
     WHERE [e0].[Discriminator] IN (N'DerivedInheritanceRelationshipEntity', N'BaseInheritanceRelationshipEntity')
 ) AS [t] ON [e.CollectionOnBase].[ParentId] = [t].[Id]
@@ -327,7 +327,7 @@ ORDER BY [e].[Id]
 SELECT [e.CollectionOnBase].[Id], [e.CollectionOnBase].[Name], [e.CollectionOnBase].[ParentId]
 FROM [CollectionOnBase] AS [e.CollectionOnBase]
 INNER JOIN (
-    SELECT [e0].*
+    SELECT [e0].[Id]
     FROM [BaseInheritanceRelationshipEntity] AS [e0]
     WHERE [e0].[Discriminator] IN (N'DerivedInheritanceRelationshipEntity', N'BaseInheritanceRelationshipEntity') AND (([e0].[Name] <> N'Bar') OR [e0].[Name] IS NULL)
 ) AS [t] ON [e.CollectionOnBase].[ParentId] = [t].[Id]
@@ -540,8 +540,8 @@ LEFT JOIN (
         {
             base.Include_collection_with_inheritance_on_derived1();
 
-            AssertSql(
-                @"SELECT [e].[Id], [e].[Discriminator], [e].[Name], [e].[BaseId]
+          AssertSql(
+              @"SELECT [e].[Id], [e].[Discriminator], [e].[Name], [e].[BaseId]
 FROM [BaseInheritanceRelationshipEntity] AS [e]
 WHERE [e].[Discriminator] = N'DerivedInheritanceRelationshipEntity'
 ORDER BY [e].[Id]
@@ -549,13 +549,13 @@ ORDER BY [e].[Id]
 SELECT [e.BaseCollectionOnBase].[Id], [e.BaseCollectionOnBase].[BaseParentId], [e.BaseCollectionOnBase].[Discriminator], [e.BaseCollectionOnBase].[Name], [e.BaseCollectionOnBase].[DerivedProperty]
 FROM [BaseCollectionOnBase] AS [e.BaseCollectionOnBase]
 INNER JOIN (
-    SELECT [e0].*
+    SELECT [e0].[Id]
     FROM [BaseInheritanceRelationshipEntity] AS [e0]
     WHERE [e0].[Discriminator] = N'DerivedInheritanceRelationshipEntity'
 ) AS [t] ON [e.BaseCollectionOnBase].[BaseParentId] = [t].[Id]
 WHERE [e.BaseCollectionOnBase].[Discriminator] IN (N'DerivedCollectionOnBase', N'BaseCollectionOnBase')
 ORDER BY [t].[Id]",
-                Sql);
+              Sql);
         }
 
         public override void Include_collection_with_inheritance_on_derived2()
@@ -571,7 +571,7 @@ ORDER BY [e].[Id]
 SELECT [e.BaseCollectionOnDerived].[Id], [e.BaseCollectionOnDerived].[Discriminator], [e.BaseCollectionOnDerived].[Name], [e.BaseCollectionOnDerived].[ParentId], [e.BaseCollectionOnDerived].[DerivedInheritanceRelationshipEntityId]
 FROM [BaseCollectionOnDerived] AS [e.BaseCollectionOnDerived]
 INNER JOIN (
-    SELECT [e0].*
+    SELECT [e0].[Id]
     FROM [BaseInheritanceRelationshipEntity] AS [e0]
     WHERE [e0].[Discriminator] = N'DerivedInheritanceRelationshipEntity'
 ) AS [t] ON [e.BaseCollectionOnDerived].[ParentId] = [t].[Id]

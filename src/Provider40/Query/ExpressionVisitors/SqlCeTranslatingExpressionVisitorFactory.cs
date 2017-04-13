@@ -24,7 +24,6 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
             [NotNull] IDbContextOptions contextOptions)
         {
             Check.NotNull(dependencies, nameof(dependencies));
-            Check.NotNull(contextOptions, nameof(contextOptions));
 
             _dependencies = dependencies;
             _contextOptions = contextOptions;

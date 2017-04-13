@@ -14,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
 
         public override Expression Visit(Expression expression)
         {
-            if (_contextOptions.FindExtension<SqlCeOptionsExtension>()?.ClientEvalForUnsupportedSqlConstructs != true)
+            if (_contextOptions?.FindExtension<SqlCeOptionsExtension>()?.ClientEvalForUnsupportedSqlConstructs != true)
                 return base.Visit(expression);
 
             var evaluatedExpression = base.Visit(expression);

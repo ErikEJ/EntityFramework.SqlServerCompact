@@ -719,15 +719,14 @@ ORDER BY [c].[CustomerID]
 
 @_outer_CustomerID: ALFKI (Size = 256)
 
-SELECT [o1].[OrderID], [o1].[CustomerID], [o1].[EmployeeID], [o1].[OrderDate]
-FROM [Orders] AS [o1]
-WHERE @_outer_CustomerID = [o1].[CustomerID]
+SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
+FROM [Orders] AS [o0]
+WHERE @_outer_CustomerID = [o0].[CustomerID]
 
 @_outer_CustomerID: ANATR (Size = 256)
 
-SELECT [o1].[OrderID], [o1].[CustomerID], [o1].[EmployeeID], [o1].[OrderDate]
-FROM [Orders] AS [o1]
-WHERE @_outer_CustomerID = [o1].[CustomerID]",
+SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
+FROM [Orders] AS [o0]",
                 Sql);
         }
 

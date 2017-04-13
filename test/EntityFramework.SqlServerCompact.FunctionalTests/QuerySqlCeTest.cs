@@ -30,6 +30,18 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
             _testOutputHelper = testOutputHelper;
         }
 
+        [Fact(Skip = "Investigate")]
+        public override void GroupJoin_customers_orders_count_preserves_ordering()
+        {
+            //base.GroupJoin_customers_orders_count_preserves_ordering();
+        }
+
+        [Fact(Skip = "Investigate")]
+        public override void Include_with_orderby_skip_preserves_ordering()
+        {
+            //base.Include_with_orderby_skip_preserves_ordering();
+        }
+
         [Fact(Skip = "SQL CE limitation")]
         public override void SelectMany_primitive_select_subquery()
         {
@@ -591,7 +603,21 @@ FROM (
     FROM [Order Details] AS [od0]
     ORDER BY [od0].[OrderID]
 ) AS [t1]
-ORDER BY [t1].[OrderID]
+
+@_outer_CustomerID2: VINET (Size = 256)
+
+SELECT TOP(1) [c3].[Country]
+FROM [Customers] AS [c3]
+WHERE [c3].[CustomerID] = @_outer_CustomerID2
+ORDER BY [c3].[CustomerID]
+
+@_outer_OrderID1: 10248
+
+SELECT TOP(1) [c4].[Country]
+FROM [Orders] AS [o20]
+INNER JOIN [Customers] AS [c4] ON [o20].[CustomerID] = [c4].[CustomerID]
+WHERE [o20].[OrderID] = @_outer_OrderID1
+ORDER BY [o20].[OrderID], [c4].[CustomerID]
 
 @_outer_CustomerID2: VINET (Size = 256)
 
@@ -3302,7 +3328,9 @@ FROM (
     FROM [Orders] AS [o2]
     ORDER BY [o2].[OrderID]
 ) AS [t]
-ORDER BY [t].[OrderID]",
+
+SELECT [c].[CustomerID]
+FROM [Customers] AS [c]",
                 Sql);
 
             Assert.Contains(
@@ -3601,8 +3629,8 @@ LEFT JOIN [Orders] AS [o] ON [e].[EmployeeID] = [o].[EmployeeID]",
         {
             base.GroupJoin_DefaultIfEmpty3();
 
-            AssertSql(
-                @"@__p_0: 1
+          AssertSql(
+              @"@__p_0: 1
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM (
@@ -3610,9 +3638,8 @@ FROM (
     FROM [Customers] AS [c]
     ORDER BY [c].[CustomerID]
 ) AS [t]
-LEFT JOIN [Orders] AS [o] ON [t].[CustomerID] = [o].[CustomerID]
-ORDER BY [t].[CustomerID]",
-                Sql);
+LEFT JOIN [Orders] AS [o] ON [t].[CustomerID] = [o].[CustomerID]",
+              Sql);
         }
 
         public override void GroupJoin_Where()

@@ -44,7 +44,7 @@
       <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.0-preview1-24394\lib\net46\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Design.2.0.0-preview1-24346\lib\netstandard1.3\Microsoft.EntityFrameworkCore.Relational.Design.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Design.2.0.0-preview1-24394\lib\netstandard1.3\Microsoft.EntityFrameworkCore.Relational.Design.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.2.0.0-preview1-24394\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>

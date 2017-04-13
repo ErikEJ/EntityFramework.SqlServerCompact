@@ -8,7 +8,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
-
         public override void AlterSequenceOperation_without_minValue_and_maxValue()
         {
             Assert.Throws<NotSupportedException>(() => base.AlterSequenceOperation_without_minValue_and_maxValue());
@@ -126,6 +125,89 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
             Assert.Equal(
                 "ALTER TABLE [People] ADD PRIMARY KEY ([Id])" + EOL + EOL,
+                Sql);
+        }
+
+
+        [Fact]
+        public virtual void SqlOperation_handles_backslash()
+        {
+            Generate(
+                new SqlOperation
+                {
+                    Sql = @"-- Multiline \" + EOL +
+                        "comment"
+                });
+
+            Assert.Equal(
+                "-- Multiline comment" + EOL,
+                Sql);
+        }
+
+        [Fact]
+        public virtual void SqlOperation_ignores_sequential_gos()
+        {
+            Generate(
+                new SqlOperation
+                {
+                    Sql = "-- Ready set" + EOL +
+                        "GO" + EOL +
+                        "GO"
+                });
+
+            Assert.Equal(
+                "-- Ready set" + EOL,
+                Sql);
+        }
+
+        [Fact]
+        public virtual void SqlOperation_handles_go()
+        {
+            Generate(
+                new SqlOperation
+                {
+                    Sql = "-- I" + EOL +
+                        "go" + EOL +
+                        "-- Too"
+                });
+
+            Assert.Equal(
+                "-- I" + EOL +
+                "GO" + EOL +
+                EOL +
+                "-- Too" + EOL,
+                Sql);
+        }
+
+        [Fact]
+        public virtual void SqlOperation_handles_go_with_count()
+        {
+            Generate(
+                new SqlOperation
+                {
+                    Sql = "-- I" + EOL +
+                        "GO 2"
+                });
+
+            Assert.Equal(
+                "-- I" + EOL +
+                "GO" + EOL +
+                EOL +
+                "-- I" + EOL,
+                Sql);
+        }
+
+        [Fact]
+        public virtual void SqlOperation_ignores_non_go()
+        {
+            Generate(
+                new SqlOperation
+                {
+                    Sql = "-- I GO 2"
+                });
+
+            Assert.Equal(
+                "-- I GO 2" + EOL,
                 Sql);
         }
 

@@ -616,16 +616,17 @@ ORDER BY [o20].[OrderID], [c4].[CustomerID]",
             base.Where_subquery_anon();
 
             Assert.StartsWith(
-                @"@__p_0: 9
+                @"@__p_0: 3
 
-SELECT [t].[EmployeeID], [t].[City], [t].[Country], [t].[FirstName], [t].[ReportsTo], [t].[Title]
+SELECT [t].[EmployeeID], [t].[City], [t].[Country], [t].[FirstName], [t].[ReportsTo], [t].[Title], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate]
 FROM (
     SELECT TOP(@__p_0) [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
     FROM [Employees] AS [e]
 ) AS [t]
-
-SELECT TOP(1000) [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
-FROM [Orders] AS [o0]",
+CROSS JOIN (
+    SELECT TOP(5) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+    FROM [Orders] AS [o]
+) AS [t0]",
                 Sql);
         }
 
@@ -696,8 +697,8 @@ ORDER BY [c].[CustomerID]
 SELECT CASE
     WHEN EXISTS (
         SELECT 1
-        FROM [Orders] AS [o1]
-        WHERE [o1].[CustomerID] = @_outer_CustomerID)
+        FROM [Orders] AS [o0]
+        WHERE [o0].[CustomerID] = @_outer_CustomerID)
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END
 
@@ -706,8 +707,8 @@ END
 SELECT CASE
     WHEN EXISTS (
         SELECT 1
-        FROM [Orders] AS [o1]
-        WHERE [o1].[CustomerID] = @_outer_CustomerID)
+        FROM [Orders] AS [o0]
+        WHERE [o0].[CustomerID] = @_outer_CustomerID)
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END",
                 Sql);
@@ -3295,9 +3296,13 @@ FROM [Customers] AS [c]",
             Assert.Contains(
                 @"@__p_0: 5
 
-SELECT TOP(@__p_0) [o20].[OrderID], [o20].[CustomerID], [o20].[EmployeeID], [o20].[OrderDate]
-FROM [Orders] AS [o20]
-ORDER BY [o20].[OrderID]",
+SELECT [t].[OrderID], [t].[CustomerID], [t].[EmployeeID], [t].[OrderDate]
+FROM (
+    SELECT TOP(@__p_0) [o2].[OrderID], [o2].[CustomerID], [o2].[EmployeeID], [o2].[OrderDate]
+    FROM [Orders] AS [o2]
+    ORDER BY [o2].[OrderID]
+) AS [t]
+ORDER BY [t].[OrderID]",
                 Sql);
 
             Assert.Contains(

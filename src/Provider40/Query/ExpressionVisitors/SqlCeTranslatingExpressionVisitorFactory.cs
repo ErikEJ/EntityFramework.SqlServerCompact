@@ -21,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
         /// <param name="contextOptions">DbContext options</param>
         public SqlCeTranslatingExpressionVisitorFactory(
             [NotNull] SqlTranslatingExpressionVisitorDependencies dependencies,
-            [NotNull] IDbContextOptions contextOptions)
+            IDbContextOptions contextOptions)
         {
             Check.NotNull(dependencies, nameof(dependencies));
 

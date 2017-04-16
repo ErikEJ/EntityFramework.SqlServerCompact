@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Utilities;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
 {
@@ -12,21 +12,22 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
     public class SqlCeTranslatingExpressionVisitorFactory : ISqlTranslatingExpressionVisitorFactory
     {
         private readonly SqlTranslatingExpressionVisitorDependencies _dependencies;
-        private readonly IDbContextOptions _contextOptions;
+        private readonly ISqlCeOptions _sqlCeOptions;
 
         /// <summary>
         ///     Creates a new instance of <see cref="SqlTranslatingExpressionVisitorFactory" />.
         /// </summary>
         /// <param name="dependencies"> The relational annotation provider. </param>
-        /// <param name="contextOptions">DbContext options</param>
+        /// <param name="sqlCeOptions">SqlCe options</param>
         public SqlCeTranslatingExpressionVisitorFactory(
             [NotNull] SqlTranslatingExpressionVisitorDependencies dependencies,
-            [NotNull] IDbContextOptions contextOptions)
+            [NotNull] ISqlCeOptions sqlCeOptions)
         {
             Check.NotNull(dependencies, nameof(dependencies));
+            Check.NotNull(sqlCeOptions, nameof(sqlCeOptions));
 
             _dependencies = dependencies;
-            _contextOptions = contextOptions;
+            _sqlCeOptions = sqlCeOptions;
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
             bool inProjection = false)
             => new SqlCeTranslatingExpressionVisitor(
                 _dependencies,
-                _contextOptions,
+                _sqlCeOptions,
                 Check.NotNull(queryModelVisitor, nameof(queryModelVisitor)),
                 targetSelectExpression,
                 topLevelPredicate,

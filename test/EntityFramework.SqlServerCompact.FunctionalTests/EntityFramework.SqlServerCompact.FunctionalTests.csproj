@@ -268,6 +268,7 @@
     <Compile Include="Migrations\TiffFilesContextModelSnapshot.cs" />
     <Compile Include="MonsterFixUpSqlCeTest.cs" />
     <Compile Include="NavigationTest.cs" />
+    <Compile Include="NorthwindQueryWithForcedClientEvalSqlCeFixture.cs" />
     <Compile Include="NorthwindQuerySqlCeFixture.cs" />
     <Compile Include="NotificationEntitiesSqlCeTest.cs" />
     <Compile Include="NullKeysSqlCeTest.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyEntrySqlCeTest.cs" />
     <Compile Include="PropertyValuesSqlCeTest.cs" />
+    <Compile Include="QueryNavigationsWithForcedClientEvalSqlCeTest.cs" />
     <Compile Include="QueryNavigationsSqlCeTest.cs" />
     <Compile Include="QueryNoClientEvalSqlCeFixture.cs" />
     <Compile Include="QueryNoClientEvalSqlCeTest.cs" />

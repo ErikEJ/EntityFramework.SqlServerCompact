@@ -15,38 +15,38 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
         }
 
         [Fact]
-        public void String_starts_with_on_argument_with_wildcard_constantForSqlCe()
+        public override void String_starts_with_on_argument_with_wildcard_constant()
         {
             using (var ctx = CreateContext())
             {
-                var result1 = ctx.FunkyCustomers.Where(c => c.FirstName.StartsWith("%B")).Select(c => c.FirstName).ToList();
-                var expected1 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && c.StartsWith("%B"));
+                var result1 = ctx.FunkyCustomers.Where(c => c.FirstName.EndsWith("%B")).Select(c => c.FirstName).ToList();
+                var expected1 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && c.EndsWith("%B"));
                 Assert.True(expected1.Count() == result1.Count);
 
-                var result2 = ctx.FunkyCustomers.Where(c => c.FirstName.StartsWith("a_")).Select(c => c.FirstName).ToList();
-                var expected2 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && c.StartsWith("a_"));
+                var result2 = ctx.FunkyCustomers.Where(c => c.FirstName.EndsWith("_r")).Select(c => c.FirstName).ToList();
+                var expected2 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && c.EndsWith("_r"));
                 Assert.True(expected2.Count() == result2.Count);
 
-                var result4 = ctx.FunkyCustomers.Where(c => c.FirstName.StartsWith("")).Select(c => c.FirstName).ToList();
+                var result3 = ctx.FunkyCustomers.Where(c => c.FirstName.EndsWith(null)).Select(c => c.FirstName).ToList();
+                Assert.True(0 == result3.Count);
+
+                var result4 = ctx.FunkyCustomers.Where(c => c.FirstName.EndsWith("")).Select(c => c.FirstName).ToList();
                 Assert.True(ctx.FunkyCustomers.Count() == result4.Count);
 
-                var result5 = ctx.FunkyCustomers.Where(c => c.FirstName.StartsWith("_Ba_")).Select(c => c.FirstName).ToList();
-                var expected5 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && c.StartsWith("_Ba_"));
+                var result5 = ctx.FunkyCustomers.Where(c => c.FirstName.EndsWith("a__r_")).Select(c => c.FirstName).ToList();
+                var expected5 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && c.EndsWith("a__r_"));
                 Assert.True(expected5.Count() == result5.Count);
 
-                var result6 = ctx.FunkyCustomers.Where(c => !c.FirstName.StartsWith("%B%a%r")).Select(c => c.FirstName).ToList();
-                var expected6 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && !c.StartsWith("%B%a%r"));
+                var result6 = ctx.FunkyCustomers.Where(c => !c.FirstName.EndsWith("%B%a%r")).Select(c => c.FirstName).ToList();
+                var expected6 = ctx.FunkyCustomers.Select(c => c.FirstName).ToList().Where(c => c != null && !c.EndsWith("%B%a%r"));
                 Assert.True(expected6.Count() == result6.Count);
 
-                var result7 = ctx.FunkyCustomers.Where(c => !c.FirstName.StartsWith("")).Select(c => c.FirstName).ToList();
+                var result7 = ctx.FunkyCustomers.Where(c => !c.FirstName.EndsWith("")).Select(c => c.FirstName).ToList();
                 Assert.True(0 == result7.Count);
-            }
-        }
 
-        [Fact(Skip = "SQL CE limitation")]
-        public override void String_starts_with_on_argument_with_wildcard_constant()
-        {
-            //base.String_starts_with_on_argument_with_wildcard_constant();
+                var result8 = ctx.FunkyCustomers.Where(c => !c.FirstName.EndsWith(null)).Select(c => c.FirstName).ToList();
+                Assert.True(0 == result8.Count);
+            }
         }
 
         public override void String_ends_with_equals_nullable_column()
@@ -77,12 +77,6 @@ WHERE (CASE
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END <> [c].[NullableBool]) OR [c].[NullableBool] IS NULL",
                 Sql);
-        }
-
-        [Fact(Skip = "Investigate why!")]
-        public override void String_ends_with_on_argument_with_wildcard_constant()
-        {
-            //base.String_ends_with_on_argument_with_wildcard_constant();
         }
 
         protected override void ClearLog() => TestSqlLoggerFactory.Reset();

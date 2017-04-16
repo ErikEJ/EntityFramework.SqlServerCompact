@@ -9,7 +9,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
         }
 
-        [Fact(Skip = "investigate invalid cast exception")]
+        [Fact(Skip = "ErikEJ Investigate invalid cast exception")]
         public override void Projecting_nullable_bool_with_coalesce()
         {
             base.Projecting_nullable_bool_with_coalesce();

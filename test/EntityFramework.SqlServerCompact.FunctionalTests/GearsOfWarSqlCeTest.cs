@@ -1253,7 +1253,7 @@ WHERE ([t].[Nickname] = [t0].[Nickname]) OR ([t].[Nickname] IS NULL AND [t0].[Ni
                 Sql);
         }
 
-        [Fact(Skip = "Investigate!")]
+        [Fact(Skip = "ErikEJ Investigate invalid cast exception")]
         public override void Optional_Navigation_Null_Coalesce_To_Clr_Type()
         {
             base.Optional_Navigation_Null_Coalesce_To_Clr_Type();

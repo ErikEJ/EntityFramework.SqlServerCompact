@@ -219,6 +219,9 @@
     <Compile Include="..\Provider40\Extensions\SqlCeServiceCollectionExtensions.cs">
       <Link>Extensions\SqlCeServiceCollectionExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Infrastructure\Internal\ISqlCeOptions.cs">
+      <Link>Infrastructure\Internal\ISqlCeOptions.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Infrastructure\Internal\SqlCeOptionsExtensions.cs">
       <Link>Infrastructure\Internal\SqlCeOptionsExtensions.cs</Link>
     </Compile>
@@ -233,6 +236,9 @@
     </Compile>
     <Compile Include="..\Provider40\Internal\SqlCeModelValidator.cs">
       <Link>Internal\SqlCeModelValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Internal\SqlCeOptions.cs">
+      <Link>Internal\SqlCeOptions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs">
       <Link>MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs</Link>

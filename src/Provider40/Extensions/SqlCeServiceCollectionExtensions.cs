@@ -83,7 +83,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
                 .TryAdd<IQuerySqlGeneratorFactory, SqlCeQuerySqlGeneratorFactory>()
                 .TryAdd<ISqlTranslatingExpressionVisitorFactory, SqlCeTranslatingExpressionVisitorFactory>()
+                .TryAdd<ISingletonOptions, ISqlCeOptions>(p => p.GetService<ISqlCeOptions>())
                 .TryAddProviderSpecificServices(b => b
+                    .TryAddSingleton<ISqlCeOptions, SqlCeOptions>()
                     .TryAddScoped<ISqlCeUpdateSqlGenerator, SqlCeUpdateSqlGenerator>()
                     .TryAddScoped<ISqlCeDatabaseConnection, SqlCeDatabaseConnection>());
 

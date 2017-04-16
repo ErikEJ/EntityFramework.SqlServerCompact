@@ -6,6 +6,8 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
 {
     public class SqlCeOptionsExtension : RelationalOptionsExtension
     {
+        private bool? _clientEvalForUnsupportedSqlConstructs;
+
         public SqlCeOptionsExtension()
         {
         }
@@ -13,7 +15,14 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
         public SqlCeOptionsExtension([NotNull] SqlCeOptionsExtension copyFrom)
             : base(copyFrom)
         {
+            _clientEvalForUnsupportedSqlConstructs = copyFrom._clientEvalForUnsupportedSqlConstructs;
         }
+
+        protected override RelationalOptionsExtension Clone()
+            => new SqlCeOptionsExtension(this);
+
+        public virtual bool? ClientEvalForUnsupportedSqlConstructs 
+            => _clientEvalForUnsupportedSqlConstructs;
 
         public virtual SqlCeOptionsExtension WithClientEvalForUnsupportedSqlConstructs(bool clientEvalForUnsupportedSqlConstructs)
         {
@@ -21,13 +30,6 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
             clone._clientEvalForUnsupportedSqlConstructs = clientEvalForUnsupportedSqlConstructs;
             return clone;
         }
-
-        private bool? _clientEvalForUnsupportedSqlConstructs;
-
-        public virtual bool? ClientEvalForUnsupportedSqlConstructs => _clientEvalForUnsupportedSqlConstructs;
-
-        protected override RelationalOptionsExtension Clone()
-            => new SqlCeOptionsExtension(this);
 
         public override bool ApplyServices(IServiceCollection services)
         {

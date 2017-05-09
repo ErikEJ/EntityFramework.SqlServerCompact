@@ -10,6 +10,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     {
         public static readonly string DatabaseName = "NullSemanticsQueryTest";
 
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
         private readonly DbContextOptions _options;
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
@@ -19,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
 
             _options = new DbContextOptionsBuilder()
@@ -37,8 +39,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     { 
                         context.Database.EnsureClean();
                         NullSemanticsModelInitializer.Seed(context);
-
-                        TestSqlLoggerFactory.Reset();
                     }
                 });
         }

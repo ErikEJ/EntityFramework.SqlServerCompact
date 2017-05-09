@@ -11,7 +11,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     {
         private readonly DbContextOptions _options;
         private readonly SqlCeTestStore _testStore;
-        private readonly TestSqlLoggerFactory _testSqlLoggerFactory = new TestSqlLoggerFactory();
+
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
 
         public BuiltInDataTypesSqlCeFixture()
         {
@@ -20,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                .AddSingleton<ILoggerFactory>(_testSqlLoggerFactory)
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
 
             _options = new DbContextOptionsBuilder()

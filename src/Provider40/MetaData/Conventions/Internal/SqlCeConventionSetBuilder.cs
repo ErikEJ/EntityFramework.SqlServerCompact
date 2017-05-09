@@ -19,6 +19,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal
                     new RelationalConventionSetBuilderDependencies(
                         new SqlCeTypeMapper(
                             new RelationalTypeMapperDependencies()),
+                        new SqlCeAnnotationProvider(),
                         null,
                         null),
                     new SqlCeSqlGenerationHelper(

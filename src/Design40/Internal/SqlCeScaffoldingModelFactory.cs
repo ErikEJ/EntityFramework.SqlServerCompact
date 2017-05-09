@@ -15,7 +15,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
     public class SqlCeScaffoldingModelFactory : RelationalScaffoldingModelFactory
     {
         public SqlCeScaffoldingModelFactory(
-            [NotNull] ILoggerFactory loggerFactory,
+            [NotNull] IInterceptingLogger<LoggerCategory.Scaffolding> loggerFactory,
             [NotNull] IRelationalTypeMapper typeMapper,
             [NotNull] IDatabaseModelFactory databaseModelFactory,
             [NotNull] CandidateNamingService candidateNamingService,

@@ -28,11 +28,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             base.Where_subquery_on_navigation2();
         }
 
-        protected override void ClearLog() => TestSqlLoggerFactory.Reset();
+        protected override void ClearLog() => Fixture.TestSqlLoggerFactory.Clear();
 
         private const string FileLineEnding = @"
 ";
 
-        private static string Sql => TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+        private string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
     }
 }

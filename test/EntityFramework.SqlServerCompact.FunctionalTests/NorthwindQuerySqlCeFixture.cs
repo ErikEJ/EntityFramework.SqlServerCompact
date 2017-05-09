@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
@@ -14,7 +13,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         private readonly DbContextOptions _options;
 
         private readonly SqlCeTestStore _testStore = SqlCeNorthwindContext.GetSharedStore();
-        private readonly TestSqlLoggerFactory _testSqlLoggerFactory = new TestSqlLoggerFactory();
+
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
 
         public NorthwindQuerySqlCeFixture()
         {
@@ -28,7 +28,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     .UseInternalServiceProvider((additionalServices ?? new ServiceCollection())
                         .AddEntityFrameworkSqlCe()
                         .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                        .AddSingleton<ILoggerFactory>(_testSqlLoggerFactory)
+                        .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                         .BuildServiceProvider()))
                 .UseSqlCe(
                     _testStore.ConnectionString,
@@ -45,12 +45,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
         }
 
-        public override NorthwindContext CreateContext(
-            QueryTrackingBehavior queryTrackingBehavior = QueryTrackingBehavior.TrackAll)
-            => new SqlCeNorthwindContext(_options, queryTrackingBehavior);
-
         public void Dispose() => _testStore.Dispose();
-
-        public override CancellationToken CancelQuery() => _testSqlLoggerFactory.CancelQuery();
     }
 }

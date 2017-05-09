@@ -24,6 +24,6 @@ WHERE [Id] = @p1 AND [EngineSupplierId] = @p2 AND [Name] = @p3",
                 Sql);
         }
 
-        private static string Sql => TestSqlLoggerFactory.Sql;
+        private string Sql => Fixture.TestSqlLoggerFactory.Sql;
     }
 }

@@ -14,12 +14,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
         public F1SqlCeFixture()
         {
             _serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
         }
 
@@ -35,8 +37,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 {
                     context.Database.EnsureClean();
                     ConcurrencyModelInitializer.Seed(context);
-
-                    TestSqlLoggerFactory.Reset();
                 }
             });
         }

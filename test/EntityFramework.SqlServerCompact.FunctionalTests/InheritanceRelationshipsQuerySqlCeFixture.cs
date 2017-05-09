@@ -11,6 +11,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         private readonly IServiceProvider _serviceProvider;
 
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
         public InheritanceRelationshipsQuerySqlCeFixture()
@@ -18,7 +20,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             _serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
         }
 
@@ -35,8 +37,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 {
                     context.Database.EnsureClean();
                     InheritanceRelationshipsModelInitializer.Seed(context);
-
-                    TestSqlLoggerFactory.Reset();
                 }
             });
         }

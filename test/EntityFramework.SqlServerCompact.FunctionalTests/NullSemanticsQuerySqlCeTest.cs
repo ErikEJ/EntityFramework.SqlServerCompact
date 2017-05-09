@@ -7,6 +7,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public NullSemanticsQuerySqlCeTest(NullSemanticsQuerySqlCeFixture fixture)
             : base(fixture)
         {
+            fixture.TestSqlLoggerFactory.Clear();
         }
 
         [Fact(Skip = "ErikEJ Investigate invalid cast exception")]
@@ -685,7 +686,7 @@ WHERE [e].[NullableStringA] = @__prm_0",
             base.Join_uses_database_semantics();
 
             Assert.Equal(
-                @"SELECT [e1].[Id], [e2].[Id], [e1].[NullableIntA], [e2].[NullableIntB]
+                @"SELECT [e1].[Id] AS [Id1], [e2].[Id] AS [Id2], [e1].[NullableIntA], [e2].[NullableIntB]
 FROM [NullSemanticsEntity1] AS [e1]
 INNER JOIN [NullSemanticsEntity2] AS [e2] ON [e1].[NullableIntA] = [e2].[NullableIntB]",
                 Sql);
@@ -996,9 +997,9 @@ WHERE [e].[NullableBoolA] = [e].[NullableBoolB]",
                 Sql);
         }
 
-        private static string Sql
+        private string Sql
         {
-            get { return TestSqlLoggerFactory.Sql; }
+            get { return Fixture.TestSqlLoggerFactory.Sql; }
         }
     }
 }

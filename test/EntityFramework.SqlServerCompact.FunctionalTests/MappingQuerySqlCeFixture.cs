@@ -7,15 +7,16 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class MappingQuerySqlCeFixture : MappingQueryFixtureBase
     {
-        private readonly IServiceProvider _serviceProvider;
         private readonly DbContextOptions _options;
         private readonly SqlCeTestStore _testDatabase;
 
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
         public MappingQuerySqlCeFixture()
         {
-            _serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
-                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
 
             _testDatabase = SqlCeNorthwindContext.GetSharedStore();
@@ -23,13 +24,17 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             var optionsBuilder = new DbContextOptionsBuilder().UseModel(CreateModel());
             optionsBuilder
                 .UseSqlCe(_testDatabase.Connection.ConnectionString)
-                .UseInternalServiceProvider(_serviceProvider);
+                .UseInternalServiceProvider(serviceProvider);
             _options = optionsBuilder.Options;
         }
 
         public DbContext CreateContext()
         {
-            return new DbContext(_options);
+            var context = new DbContext(_options);
+
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+            return context;
         }
 
         public void Dispose()

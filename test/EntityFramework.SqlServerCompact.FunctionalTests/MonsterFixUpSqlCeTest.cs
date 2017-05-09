@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
@@ -8,70 +6,61 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class MonsterFixupSqlCeTest : MonsterFixupTestBase
-    {
-        private static readonly HashSet<string> _createdDatabases = new HashSet<string>();
+    //public class MonsterFixupSqlCeTest : MonsterFixupTestBase
+    //{
+    //    protected override IServiceProvider CreateServiceProvider(bool throwingStateManager = false)
+    //    {
+    //        var serviceCollection = new ServiceCollection()
+    //            .AddEntityFrameworkSqlCe();
 
-        private static readonly ConcurrentDictionary<string, object> _creationLocks
-            = new ConcurrentDictionary<string, object>();
+    //        if (throwingStateManager)
+    //        {
+    //            serviceCollection.AddScoped<IStateManager, ThrowingMonsterStateManager>();
+    //        }
 
-        protected override IServiceProvider CreateServiceProvider(bool throwingStateManager = false)
-        {
-            var serviceCollection = new ServiceCollection()
-                .AddEntityFrameworkSqlCe();
+    //        return serviceCollection.BuildServiceProvider();
+    //    }
 
-            if (throwingStateManager)
-            {
-                serviceCollection.AddScoped<IStateManager, ThrowingMonsterStateManager>();
-            }
+    //    protected override DbContextOptions CreateOptions(string databaseName)
+    //    {
+    //        var optionsBuilder = new DbContextOptionsBuilder();
+    //        optionsBuilder
+    //            .UseSqlCe(CreateConnectionString(databaseName));
 
-            return serviceCollection.BuildServiceProvider();
-        }
+    //        return optionsBuilder.Options;
+    //    }
 
-        protected override DbContextOptions CreateOptions(string databaseName)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
-                .UseSqlCe(CreateConnectionString(databaseName));
+    //    private static string CreateConnectionString(string name)
+    //    {
+    //        return new SqlCeConnectionStringBuilder
+    //        {
+    //            DataSource = name + ".sdf"
+    //        }.ConnectionString;
+    //    }
 
-            return optionsBuilder.Options;
-        }
+    //    private SqlCeTestStore _testStore;
 
-        private static string CreateConnectionString(string name)
-        {
-            return new SqlCeConnectionStringBuilder
-            {
-                DataSource = name + ".sdf"
-            }.ConnectionString;
-        }
+    //    protected override void CreateAndSeedDatabase(string databaseName, Func<MonsterContext> createContext, Action<MonsterContext> seed)
+    //    {
+    //        _testStore = SqlCeTestStore.GetOrCreateShared(databaseName, () =>
+    //        {
+    //            using (var context = createContext())
+    //            {
+    //                context.Database.EnsureCreated();
+    //                seed(context);
+    //            }
+    //        });
+    //    }
 
-        protected override void CreateAndSeedDatabase(string databaseName, Func<MonsterContext> createContext, Action<MonsterContext> seed)
-        {
-            var creationLock = _creationLocks.GetOrAdd(databaseName, n => new object());
-            lock (creationLock)
-            {
-                if (!_createdDatabases.Contains(databaseName))
-                {
-                    using (var context = createContext())
-                    {
-                        context.Database.EnsureClean();
-                        seed(context);
-                        //context.SeedUsingFKs();
-                    }
+    //    public virtual void Dispose() => _testStore?.Dispose();
 
-                    _createdDatabases.Add(databaseName);
-                    TestSqlLoggerFactory.Reset();
-                }
-            }
-        }
+    //    public override void OnModelCreating<TMessage, TProductPhoto, TProductReview>(ModelBuilder builder)
+    //    {
+    //        base.OnModelCreating<TMessage, TProductPhoto, TProductReview>(builder);
 
-        public override void OnModelCreating<TMessage, TProductPhoto, TProductReview>(ModelBuilder builder)
-        {
-            base.OnModelCreating<TMessage, TProductPhoto, TProductReview>(builder);
-
-            builder.Entity<TMessage>().HasKey(e => e.MessageId);
-            builder.Entity<TProductPhoto>().HasKey(e => e.PhotoId);
-            builder.Entity<TProductReview>().HasKey(e => e.ReviewId);
-        }
-    }
+    //        builder.Entity<TMessage>().HasKey(e => e.MessageId);
+    //        builder.Entity<TProductPhoto>().HasKey(e => e.PhotoId);
+    //        builder.Entity<TProductReview>().HasKey(e => e.ReviewId);
+    //    }
+    //}
 }

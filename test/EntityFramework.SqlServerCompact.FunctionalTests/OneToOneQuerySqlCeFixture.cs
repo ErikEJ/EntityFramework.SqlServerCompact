@@ -1,30 +1,28 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class OneToOneQuerySqlCeFixture : OneToOneQueryFixtureBase
     {
         private readonly DbContextOptions _options;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly SqlCeTestStore _testStore;
+
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
 
         public OneToOneQuerySqlCeFixture()
         {
-            _serviceProvider
-                = new ServiceCollection()
+            _testStore = SqlCeTestStore.CreateScratch(true);
+
+            _options = new DbContextOptionsBuilder()
+                .UseSqlCe(_testStore.ConnectionString, b => b.ApplyConfiguration())
+                .UseInternalServiceProvider(new ServiceCollection()
                     .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                    .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
-                    .BuildServiceProvider();
-
-            var database = SqlCeTestStore.CreateScratch(createDatabase: true);
-
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
-                .UseSqlCe(database.Connection.ConnectionString)
-                .UseInternalServiceProvider(_serviceProvider);
-            _options = optionsBuilder.Options;
+                    .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
+                    .BuildServiceProvider())
+                .Options;
 
             using (var context = new DbContext(_options))
             {
@@ -38,5 +36,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
             return new DbContext(_options);
         }
+
+        public void Dispose() => _testStore.Dispose();
     }
 }

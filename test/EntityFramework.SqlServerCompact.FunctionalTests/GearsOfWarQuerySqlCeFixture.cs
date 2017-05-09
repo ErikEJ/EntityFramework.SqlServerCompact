@@ -21,12 +21,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
         public GearsOfWarQuerySqlCeFixture()
         {
              var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
 
             _options = new DbContextOptionsBuilder()
@@ -46,8 +48,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 {
                     context.Database.EnsureCreated();
                     GearsOfWarModelInitializer.Seed(context);
-
-                    TestSqlLoggerFactory.Reset();
                 }
             });
         }

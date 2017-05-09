@@ -94,7 +94,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             var typeMapper = new SqlCeTypeMapper(new RelationalTypeMapperDependencies());
 
             var commandBuilderFactory = new RelationalCommandBuilderFactory(
-                new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
+                new FakeInterceptingLogger<LoggerCategory.Database.Sql>(),
                 new DiagnosticListener("Fake"),
                 typeMapper);
 
@@ -121,7 +121,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                             new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()),
                             typeMapper,
                             annotationsProvider),
-                        new FakeSensitiveDataLogger<SqlCeMigrationsSqlGenerator>()),
+                        new FakeInterceptingLogger<LoggerCategory.Database.Sql>()),
                     annotationsProvider,
                     sqlGenerator));
         }

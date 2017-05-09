@@ -61,9 +61,9 @@ LEFT JOIN [Address2] AS [p.Address] ON [p].[Id] = [p.Address].[PersonId]",
             return _fixture.CreateContext();
         }
 
-        private static string Sql
+        private  string Sql
         {
-            get { return TestSqlLoggerFactory.SqlStatements.Last(); }
+            get { return _fixture.TestSqlLoggerFactory.SqlStatements.Last(); }
         }
     }
 }

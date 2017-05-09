@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class ComplexNavigationsQuerySqlCeFixture
-        : ComplexNavigationsQueryRelationalFixture<SqlCeTestStore>
+        : ComplexNavigationsQueryFixtureBase<SqlCeTestStore>
     {
         public static readonly string DatabaseName = "ComplexNavigations";
 
@@ -16,12 +16,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         private readonly string _connectionString
             = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
         public ComplexNavigationsQuerySqlCeFixture()
         {
              var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
 
             _options = new DbContextOptionsBuilder()
@@ -38,8 +40,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 {
                     context.Database.EnsureCreated();
                     ComplexNavigationsModelInitializer.Seed(context);
-
-                    TestSqlLoggerFactory.Reset();
                 }
             });
         }

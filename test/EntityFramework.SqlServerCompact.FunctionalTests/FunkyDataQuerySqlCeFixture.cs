@@ -14,12 +14,14 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
 
         private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
 
+        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
         public FunkyDataQuerySqlCeFixture()
         {
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory())
+                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
 
             _options = new DbContextOptionsBuilder()
@@ -39,8 +41,6 @@ namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
                 {
                     context.Database.EnsureClean();
                     FunkyDataModelInitializer.Seed(context);
-
-                    TestSqlLoggerFactory.Reset();
                 }
             });
         }

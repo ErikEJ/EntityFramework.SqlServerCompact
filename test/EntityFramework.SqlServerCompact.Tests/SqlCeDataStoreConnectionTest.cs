@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.Logging;
 using Xunit;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Tests
 {
@@ -25,7 +26,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
                           .UseSqlCe(@"Data Source=C:\data\EF7SQLCE.sdf;")
                           .Options;
 
-            return new RelationalConnectionDependencies(options, new Logger<SqlCeDatabaseConnection>(new LoggerFactory()), new DiagnosticListener("Fake"));
+            return new RelationalConnectionDependencies(options,
+                new InterceptingLogger<LoggerCategory.Database.Transaction>(new LoggerFactory(), new LoggingOptions()),
+                new InterceptingLogger<LoggerCategory.Database.Connection>(new LoggerFactory(), new LoggingOptions()),
+                new DiagnosticListener("Fake"));
         }
     }
 }

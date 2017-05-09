@@ -19,11 +19,11 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
         private readonly IRelationalAnnotationProvider _annotations;
-        private readonly ISensitiveDataLogger<SqlCeMigrationsSqlGenerator> _logger;
+        private readonly IInterceptingLogger<LoggerCategory.Database.Sql> _logger;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] MigrationsSqlGeneratorDependencies dependencies,
-            [NotNull] ISensitiveDataLogger<SqlCeMigrationsSqlGenerator> logger)
+            [NotNull] IInterceptingLogger<LoggerCategory.Database.Sql> logger)
             : base(dependencies)
         {
             _commandBuilderFactory = dependencies.CommandBuilderFactory;

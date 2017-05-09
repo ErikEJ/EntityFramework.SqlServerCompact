@@ -12,6 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         protected FindSqlCeTest(FindSqlCeFixture fixture)
             : base(fixture)
         {
+            fixture.TestSqlLoggerFactory.Clear();
         }
 
         public class FindSqlCeTestSet : FindSqlCeTest
@@ -309,30 +310,26 @@ FROM [ShadowKey] AS [e]
 WHERE [e].[Id] = @__get_Item_0", Sql);
         }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-            TestSqlLoggerFactory.Reset();
-        }
-
         private const string FileLineEnding = @"
 ";
 
-        private static string Sql => TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+        private string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
 
         public class FindSqlCeFixture : FindFixtureBase
         {
             private const string DatabaseName = "FindTest";
             private readonly DbContextOptions _options;
 
+            public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+
             public FindSqlCeFixture()
             {
                 var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                    .AddSingleton<ILoggerFactory, TestSqlLoggerFactory>()
+                    .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                     .BuildServiceProvider();
-
+                    
                 _options = new DbContextOptionsBuilder()
                     .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
                     .UseInternalServiceProvider(serviceProvider)
@@ -348,8 +345,6 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
                     {
                         context.Database.EnsureClean();
                         Seed(context);
-
-                        TestSqlLoggerFactory.Reset();
                     }
                 });
             }

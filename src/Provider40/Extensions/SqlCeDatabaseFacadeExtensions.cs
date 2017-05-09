@@ -20,7 +20,7 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(database, nameof(database));
             Check.NotNull(writeAction, nameof(writeAction));
 
-            var loggerFactory =  database.GetService<ILoggerFactory>();
+            var loggerFactory = database.GetService<ILoggerFactory>();
             loggerFactory.AddProvider(new DbLoggerProvider(writeAction));
         }
     }

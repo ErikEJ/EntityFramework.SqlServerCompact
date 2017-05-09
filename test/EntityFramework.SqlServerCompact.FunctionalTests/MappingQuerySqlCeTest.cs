@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -49,16 +50,14 @@ FROM [Orders] AS [o]",
         public MappingQuerySqlCeTest(MappingQuerySqlCeFixture fixture)
         {
             _fixture = fixture;
+            _fixture.TestSqlLoggerFactory.Clear();
         }
 
-        protected override DbContext CreateContext()
-        {
-            return _fixture.CreateContext();
-        }
+        protected override DbContext CreateContext() => _fixture.CreateContext();
 
-        private static string Sql
-        {
-            get { return TestSqlLoggerFactory.Sql; }
-        }
+        private const string FileLineEnding = @"
+";
+
+        private string Sql => _fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
     }
 }

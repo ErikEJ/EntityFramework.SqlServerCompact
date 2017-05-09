@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using System;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
@@ -9,6 +10,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public DataAnnotationSqlCeTest(DataAnnotationSqlCeFixture fixture)
             : base(fixture)
         {
+            fixture.TestSqlLoggerFactory.Clear();
         }
 
         public override ModelBuilder Non_public_annotations_are_enabled()
@@ -82,7 +84,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 context.Database.EnsureCreated();
                 DataAnnotationModelInitializer.Seed(context);
 
-                TestSqlLoggerFactory.Reset();
+                Fixture.TestSqlLoggerFactory.Clear();
             }
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();
 
@@ -200,7 +202,7 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 
         public override void StringLengthAttribute_throws_while_inserting_value_longer_than_max_length()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             base.StringLengthAttribute_throws_while_inserting_value_longer_than_max_length();
 
             Assert.Equal(@"@p0: ValidString (Size = 16)
@@ -235,6 +237,8 @@ WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
             // row version value is not stable. 
         }
 
-        private static string Sql => TestSqlLoggerFactory.Sql;
+        private const string FileLineEnding = @"
+";
+        private  string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
     }
 }

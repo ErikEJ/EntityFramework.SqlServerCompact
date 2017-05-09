@@ -10,8 +10,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class FromSqlQuerySqlCeTest : FromSqlQueryTestBase<NorthwindQuerySqlCeFixture>
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-        
+        public FromSqlQuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
+            : base(fixture)
+        {
+            Fixture.TestSqlLoggerFactory.Clear();
+        }
+
         public override void From_sql_queryable_simple()
         {
             base.From_sql_queryable_simple();
@@ -245,13 +249,13 @@ FROM (
             base.From_sql_queryable_simple_include();
 
             AssertSql(
-              @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM (
     SELECT * FROM ""Customers""
 ) AS [c]
-ORDER BY [c].[CustomerID]
-
-SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
+ORDER BY [c].[CustomerID]",
+                //
+                @"SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
 INNER JOIN (
     SELECT [c0].[CustomerID]
@@ -259,8 +263,7 @@ INNER JOIN (
         SELECT * FROM ""Customers""
     ) AS [c0]
 ) AS [t] ON [c.Orders].[CustomerID] = [t].[CustomerID]
-ORDER BY [t].[CustomerID]",
-              Sql);
+ORDER BY [t].[CustomerID]");
         }
 
         public override void From_sql_queryable_simple_composed_include()
@@ -268,14 +271,14 @@ ORDER BY [t].[CustomerID]",
             base.From_sql_queryable_simple_composed_include();
 
             AssertSql(
-              @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM (
     SELECT * FROM ""Customers""
 ) AS [c]
 WHERE [c].[City] = N'London'
-ORDER BY [c].[CustomerID]
-
-SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
+ORDER BY [c].[CustomerID]",
+                //
+                @"SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
 INNER JOIN (
     SELECT [c0].[CustomerID]
@@ -284,8 +287,7 @@ INNER JOIN (
     ) AS [c0]
     WHERE [c0].[City] = N'London'
 ) AS [t] ON [c.Orders].[CustomerID] = [t].[CustomerID]
-ORDER BY [t].[CustomerID]",
-              Sql);
+ORDER BY [t].[CustomerID]");
         }
 
         public override void From_sql_annotations_do_not_affect_successive_calls()
@@ -313,13 +315,6 @@ WHERE ([c].[ContactName] = [c].[CompanyName]) OR ([c].[ContactName] IS NULL AND 
                 Sql);
         }
 
-        public FromSqlQuerySqlCeTest(NorthwindQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
-            : base(fixture)
-        {
-            _testOutputHelper = testOutputHelper;
-
-            //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
-        }
 
         protected override DbParameter CreateDbParameter(string name, object value)
             => new SqlCeParameter
@@ -331,11 +326,9 @@ WHERE ([c].[ContactName] = [c].[CompanyName]) OR ([c].[ContactName] IS NULL AND 
         private const string FileLineEnding = @"
 ";
 
-        private static string Sql => TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+        private string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
 
-        private void AssertSql(string expected, string actual)
-        {
-            TestHelpers.AssertBaseline(expected, actual, _testOutputHelper);
-        }
+        private void AssertSql(params string[] expected)
+            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
     }
 }

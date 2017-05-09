@@ -22,7 +22,7 @@ namespace Microsoft.EntityFrameworkCore
 
         private static readonly string[] _whitelist = 
         {
-            typeof(Storage.IRelationalCommandBuilderFactory).FullName,
+            "Microsoft.EntityFrameworkCore.Database.Sql",
             typeof(SqlCeMigrationsSqlGenerator).FullName
         };
 

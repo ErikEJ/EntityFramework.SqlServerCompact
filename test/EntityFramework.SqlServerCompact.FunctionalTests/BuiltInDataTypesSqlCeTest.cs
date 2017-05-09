@@ -188,7 +188,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedDataTypes>().Add(CreateMappedDataTypes(77));
@@ -224,10 +224,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             }
         }
 
-        private static string DumpParameters()
+        private string DumpParameters()
             => string.Join(
                 FileLineEnding,
-                TestSqlLoggerFactory.CommandLogData.First().Parameters
+                Fixture.TestSqlLoggerFactory.CommandLogData.First().Parameters
                     .Select(p => p.Name + ": " + p.FormatParameter(quoteValues: false)));
 
         private static void AssertMappedDataTypes(MappedDataTypes entity, int id)
@@ -278,7 +278,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_nullable_data_types()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedNullableDataTypes>().Add(CreateMappedNullableDataTypes(77));
@@ -362,7 +362,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_set_to_null()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedNullableDataTypes>().Add(new MappedNullableDataTypes { Int = 78 });
@@ -423,7 +423,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_sized_data_types()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedSizedDataTypes>().Add(CreateMappedSizedDataTypes(77));
@@ -477,7 +477,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_nulls_for_all_mapped_sized_data_types()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedSizedDataTypes>().Add(new MappedSizedDataTypes { Id = 78 });
@@ -518,7 +518,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_with_scale()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedScaledDataTypes>().Add(CreateMappedScaledDataTypes(77));
@@ -563,7 +563,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_with_precision_and_scale()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedPrecisionAndScaledDataTypes>().Add(CreateMappedPrecisionAndScaledDataTypes(77));
@@ -605,7 +605,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_with_identity()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedDataTypesWithIdentity>().Add(CreateMappedDataTypesWithIdentity(77));
@@ -692,7 +692,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_nullable_data_types_with_identity()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedNullableDataTypesWithIdentity>().Add(CreateMappedNullableDataTypesWithIdentity(77));
@@ -776,7 +776,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_set_to_null_with_identity()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedNullableDataTypesWithIdentity>().Add(new MappedNullableDataTypesWithIdentity { Int = 78 });
@@ -838,7 +838,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_sized_data_types_with_identity()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedSizedDataTypesWithIdentity>().Add(CreateMappedSizedDataTypesWithIdentity(77));
@@ -892,7 +892,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_nulls_for_all_mapped_sized_data_types_with_identity()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedSizedDataTypesWithIdentity>().Add(new MappedSizedDataTypesWithIdentity { Int = 78 });
@@ -933,7 +933,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_with_scale_with_identity()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedScaledDataTypesWithIdentity>().Add(CreateMappedScaledDataTypesWithIdentity(77));
@@ -978,7 +978,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_with_precision_and_scale_with_identity()
         {
-            TestSqlLoggerFactory.Reset();
+            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedPrecisionAndScaledDataTypesWithIdentity>().Add(
@@ -1570,7 +1570,7 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = 4000]
         private const string FileLineEnding = @"
 ";
 
-        private static string Sql => TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+        private  string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
 
         private class ColumnInfo
         {

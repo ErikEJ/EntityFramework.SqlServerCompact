@@ -2,9 +2,9 @@
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class FiltersInheritanceSqlCeTest : FiltersInheritanceTestBase<InheritanceSqlCeFixture>
+    public class FiltersInheritanceSqlCeTest : FiltersInheritanceTestBase<FiltersInheritanceSqlCeFixture>
     {
-        public FiltersInheritanceSqlCeTest(InheritanceSqlCeFixture fixture, ITestOutputHelper testOutputHelper)
+        public FiltersInheritanceSqlCeTest(FiltersInheritanceSqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             Fixture.TestSqlLoggerFactory.Clear();

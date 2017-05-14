@@ -217,6 +217,7 @@
     <Compile Include="IncludeSqlCeTest.cs" />
     <Compile Include="InheritanceRelationshipsQuerySqlCeTest.cs" />
     <Compile Include="InheritanceRelationshipsQuerySqlCeFixture.cs" />
+    <Compile Include="FiltersInheritanceSqlCeFixture.cs" />
     <Compile Include="InheritanceSqlCeFixture.cs" />
     <Compile Include="InheritanceSqlCeTest.cs" />
     <Compile Include="Issue398Test.cs" />

@@ -215,6 +215,9 @@
     <Compile Include="..\Provider40\Extensions\SqlCeReferenceCollectionBuilderExtensions.cs">
       <Link>Extensions\SqlCeReferenceCollectionBuilderExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Extensions\SqlCeReferenceOwnershipBuilderExtensions.cs">
+      <Link>Extensions\SqlCeReferenceOwnershipBuilderExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeReferenceReferenceBuilderExtensions.cs">
       <Link>Extensions\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
     </Compile>

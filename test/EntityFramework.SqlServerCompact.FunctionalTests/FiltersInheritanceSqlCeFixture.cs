@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class InheritanceSqlCeFixture : InheritanceRelationalFixture
+    public class FiltersInheritanceSqlCeFixture : InheritanceRelationalFixture
     {
-        public InheritanceSqlCeFixture()
+        public FiltersInheritanceSqlCeFixture()
         {
-            using (var context = CreateContext())
+            using (var context = CreateContext(enableFilters: true))
             {
                 context.Database.EnsureClean();
                 context.Database.EnsureCreated();
@@ -21,6 +21,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override DbContextOptions BuildOptions()
         {
+            //var testStore = SqlCeTestStore.CreateScratch(createDatabase: true);
+
             return
                 new DbContextOptionsBuilder()
                     .EnableSensitiveDataLogging()

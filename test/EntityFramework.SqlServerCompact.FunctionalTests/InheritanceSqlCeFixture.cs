@@ -6,15 +6,28 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class InheritanceSqlCeFixture : InheritanceRelationalFixture
     {
+        public InheritanceSqlCeFixture()
+        {
+            using (var context = CreateContext())
+            {
+                context.Database.EnsureClean();
+                context.Database.EnsureCreated();
+
+                SeedData(context);
+            }
+        }
+
         public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
 
         public override DbContextOptions BuildOptions()
         {
+            var testStore = SqlCeTestStore.CreateScratch(createDatabase: true);
+
             return
                 new DbContextOptionsBuilder()
                     .EnableSensitiveDataLogging()
                     .UseSqlCe(
-                        SqlCeTestStore.CreateConnectionString("InheritanceSqlServerTest"),
+                        testStore.Connection,
                         b => b.ApplyConfiguration())
                     .UseInternalServiceProvider(
                         new ServiceCollection()

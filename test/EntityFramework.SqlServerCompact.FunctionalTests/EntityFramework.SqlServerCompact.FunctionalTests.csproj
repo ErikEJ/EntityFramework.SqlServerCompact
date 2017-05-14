@@ -201,6 +201,8 @@
     <Compile Include="DefaultValuesTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
     <Compile Include="FieldMappingSqlCeTest.cs" />
+    <Compile Include="FiltersInheritanceSqlCeTest.cs" />
+    <Compile Include="FiltersSqlCeTest.cs" />
     <Compile Include="FindSqlCeTest.cs" />
     <Compile Include="FromSqlQuerySqlCeTest.cs" />
     <Compile Include="FunkyDataQuerySqlCeFixture.cs" />

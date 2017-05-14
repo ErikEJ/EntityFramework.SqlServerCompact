@@ -196,6 +196,8 @@
     <Compile Include="DataAnnotationSqlCeFixture.cs" />
     <Compile Include="DataAnnotationSqlCeTest.cs" />
     <Compile Include="DataBindingSqlCeTest.cs" />
+    <Compile Include="DbContextPoolingTest.cs" />
+    <Compile Include="DbFunctionsSqlCeTest.cs" />
     <Compile Include="DefaultValuesTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
     <Compile Include="FieldMappingSqlCeTest.cs" />

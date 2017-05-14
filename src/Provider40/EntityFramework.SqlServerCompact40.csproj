@@ -186,6 +186,7 @@
     <Compile Include="Extensions\Logging\DbSimpleLogger.cs" />
     <Compile Include="Extensions\Logging\DbLoggerProvider.cs" />
     <Compile Include="Extensions\Logging\NullLogger.cs" />
+    <Compile Include="Extensions\SqlCeReferenceOwnershipBuilderExtensions.cs" />
     <Compile Include="Infrastructure\Internal\ISqlCeOptions.cs" />
     <Compile Include="Infrastructure\SqlCeEventId.cs" />
     <Compile Include="Internal\SqlCeLoggerExtensions.cs" />

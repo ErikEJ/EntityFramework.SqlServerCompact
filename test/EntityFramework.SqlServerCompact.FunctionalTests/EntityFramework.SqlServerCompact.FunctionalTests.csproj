@@ -188,6 +188,8 @@
     <Compile Include="BuiltInDataTypesSqlCeFixture.cs" />
     <Compile Include="BuiltInDataTypesSqlCeTest.cs" />
     <Compile Include="ChangeTrackingSqlCeTest.cs" />
+    <Compile Include="ComplexNavigationsOwnedQuerySqlCeFixture.cs" />
+    <Compile Include="ComplexNavigationsOwnedQuerySqlCeTest.cs" />
     <Compile Include="ComplexNavigationsQuerySqlCeFixture.cs" />
     <Compile Include="ComplexNavigationsQuerySqlCeTest.cs" />
     <Compile Include="CompositeKeyEndToEndTest.cs" />

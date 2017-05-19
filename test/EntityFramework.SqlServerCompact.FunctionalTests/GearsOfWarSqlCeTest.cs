@@ -12,6 +12,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             fixture.TestSqlLoggerFactory.Clear();
         }
 
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Optional_navigation_with_collection_composite_key()
+        {
+            base.Optional_navigation_with_collection_composite_key();
+        }
+
         public override void Entity_equality_empty()
         {
             base.Entity_equality_empty();

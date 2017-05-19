@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlServerCe;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -10,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 
 namespace Microsoft.EntityFrameworkCore.Migrations
@@ -19,11 +16,11 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
         private readonly IRelationalAnnotationProvider _annotations;
-        private readonly IInterceptingLogger<LoggerCategory.Database.Sql> _logger;
+        private readonly IDiagnosticsLogger<LoggerCategory.Database.Sql> _logger;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] MigrationsSqlGeneratorDependencies dependencies,
-            [NotNull] IInterceptingLogger<LoggerCategory.Database.Sql> logger)
+            [NotNull] IDiagnosticsLogger<LoggerCategory.Database.Sql> logger)
             : base(dependencies)
         {
             _commandBuilderFactory = dependencies.CommandBuilderFactory;
@@ -49,7 +46,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             {
                 if (!string.IsNullOrEmpty(migrationCommand.CommandText))
                 {
-                    _logger.LogCommandExecuted(new SqlCeCommand(migrationCommand.CommandText), Stopwatch.GetTimestamp(), Stopwatch.GetTimestamp());
+                    //TODO ErikEJ Investigate how to fix this?
+                    //_logger.Logger.LogCommandExecuted(new SqlCeCommand(migrationCommand.CommandText), Stopwatch.GetTimestamp(), Stopwatch.GetTimestamp());
                 }
             }
             return list;

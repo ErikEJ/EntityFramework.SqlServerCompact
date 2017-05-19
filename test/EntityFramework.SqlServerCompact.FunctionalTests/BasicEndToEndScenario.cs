@@ -13,26 +13,18 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public void Can_run_end_to_end_scenario()
         {
-            //Demo of logging both using LogToConsole and an IObserver
+            //Demo of logging using Log
             using (var db = new BloggingContext())
             {
-                var diag = db.GetService<DiagnosticListener>();
-                var result = new List<KeyValuePair<string, object>>();
-                var observer = new ObserverToList<KeyValuePair<string, object>>(result);
+                db.Database.Log(AppendLog);
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+                db.Blogs.Add(new Blog { BlogId = new Guid("b3279372-78f5-4c13-93c9-e9b281a5ed5b"), Url = "http://erikej.blogspot.com" });
+                db.SaveChanges();
 
-                using (diag.Subscribe(observer))
-                {
-                    db.Database.Log(AppendLog);
-                    db.Database.EnsureDeleted();
-                    db.Database.EnsureCreated();
-                    db.Blogs.Add(new Blog { BlogId = new Guid("b3279372-78f5-4c13-93c9-e9b281a5ed5b"), Url = "http://erikej.blogspot.com" });
-                    db.SaveChanges();
-                }
                 var blogs = db.Blogs.ToList();
 
-                Assert.Equal(23, result.Count);
-
-                Assert.True(_log.Contains(@"[Parameters=[@p0='b3279372-78f5-4c13-93c9-e9b281a5ed5b', @p1='http://erikej.blogspot.com' (Size = 4000)], CommandType='Text', CommandTimeout='0']
+                Assert.True(_log.Contains(@"[Parameters=[@p0: b3279372-78f5-4c13-93c9-e9b281a5ed5b, @p1: http://erikej.blogspot.com (Size = 4000)], CommandType='Text', CommandTimeout='0']
 INSERT INTO [Blogs] ([BlogId], [Url])
 VALUES (@p0, @p1)"));
 
@@ -87,42 +79,5 @@ FROM [Blogs] AS [b]"));
             public Guid BlogId { get; set; }
             public Blog Blog { get; set; }
         }
-    }
-
-    internal class ObserverToList<T> : IObserver<T>
-    {
-        public ObserverToList(List<T> output, Predicate<T> filter = null, string name = null)
-        {
-            _output = output;
-            _output.Clear();
-            _filter = filter;
-            _name = name;
-        }
-
-        public bool Completed { get; private set; }
-
-        #region private
-
-        public void OnCompleted()
-        {
-            Completed = true;
-        }
-
-        public void OnError(Exception error)
-        {
-            Assert.True(false, "Error happened on IObserver");
-        }
-
-        public void OnNext(T value)
-        {
-            Assert.False(Completed);
-            if (_filter == null || _filter(value))
-                _output.Add(value);
-        }
-
-        private List<T> _output;
-        private Predicate<T> _filter;
-        private string _name;  // for debugging 
-        #endregion
     }
 }

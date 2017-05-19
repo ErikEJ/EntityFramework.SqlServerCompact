@@ -696,11 +696,10 @@ INNER JOIN [NullSemanticsEntity2] AS [e2] ON [e1].[NullableIntA] = [e2].[Nullabl
         {
             base.Contains_with_local_array_closure_with_null();
 
-            Assert.Equal(
-                @"SELECT [e].[Id]
+            AssertSql(
+                 @"SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
-WHERE [e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL",
-                Sql);
+WHERE ([e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL)");
         }
 
         public override void Contains_with_local_array_closure_false_with_null()
@@ -718,11 +717,11 @@ WHERE [e].[NullableStringA] NOT IN (N'Foo') AND [e].[NullableStringA] IS NOT NUL
         {
             base.Contains_with_local_array_closure_with_multiple_nulls();
 
-            Assert.Equal(
-                @"SELECT [e].[Id]
+            AssertSql(
+                 @"SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
-WHERE [e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL",
-                Sql);
+WHERE ([e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL)");
+
         }
 
         public override void Where_multiple_ors_with_null()
@@ -754,7 +753,7 @@ WHERE [e].[NullableStringA] NOT IN (N'Foo', N'Blah') AND [e].[NullableStringA] I
             Assert.Equal(
                 @"SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
-WHERE [e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL",
+WHERE ([e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL)",
                 Sql);
         }
 
@@ -996,6 +995,12 @@ FROM [NullSemanticsEntity1] AS [e]
 WHERE [e].[NullableBoolA] = [e].[NullableBoolB]",
                 Sql);
         }
+
+        private void AssertSql(params string[] expected)
+            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+
+        protected override void ClearLog()
+            => Fixture.TestSqlLoggerFactory.Clear();
 
         private string Sql
         {

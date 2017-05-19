@@ -26,10 +26,16 @@ namespace Microsoft.EntityFrameworkCore.Tests
                           .UseSqlCe(@"Data Source=C:\data\EF7SQLCE.sdf;")
                           .Options;
 
-            return new RelationalConnectionDependencies(options,
-                new InterceptingLogger<LoggerCategory.Database.Transaction>(new LoggerFactory(), new LoggingOptions()),
-                new InterceptingLogger<LoggerCategory.Database.Connection>(new LoggerFactory(), new LoggingOptions()),
-                new DiagnosticListener("Fake"));
+            return new RelationalConnectionDependencies(
+              options,
+              new DiagnosticsLogger<LoggerCategory.Database.Transaction>(
+                  new LoggerFactory(),
+                  new LoggingOptions(),
+                  new DiagnosticListener("FakeDiagnosticListener")),
+              new DiagnosticsLogger<LoggerCategory.Database.Connection>(
+                  new LoggerFactory(),
+                  new LoggingOptions(),
+                  new DiagnosticListener("FakeDiagnosticListener")));
         }
     }
 }

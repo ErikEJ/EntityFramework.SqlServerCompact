@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -8,9 +7,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Microsoft.EntityFrameworkCore.TestUtilities;
 using Moq;
 using Xunit;
+using Microsoft.EntityFrameworkCore.Relational.Tests.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 {
@@ -94,8 +93,8 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             var typeMapper = new SqlCeTypeMapper(new RelationalTypeMapperDependencies());
 
             var commandBuilderFactory = new RelationalCommandBuilderFactory(
-                new FakeInterceptingLogger<LoggerCategory.Database.Sql>(),
-                new DiagnosticListener("Fake"),
+                new FakeDiagnosticsLogger<LoggerCategory.Database.Sql>(),
+                new FakeDiagnosticsLogger<LoggerCategory.Database.DataReader>(),
                 typeMapper);
 
             return new SqlCeHistoryRepository(
@@ -121,7 +120,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                             new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()),
                             typeMapper,
                             annotationsProvider),
-                        new FakeInterceptingLogger<LoggerCategory.Database.Sql>()),
+                        new FakeDiagnosticsLogger<LoggerCategory.Database.Sql>()),
                     annotationsProvider,
                     sqlGenerator));
         }

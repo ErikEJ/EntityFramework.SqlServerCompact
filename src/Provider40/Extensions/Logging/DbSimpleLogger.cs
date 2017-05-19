@@ -22,12 +22,13 @@ namespace Microsoft.EntityFrameworkCore.Extensions.Logging
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            if (eventId.Id == (int)RelationalEventId.ExecutedCommand)
+            if (eventId.Id == RelationalEventId.CommandExecuting.Id)
             {
                 var data = state as IEnumerable<KeyValuePair<string, object>>;
                 if (data != null)
                 {
-                    var commandText = data.Single(p => p.Key == "CommandText").Value;
+                    var dataList = data.ToList();
+                    var commandText = dataList.Single(p => p.Key == "commandText").Value;
                     if (string.IsNullOrEmpty(commandText?.ToString()))
                         return;
                     var message = $"{Environment.NewLine}{formatter(state, exception)}";

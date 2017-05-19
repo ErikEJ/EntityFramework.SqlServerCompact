@@ -17,6 +17,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public BuiltInDataTypesSqlCeTest(BuiltInDataTypesSqlCeFixture fixture)
             : base(fixture)
         {
+            fixture.TestSqlLoggerFactory.Clear();
         }
 
         [Fact]
@@ -225,10 +226,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         private string DumpParameters()
-            => string.Join(
-                FileLineEnding,
-                Fixture.TestSqlLoggerFactory.CommandLogData.First().Parameters
-                    .Select(p => p.Name + ": " + p.FormatParameter(quoteValues: false)));
+            => Fixture.TestSqlLoggerFactory.Parameters.First().Replace(", ", FileLineEnding);
 
         private static void AssertMappedDataTypes(MappedDataTypes entity, int id)
         {
@@ -892,7 +890,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_nulls_for_all_mapped_sized_data_types_with_identity()
         {
-            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedSizedDataTypesWithIdentity>().Add(new MappedSizedDataTypesWithIdentity { Int = 78 });
@@ -978,7 +975,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public virtual void Can_insert_and_read_back_all_mapped_data_types_with_precision_and_scale_with_identity()
         {
-            Fixture.TestSqlLoggerFactory.Clear();
             using (var context = CreateContext())
             {
                 context.Set<MappedPrecisionAndScaledDataTypesWithIdentity>().Add(

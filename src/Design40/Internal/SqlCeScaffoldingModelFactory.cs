@@ -15,7 +15,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
     public class SqlCeScaffoldingModelFactory : RelationalScaffoldingModelFactory
     {
         public SqlCeScaffoldingModelFactory(
-            [NotNull] IInterceptingLogger<LoggerCategory.Scaffolding> loggerFactory,
+            [NotNull] IDiagnosticsLogger<LoggerCategory.Scaffolding> loggerFactory,
             [NotNull] IRelationalTypeMapper typeMapper,
             [NotNull] IDatabaseModelFactory databaseModelFactory,
             [NotNull] CandidateNamingService candidateNamingService,
@@ -29,7 +29,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             if ((tableSelectionSet != null)
                 && tableSelectionSet.Schemas.Any())
             {
-                Logger.LogWarning("You have specified some schema selections. The SQL Server Compact provider does not support these and they will be ignored. Note: it does support table selections.");
+                //TODO ErikEJ fix logging (see sqlite provider)
+                //Logger.LogWarning("You have specified some schema selections. The SQL Server Compact provider does not support these and they will be ignored. Note: it does support table selections.");
 
                 tableSelectionSet.Schemas.ToList().ForEach(s => s.IsMatched = true);
             }
@@ -102,7 +103,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             {
                 if (typeof(byte) == propertyBuilder.Metadata.ClrType)
                 {
-                    Logger.LogWarning($"For column {column.DisplayName}. This column is set up as an Identity column, but the SQL Server data type is {column.DataType}. This will be mapped to CLR type byte which does not allow the SqlServerValueGenerationStrategy.IdentityColumn setting. Generating a matching Property but ignoring the Identity setting.");
+                    //TODO ErikEJ fix logging (see sqlite provider)
+                    //Logger.LogWarning($"For column {column.DisplayName}. This column is set up as an Identity column, but the SQL Server data type is {column.DataType}. This will be mapped to CLR type byte which does not allow the SqlServerValueGenerationStrategy.IdentityColumn setting. Generating a matching Property but ignoring the Identity setting.");
                 }
                 else
                 {
@@ -137,8 +139,9 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 }
                 else
                 {
-                    Logger.LogWarning(
-                        $"For column {column.DisplayName} unable to interpret default value {column.DefaultValue}. Will not generate code setting a default value for the property {propertyBuilder.Metadata.Name} on entity type {propertyBuilder.Metadata.DeclaringEntityType.Name}.");
+                    //TODO ErikEJ fix logging (see sqlite provider)
+                    //Logger.LogWarning(
+                    //    $"For column {column.DisplayName} unable to interpret default value {column.DefaultValue}. Will not generate code setting a default value for the property {propertyBuilder.Metadata.Name} on entity type {propertyBuilder.Metadata.DeclaringEntityType.Name}.");
                 }
             }
         }

@@ -15,6 +15,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         }
 
         [Fact(Skip = "SQLCE limitation")]
+        public override void Navigation_with_collection_with_nullable_type_key()
+        {
+            base.Navigation_with_collection_with_nullable_type_key();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
         public override void Navigation_in_subquery_referencing_outer_query_with_client_side_result_operator_and_count()
         {
             base.Navigation_in_subquery_referencing_outer_query_with_client_side_result_operator_and_count();
@@ -524,7 +530,7 @@ WHERE @_outer_CustomerID = [o].[CustomerID]");
             base.Select_collection_navigation_multi_part();
 
             AssertSql(
-                @"SELECT [o.Customer].[CustomerID], [o.Customer].[Address], [o.Customer].[City], [o.Customer].[CompanyName], [o.Customer].[ContactName], [o.Customer].[ContactTitle], [o.Customer].[Country], [o.Customer].[Fax], [o.Customer].[Phone], [o.Customer].[PostalCode], [o.Customer].[Region], [o].[OrderID]
+                @"SELECT [o].[OrderID], [o.Customer].[CustomerID]
 FROM [Orders] AS [o]
 LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
 WHERE [o].[CustomerID] = N'ALFKI'",

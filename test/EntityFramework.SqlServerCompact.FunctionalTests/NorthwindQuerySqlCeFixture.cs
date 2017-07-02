@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

@@ -18,7 +18,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <param name="entityType"> The entity to get metadata for. </param>
         /// <returns> The SQL Server Compact specific metadata for the entity. </returns>
         public static IRelationalEntityTypeAnnotations SqlCe([NotNull] this IEntityType entityType)
-            => new RelationalEntityTypeAnnotations(Check.NotNull(entityType, nameof(entityType)), SqlCeFullAnnotationNames.Instance);
+            => new RelationalEntityTypeAnnotations(Check.NotNull(entityType, nameof(entityType)));
 
         /// <summary>
         ///     Gets the SQL Server Compact specific metadata for an entity.
@@ -34,7 +34,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <param name="foreignKey"> The foreign key to get metadata for. </param>
         /// <returns> The SQL Server Compact specific metadata for the foreign key. </returns>
         public static IRelationalForeignKeyAnnotations SqlCe([NotNull] this IForeignKey foreignKey)
-            => new RelationalForeignKeyAnnotations(Check.NotNull(foreignKey, nameof(foreignKey)), SqlCeFullAnnotationNames.Instance);
+            => new RelationalForeignKeyAnnotations(Check.NotNull(foreignKey, nameof(foreignKey)));
 
         /// <summary>
         ///     Gets the SQL Server Compact specific metadata for a foreign key.
@@ -50,7 +50,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <param name="index"> The index to get metadata for. </param>
         /// <returns> The SQL Server Compact specific metadata for the index. </returns>
         public static IRelationalIndexAnnotations SqlCe([NotNull] this IIndex index)
-            => new RelationalIndexAnnotations(Check.NotNull(index, nameof(index)), SqlCeFullAnnotationNames.Instance);
+            => new RelationalIndexAnnotations(Check.NotNull(index, nameof(index)));
 
         /// <summary>
         ///     Gets the SQL Server Compact specific metadata for an index.
@@ -66,7 +66,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <param name="key"> The key to get metadata for. </param>
         /// <returns> The SQL Server Compact specific metadata for the key. </returns>
         public static IRelationalKeyAnnotations SqlCe([NotNull] this IKey key)
-            => new RelationalKeyAnnotations(Check.NotNull(key, nameof(key)), SqlCeFullAnnotationNames.Instance);
+            => new RelationalKeyAnnotations(Check.NotNull(key, nameof(key)));
 
         /// <summary>
         ///     Gets the SQL Server Compact specific metadata for a key.
@@ -90,7 +90,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <param name="model"> The model to get metadata for. </param>
         /// <returns> The SQL Server Compact specific metadata for the model. </returns>
         public static IRelationalModelAnnotations SqlCe([NotNull] this IModel model)
-            => new RelationalModelAnnotations(Check.NotNull(model, nameof(model)), SqlCeFullAnnotationNames.Instance);
+            => new RelationalModelAnnotations(Check.NotNull(model, nameof(model)));
 
         /// <summary>
         ///     Gets the SQL Server Compact specific metadata for a property.
@@ -98,7 +98,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <param name="property"> The property to get metadata for. </param>
         /// <returns> The SQL Server Compact specific metadata for the property. </returns>
         public static IRelationalPropertyAnnotations SqlCe([NotNull] this IProperty property)
-            => new RelationalPropertyAnnotations(Check.NotNull(property, nameof(property)), SqlCeFullAnnotationNames.Instance);
+            => new RelationalPropertyAnnotations(Check.NotNull(property, nameof(property)));
 
         /// <summary>
         ///     Gets the SQL Server Compact specific metadata for a property.

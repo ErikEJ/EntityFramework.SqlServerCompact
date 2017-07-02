@@ -209,7 +209,6 @@
     <None Include="EntityFrameworkCore.SqlServerCompact35.Design.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Provider35\EntityFramework.SqlServerCompact35.csproj">

@@ -15,17 +15,21 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
-        private readonly IRelationalAnnotationProvider _annotations;
-        private readonly IDiagnosticsLogger<LoggerCategory.Database.Sql> _logger;
+        private readonly IMigrationsAnnotationProvider _annotations;
+        //TODO ErikEJ Fix logging
+        //private readonly IDiagnosticsLogger<LoggerCategory.Database.Sql> _logger;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] MigrationsSqlGeneratorDependencies dependencies,
-            [NotNull] IDiagnosticsLogger<LoggerCategory.Database.Sql> logger)
+            [NotNull] IMigrationsAnnotationProvider migrationsAnnotations
+            //,
+            //[NotNull] IDiagnosticsLogger<LoggerCategory.Database.Sql> logger
+            )
             : base(dependencies)
         {
             _commandBuilderFactory = dependencies.CommandBuilderFactory;
-            _annotations = dependencies.Annotations;
-            _logger = logger;
+            _annotations = migrationsAnnotations;
+            //_logger = logger;
         }
 
         public override IReadOnlyList<MigrationCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
@@ -224,7 +228,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
             }
 
-            var index = FindEntityType(model, null, operation.Table).GetIndexes().Single(i => _annotations.For(i).Name == operation.NewName);
+            //TODO ErikEJ Test!
+            var index = model.FindEntityType(operation.Table).GetIndexes().Single(i => _annotations.For(i).First().Name == operation.NewName);
 
             var dropIndexOperation = new DropIndexOperation
             {
@@ -408,12 +413,5 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 builder.Append(" IDENTITY");
             }
         }
-
-       private IEntityType FindEntityType(
-       IModel model,
-       string schema,
-       string tableName)
-       => model?.GetEntityTypes().FirstOrDefault(
-           t => (_annotations.For(t).TableName == tableName) && (_annotations.For(t).Schema == schema));
     }
 }

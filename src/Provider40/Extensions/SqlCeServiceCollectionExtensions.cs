@@ -67,7 +67,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IDatabaseProvider, DatabaseProvider<SqlCeOptionsExtension>>()
                 .TryAdd<IRelationalTypeMapper, SqlCeTypeMapper>()
                 .TryAdd<ISqlGenerationHelper, SqlCeSqlGenerationHelper>()
-                .TryAdd<IRelationalAnnotationProvider, SqlCeAnnotationProvider>()
                 .TryAdd<IMigrationsAnnotationProvider, SqlCeMigrationsAnnotationProvider>()
                 .TryAdd<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
                 .TryAdd<IModelValidator, SqlCeModelValidator>()
@@ -80,7 +79,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IHistoryRepository, SqlCeHistoryRepository>()
                 .TryAdd<IQueryCompilationContextFactory, SqlCeQueryCompilationContextFactory>()
                 .TryAdd<IMemberTranslator, SqlCeCompositeMemberTranslator>()
-                .TryAdd<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
+                //TODOErikEJ Fix this
+                //.TryAdd<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
                 .TryAdd<IQuerySqlGeneratorFactory, SqlCeQuerySqlGeneratorFactory>()
                 .TryAdd<ISqlTranslatingExpressionVisitorFactory, SqlCeTranslatingExpressionVisitorFactory>()
                 .TryAdd<ISingletonOptions, ISqlCeOptions>(p => p.GetService<ISqlCeOptions>())

@@ -13,13 +13,13 @@
     <releaseNotes>for EF Core 2.0</releaseNotes>
     <tags>EntityFramework EF sqlce entity framework core provider sql server compact sqlservercompact</tags>
     <dependencies>
-        <group targetFramework="net46">
+        <group targetFramework="net461">
             <dependency id="Microsoft.EntityFrameworkCore.Relational" version="2.0.0-preview2" />
             <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
          </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\EntityFrameworkCore.SqlServerCompact40.dll" target="lib\net46\" />
+    <file src="bin\Release\EntityFrameworkCore.SqlServerCompact40.dll" target="lib\net461\" />
   </files>
 </package>

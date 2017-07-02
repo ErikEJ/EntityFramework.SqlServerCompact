@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="ReverseEngineering\ExpectedResults\E2E_AllFluentAPI\MultipleFKsDependent.expected">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

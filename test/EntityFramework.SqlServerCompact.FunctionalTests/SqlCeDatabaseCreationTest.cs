@@ -247,7 +247,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                             "Blogs.AndChew (varbinary)",
                             "Blogs.AndRow (rowversion)",
                             "Blogs.Cheese (nvarchar)",
-                            "Blogs.CupOfChar (int)",
                             "Blogs.ErMilan (int)",
                             "Blogs.Fuse (smallint)",
                             "Blogs.George (bit)",
@@ -330,6 +329,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     b.HasKey(e => new { e.Key1, e.Key2 });
                     b.Property(e => e.AndRow).IsConcurrencyToken().ValueGeneratedOnAddOrUpdate();
                 });
+
             }
 
             public DbSet<Blog> Blogs { get; set; }
@@ -345,7 +345,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             public Guid TheGu { get; set; }
             public DateTime NotFigTime { get; set; }
             public byte ToEat { get; set; }
-            public char CupOfChar { get; set; }
             public double OrNothing { get; set; }
             public short Fuse { get; set; }
             public long WayRound { get; set; }

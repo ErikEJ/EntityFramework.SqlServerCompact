@@ -30,7 +30,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
         {
             Assert.Equal(
                 typeof(SqlCeDatabaseConnection).GetTypeInfo().Assembly.GetName().Name,
-                new DatabaseProvider<SqlCeOptionsExtension>(new DatabaseProviderDependencies()).InvariantName);
+                new DatabaseProvider<SqlCeOptionsExtension>(new DatabaseProviderDependencies()).Name);
         }
     }
 }

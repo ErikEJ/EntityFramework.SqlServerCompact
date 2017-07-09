@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Data.SqlServerCe;
+using System.Diagnostics;
 
 namespace Microsoft.EntityFrameworkCore.Migrations
 {
@@ -16,14 +19,13 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
         private readonly IMigrationsAnnotationProvider _annotations;
-        //TODO ErikEJ Fix logging
-        //private readonly IDiagnosticsLogger<LoggerCategory.Database.Sql> _logger;
+        //private readonly IDiagnosticsLogger<DbLoggerCategory.Database> _logger;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] MigrationsSqlGeneratorDependencies dependencies,
             [NotNull] IMigrationsAnnotationProvider migrationsAnnotations
             //,
-            //[NotNull] IDiagnosticsLogger<LoggerCategory.Database.Sql> logger
+            //[NotNull] IDiagnosticsLogger<DbLoggerCategory.Database> logger
             )
             : base(dependencies)
         {
@@ -50,7 +52,6 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             {
                 if (!string.IsNullOrEmpty(migrationCommand.CommandText))
                 {
-                    //TODO ErikEJ Investigate how to fix this?
                     //_logger.Logger.LogCommandExecuted(new SqlCeCommand(migrationCommand.CommandText), Stopwatch.GetTimestamp(), Stopwatch.GetTimestamp());
                 }
             }
@@ -335,7 +336,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                     IModel model,
                     MigrationCommandListBuilder builder)
         {
-            var valueGeneration = (string)annotatable[SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration];
+            var valueGeneration = (string)annotatable[SqlCeAnnotationNames.ValueGeneration];
 
             ColumnDefinition(
                 schema,

@@ -239,7 +239,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 var columns = (testStore.Query<string>(
                     "SELECT TABLE_NAME + '.' + COLUMN_NAME + ' (' + DATA_TYPE + ')' FROM INFORMATION_SCHEMA.COLUMNS ORDER BY TABLE_NAME, COLUMN_NAME")).ToArray();
-                Assert.Equal(15, columns.Length);
+                Assert.Equal(14, columns.Length);
 
                 Assert.Equal(
                     new[]

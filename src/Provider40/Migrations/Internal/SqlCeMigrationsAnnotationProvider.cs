@@ -22,7 +22,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
             if (generateIdentityKey)
             {
                 yield return new Annotation(
-                    SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration,
+                    SqlCeAnnotationNames.ValueGeneration,
                     SqlCeAnnotationNames.Identity);
             }
         }

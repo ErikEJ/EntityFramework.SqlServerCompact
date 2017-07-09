@@ -79,8 +79,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IHistoryRepository, SqlCeHistoryRepository>()
                 .TryAdd<IQueryCompilationContextFactory, SqlCeQueryCompilationContextFactory>()
                 .TryAdd<IMemberTranslator, SqlCeCompositeMemberTranslator>()
-                //TODOErikEJ Fix this
-                //.TryAdd<IMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
+                .TryAdd<ICompositeMethodCallTranslator, SqlCeCompositeMethodCallTranslator>()
                 .TryAdd<IQuerySqlGeneratorFactory, SqlCeQuerySqlGeneratorFactory>()
                 .TryAdd<ISqlTranslatingExpressionVisitorFactory, SqlCeTranslatingExpressionVisitorFactory>()
                 .TryAdd<ISingletonOptions, ISqlCeOptions>(p => p.GetService<ISqlCeOptions>())

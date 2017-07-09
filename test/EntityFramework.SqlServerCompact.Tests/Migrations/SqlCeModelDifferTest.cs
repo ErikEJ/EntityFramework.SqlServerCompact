@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.Relational.Tests.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using System;
+using System.Diagnostics;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Migrations
@@ -22,8 +22,8 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     x =>
                     {
                         x.Property<int>("Id");
-                        x.HasKey("Id").ForSqlCeHasName("PK_People");
-                        x.ForSqlCeToTable("People");
+                        x.HasKey("Id").HasName("PK_People");
+                        x.ToTable("People");
                     }),
                 operations =>
                 {
@@ -54,7 +54,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     {
                         x.Property<int>("Id");
                         x.HasKey("Id").HasName("PK_Person");
-                        x.ForSqlCeToTable("People");
+                        x.ToTable("People");
                     }),
                 operations =>
                 {
@@ -77,7 +77,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     {
                         x.Property<int>("Id");
                         x.HasKey("Id");
-                        x.ForSqlCeToTable("People");
+                        x.ToTable("People");
                     }),
                 _ => { },
                 operations =>
@@ -99,16 +99,16 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     x =>
                     {
                         x.Property<int>("Id");
-                        x.HasKey("Id").ForSqlCeHasName("PK_People");
-                        x.ForSqlCeToTable("People");
+                        x.HasKey("Id").HasName("PK_People");
+                        x.ToTable("People");
                     }),
                 modelBuilder => modelBuilder.Entity(
                     "Person",
                     x =>
                     {
                         x.Property<int>("Id");
-                        x.HasKey("Id").ForSqlCeHasName("PK_People");
-                        x.ForSqlCeToTable("People");
+                        x.HasKey("Id").HasName("PK_People");
+                        x.ToTable("People");
                         x.Property<string>("FirstName");
                         x.Property<string>("FullName").HasComputedColumnSql("[FirstName] + [LastName]");
                         x.Property<string>("LastName");
@@ -141,7 +141,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     {
                         x.Property<int>("Id");
                         x.HasKey("Id");
-                        x.Property<int>("Value").ForSqlCeHasColumnName("PersonValue");
+                        x.Property<int>("Value").HasColumnName("PersonValue");
                     }),
                 operations =>
                 {
@@ -173,7 +173,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("Value")
-                            .ForSqlCeHasColumnType("varchar(8000)")
+                            .HasColumnType("varchar(8000)")
                             .HasDefaultValueSql("1 + 1");
                     }),
                 operations =>
@@ -216,7 +216,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Assert.Equal("bah", operation.Schema);
                     Assert.Equal("Lamb", operation.Table);
                     Assert.Equal("Id", operation.Name);
-                    Assert.Equal(SqlCeFullAnnotationNames.Instance.ValueGeneration, "SqlCe:ValueGeneration");
+                    Assert.Equal(SqlCeAnnotationNames.Identity, operation["SqlCe:ValueGeneration"]);
                 });
         }
 
@@ -237,7 +237,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     {
                         x.Property<int>("Id");
                         x.HasKey("Id");
-                        x.Property<int>("Value").ForSqlCeHasColumnName("PersonValue");
+                        x.Property<int>("Value").HasColumnName("PersonValue");
                     }),
                 operations =>
                 {
@@ -259,7 +259,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     {
                         x.Property<int>("Id");
                         x.HasKey("Id");
-                        x.Property<int>("Value").ForSqlCeHasColumnName("PersonValue");
+                        x.Property<int>("Value").HasColumnName("PersonValue");
                     }),
                 target => target.Entity(
                     "Person",
@@ -299,7 +299,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("AlternateId");
-                        x.HasAlternateKey("AlternateId").ForSqlCeHasName("AK_Ewe");
+                        x.HasAlternateKey("AlternateId").HasName("AK_Ewe");
                     }),
                 operations =>
                 {
@@ -324,7 +324,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("AlternateId");
-                        x.HasAlternateKey("AlternateId").ForSqlCeHasName("AK_Ewe");
+                        x.HasAlternateKey("AlternateId").HasName("AK_Ewe");
                     }),
                 target => target.Entity(
                     "Ewe",
@@ -367,7 +367,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("ParentId");
-                        x.HasOne("Amoeba").WithMany().HasForeignKey("ParentId").ForSqlCeHasConstraintName("FK_Amoeba_Parent");
+                        x.HasOne("Amoeba").WithMany().HasForeignKey("ParentId").HasConstraintName("FK_Amoeba_Parent");
                     }),
                 operations =>
                 {
@@ -397,7 +397,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("ParentId");
-                        x.HasOne("Anemone").WithMany().HasForeignKey("ParentId").ForSqlCeHasConstraintName("FK_Anemone_Parent");
+                        x.HasOne("Anemone").WithMany().HasForeignKey("ParentId").HasConstraintName("FK_Anemone_Parent");
                     }),
                 target => target.Entity(
                     "Anemone",
@@ -446,7 +446,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("Value");
-                        x.HasIndex("Value").ForSqlCeHasName("IX_dbo.Donkey_Value");
+                        x.HasIndex("Value").HasName("IX_dbo.Donkey_Value");
                     }),
                 operations =>
                 {
@@ -481,7 +481,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("Value");
-                        x.HasIndex("Value").ForSqlCeHasName("IX_HipVal");
+                        x.HasIndex("Value").HasName("IX_HipVal");
                     }),
                 operations =>
                 {
@@ -506,7 +506,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         x.Property<int>("Id");
                         x.HasKey("Id");
                         x.Property<int>("Value");
-                        x.HasIndex("Value").ForSqlCeHasName("IX_HorseVal");
+                        x.HasIndex("Value").HasName("IX_HorseVal");
                     }),
                 target => target.Entity(
                     "Horse",
@@ -564,8 +564,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
         protected override MigrationsModelDiffer CreateModelDiffer()
             => new MigrationsModelDiffer(
-                new SqlCeTypeMapper(new RelationalTypeMapperDependencies()),
-                new SqlCeAnnotationProvider(),
-                new SqlCeMigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies()));
+        new SqlCeTypeMapper(new RelationalTypeMapperDependencies()),
+        new SqlCeMigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies()));
     }
 }

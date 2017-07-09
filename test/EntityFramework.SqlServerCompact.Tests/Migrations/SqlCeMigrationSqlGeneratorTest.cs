@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.Relational.Specification.Tests;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Migrations
@@ -104,7 +103,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     ColumnType = "int",
                     DefaultValue = 0,
                     IsNullable = false,
-                    [SqlCeAnnotationNames.Prefix + SqlCeAnnotationNames.ValueGeneration] =
+                    [SqlCeAnnotationNames.ValueGeneration] =
                         SqlCeAnnotationNames.Identity
                 });
 

@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Moq;
 using Xunit;
-using Microsoft.EntityFrameworkCore.Relational.Tests.TestUtilities;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 {
@@ -88,13 +87,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
         private static IHistoryRepository CreateHistoryRepository(string schema = null)
         {
-            var annotationsProvider = new SqlCeAnnotationProvider();
             var sqlGenerator = new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies());
             var typeMapper = new SqlCeTypeMapper(new RelationalTypeMapperDependencies());
 
             var commandBuilderFactory = new RelationalCommandBuilderFactory(
-                new FakeDiagnosticsLogger<LoggerCategory.Database.Sql>(),
-                new FakeDiagnosticsLogger<LoggerCategory.Database.DataReader>(),
+                new FakeDiagnosticsLogger<DbLoggerCategory.Database.Command>(),
                 typeMapper);
 
             return new SqlCeHistoryRepository(
@@ -112,16 +109,13 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                         }),
                     new MigrationsModelDiffer(
                         new SqlCeTypeMapper(new RelationalTypeMapperDependencies()),
-                        annotationsProvider,
                         new SqlCeMigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies())),
                     new SqlCeMigrationsSqlGenerator(
                         new MigrationsSqlGeneratorDependencies(
                             commandBuilderFactory,
                             new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()),
-                            typeMapper,
-                            annotationsProvider),
-                        new FakeDiagnosticsLogger<LoggerCategory.Database.Sql>()),
-                    annotationsProvider,
+                            typeMapper),
+                        new SqlCeMigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies())),
                     sqlGenerator));
         }
 

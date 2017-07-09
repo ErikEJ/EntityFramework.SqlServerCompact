@@ -120,29 +120,8 @@
     <Compile Include="..\Provider40\Extensions\SqlCeDbContextOptionsExtensions.cs">
       <Link>Extensions\SqlCeDbContextOptionsExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeEntityTypeBuilderExtensions.cs">
-      <Link>Extensions\SqlCeEntityTypeBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeIndexBuilderExtensions.cs">
-      <Link>Extensions\SqlCeIndexBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeKeyBuilderExtensions.cs">
-      <Link>Extensions\SqlCeKeyBuilderExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeMetaDataExtensions.cs">
       <Link>Extensions\SqlCeMetaDataExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCePropertyBuilderExtensions.cs">
-      <Link>Extensions\SqlCePropertyBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeReferenceCollectionBuilderExtensions.cs">
-      <Link>Extensions\SqlCeReferenceCollectionBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeReferenceOwnershipBuilderExtensions.cs">
-      <Link>Extensions\SqlCeReferenceOwnershipBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeReferenceReferenceBuilderExtensions.cs">
-      <Link>Extensions\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeServiceCollectionExtensions.cs">
       <Link>Extensions\SqlCeServiceCollectionExtensions.cs</Link>

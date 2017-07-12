@@ -464,7 +464,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             => builder.Entity<Customer>(b =>
             {
                 b.HasKey(c => c.CustomerID);
-                b.ForSqlCeToTable("Customers");
+                b.ToTable("Customers");
             });
     }
 }

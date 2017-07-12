@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
+﻿using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
 using Xunit;
 using Xunit.Abstractions;
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Inheritance;
+﻿using Microsoft.EntityFrameworkCore.TestModels.Inheritance;
 using Xunit;
 using Xunit.Abstractions;
 

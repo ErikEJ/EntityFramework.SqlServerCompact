@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.ComplexNavigationsModel;
-using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+﻿using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.TestModels.ComplexNavigationsModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

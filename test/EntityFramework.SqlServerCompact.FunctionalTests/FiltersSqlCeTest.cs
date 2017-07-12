@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
+﻿using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 

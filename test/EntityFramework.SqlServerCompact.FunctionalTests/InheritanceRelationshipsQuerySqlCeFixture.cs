@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.InheritanceRelationships;
+using Microsoft.EntityFrameworkCore.TestModels.InheritanceRelationships;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

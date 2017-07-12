@@ -105,6 +105,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Provider40\Design\Internal\SqlCeDesignTimeServices.cs">
+      <Link>Design\Internal\SqlCeDesignTimeServices.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Extensions\Logging\DbLoggerProvider.cs">
       <Link>Extensions\Logging\DbLoggerProvider.cs</Link>
     </Compile>
@@ -254,6 +257,15 @@
     </Compile>
     <Compile Include="..\Provider40\Query\Sql\Internal\SqlCeQuerySqlGeneratorFactory.cs">
       <Link>Query\Sql\Internal\SqlCeQuerySqlGeneratorFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeDatabaseModelfactory.cs">
+      <Link>Scaffolding\Internal\SqlCeDatabaseModelfactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeScaffoldingCodeGenerator.cs">
+      <Link>Scaffolding\Internal\SqlCeScaffoldingCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeTableSelectionSetExtensions.cs">
+      <Link>Scaffolding\Internal\SqlCeTableSelectionSetExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Storage\Internal\ISqlCeDatabaseConnection.cs">
       <Link>Storage\Internal\ISqlCeDatabaseConnection.cs</Link>

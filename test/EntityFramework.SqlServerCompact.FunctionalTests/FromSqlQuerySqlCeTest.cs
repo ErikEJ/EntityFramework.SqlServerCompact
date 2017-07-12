@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.TestModels.Northwind;
+using System;
 using System.Data.Common;
 using System.Data.SqlServerCe;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
 using Xunit;
 using Xunit.Abstractions;
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
+using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using Xunit;
 using Xunit.Abstractions;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
 
 #if NETCOREAPP2_0
 using System.Reflection;

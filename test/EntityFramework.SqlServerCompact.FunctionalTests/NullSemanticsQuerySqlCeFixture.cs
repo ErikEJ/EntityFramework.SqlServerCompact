@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.NullSemanticsModel;
+﻿using Microsoft.EntityFrameworkCore.TestModels.NullSemanticsModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;

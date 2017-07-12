@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Xunit;
+using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
 
 // ReSharper disable UnusedParameter.Local
 // ReSharper disable PossibleInvalidOperationException

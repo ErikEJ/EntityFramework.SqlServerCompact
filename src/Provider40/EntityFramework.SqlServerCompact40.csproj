@@ -130,6 +130,10 @@
     <Compile Include="Query\ExpressionVisitors\SqlCeTranslatingExpressionVisitor.cs" />
     <Compile Include="Query\ExpressionVisitors\SqlCeTranslatingExpressionVisitorFactory.cs" />
     <Compile Include="Query\Sql\Internal\ISqlCeExpressionVisitor.cs" />
+    <Compile Include="Scaffolding\Internal\SqlCeDatabaseModelfactory.cs" />
+    <Compile Include="Design\Internal\SqlCeDesignTimeServices.cs" />
+    <Compile Include="Scaffolding\Internal\SqlCeScaffoldingCodeGenerator.cs" />
+    <Compile Include="Scaffolding\Internal\SqlCeTableSelectionSetExtensions.cs" />
     <Compile Include="Storage\Internal\SqlCeByteArrayTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlCeDatabaseFacadeExtensions.cs" />

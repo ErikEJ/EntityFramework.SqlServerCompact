@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 
@@ -15,15 +14,16 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal
         }
 
         public static ConventionSet Build()
-            => new SqlCeConventionSetBuilder(
-                    new RelationalConventionSetBuilderDependencies(
-                        new SqlCeTypeMapper(
-                            new RelationalTypeMapperDependencies()),
-                        new SqlCeAnnotationProvider(),
-                        null,
-                        null),
-                    new SqlCeSqlGenerationHelper(
-                        new RelationalSqlGenerationHelperDependencies()))
-                .AddConventions(new CoreConventionSetBuilder().CreateConventionSet());
+        {
+            var sqlCeTypeMapper = new SqlCeTypeMapper(new RelationalTypeMapperDependencies());
+
+            return new SqlCeConventionSetBuilder(
+                    new RelationalConventionSetBuilderDependencies(sqlCeTypeMapper, null, null),
+                    new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()))
+                .AddConventions(
+                    new CoreConventionSetBuilder(
+                            new CoreConventionSetBuilderDependencies(sqlCeTypeMapper))
+                        .CreateConventionSet());
+        }
     }
 }

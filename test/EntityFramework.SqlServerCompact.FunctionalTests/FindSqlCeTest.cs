@@ -71,7 +71,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             base.Find_int_key_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 77
+                @"@__get_Item_0='77'
 
 SELECT TOP(1) [e].[Id], [e].[Foo]
 FROM [IntKey] AS [e]
@@ -84,7 +84,7 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
             base.Returns_null_for_int_key_not_in_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 99
+                @"@__get_Item_0='99'
 
 SELECT TOP(1) [e].[Id], [e].[Foo]
 FROM [IntKey] AS [e]
@@ -105,7 +105,7 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
             base.Find_string_key_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: Cat (Size = 256)
+                @"@__get_Item_0='Cat' (Size = 256)
 
 SELECT TOP(1) [e].[Id], [e].[Foo]
 FROM [StringKey] AS [e]
@@ -118,7 +118,7 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
             base.Returns_null_for_string_key_not_in_store();
 
             Assert.Equal(
-                @"@__get_Item_0: Fox (Size = 256)
+                @"@__get_Item_0='Fox' (Size = 256)
 
 SELECT TOP(1) [e].[Id], [e].[Foo]
 FROM [StringKey] AS [e]
@@ -139,8 +139,8 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
             base.Find_composite_key_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 77
-@__get_Item_1: Dog (Size = 256)
+                @"@__get_Item_0='77'
+@__get_Item_1='Dog' (Size = 256)
 
 SELECT TOP(1) [e].[Id1], [e].[Id2], [e].[Foo]
 FROM [CompositeKey] AS [e]
@@ -153,8 +153,8 @@ WHERE ([e].[Id1] = @__get_Item_0) AND ([e].[Id2] = @__get_Item_1)", Sql);
             base.Returns_null_for_composite_key_not_in_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 77
-@__get_Item_1: Fox (Size = 256)
+                @"@__get_Item_0='77'
+@__get_Item_1='Fox' (Size = 256)
 
 SELECT TOP(1) [e].[Id1], [e].[Id2], [e].[Foo]
 FROM [CompositeKey] AS [e]
@@ -175,7 +175,7 @@ WHERE ([e].[Id1] = @__get_Item_0) AND ([e].[Id2] = @__get_Item_1)", Sql);
             base.Find_base_type_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 77
+                @"@__get_Item_0='77'
 
 SELECT TOP(1) [e].[Id], [e].[Discriminator], [e].[Foo], [e].[Boo]
 FROM [BaseType] AS [e]
@@ -188,7 +188,7 @@ WHERE [e].[Discriminator] IN (N'DerivedType', N'BaseType') AND ([e].[Id] = @__ge
             base.Returns_null_for_base_type_not_in_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 99
+                @"@__get_Item_0='99'
 
 SELECT TOP(1) [e].[Id], [e].[Discriminator], [e].[Foo], [e].[Boo]
 FROM [BaseType] AS [e]
@@ -209,7 +209,7 @@ WHERE [e].[Discriminator] IN (N'DerivedType', N'BaseType') AND ([e].[Id] = @__ge
             base.Find_derived_type_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 78
+                @"@__get_Item_0='78'
 
 SELECT TOP(1) [e].[Id], [e].[Discriminator], [e].[Foo], [e].[Boo]
 FROM [BaseType] AS [e]
@@ -222,7 +222,7 @@ WHERE ([e].[Discriminator] = N'DerivedType') AND ([e].[Id] = @__get_Item_0)", Sq
             base.Returns_null_for_derived_type_not_in_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 99
+                @"@__get_Item_0='99'
 
 SELECT TOP(1) [e].[Id], [e].[Discriminator], [e].[Foo], [e].[Boo]
 FROM [BaseType] AS [e]
@@ -235,7 +235,7 @@ WHERE ([e].[Discriminator] = N'DerivedType') AND ([e].[Id] = @__get_Item_0)", Sq
             base.Find_base_type_using_derived_set_tracked();
 
             Assert.Equal(
-                @"@__get_Item_0: 88
+                @"@__get_Item_0='88'
 
 SELECT TOP(1) [e].[Id], [e].[Discriminator], [e].[Foo], [e].[Boo]
 FROM [BaseType] AS [e]
@@ -248,7 +248,7 @@ WHERE ([e].[Discriminator] = N'DerivedType') AND ([e].[Id] = @__get_Item_0)", Sq
             base.Find_base_type_using_derived_set_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 77
+                @"@__get_Item_0='77'
 
 SELECT TOP(1) [e].[Id], [e].[Discriminator], [e].[Foo], [e].[Boo]
 FROM [BaseType] AS [e]
@@ -269,7 +269,7 @@ WHERE ([e].[Discriminator] = N'DerivedType') AND ([e].[Id] = @__get_Item_0)", Sq
             base.Find_derived_using_base_set_type_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 78
+                @"@__get_Item_0='78'
 
 SELECT TOP(1) [e].[Id], [e].[Discriminator], [e].[Foo], [e].[Boo]
 FROM [BaseType] AS [e]
@@ -290,7 +290,7 @@ WHERE [e].[Discriminator] IN (N'DerivedType', N'BaseType') AND ([e].[Id] = @__ge
             base.Find_shadow_key_from_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 77
+                @"@__get_Item_0='77'
 
 SELECT TOP(1) [e].[Id], [e].[Foo]
 FROM [ShadowKey] AS [e]
@@ -303,7 +303,7 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
             base.Returns_null_for_shadow_key_not_in_store();
 
             Assert.Equal(
-                @"@__get_Item_0: 99
+                @"@__get_Item_0='99'
 
 SELECT TOP(1) [e].[Id], [e].[Foo]
 FROM [ShadowKey] AS [e]

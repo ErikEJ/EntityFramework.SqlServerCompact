@@ -17,7 +17,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal("int", GetTypeMapping(typeof(int)).StoreType);
             Assert.Equal("datetime", GetTypeMapping(typeof(DateTime)).StoreType);
             Assert.Equal("uniqueidentifier", GetTypeMapping(typeof(Guid)).StoreType);
-            Assert.Equal("int", GetTypeMapping(typeof(char)).StoreType);
             Assert.Equal("tinyint", GetTypeMapping(typeof(byte)).StoreType);
             Assert.Equal("float", GetTypeMapping(typeof(double)).StoreType);
             Assert.Equal("bit", GetTypeMapping(typeof(bool)).StoreType);
@@ -40,7 +39,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal("int", GetTypeMapping(typeof(int?)).StoreType);
             Assert.Equal("datetime", GetTypeMapping(typeof(DateTime?)).StoreType);
             Assert.Equal("uniqueidentifier", GetTypeMapping(typeof(Guid?)).StoreType);
-            Assert.Equal("int", GetTypeMapping(typeof(char?)).StoreType);
             Assert.Equal("tinyint", GetTypeMapping(typeof(byte?)).StoreType);
             Assert.Equal("float", GetTypeMapping(typeof(double?)).StoreType);
             Assert.Equal("bit", GetTypeMapping(typeof(bool?)).StoreType);
@@ -69,7 +67,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal(DbType.String, GetTypeMapping(typeof(string)).DbType);
             Assert.Equal(DbType.Binary, GetTypeMapping(typeof(byte[])).DbType);
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid)).DbType);
-            Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte)).DbType);
             Assert.Equal(DbType.Double, GetTypeMapping(typeof(double)).DbType);
             Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool)).DbType);
@@ -86,7 +83,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal(DbType.String, GetTypeMapping(typeof(string)).DbType);
             Assert.Equal(DbType.Binary, GetTypeMapping(typeof(byte[])).DbType);
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid?)).DbType);
-            Assert.Equal(DbType.Int32, GetTypeMapping(typeof(char?)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte?)).DbType);
             Assert.Equal(DbType.Double, GetTypeMapping(typeof(double?)).DbType);
             Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool?)).DbType);
@@ -340,7 +336,7 @@ namespace Microsoft.EntityFrameworkCore.Tests
             var property = CreateEntityType().AddProperty("MyProp", typeof(byte[]));
             property.IsConcurrencyToken = true;
 
-            var typeMapping = (SqlCeMaxLengthMapping)new SqlCeTypeMapper(new RelationalTypeMapperDependencies()).GetMapping(property);
+            var typeMapping = (SqlCeByteArrayTypeMapping)new SqlCeTypeMapper(new RelationalTypeMapperDependencies()).GetMapping(property);
 
             Assert.Equal(DbType.Binary, typeMapping.DbType);
             Assert.Equal("varbinary(8000)", typeMapping.StoreType);

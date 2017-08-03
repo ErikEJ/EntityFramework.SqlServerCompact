@@ -33,7 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                         .HasForeignKey(p => p.BlogId);
                 modelBuilder.Entity<Post>()
                     .HasIndex(p => p.BlogId)
-                    .ForSqlCeHasName("NewIndex");
+                    .HasName("NewIndex");
             }
         }
 

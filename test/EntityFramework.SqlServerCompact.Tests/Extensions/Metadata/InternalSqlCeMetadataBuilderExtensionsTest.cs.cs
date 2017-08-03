@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Xunit;
 
@@ -10,19 +9,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
     {
         private InternalModelBuilder CreateBuilder()
             => new InternalModelBuilder(new Model());
-
-        [Fact]
-        public void Can_access_model()
-        {
-            var builder = CreateBuilder();
-
-            builder.SqlCe(ConfigurationSource.Convention).GetOrAddSequence("Mine").IncrementBy = 77;
-
-            Assert.Equal(77, builder.Metadata.SqlCe().FindSequence("Mine").IncrementBy);
-
-            Assert.Equal(1, builder.Metadata.GetAnnotations().Count(
-                a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
-        }
 
         [Fact]
         public void Can_access_entity_type()
@@ -37,29 +23,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             Assert.False(typeBuilder.SqlCe(ConfigurationSource.Convention).ToTable("Splod"));
             Assert.Equal("Splow", typeBuilder.Metadata.SqlCe().TableName);
-
-            Assert.Equal(1, typeBuilder.Metadata.GetAnnotations().Count(
-                a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
-        }
-
-        [Fact]
-        public void Can_access_property()
-        {
-            var propertyBuilder = CreateBuilder()
-                .Entity(typeof(Splot), ConfigurationSource.Convention)
-                .Property("Id", typeof(int), ConfigurationSource.Convention);
-
-            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.Convention).HasColumnName("Splew"));
-            Assert.Equal("Splew", propertyBuilder.Metadata.SqlCe().ColumnName);
-
-            Assert.True(propertyBuilder.SqlCe(ConfigurationSource.DataAnnotation).HasColumnName("Splow"));
-            Assert.Equal("Splow", propertyBuilder.Metadata.SqlCe().ColumnName);
-
-            Assert.False(propertyBuilder.SqlCe(ConfigurationSource.Convention).HasColumnName("Splod"));
-            Assert.Equal("Splow", propertyBuilder.Metadata.SqlCe().ColumnName);
-
-            Assert.Equal(1, propertyBuilder.Metadata.GetAnnotations().Count(
-                a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
         [Fact]
@@ -78,9 +41,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             Assert.False(keyBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splod"));
             Assert.Equal("Splow", keyBuilder.Metadata.SqlCe().Name);
-
-            Assert.Equal(1, keyBuilder.Metadata.GetAnnotations().Count(
-                a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
         [Fact]
@@ -99,9 +59,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             indexBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splod");
             Assert.Equal("Splow", indexBuilder.Metadata.SqlCe().Name);
-
-            Assert.Equal(1, indexBuilder.Metadata.GetAnnotations().Count(
-                a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
         [Fact]
@@ -120,9 +77,6 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             Assert.False(relationshipBuilder.SqlCe(ConfigurationSource.Convention).HasConstraintName("Splod"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
-
-            Assert.Equal(1, relationshipBuilder.Metadata.GetAnnotations().Count(
-                a => a.Name.StartsWith(SqlCeAnnotationNames.Prefix, StringComparison.Ordinal)));
         }
 
         private class Splot

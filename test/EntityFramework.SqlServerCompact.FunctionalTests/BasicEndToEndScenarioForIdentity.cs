@@ -3,10 +3,7 @@ using System.Data.SqlServerCe;
 using System.Diagnostics;
 using System.Linq;
 using Xunit;
-#if SQLCE35
-#else
 
-#endif
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class BasicEndToEndScenarioForIdentity

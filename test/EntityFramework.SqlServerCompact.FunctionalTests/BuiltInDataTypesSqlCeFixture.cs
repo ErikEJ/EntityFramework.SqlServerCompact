@@ -58,7 +58,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 b.Ignore(dt => dt.TestSignedByte);
                 b.Ignore(dt => dt.TestDateTimeOffset);
                 b.Ignore(dt => dt.TestTimeSpan);
-                b.Property(dt => dt.TestDecimal).ForSqlCeHasColumnType("decimal(18,2)");
+                b.Property(dt => dt.TestDecimal).HasColumnType("decimal(18,2)");
             });
 
             modelBuilder.Entity<BuiltInNullableDataTypes>(b =>

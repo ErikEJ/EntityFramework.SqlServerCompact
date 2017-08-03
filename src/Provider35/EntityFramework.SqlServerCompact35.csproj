@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
     <AssemblyName>EntityFrameworkCore.SqlServerCompact35</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -40,147 +40,74 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.2.0.0-preview2-25099\lib\net46\Microsoft.EntityFrameworkCore.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.2.0.0-preview2-final\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.0-preview2-25099\lib\net46\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.0-preview2-final\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.2.0.0-preview2-25099\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.2.0.0-preview2-final\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Memory.2.0.0-preview2-25099\lib\netstandard1.3\Microsoft.Extensions.Caching.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.2.0.0-preview2-25099\lib\netstandard1.1\Microsoft.Extensions.Configuration.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Memory.2.0.0-preview2-final\lib\netstandard1.3\Microsoft.Extensions.Caching.Memory.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Abstractions.2.0.0-preview2-25099\lib\netstandard1.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Abstractions.2.0.0-preview2-final\lib\netstandard1.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.2.0.0-preview2-25099\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.2.0.0-preview2-final\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0-preview2-25099\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0-preview2-final\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Logging.2.0.0-preview2-25099\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.2.0.0-preview2-final\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.2.0.0-preview2-25099\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.2.0.0-preview2-final\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Options.2.0.0-preview2-25099\lib\netstandard1.1\Microsoft.Extensions.Options.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Options.2.0.0-preview2-final\lib\netstandard1.1\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.2.0.0-preview2-25099\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.2.0.0-preview2-final\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.4.4.0-preview2-25405-01\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\..\..\Program Files (x86)\Microsoft SQL Server Compact Edition\v3.5\Desktop\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.4.0-preview2-25317-01\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.4.0-preview2-25405-01\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Interactive.Async, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Interactive.Async.3.1.1\lib\net46\System.Interactive.Async.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0-preview2-25310-01\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net46\System.Security.Cryptography.Algorithms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net46\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0-preview2-25405-01\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Provider40\Design\Internal\SqlCeDesignTimeServices.cs">
+      <Link>Design\Internal\SqlCeDesignTimeServices.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Extensions\Logging\DbLoggerProvider.cs">
       <Link>Extensions\Logging\DbLoggerProvider.cs</Link>
     </Compile>
@@ -196,29 +123,8 @@
     <Compile Include="..\Provider40\Extensions\SqlCeDbContextOptionsExtensions.cs">
       <Link>Extensions\SqlCeDbContextOptionsExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeEntityTypeBuilderExtensions.cs">
-      <Link>Extensions\SqlCeEntityTypeBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeIndexBuilderExtensions.cs">
-      <Link>Extensions\SqlCeIndexBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeKeyBuilderExtensions.cs">
-      <Link>Extensions\SqlCeKeyBuilderExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeMetaDataExtensions.cs">
       <Link>Extensions\SqlCeMetaDataExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCePropertyBuilderExtensions.cs">
-      <Link>Extensions\SqlCePropertyBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeReferenceCollectionBuilderExtensions.cs">
-      <Link>Extensions\SqlCeReferenceCollectionBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeReferenceOwnershipBuilderExtensions.cs">
-      <Link>Extensions\SqlCeReferenceOwnershipBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\SqlCeReferenceReferenceBuilderExtensions.cs">
-      <Link>Extensions\SqlCeReferenceReferenceBuilderExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeServiceCollectionExtensions.cs">
       <Link>Extensions\SqlCeServiceCollectionExtensions.cs</Link>
@@ -250,14 +156,8 @@
     <Compile Include="..\Provider40\MetaData\Internal\SqlCeAnnotationNames.cs">
       <Link>MetaData\Internal\SqlCeAnnotationNames.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\MetaData\Internal\SqlCeFullAnnotationNames.cs">
-      <Link>MetaData\Internal\SqlCeFullAnnotationNames.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs">
       <Link>MetaData\Internal\SqlCeInternalMetaDataBuilderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\MetaData\SqlCeAnnotationProvider.cs">
-      <Link>MetaData\SqlCeAnnotationProvider.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Migrations\Internal\SqlCeHistoryRepository.cs">
       <Link>Migrations\Internal\SqlCeHistoryRepository.cs</Link>
@@ -358,8 +258,20 @@
     <Compile Include="..\Provider40\Query\Sql\Internal\SqlCeQuerySqlGeneratorFactory.cs">
       <Link>Query\Sql\Internal\SqlCeQuerySqlGeneratorFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeDatabaseModelfactory.cs">
+      <Link>Scaffolding\Internal\SqlCeDatabaseModelfactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeScaffoldingCodeGenerator.cs">
+      <Link>Scaffolding\Internal\SqlCeScaffoldingCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeTableSelectionSetExtensions.cs">
+      <Link>Scaffolding\Internal\SqlCeTableSelectionSetExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Storage\Internal\ISqlCeDatabaseConnection.cs">
       <Link>Storage\Internal\ISqlCeDatabaseConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeByteArrayTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeByteArrayTypeMapping.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Storage\Internal\SqlCeConnectionExtensions.cs">
       <Link>Storage\Internal\SqlCeConnectionExtensions.cs</Link>
@@ -370,11 +282,14 @@
     <Compile Include="..\Provider40\Storage\Internal\SqlCeDatabaseCreator.cs">
       <Link>Storage\Internal\SqlCeDatabaseCreator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Storage\Internal\SqlCeMaxLengthMapping.cs">
-      <Link>Storage\Internal\SqlCeMaxLengthMapping.cs</Link>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeDateTimeMapping.cs">
+      <Link>Storage\Internal\SqlCeDateTimeMapping.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Storage\Internal\SqlCeSqlGenerationHelper.cs">
       <Link>Storage\Internal\SqlCeSqlGenerationHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeStringTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeStringTypeMapping.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Storage\Internal\SqlCeTypeMapper.cs">
       <Link>Storage\Internal\SqlCeTypeMapper.cs</Link>
@@ -427,18 +342,13 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
   </PropertyGroup>
-  <Import Project="..\..\packages\NETStandard.Library.2.0.0-preview2-25303-01\build\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.0-preview2-25303-01\build\NETStandard.Library.targets')" />
+  <Import Project="..\..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets" Condition="Exists('..\..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.0-preview2-25303-01\build\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.0-preview2-25303-01\build\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets'))" />
+    <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <Import Project="..\..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets')" />
 </Project>

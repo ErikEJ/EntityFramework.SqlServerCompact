@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
 using Xunit;
+using static Microsoft.EntityFrameworkCore.TestModels.ChangedChangingMonsterContext;
 
 #pragma warning disable 1998
 
@@ -48,17 +48,17 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         public override async Task String_Contains_Literal()
         {
             await AssertQuery<Customer>(
-                cs => cs.Where(c => c.ContactName.Contains("M")), // case-insensitive
-                cs => cs.Where(c => c.ContactName.Contains("M")
-                                     || c.ContactName.Contains("m")), // case-sensitive
+                cs => cs.Where(c => c.Name.Contains("M")), // case-insensitive
+                cs => cs.Where(c => c.Name.Contains("M")
+                                     || c.Name.Contains("m")), // case-sensitive
                 entryCount: 34);
         }
 
         public override async Task String_Contains_MethodCall()
         {
             await AssertQuery<Customer>(
-                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
-                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1().ToLower()) || c.ContactName.Contains(LocalMethod1().ToUpper())), // case-sensitive
+                cs => cs.Where(c => c.Name.Contains(LocalMethod1())), // case-insensitive
+                cs => cs.Where(c => c.Name.Contains(LocalMethod1().ToLower()) || c.Name.Contains(LocalMethod1().ToUpper())), // case-sensitive
                 entryCount: 34);
         }
 

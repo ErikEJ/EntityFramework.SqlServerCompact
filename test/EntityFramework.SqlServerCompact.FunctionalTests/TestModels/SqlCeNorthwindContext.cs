@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.Northwind;
+﻿using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests.TestModels
 {

@@ -24,7 +24,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -41,7 +41,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -58,7 +58,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -75,7 +75,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -92,7 +92,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -109,7 +109,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id]
 FROM [SinglePkToPk] AS [e]
@@ -126,7 +126,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -143,7 +143,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -160,7 +160,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -177,7 +177,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT TOP(2) [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -194,7 +194,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -211,7 +211,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id]
 FROM [SinglePkToPk] AS [e]
@@ -280,7 +280,7 @@ WHERE 0 = 1",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -297,7 +297,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -314,7 +314,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -331,7 +331,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -348,7 +348,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -365,7 +365,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -382,7 +382,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -399,7 +399,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT TOP(2) [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -482,7 +482,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -499,7 +499,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -516,7 +516,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -533,7 +533,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT TOP(2) [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -550,7 +550,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -567,7 +567,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id]
 FROM [SinglePkToPk] AS [e]
@@ -584,7 +584,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -601,7 +601,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -618,7 +618,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -635,7 +635,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -652,7 +652,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -669,7 +669,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -686,7 +686,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -703,7 +703,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -720,7 +720,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -737,7 +737,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -754,7 +754,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -771,7 +771,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -788,7 +788,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -805,7 +805,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -822,7 +822,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 787
+                    @"@__get_Item_0='787'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -839,7 +839,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 767 (Nullable = true)
+                    @"@__get_Item_0='767' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -900,7 +900,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Child] AS [e]
@@ -917,7 +917,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -934,7 +934,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -951,7 +951,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [Single] AS [e]
@@ -968,7 +968,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [ChildAk] AS [e]
@@ -985,7 +985,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1002,7 +1002,7 @@ WHERE [e].[AlternateId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1019,7 +1019,7 @@ WHERE [e].[AlternateId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [SingleAk] AS [e]
@@ -1036,7 +1036,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [ChildAk] AS [e]
@@ -1053,7 +1053,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1070,7 +1070,7 @@ WHERE [e].[AlternateId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1087,7 +1087,7 @@ WHERE [e].[AlternateId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
+                    @"@__get_Item_0='Root' (Size = 256)
 
 SELECT TOP(2) [e].[Id], [e].[ParentId]
 FROM [SingleAk] AS [e]
@@ -1156,7 +1156,7 @@ WHERE 0 = 1",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [ChildShadowFk] AS [e]
@@ -1173,7 +1173,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1190,7 +1190,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1207,7 +1207,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [SingleShadowFk] AS [e]
@@ -1224,7 +1224,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentId]
 FROM [ChildShadowFk] AS [e]
@@ -1241,7 +1241,7 @@ WHERE [e].[ParentId] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1258,7 +1258,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707
+                    @"@__get_Item_0='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1275,7 +1275,7 @@ WHERE [e].[Id] = @__get_Item_0",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: 707 (Nullable = true)
+                    @"@__get_Item_0='707' (Nullable = true)
 
 SELECT TOP(2) [e].[Id], [e].[ParentId]
 FROM [SingleShadowFk] AS [e]
@@ -1344,8 +1344,8 @@ WHERE 0 = 1",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707 (Nullable = true)
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentAlternateId], [e].[ParentId]
 FROM [ChildCompositeKey] AS [e]
@@ -1362,8 +1362,8 @@ WHERE ([e].[ParentAlternateId] = @__get_Item_0) AND ([e].[ParentId] = @__get_Ite
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1380,8 +1380,8 @@ WHERE ([e].[AlternateId] = @__get_Item_0) AND ([e].[Id] = @__get_Item_1)",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707'
 
 SELECT [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1398,8 +1398,8 @@ WHERE ([e].[AlternateId] = @__get_Item_0) AND ([e].[Id] = @__get_Item_1)",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707 (Nullable = true)
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentAlternateId], [e].[ParentId]
 FROM [SingleCompositeKey] AS [e]
@@ -1416,8 +1416,8 @@ WHERE ([e].[ParentAlternateId] = @__get_Item_0) AND ([e].[ParentId] = @__get_Ite
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707 (Nullable = true)
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707' (Nullable = true)
 
 SELECT [e].[Id], [e].[ParentAlternateId], [e].[ParentId]
 FROM [ChildCompositeKey] AS [e]
@@ -1434,8 +1434,8 @@ WHERE ([e].[ParentAlternateId] = @__get_Item_0) AND ([e].[ParentId] = @__get_Ite
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1452,8 +1452,8 @@ WHERE ([e].[AlternateId] = @__get_Item_0) AND ([e].[Id] = @__get_Item_1)",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707'
 
 SELECT TOP(2) [e].[Id], [e].[AlternateId]
 FROM [Parent] AS [e]
@@ -1470,8 +1470,8 @@ WHERE ([e].[AlternateId] = @__get_Item_0) AND ([e].[Id] = @__get_Item_1)",
             if (!async)
             {
                 Assert.Equal(
-                    @"@__get_Item_0: Root (Size = 256)
-@__get_Item_1: 707 (Nullable = true)
+                    @"@__get_Item_0='Root' (Size = 256)
+@__get_Item_1='707' (Nullable = true)
 
 SELECT TOP(2) [e].[Id], [e].[ParentAlternateId], [e].[ParentId]
 FROM [SingleCompositeKey] AS [e]

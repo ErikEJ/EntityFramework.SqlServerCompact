@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.ComplexNavigationsModel;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.TestModels.ComplexNavigationsModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -59,21 +59,21 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
             base.Configure(l2);
 
-            l2.ForSqlCeToTable("Level2");
+            l2.ToTable("Level2");
         }
 
         protected override void Configure(ReferenceOwnershipBuilder<Level2, Level3> l3)
         {
             base.Configure(l3);
 
-            l3.ForSqlCeToTable("Level3");
+            l3.ToTable("Level3");
         }
 
         protected override void Configure(ReferenceOwnershipBuilder<Level3, Level4> l4)
         {
             base.Configure(l4);
 
-            l4.ForSqlCeToTable("Level4");
+            l4.ToTable("Level4");
         }
     }
 }

@@ -47,21 +47,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     Seed(context);
                 }
 
-                //var testStore = SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
-                //{
-                //    var options = new DbContextOptionsBuilder()
-                //        .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
-                //        .UseInternalServiceProvider(_serviceProvider)
-                //        .Options;
-
-                //    using (var context = new GraphUpdatesContext(options))
-                //    {
-                //        context.Database.EnsureDeleted();
-                //        Seed(context);
-                //    }
-                //});
-
-
                 return testStore;
             }
 

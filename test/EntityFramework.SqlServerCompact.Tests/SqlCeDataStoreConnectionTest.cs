@@ -27,15 +27,16 @@ namespace Microsoft.EntityFrameworkCore.Tests
                           .Options;
 
             return new RelationalConnectionDependencies(
-              options,
-              new DiagnosticsLogger<LoggerCategory.Database.Transaction>(
-                  new LoggerFactory(),
-                  new LoggingOptions(),
-                  new DiagnosticListener("FakeDiagnosticListener")),
-              new DiagnosticsLogger<LoggerCategory.Database.Connection>(
-                  new LoggerFactory(),
-                  new LoggingOptions(),
-                  new DiagnosticListener("FakeDiagnosticListener")));
+                options,
+                new DiagnosticsLogger<DbLoggerCategory.Database.Transaction>(
+                    new LoggerFactory(),
+                    new LoggingOptions(),
+                    new DiagnosticListener("FakeDiagnosticListener")),
+                new DiagnosticsLogger<DbLoggerCategory.Database.Connection>(
+                    new LoggerFactory(),
+                    new LoggingOptions(),
+                    new DiagnosticListener("FakeDiagnosticListener")),
+                new NamedConnectionStringResolver(options));
         }
     }
 }

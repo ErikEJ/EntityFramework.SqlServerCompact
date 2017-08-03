@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.GearsOfWarModel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.TestModels.GearsOfWarModel;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {

@@ -3,14 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.Relational.Tests.TestUtilities;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 
-namespace Microsoft.EntityFrameworkCore.Relational.Tests.Migrations.Internal
+namespace Microsoft.EntityFrameworkCore.Migrations.Internal
 {
     public abstract class MigrationsModelDifferTestBase
     {
@@ -46,7 +45,6 @@ namespace Microsoft.EntityFrameworkCore.Relational.Tests.Migrations.Internal
         protected virtual MigrationsModelDiffer CreateModelDiffer()
             => new MigrationsModelDiffer(
                 new ConcreteTypeMapper(new RelationalTypeMapperDependencies()),
-                new TestAnnotationProvider(),
                 new MigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies()));
 
         private class ConcreteTypeMapper : RelationalTypeMapper
@@ -60,26 +58,26 @@ namespace Microsoft.EntityFrameworkCore.Relational.Tests.Migrations.Internal
 
             public override RelationalTypeMapping FindMapping(Type clrType)
                 => clrType == typeof(string)
-                    ? new RelationalTypeMapping("varchar(4000)", typeof(string), dbType: null, unicode: false, size: 4000)
+                    ? new StringTypeMapping("varchar(4000)", dbType: null, unicode: false, size: 4000)
                     : base.FindMapping(clrType);
 
             protected override RelationalTypeMapping FindCustomMapping(IProperty property)
                 => property.ClrType == typeof(string) && (property.GetMaxLength().HasValue || property.IsUnicode().HasValue)
-                    ? new RelationalTypeMapping(((property.IsUnicode() ?? true) ? "n" : "") + "varchar(" + (property.GetMaxLength() ?? 767) + ")", typeof(string), dbType: null, unicode: false, size: property.GetMaxLength())
+                    ? new StringTypeMapping(((property.IsUnicode() ?? true) ? "n" : "") + "varchar(" + (property.GetMaxLength() ?? 767) + ")", dbType: null, unicode: false, size: property.GetMaxLength())
                     : base.FindCustomMapping(property);
 
             private readonly IReadOnlyDictionary<Type, RelationalTypeMapping> _simpleMappings
                 = new Dictionary<Type, RelationalTypeMapping>
                 {
-                    { typeof(int), new RelationalTypeMapping("int", typeof(int)) },
-                    { typeof(bool), new RelationalTypeMapping("boolean", typeof(bool)) }
+                    { typeof(int), new IntTypeMapping("int") },
+                    { typeof(bool), new BoolTypeMapping("boolean") }
                 };
 
             private readonly IReadOnlyDictionary<string, RelationalTypeMapping> _simpleNameMappings
                 = new Dictionary<string, RelationalTypeMapping>
                 {
-                    { "varchar", new RelationalTypeMapping("varchar", typeof(string), dbType: null, unicode: false, size: null, hasNonDefaultUnicode: true) },
-                    { "bigint", new RelationalTypeMapping("bigint", typeof(long)) }
+                    { "varchar", new StringTypeMapping("varchar", dbType: null, unicode: false, size: null) },
+                    { "bigint", new LongTypeMapping("bigint") }
                 };
 
             protected override IReadOnlyDictionary<Type, RelationalTypeMapping> GetClrTypeMappings()

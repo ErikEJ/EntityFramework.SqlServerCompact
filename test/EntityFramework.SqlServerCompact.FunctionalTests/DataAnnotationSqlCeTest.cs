@@ -96,18 +96,18 @@ SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersi
 FROM [Sample] AS [r]
 WHERE [r].[UniqueNo] = 1
 
-@p2: 1
-@p0: ModifiedData (Nullable = false) (Size = 4000)
-@p1: 00000000-0000-0000-0003-000000000001
-@p3: 00000001-0000-0000-0000-000000000001
+@p2='1'
+@p0='ModifiedData' (Nullable = false) (Size = 4000)
+@p1='00000000-0000-0000-0003-000000000001'
+@p3='00000001-0000-0000-0000-000000000001'
 
 UPDATE [Sample] SET [Name] = @p0, [RowVersion] = @p1
 WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3
 
-@p2: 1
-@p0: ChangedData (Nullable = false) (Size = 4000)
-@p1: 00000000-0000-0000-0002-000000000001
-@p3: 00000001-0000-0000-0000-000000000001
+@p2='1'
+@p0='ChangedData' (Nullable = false) (Size = 4000)
+@p1='00000000-0000-0000-0002-000000000001'
+@p3='00000001-0000-0000-0000-000000000001'
 
 UPDATE [Sample] SET [Name] = @p0, [RowVersion] = @p1
 WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3", Sql);
@@ -116,16 +116,16 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3", Sql);
         public override void DatabaseGeneratedAttribute_autogenerates_values_when_set_to_identity()
         {
             base.DatabaseGeneratedAttribute_autogenerates_values_when_set_to_identity();
-            Assert.Equal(@"@p0:  (Size = 10) (DbType = String)
-@p1: Third (Nullable = false) (Size = 4000)
-@p2: 00000000-0000-0000-0000-000000000003
+            Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
+@p1='Third' (Nullable = false) (Size = 4000)
+@p2='00000000-0000-0000-0000-000000000003'
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
 VALUES (@p0, @p1, @p2)
 
-@p0:  (Size = 10) (DbType = String)
-@p1: Third (Nullable = false) (Size = 4000)
-@p2: 00000000-0000-0000-0000-000000000003
+@p0='' (Size = 10) (DbType = String)
+@p1='Third' (Nullable = false) (Size = 4000)
+@p2='00000000-0000-0000-0000-000000000003'
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -137,16 +137,16 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)",
         {
             base.MaxLengthAttribute_throws_while_inserting_value_longer_than_max_length();
 
-            Assert.Equal(@"@p0: Short (Size = 10)
-@p1: ValidString (Nullable = false) (Size = 4000)
-@p2: 00000000-0000-0000-0000-000000000001
+            Assert.Equal(@"@p0='Short' (Size = 10)
+@p1='ValidString' (Nullable = false) (Size = 4000)
+@p2='00000000-0000-0000-0000-000000000001'
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
 VALUES (@p0, @p1, @p2)
 
-@p0: Short (Size = 10)
-@p1: ValidString (Nullable = false) (Size = 4000)
-@p2: 00000000-0000-0000-0000-000000000001
+@p0='Short' (Size = 10)
+@p1='ValidString' (Nullable = false) (Size = 4000)
+@p2='00000000-0000-0000-0000-000000000001'
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -160,14 +160,14 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
         {
             base.RequiredAttribute_for_navigation_throws_while_inserting_null_value();
 
-            Assert.Equal(@"@p0:  (DbType = Int32)
-@p1: Book1 (Nullable = false) (Size = 256)
+            Assert.Equal(@"@p0='' (DbType = Int32)
+@p1='Book1' (Nullable = false) (Size = 256)
 
 INSERT INTO [BookDetail] ([AdditionalBookDetailId], [BookId])
 VALUES (@p0, @p1)
 
-@p0:  (DbType = Int32)
-@p1: Book1 (Nullable = false) (Size = 256)
+@p0='' (DbType = Int32)
+@p1='Book1' (Nullable = false) (Size = 256)
 
 SELECT [Id]
 FROM [BookDetail]
@@ -181,16 +181,16 @@ WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
         {
             base.RequiredAttribute_for_property_throws_while_inserting_null_value();
 
-            Assert.Equal(@"@p0:  (Size = 10) (DbType = String)
-@p1: ValidString (Nullable = false) (Size = 4000)
-@p2: 00000000-0000-0000-0000-000000000001
+            Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
+@p1='ValidString' (Nullable = false) (Size = 4000)
+@p2='00000000-0000-0000-0000-000000000001'
 
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
 VALUES (@p0, @p1, @p2)
 
-@p0:  (Size = 10) (DbType = String)
-@p1: ValidString (Nullable = false) (Size = 4000)
-@p2: 00000000-0000-0000-0000-000000000001
+@p0='' (Size = 10) (DbType = String)
+@p1='ValidString' (Nullable = false) (Size = 4000)
+@p2='00000000-0000-0000-0000-000000000001'
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -205,12 +205,12 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
             Fixture.TestSqlLoggerFactory.Clear();
             base.StringLengthAttribute_throws_while_inserting_value_longer_than_max_length();
 
-            Assert.Equal(@"@p0: ValidString (Size = 16)
+            Assert.Equal(@"@p0='ValidString' (Size = 16)
 
 INSERT INTO [Two] ([Data])
 VALUES (@p0)
 
-@p0: ValidString (Size = 16)
+@p0='ValidString' (Size = 16)
 
 SELECT [Id], [Timestamp]
 FROM [Two]

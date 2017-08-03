@@ -23,12 +23,12 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Customer>()
                 .Property(e => e.Name)
-                .ForSqlCeHasColumnName("MyNameIs");
+                .HasColumnName("MyNameIs");
 
             var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
 
             Assert.Equal("Name", property.Name);
-            Assert.Equal("Eman", property.Relational().ColumnName);
+            Assert.Equal("MyNameIs", property.Relational().ColumnName);
             Assert.Equal("MyNameIs", property.SqlCe().ColumnName);
         }
 
@@ -45,11 +45,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Customer>()
                 .Property(e => e.Name)
-                .ForSqlCeHasColumnType("nvarchar(DA)");
+                .HasColumnType("nvarchar(DA)");
 
             var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
 
-            Assert.Equal("nvarchar(42)", property.Relational().ColumnType);
+            Assert.Equal("nvarchar(DA)", property.Relational().ColumnType);
             Assert.Equal("nvarchar(DA)", property.SqlCe().ColumnType);
         }
 
@@ -61,7 +61,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Customer>()
                 .Property(e => e.Name)
-                .ForSqlCeHasDefaultValueSql("VanillaCoke");
+                .HasDefaultValueSql("VanillaCoke");
 
             var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
 
@@ -73,7 +73,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .HasDefaultValueSql("CherryCoke");
 
             Assert.Equal("CherryCoke", property.Relational().DefaultValueSql);
-            Assert.Equal("VanillaCoke", property.SqlCe().DefaultValueSql);
+            Assert.Equal("CherryCoke", property.SqlCe().DefaultValueSql);
             Assert.Equal(ValueGenerated.OnAdd, property.ValueGenerated);
         }
 
@@ -86,7 +86,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity<Customer>()
                 .Property(e => e.Name)
                 .ValueGeneratedNever()
-                .ForSqlCeHasDefaultValueSql("VanillaCoke");
+                .HasDefaultValueSql("VanillaCoke");
 
             var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
 
@@ -98,7 +98,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .HasDefaultValueSql("CherryCoke");
 
             Assert.Equal("CherryCoke", property.Relational().DefaultValueSql);
-            Assert.Equal("VanillaCoke", property.SqlCe().DefaultValueSql);
+            Assert.Equal("CherryCoke", property.SqlCe().DefaultValueSql);
             Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
         }
 
@@ -115,11 +115,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Customer>()
                 .Property(e => e.Offset)
-                .ForSqlCeHasDefaultValue(new DateTime(2006, 9, 19, 19, 0, 0));
+                .HasDefaultValue(new DateTime(2006, 9, 19, 19, 0, 0));
 
             var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Offset");
 
-            Assert.Equal(new DateTime(1973, 9, 3, 0, 10, 0), property.Relational().DefaultValue);
+            Assert.Equal(new DateTime(2006, 9, 19, 19, 0, 0), property.Relational().DefaultValue);
             Assert.Equal(new DateTime(2006, 9, 19, 19, 0, 0), property.SqlCe().DefaultValue);
         }
 
@@ -130,20 +130,22 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             modelBuilder
                 .Entity<Customer>()
-                .Property(e => e.Offset)
-                .ValueGeneratedOnAddOrUpdate()
-                .HasDefaultValue(new DateTime(1973, 9, 3, 0, 10, 0));
+                .Property(e => e.Name)
+                .ValueGeneratedNever()
+                .HasDefaultValueSql("VanillaCoke");
+
+            var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Name");
+
+            Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
 
             modelBuilder
                 .Entity<Customer>()
-                .Property(e => e.Offset)
-                .ForSqlCeHasDefaultValue(new DateTime(2006, 9, 19, 19, 0, 0));
+                .Property(e => e.Name)
+                .HasDefaultValueSql("CherryCoke");
 
-            var property = modelBuilder.Model.FindEntityType(typeof(Customer)).FindProperty("Offset");
-
-            Assert.Equal(new DateTime(1973, 9, 3, 0, 10, 0), property.Relational().DefaultValue);
-            Assert.Equal(new DateTime(2006, 9, 19, 19, 0, 0), property.SqlCe().DefaultValue);
-            Assert.Equal(ValueGenerated.OnAddOrUpdate, property.ValueGenerated);
+            Assert.Equal("CherryCoke", property.Relational().DefaultValueSql);
+            Assert.Equal("CherryCoke", property.SqlCe().DefaultValueSql);
+            Assert.Equal(ValueGenerated.Never, property.ValueGenerated);
         }
 
         [Fact]
@@ -155,11 +157,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity<Customer>()
                 .HasKey(e => e.Id)
                 .HasName("KeyLimePie")
-                .ForSqlCeHasName("LemonSupreme");
+                .HasName("LemonSupreme");
 
             var key = modelBuilder.Model.FindEntityType(typeof(Customer)).FindPrimaryKey();
 
-            Assert.Equal("KeyLimePie", key.Relational().Name);
+            Assert.Equal("LemonSupreme", key.Relational().Name);
             Assert.Equal("LemonSupreme", key.SqlCe().Name);
         }
 
@@ -171,19 +173,17 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Customer>().HasMany(e => e.Orders).WithOne(e => e.Customer)
                 .HasConstraintName("LemonSupreme")
-                .ForSqlCeHasConstraintName("ChocolateLimes");
+                .HasConstraintName("ChocolateLimes");
 
             var foreignKey = modelBuilder.Model.FindEntityType(typeof(Order)).GetForeignKeys().Single(fk => fk.PrincipalEntityType.ClrType == typeof(Customer));
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
-            Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
+            Assert.Equal("ChocolateLimes", foreignKey.Relational().Name);
 
             modelBuilder
                 .Entity<Customer>().HasMany(e => e.Orders).WithOne(e => e.Customer)
-                .ForSqlCeHasConstraintName(null);
+                .HasConstraintName(null);
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
-            Assert.Equal("LemonSupreme", foreignKey.SqlCe().Name);
+            Assert.Equal("FK_Order_Customer_CustomerId", foreignKey.Relational().Name);
         }
 
         [Fact]
@@ -195,11 +195,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity<Customer>().HasMany(e => e.Orders).WithOne(e => e.Customer)
                 .HasForeignKey(e => e.CustomerId)
                 .HasConstraintName("LemonSupreme")
-                .ForSqlCeHasConstraintName("ChocolateLimes");
+                .HasConstraintName("ChocolateLimes");
 
             var foreignKey = modelBuilder.Model.FindEntityType(typeof(Order)).GetForeignKeys().Single(fk => fk.PrincipalEntityType.ClrType == typeof(Customer));
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
+            Assert.Equal("ChocolateLimes", foreignKey.Relational().Name);
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
         }
 
@@ -211,19 +211,17 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Order>().HasOne(e => e.Customer).WithMany(e => e.Orders)
                 .HasConstraintName("LemonSupreme")
-                .ForSqlCeHasConstraintName("ChocolateLimes");
+                .HasConstraintName("ChocolateLimes");
 
             var foreignKey = modelBuilder.Model.FindEntityType(typeof(Order)).GetForeignKeys().Single(fk => fk.PrincipalEntityType.ClrType == typeof(Customer));
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
-            Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
+            Assert.Equal("ChocolateLimes", foreignKey.Relational().Name);
 
             modelBuilder
                 .Entity<Order>().HasOne(e => e.Customer).WithMany(e => e.Orders)
-                .ForSqlCeHasConstraintName(null);
+                .HasConstraintName(null);
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
-            Assert.Equal("LemonSupreme", foreignKey.SqlCe().Name);
+            Assert.Equal("FK_Order_Customer_CustomerId", foreignKey.Relational().Name);
         }
 
         [Fact]
@@ -235,11 +233,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity<Order>().HasOne(e => e.Customer).WithMany(e => e.Orders)
                 .HasForeignKey(e => e.CustomerId)
                 .HasConstraintName("LemonSupreme")
-                .ForSqlCeHasConstraintName("ChocolateLimes");
+                .HasConstraintName("ChocolateLimes");
 
             var foreignKey = modelBuilder.Model.FindEntityType(typeof(Order)).GetForeignKeys().Single(fk => fk.PrincipalEntityType.ClrType == typeof(Customer));
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
+            Assert.Equal("ChocolateLimes", foreignKey.Relational().Name);
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
         }
 
@@ -252,19 +250,17 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity<Order>().HasOne(e => e.Details).WithOne(e => e.Order)
                 .HasPrincipalKey<Order>(e => e.OrderId)
                 .HasConstraintName("LemonSupreme")
-                .ForSqlCeHasConstraintName("ChocolateLimes");
+                .HasConstraintName("ChocolateLimes");
 
             var foreignKey = modelBuilder.Model.FindEntityType(typeof(OrderDetails)).GetForeignKeys().Single();
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
-            Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
+            Assert.Equal("ChocolateLimes", foreignKey.Relational().Name);
 
             modelBuilder
                 .Entity<Order>().HasOne(e => e.Details).WithOne(e => e.Order)
-                .ForSqlCeHasConstraintName(null);
+                .HasConstraintName(null);
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
-            Assert.Equal("LemonSupreme", foreignKey.SqlCe().Name);
+            Assert.Equal("FK_OrderDetails_Order_OrderId", foreignKey.Relational().Name);
         }
 
         [Fact]
@@ -276,11 +272,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity<Order>().HasOne(e => e.Details).WithOne(e => e.Order)
                 .HasForeignKey<OrderDetails>(e => e.Id)
                 .HasConstraintName("LemonSupreme")
-                .ForSqlCeHasConstraintName("ChocolateLimes");
+                .HasConstraintName("ChocolateLimes");
 
             var foreignKey = modelBuilder.Model.FindEntityType(typeof(OrderDetails)).GetForeignKeys().Single();
 
-            Assert.Equal("LemonSupreme", foreignKey.Relational().Name);
+            Assert.Equal("ChocolateLimes", foreignKey.Relational().Name);
             Assert.Equal("ChocolateLimes", foreignKey.SqlCe().Name);
         }
 
@@ -293,11 +289,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 .Entity<Customer>()
                 .HasIndex(e => e.Id)
                 .HasName("Eeeendeeex")
-                .ForSqlCeHasName("Dexter");
+                .HasName("Dexter");
 
             var index = modelBuilder.Model.FindEntityType(typeof(Customer)).GetIndexes().Single();
 
-            Assert.Equal("Eeeendeeex", index.Relational().Name);
+            Assert.Equal("Dexter", index.Relational().Name);
             Assert.Equal("Dexter", index.SqlCe().Name);
         }
 
@@ -309,12 +305,12 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Customer>()
                 .ToTable("Customizer")
-                .ForSqlCeToTable("Custardizer");
+                .ToTable("Custardizer");
 
             var entityType = modelBuilder.Model.FindEntityType(typeof(Customer));
 
             Assert.Equal("Customer", entityType.DisplayName());
-            Assert.Equal("Customizer", entityType.Relational().TableName);
+            Assert.Equal("Custardizer", entityType.Relational().TableName);
             Assert.Equal("Custardizer", entityType.SqlCe().TableName);
         }
 
@@ -326,12 +322,12 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity(typeof(Customer))
                 .ToTable("Customizer")
-                .ForSqlCeToTable("Custardizer");
+                .ToTable("Custardizer");
 
             var entityType = modelBuilder.Model.FindEntityType(typeof(Customer));
 
             Assert.Equal("Customer", entityType.DisplayName());
-            Assert.Equal("Customizer", entityType.Relational().TableName);
+            Assert.Equal("Custardizer", entityType.Relational().TableName);
             Assert.Equal("Custardizer", entityType.SqlCe().TableName);
         }
 
@@ -342,11 +338,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
 
             modelBuilder
                 .Entity(typeof(Customer))
-                .ForSqlCeToTable("Will");
+                .ToTable("Will");
 
             modelBuilder
                 .Entity<Customer>()
-                .ForSqlCeToTable("Simon");
+                .ToTable("Simon");
         }
 
         [Fact]
@@ -358,19 +354,19 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 modelBuilder
                     .Entity<Customer>()
                     .Property(e => e.Name)
-                    .ForSqlCeHasColumnName("Will"));
+                    .HasColumnName("Will"));
 
             AssertIsGeneric(
                 modelBuilder
                     .Entity<Customer>()
                     .Property(e => e.Name)
-                    .ForSqlCeHasColumnType("Jay"));
+                    .HasColumnType("Jay"));
 
             AssertIsGeneric(
                 modelBuilder
                     .Entity<Customer>()
                     .Property(e => e.Name)
-                    .ForSqlCeHasDefaultValue("Neil"));
+                    .HasDefaultValue("Neil"));
         }
 
         [Fact]
@@ -382,19 +378,19 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 modelBuilder
                     .Entity<Customer>()
                     .Property(e => e.Name)
-                    .ForSqlCeHasColumnName("Will"));
+                    .HasColumnName("Will"));
 
             AssertIsGeneric(
                 modelBuilder
                     .Entity<Customer>()
                     .Property(e => e.Name)
-                    .ForSqlCeHasColumnType("Jay"));
+                    .HasColumnType("Jay"));
 
             AssertIsGeneric(
                 modelBuilder
                     .Entity<Customer>()
                     .Property(e => e.Name)
-                    .ForSqlCeHasDefaultValueSql("Simon"));
+                    .HasDefaultValueSql("Simon"));
         }
 
         [Fact]
@@ -404,32 +400,32 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity(typeof(Customer))
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnName("Will");
+                .HasColumnName("Will");
 
             modelBuilder
                 .Entity<Customer>()
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnName("Jay");
+                .HasColumnName("Jay");
 
             modelBuilder
                 .Entity(typeof(Customer))
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnType("Simon");
+                .HasColumnType("Simon");
 
             modelBuilder
                 .Entity<Customer>()
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnType("Neil");
+                .HasColumnType("Neil");
 
             modelBuilder
                 .Entity(typeof(Customer))
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasDefaultValue("Simon");
+                .HasDefaultValue("Simon");
 
             modelBuilder
                 .Entity<Customer>()
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasDefaultValue("Neil");
+                .HasDefaultValue("Neil");
         }
 
         [Fact]
@@ -439,32 +435,32 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity(typeof(Customer))
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnName("Will");
+                .HasColumnName("Will");
 
             modelBuilder
                 .Entity<Customer>()
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnName("Jay");
+                .HasColumnName("Jay");
 
             modelBuilder
                 .Entity(typeof(Customer))
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnType("Simon");
+                .HasColumnType("Simon");
 
             modelBuilder
                 .Entity<Customer>()
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasColumnType("Neil");
+                .HasColumnType("Neil");
 
             modelBuilder
                 .Entity(typeof(Customer))
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasDefaultValueSql("Simon");
+                .HasDefaultValueSql("Simon");
 
             modelBuilder
                 .Entity<Customer>()
                 .Property(typeof(string), "Name")
-                .ForSqlCeHasDefaultValueSql("Neil");
+                .HasDefaultValueSql("Neil");
         }
 
         [Fact]
@@ -476,21 +472,21 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
                 modelBuilder
                     .Entity<Customer>().HasMany(e => e.Orders)
                     .WithOne(e => e.Customer)
-                    .ForSqlCeHasConstraintName("Will"));
+                    .HasConstraintName("Will"));
 
             AssertIsGeneric(
                 modelBuilder
                     .Entity<Order>()
                     .HasOne(e => e.Customer)
                     .WithMany(e => e.Orders)
-                    .ForSqlCeHasConstraintName("Jay"));
+                    .HasConstraintName("Jay"));
 
             AssertIsGeneric(
                 modelBuilder
                     .Entity<Order>()
                     .HasOne(e => e.Details)
                     .WithOne(e => e.Order)
-                    .ForSqlCeHasConstraintName("Simon"));
+                    .HasConstraintName("Simon"));
         }
 
         [Fact]
@@ -501,19 +497,19 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             modelBuilder
                 .Entity<Customer>().HasMany(typeof(Order), "Orders")
                 .WithOne("Customer")
-                .ForSqlCeHasConstraintName("Will");
+                .HasConstraintName("Will");
 
             modelBuilder
                 .Entity<Order>()
                 .HasOne(e => e.Customer)
                 .WithMany(e => e.Orders)
-                .ForSqlCeHasConstraintName("Jay");
+                .HasConstraintName("Jay");
 
             modelBuilder
                 .Entity<Order>()
                 .HasOne(e => e.Details)
                 .WithOne(e => e.Order)
-                .ForSqlCeHasConstraintName("Simon");
+                .HasConstraintName("Simon");
         }
 
         private void AssertIsGeneric(EntityTypeBuilder<Customer> _)

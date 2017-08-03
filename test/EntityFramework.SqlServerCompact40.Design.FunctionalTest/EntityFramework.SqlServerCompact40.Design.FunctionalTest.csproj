@@ -319,10 +319,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Design40\EntityFramework.SqlServerCompact40.Design.csproj">
-      <Project>{38b6c219-941a-4dcf-a087-673616418e36}</Project>
-      <Name>EntityFramework.SqlServerCompact40.Design</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Provider40\EntityFramework.SqlServerCompact40.csproj">
       <Project>{0bdb0cbb-c42a-45e5-8518-14e0c31119ad}</Project>
       <Name>EntityFramework.SqlServerCompact40</Name>

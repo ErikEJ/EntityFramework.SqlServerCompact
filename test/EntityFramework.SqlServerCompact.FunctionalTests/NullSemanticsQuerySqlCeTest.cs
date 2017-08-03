@@ -673,7 +673,7 @@ WHERE [e].[NullableStringA] IS NULL",
             base.Compare_nullable_with_non_null_parameter_not_equal();
 
             Assert.Equal(
-                @"@__prm_0: Foo (Size = 4000)
+                @"@__prm_0='Foo' (Size = 4000)
 
 SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
@@ -762,7 +762,7 @@ WHERE ([e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL)",
             base.Where_multiple_ands_with_nullable_parameter_and_constant();
 
             Assert.Equal(
-                @"@__prm3_2: Blah (Size = 4000)
+                @"@__prm3_2='Blah' (Size = 4000)
 
 SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
@@ -775,7 +775,7 @@ WHERE [e].[NullableStringA] NOT IN (N'Foo', @__prm3_2) AND [e].[NullableStringA]
             base.Where_multiple_ands_with_nullable_parameter_and_constant_not_optimized();
 
             Assert.Equal(
-                @"@__prm3_2: Blah (Size = 4000)
+                @"@__prm3_2='Blah' (Size = 4000)
 
 SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
@@ -927,7 +927,7 @@ WHERE [e].[NullableBoolA] = [e].[NullableBoolB]",
             base.Where_equal_using_relational_null_semantics_with_parameter();
 
             Assert.Equal(
-                @"@__prm_0:  (DbType = Boolean)
+                @"@__prm_0='' (DbType = Boolean)
 
 SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
@@ -962,7 +962,7 @@ WHERE [e].[NullableBoolA] <> [e].[NullableBoolB]",
             base.Where_not_equal_using_relational_null_semantics_with_parameter();
 
             Assert.Equal(
-                @"@__prm_0:  (DbType = Boolean)
+                @"@__prm_0='' (DbType = Boolean)
 
 SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]

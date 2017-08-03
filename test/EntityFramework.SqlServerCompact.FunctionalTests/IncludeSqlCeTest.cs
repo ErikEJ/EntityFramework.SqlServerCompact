@@ -106,14 +106,14 @@ ORDER BY [t].[CustomerID] DESC");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 10
+                    @"@__p_0='10'
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]
 OFFSET @__p_0 ROWS",
                     //
-                    @"@__p_0: 10
+                    @"@__p_0='10'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
@@ -134,13 +134,13 @@ ORDER BY [t].[CustomerID]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 10
+                    @"@__p_0='10'
 
 SELECT TOP(@__p_0) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                     //
-                    @"@__p_0: 10
+                    @"@__p_0='10'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
@@ -160,16 +160,16 @@ ORDER BY [t].[CustomerID]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 10
-@__p_1: 5
+                    @"@__p_0='10'
+@__p_1='5'
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]
 OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY",
                     //
-                    @"@__p_0: 10
-@__p_1: 5
+                    @"@__p_0='10'
+@__p_1='5'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
@@ -404,13 +404,13 @@ ORDER BY [t].[City], [t].[CustomerID]");
             base.Include_collection_order_by_non_key_with_take(useString);
 
             AssertSql(
-                @"@__p_0: 10
+                @"@__p_0='10'
 
 SELECT TOP(@__p_0) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[ContactTitle], [c].[CustomerID]",
                 //
-                @"@__p_0: 10
+                @"@__p_0='10'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
@@ -429,14 +429,14 @@ ORDER BY [t].[ContactTitle], [t].[CustomerID]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 10
+                    @"@__p_0='10'
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[ContactTitle], [c].[CustomerID]
 OFFSET @__p_0 ROWS",
                     //
-                    @"@__p_0: 10
+                    @"@__p_0='10'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
@@ -702,7 +702,7 @@ ORDER BY [t].[CustomerID]");
             base.Include_collection_on_additional_from_clause(useString);
 
             AssertSql(
-                @"@__p_0: 5
+                @"@__p_0='5'
 
 SELECT [c2].[CustomerID], [c2].[Address], [c2].[City], [c2].[CompanyName], [c2].[ContactName], [c2].[ContactTitle], [c2].[Country], [c2].[Fax], [c2].[Phone], [c2].[PostalCode], [c2].[Region]
 FROM (
@@ -713,7 +713,7 @@ FROM (
 CROSS JOIN [Customers] AS [c2]
 ORDER BY [c2].[CustomerID]",
                 //
-                @"@__p_0: 5
+                @"@__p_0='5'
 
 SELECT [c2.Orders].[OrderID], [c2.Orders].[CustomerID], [c2.Orders].[EmployeeID], [c2.Orders].[OrderDate]
 FROM [Orders] AS [c2.Orders]
@@ -736,7 +736,7 @@ ORDER BY [t1].[CustomerID]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 2
+                    @"@__p_0='2'
 
 SELECT [t].[CustomerID], [t].[Address], [t].[City], [t].[CompanyName], [t].[ContactName], [t].[ContactTitle], [t].[Country], [t].[Fax], [t].[Phone], [t].[PostalCode], [t].[Region], [t0].[CustomerID], [t0].[Address], [t0].[City], [t0].[CompanyName], [t0].[ContactName], [t0].[ContactTitle], [t0].[Country], [t0].[Fax], [t0].[Phone], [t0].[PostalCode], [t0].[Region]
 FROM (
@@ -752,7 +752,7 @@ CROSS JOIN (
 ) AS [t0]
 ORDER BY [t].[CustomerID], [t0].[CustomerID]",
                     //
-                    @"@__p_0: 2
+                    @"@__p_0='2'
 
 SELECT [c1.Orders].[OrderID], [c1.Orders].[CustomerID], [c1.Orders].[EmployeeID], [c1.Orders].[OrderDate]
 FROM [Orders] AS [c1.Orders]
@@ -772,7 +772,7 @@ INNER JOIN (
 ) AS [t3] ON [c1.Orders].[CustomerID] = [t3].[CustomerID]
 ORDER BY [t3].[CustomerID]",
                     //
-                    @"@__p_0: 2
+                    @"@__p_0='2'
 
 SELECT [c2.Orders].[OrderID], [c2.Orders].[CustomerID], [c2.Orders].[EmployeeID], [c2.Orders].[OrderDate]
 FROM [Orders] AS [c2.Orders]
@@ -801,8 +801,8 @@ ORDER BY [t6].[CustomerID0], [t6].[CustomerID]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_1: 1
-@__p_0: 2
+                   @"@__p_1='1'
+@__p_0='2'
 
 SELECT TOP(@__p_1) [t].[CustomerID], [t].[Address], [t].[City], [t].[CompanyName], [t].[ContactName], [t].[ContactTitle], [t].[Country], [t].[Fax], [t].[Phone], [t].[PostalCode], [t].[Region], [t0].[CustomerID], [t0].[Address], [t0].[City], [t0].[CompanyName], [t0].[ContactName], [t0].[ContactTitle], [t0].[Country], [t0].[Fax], [t0].[Phone], [t0].[PostalCode], [t0].[Region]
 FROM (
@@ -818,8 +818,8 @@ CROSS JOIN (
 ) AS [t0]
 ORDER BY [t].[CustomerID], [t0].[CustomerID]",
                     //
-                    @"@__p_1: 1
-@__p_0: 2
+                    @"@__p_1='1'
+@__p_0='2'
 
 SELECT [c1.Orders].[OrderID], [c1.Orders].[CustomerID], [c1.Orders].[EmployeeID], [c1.Orders].[OrderDate]
 FROM [Orders] AS [c1.Orders]
@@ -843,8 +843,8 @@ INNER JOIN (
 ) AS [t4] ON [c1.Orders].[CustomerID] = [t4].[CustomerID]
 ORDER BY [t4].[CustomerID]",
                     //
-                    @"@__p_1: 1
-@__p_0: 2
+                    @"@__p_1='1'
+@__p_0='2'
 
 SELECT [c2.Orders].[OrderID], [c2.Orders].[CustomerID], [c2.Orders].[EmployeeID], [c2.Orders].[OrderDate]
 FROM [Orders] AS [c2.Orders]
@@ -917,7 +917,7 @@ ORDER BY [t].[City], [t].[CustomerID]");
             base.Include_collection_on_additional_from_clause2(useString);
 
             AssertSql(
-                @"@__p_0: 5
+                @"@__p_0='5'
 
 SELECT [t].[CustomerID], [t].[Address], [t].[City], [t].[CompanyName], [t].[ContactName], [t].[ContactTitle], [t].[Country], [t].[Fax], [t].[Phone], [t].[PostalCode], [t].[Region]
 FROM (
@@ -935,8 +935,8 @@ CROSS JOIN [Customers] AS [c2]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 1
-@__p_1: 2
+                    @"@__p_0='1'
+@__p_1='2'
 
 SELECT [od.Order].[CustomerID]
 FROM [Order Details] AS [od]
@@ -954,8 +954,8 @@ OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_1: 1
-@__p_0: 2
+                    @"@__p_1='1'
+@__p_0='2'
 
 SELECT TOP(@__p_1) [t].[CustomerID], [t].[Address], [t].[City], [t].[CompanyName], [t].[ContactName], [t].[ContactTitle], [t].[Country], [t].[Fax], [t].[Phone], [t].[PostalCode], [t].[Region], [t0].[CustomerID], [t0].[Address], [t0].[City], [t0].[CompanyName], [t0].[ContactName], [t0].[ContactTitle], [t0].[Country], [t0].[Fax], [t0].[Phone], [t0].[PostalCode], [t0].[Region]
 FROM (
@@ -971,8 +971,8 @@ CROSS JOIN (
 ) AS [t0]
 ORDER BY [t].[CustomerID]",
                     //
-                    @"@__p_1: 1
-@__p_0: 2
+                    @"@__p_1='1'
+@__p_0='2'
 
 SELECT [c1.Orders].[OrderID], [c1.Orders].[CustomerID], [c1.Orders].[EmployeeID], [c1.Orders].[OrderDate]
 FROM [Orders] AS [c1.Orders]
@@ -1026,7 +1026,7 @@ INNER JOIN [Orders] AS [o.Order] ON [o].[OrderID] = [o.Order].[OrderID]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 2
+                    @"@__p_0='2'
 
 SELECT [t].[OrderID], [t].[CustomerID], [t].[EmployeeID], [t].[OrderDate], [o1.Customer].[CustomerID], [o1.Customer].[Address], [o1.Customer].[City], [o1.Customer].[CompanyName], [o1.Customer].[ContactName], [o1.Customer].[ContactTitle], [o1.Customer].[Country], [o1.Customer].[Fax], [o1.Customer].[Phone], [o1.Customer].[PostalCode], [o1.Customer].[Region], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [o2.Customer].[CustomerID], [o2.Customer].[Address], [o2.Customer].[City], [o2.Customer].[CompanyName], [o2.Customer].[ContactName], [o2.Customer].[ContactTitle], [o2.Customer].[Country], [o2.Customer].[Fax], [o2.Customer].[Phone], [o2.Customer].[PostalCode], [o2.Customer].[Region]
 FROM (
@@ -1052,7 +1052,7 @@ LEFT JOIN [Customers] AS [o2.Customer] ON [t0].[CustomerID] = [o2.Customer].[Cus
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 2
+                    @"@__p_0='2'
 
 SELECT [t].[OrderID], [t].[CustomerID], [t].[EmployeeID], [t].[OrderDate], [o1.Customer].[CustomerID], [o1.Customer].[Address], [o1.Customer].[City], [o1.Customer].[CompanyName], [o1.Customer].[ContactName], [o1.Customer].[ContactTitle], [o1.Customer].[Country], [o1.Customer].[Fax], [o1.Customer].[Phone], [o1.Customer].[PostalCode], [o1.Customer].[Region], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate]
 FROM (
@@ -1077,7 +1077,7 @@ CROSS JOIN (
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 2
+                    @"@__p_0='2'
 
 SELECT [t].[OrderID], [t].[CustomerID], [t].[EmployeeID], [t].[OrderDate], [t0].[OrderID], [t0].[CustomerID], [t0].[EmployeeID], [t0].[OrderDate], [o2.Customer].[CustomerID], [o2.Customer].[Address], [o2.Customer].[City], [o2.Customer].[CompanyName], [o2.Customer].[ContactName], [o2.Customer].[ContactTitle], [o2.Customer].[Country], [o2.Customer].[Fax], [o2.Customer].[Phone], [o2.Customer].[PostalCode], [o2.Customer].[Region]
 FROM (
@@ -1205,13 +1205,13 @@ LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[Custom
             base.Include_collection_as_no_tracking2(useString);
 
             AssertSql(
-                @"@__p_0: 5
+                @"@__p_0='5'
 
 SELECT TOP(@__p_0) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                 //
-                @"@__p_0: 5
+                @"@__p_0='5'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
@@ -1237,13 +1237,13 @@ FROM [Orders] AS [o]");
             base.Include_with_take(useString);
 
             AssertSql(
-                @"@__p_0: 10
+                @"@__p_0='10'
 
 SELECT TOP(@__p_0) [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[City] DESC, [c].[CustomerID]",
                 //
-                @"@__p_0: 10
+                @"@__p_0='10'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]
@@ -1262,14 +1262,14 @@ ORDER BY [t].[City] DESC, [t].[CustomerID]");
             if (SupportsOffset)
             {
                 AssertSql(
-                    @"@__p_0: 80
+                    @"@__p_0='80'
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY [c].[ContactName], [c].[CustomerID]
 OFFSET @__p_0 ROWS",
                     //
-                    @"@__p_0: 80
+                    @"@__p_0='80'
 
 SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
 FROM [Orders] AS [c.Orders]

@@ -198,24 +198,24 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 77
-@p1: 78
-@p2: True
-@p3: 01/02/2019 14:11:12 (DbType = DateTime)
-@p4: 102.2
-@p5: 101.1
-@p6: 83.3
-@p7: 0x61626364 (Nullable = false) (Size = 8000)
-@p8: 81.1
-@p9: help (Nullable = false) (Size = 4000)
-@p10: anyone! (Nullable = false) (Size = 4000)
-@p11: Gumball Rules OK! (Nullable = false) (Size = 4000)
-@p12: 103.3
-@p13: don't (Nullable = false) (Size = 4000)
-@p14: 84.4
-@p15: 79
-@p16: 80
-@p17: 0x595A5B5C (Nullable = false) (Size = 8000)",
+                @"@p0='77'
+@p1='78'
+@p2='True'
+@p3='01/02/2019 14:11:12' (DbType = DateTime)
+@p4='102.2'
+@p5='101.1'
+@p6='83.3'
+@p7='0x61626364' (Nullable = false) (Size = 8000)
+@p8='81.1'
+@p9='help' (Nullable = false) (Size = 4000)
+@p10='anyone!' (Nullable = false) (Size = 4000)
+@p11='Gumball Rules OK!' (Nullable = false) (Size = 4000)
+@p12='103.3'
+@p13='don't' (Nullable = false) (Size = 4000)
+@p14='84.4'
+@p15='79'
+@p16='80'
+@p17='0x595A5B5C' (Nullable = false) (Size = 8000)",
                 parameters);
 
             using (var context = CreateContext())
@@ -285,24 +285,24 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 77
-@p1: 78 (Nullable = true)
-@p2: True (Nullable = true)
-@p3: 01/02/2019 14:11:12 (Nullable = true) (DbType = DateTime)
-@p4: 102.2 (Nullable = true)
-@p5: 101.1 (Nullable = true)
-@p6: 83.3 (Nullable = true)
-@p7: 0x61626364 (Size = 8000)
-@p8: 81.1 (Nullable = true)
-@p9: help (Size = 4000)
-@p10: anyone! (Size = 4000)
-@p11: Gumball Rules OK! (Size = 4000)
-@p12: 103.3 (Nullable = true)
-@p13: don't (Size = 4000)
-@p14: 84.4 (Nullable = true)
-@p15: 79 (Nullable = true)
-@p16: 80 (Nullable = true)
-@p17: 0x595A5B5C (Size = 8000)",
+                @"@p0='77'
+@p1='78' (Nullable = true)
+@p2='True' (Nullable = true)
+@p3='01/02/2019 14:11:12' (Nullable = true) (DbType = DateTime)
+@p4='102.2' (Nullable = true)
+@p5='101.1' (Nullable = true)
+@p6='83.3' (Nullable = true)
+@p7='0x61626364' (Size = 8000)
+@p8='81.1' (Nullable = true)
+@p9='help'
+@p10='anyone!'
+@p11='Gumball Rules OK!' (Size = 4000)
+@p12='103.3' (Nullable = true)
+@p13='don't' (Size = 4000)
+@p14='84.4' (Nullable = true)
+@p15='79' (Nullable = true)
+@p16='80' (Nullable = true)
+@p17='0x595A5B5C' (Size = 8000)",
                 parameters);
 
             using (var context = CreateContext())
@@ -369,24 +369,24 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 78
-@p1:  (DbType = Int64)
-@p2:  (DbType = Boolean)
-@p3:  (DbType = DateTime)
-@p4:  (DbType = Decimal)
-@p5:  (DbType = Decimal)
-@p6:  (DbType = Double)
-@p7:  (Size = 8000) (DbType = Binary)
-@p8:  (DbType = Decimal)
-@p9:  (Size = 4000) (DbType = String)
-@p10:  (Size = 4000) (DbType = String)
-@p11:  (Size = 4000) (DbType = String)
-@p12:  (DbType = Decimal)
-@p13:  (Size = 4000) (DbType = String)
-@p14:  (DbType = Single)
-@p15:  (DbType = Int16)
-@p16:  (DbType = Byte)
-@p17:  (Size = 8000) (DbType = Binary)",
+                @"@p0='78'
+@p1='' (DbType = Int64)
+@p2='' (DbType = Boolean)
+@p3='' (DbType = DateTime)
+@p4='' (DbType = Decimal)
+@p5='' (DbType = Decimal)
+@p6='' (DbType = Double)
+@p7='' (Size = 8000) (DbType = Binary)
+@p8='' (DbType = Decimal)
+@p9='' (Size = 4000) (DbType = String)
+@p10='' (Size = 4000) (DbType = String)
+@p11='' (Size = 4000) (DbType = String)
+@p12='' (DbType = Decimal)
+@p13='' (Size = 4000) (DbType = String)
+@p14='' (DbType = Single)
+@p15='' (DbType = Int16)
+@p16='' (DbType = Byte)
+@p17='' (Size = 8000) (DbType = Binary)",
                 parameters);
 
             using (var context = CreateContext())
@@ -430,14 +430,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 77
-@p1: 0x0A0B0C (Size = 3)
-@p2: The (Size = 3)
-@p3: Squ (Size = 3) (DbType = StringFixedLength)
-@p4: Col (Size = 3)
-@p5: Won (Size = 3) (DbType = StringFixedLength)
-@p6: Int (Size = 3)
-@p7: 0x0B0C0D (Size = 3)",
+                @"@p0='77'
+@p1='0x0A0B0C' (Size = 3)
+@p2='The' (Size = 3)
+@p3='Squ' (Size = 3) (DbType = StringFixedLength)
+@p4='Col' (Size = 3)
+@p5='Won' (Size = 3) (DbType = StringFixedLength)
+@p6='Int' (Size = 3)
+@p7='0x0B0C0D' (Size = 3)",
                 parameters);
 
             using (var context = CreateContext())
@@ -484,14 +484,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 78
-@p1:  (Size = 3) (DbType = Binary)
-@p2:  (Size = 3) (DbType = String)
-@p3:  (Size = 3) (DbType = StringFixedLength)
-@p4:  (Size = 3) (DbType = String)
-@p5:  (Size = 3) (DbType = StringFixedLength)
-@p6:  (Size = 3) (DbType = String)
-@p7:  (Size = 3) (DbType = Binary)",
+                @"@p0='78'
+@p1='' (Size = 3) (DbType = Binary)
+@p2='' (Size = 3) (DbType = String)
+@p3='' (Size = 3) (DbType = StringFixedLength)
+@p4='' (Size = 3) (DbType = String)
+@p5='' (Size = 3) (DbType = StringFixedLength)
+@p6='' (Size = 3) (DbType = String)
+@p7='' (Size = 3) (DbType = Binary)",
                 parameters);
 
             using (var context = CreateContext())
@@ -525,11 +525,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 77
-@p1: 102.2
-@p2: 101.1
-@p3: 83.3
-@p4: 103.3",
+                @"@p0='77'
+@p1='102.2'
+@p2='101.1'
+@p3='83.3'
+@p4='103.3'",
                 parameters);
 
             using (var context = CreateContext())
@@ -570,10 +570,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 77
-@p1: 102.2
-@p2: 101.1
-@p3: 103.3",
+                @"@p0='77'
+@p1='102.2'
+@p2='101.1'
+@p3='103.3'",
                 parameters);
 
             using (var context = CreateContext())
@@ -612,25 +612,25 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 78
-@p1: 0x5D5E5F60 (Size = 8000)
-@p2: True
-@p3: 01/02/2019 14:11:12 (DbType = DateTime)
-@p4: 102.2
-@p5: 101.1
-@p6: 83.3
-@p7: 0x61626364 (Size = 8000)
-@p8: 77
-@p9: 81.1
-@p10: help (Size = 4000)
-@p11: anyone! (Size = 4000)
-@p12: Gumball Rules OK! (Size = 4000)
-@p13: 103.3
-@p14: don't (Size = 4000)
-@p15: 84.4
-@p16: 79
-@p17: 80
-@p18: 0x595A5B5C (Size = 8000)",
+                @"@p0='78'
+@p1='0x5D5E5F60' (Size = 8000)
+@p2='True'
+@p3='01/02/2019 14:11:12' (DbType = DateTime)
+@p4='102.2'
+@p5='101.1'
+@p6='83.3'
+@p7='0x61626364' (Size = 8000)
+@p8='77'
+@p9='81.1'
+@p10='help' (Size = 4000)
+@p11='anyone!' (Size = 4000)
+@p12='Gumball Rules OK!' (Size = 4000)
+@p13='103.3'
+@p14='don't' (Size = 4000)
+@p15='84.4'
+@p16='79'
+@p17='80'
+@p18='0x595A5B5C' (Size = 8000)",
                 parameters);
 
             using (var context = CreateContext())
@@ -700,23 +700,23 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             var parameters = DumpParameters();
             Assert.Equal(
                 @"@p0: 78 (Nullable = true)
-@p1: True (Nullable = true)
-@p2: 01/02/2019 14:11:12 (Nullable = true) (DbType = DateTime)
-@p3: 102.2 (Nullable = true)
-@p4: 101.1 (Nullable = true)
-@p5: 83.3 (Nullable = true)
-@p6: 0x61626364 (Size = 8000)
-@p7: 77 (Nullable = true)
-@p8: 81.1 (Nullable = true)
-@p9: help (Size = 4000)
-@p10: anyone! (Size = 4000)
-@p11: Gumball Rules OK! (Size = 4000)
-@p12: 103.3 (Nullable = true)
-@p13: don't (Size = 4000)
-@p14: 84.4 (Nullable = true)
-@p15: 79 (Nullable = true)
-@p16: 80 (Nullable = true)
-@p17: 0x595A5B5C (Size = 8000)",
+@p1='True' (Nullable = true)
+@p2='01/02/2019 14:11:12' (Nullable = true) (DbType = DateTime)
+@p3='102.2' (Nullable = true)
+@p4='101.1' (Nullable = true)
+@p5='83.3' (Nullable = true)
+@p6='0x61626364' (Size = 8000)
+@p7='77' (Nullable = true)
+@p8='81.1' (Nullable = true)
+@p9='help' (Size = 4000)
+@p10='anyone!' (Size = 4000)
+@p11='Gumball Rules OK!' (Size = 4000)
+@p12='103.3' (Nullable = true)
+@p13='don't' (Size = 4000)
+@p14='84.4' (Nullable = true)
+@p15='79' (Nullable = true)
+@p16='80' (Nullable = true)
+@p17='0x595A5B5C' (Size = 8000)",
                 parameters);
 
             using (var context = CreateContext())
@@ -783,24 +783,24 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0:  (DbType = Int64)
-@p1:  (DbType = Boolean)
-@p2:  (DbType = DateTime)
-@p3:  (DbType = Decimal)
-@p4:  (DbType = Decimal)
-@p5:  (DbType = Double)
-@p6:  (Size = 8000) (DbType = Binary)
-@p7: 78 (Nullable = true)
-@p8:  (DbType = Decimal)
-@p9:  (Size = 4000) (DbType = String)
-@p10:  (Size = 4000) (DbType = String)
-@p11:  (Size = 4000) (DbType = String)
-@p12:  (DbType = Decimal)
-@p13:  (Size = 4000) (DbType = String)
-@p14:  (DbType = Single)
-@p15:  (DbType = Int16)
-@p16:  (DbType = Byte)
-@p17:  (Size = 8000) (DbType = Binary)",
+                @"@p0='' (DbType = Int64)
+@p1='' (DbType = Boolean)
+@p2='' (DbType = DateTime)
+@p3='' (DbType = Decimal)
+@p4='' (DbType = Decimal)
+@p5='' (DbType = Double)
+@p6='' (Size = 8000) (DbType = Binary)
+@p7='78' (Nullable = true)
+@p8='' (DbType = Decimal)
+@p9='' (Size = 4000) (DbType = String)
+@p10='' (Size = 4000) (DbType = String)
+@p11='' (Size = 4000) (DbType = String)
+@p12='' (DbType = Decimal)
+@p13='' (Size = 4000) (DbType = String)
+@p14='' (DbType = Single)
+@p15='' (DbType = Int16)
+@p16='' (DbType = Byte)
+@p17='' (Size = 8000) (DbType = Binary)",
                 parameters);
 
             using (var context = CreateContext())
@@ -845,14 +845,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 0x0A0B0C (Size = 3)
-@p1: 77
-@p2: The (Size = 3)
-@p3: Squ (Size = 3) (DbType = StringFixedLength)
-@p4: Col (Size = 3)
-@p5: Won (Size = 3) (DbType = StringFixedLength)
-@p6: Int (Size = 3)
-@p7: 0x0B0C0D (Size = 3)",
+                @"@p0='0x0A0B0C' (Size = 3)
+@p1='77'
+@p2='The' (Size = 3)
+@p3='Squ' (Size = 3) (DbType = StringFixedLength)
+@p4='Col' (Size = 3)
+@p5='Won' (Size = 3) (DbType = StringFixedLength)
+@p6='Int' (Size = 3)
+@p7='0x0B0C0D' (Size = 3)",
                 parameters);
 
             using (var context = CreateContext())
@@ -898,14 +898,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0:  (Size = 3) (DbType = Binary)
-@p1: 78
-@p2:  (Size = 3) (DbType = String)
-@p3:  (Size = 3) (DbType = StringFixedLength)
-@p4:  (Size = 3) (DbType = String)
-@p5:  (Size = 3) (DbType = StringFixedLength)
-@p6:  (Size = 3) (DbType = String)
-@p7:  (Size = 3) (DbType = Binary)",
+                @"@p0='' (Size = 3) (DbType = Binary)
+@p1='78'
+@p2='' (Size = 3) (DbType = String)
+@p3='' (Size = 3) (DbType = StringFixedLength)
+@p4='' (Size = 3) (DbType = String)
+@p5='' (Size = 3) (DbType = StringFixedLength)
+@p6='' (Size = 3) (DbType = String)
+@p7='' (Size = 3) (DbType = Binary)",
                 parameters);
 
             using (var context = CreateContext())
@@ -939,11 +939,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 102.2
-@p1: 101.1
-@p2: 83.3
-@p3: 77
-@p4: 103.3",
+                @"@p0='102.2'
+@p1='101.1'
+@p2='83.3'
+@p3='77'
+@p4='103.3'",
                 parameters);
 
             using (var context = CreateContext())
@@ -984,10 +984,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 102.2
-@p1: 101.1
-@p2: 77
-@p3: 103.3",
+                @"@p0='102.2'
+@p1='101.1'
+@p2='77'
+@p3='103.3'",
                 parameters);
 
             using (var context = CreateContext())

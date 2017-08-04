@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests.ReverseEngineering;
-using Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests.TestUtilities;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
+using Microsoft.EntityFrameworkCore.ReverseEngineering;
+using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 
 namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {
@@ -24,8 +24,29 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
         public virtual string TestSubDir => "SubDir";
         public virtual string CustomizedTemplateDir => Path.Combine("E2ETest", "CustomizedTemplate", "Dir");
 
-        public static TableSelectionSet Filter
-            => new TableSelectionSet(new List<string>{
+        //public static Microsoft.EntityFrameworkCore.Scaffolding.TableSelectionSet Filter
+        //    => new Microsoft.EntityFrameworkCore.Scaffolding.TableSelectionSet(new List<string>{
+        //        "AllDataTypes",
+        //        "PropertyConfiguration",
+        //        "Test Spaces Keywords Table",
+        //        "MultipleFKsDependent",
+        //        "MultipleFKsPrincipal",
+        //        "OneToManyDependent",
+        //        "OneToManyPrincipal",
+        //        "OneToOneDependent",
+        //        "OneToOnePrincipal",
+        //        "OneToOneSeparateFKDependent",
+        //        "OneToOneSeparateFKPrincipal",
+        //        "OneToOneFKToUniqueKeyDependent",
+        //        "OneToOneFKToUniqueKeyPrincipal",
+        //        "ReferredToByTableWithUnmappablePrimaryKeyColumn",
+        //        "TableWithUnmappablePrimaryKeyColumn",
+        //        "selfReferencing",
+        //    });
+
+        public static IEnumerable<string> Tables
+            => new List<string>
+            {
                 "AllDataTypes",
                 "PropertyConfiguration",
                 "Test Spaces Keywords Table",
@@ -39,10 +60,10 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
                 "OneToOneSeparateFKPrincipal",
                 "OneToOneFKToUniqueKeyDependent",
                 "OneToOneFKToUniqueKeyPrincipal",
-                "ReferredToByTableWithUnmappablePrimaryKeyColumn",
+                "UnmappablePKColumn",
                 "TableWithUnmappablePrimaryKeyColumn",
-                "selfReferencing",
-            });
+                "selfreferencing"
+            };
 
         // ReSharper disable once UnusedParameter.Local
         public SqlCeE2ETests(SqlCeE2EFixture fixture, ITestOutputHelper output)
@@ -75,17 +96,18 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
         [UseCulture("en-US")]
         public void E2ETestUseAttributesInsteadOfFluentApi()
         {
-            var configuration = new ReverseEngineeringConfiguration
-            {
-                ConnectionString = _connectionString,
-                ContextClassName = "AttributesContext",
-                ProjectPath = TestProjectDir + Path.DirectorySeparatorChar, // tests that ending DirectorySeparatorChar does not affect namespace
-                ProjectRootNamespace = TestNamespace,
-                OutputPath = TestSubDir,
-                TableSelectionSet = Filter,
-            };
 
-            var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
+            var filePaths = Generator.Generate(
+                    _connectionString,
+                    Tables,
+                    Enumerable.Empty<string>(),
+                    TestProjectDir + Path.DirectorySeparatorChar, // tests that ending DirectorySeparatorChar does not affect namespace
+                    TestSubDir,
+                    TestNamespace,
+                    contextName: "AttributesContext",
+                    useDataAnnotations: true,
+                    overwriteFiles: false,
+                    useDatabaseNames: false);
 
             var actualFileSet = new FileSet(InMemoryFiles, Path.GetFullPath(Path.Combine(TestProjectDir, TestSubDir)))
             {
@@ -109,17 +131,17 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
         [UseCulture("en-US")]
         public void E2ETestAllFluentApi()
         {
-            var configuration = new ReverseEngineeringConfiguration
-            {
-                ConnectionString = _connectionString,
-                ProjectPath = TestProjectDir,
-                ProjectRootNamespace = TestNamespace,
-                OutputPath = null, // not used for this test
-                UseFluentApiOnly = true,
-                TableSelectionSet = Filter,
-            };
-
-            var filePaths = Generator.GenerateAsync(configuration).GetAwaiter().GetResult();
+            var filePaths = Generator.Generate(
+                                _connectionString,
+                                Tables,
+                                Enumerable.Empty<string>(),
+                                TestProjectDir,
+                                outputPath: null, // not used for this test
+                                rootNamespace: TestNamespace,
+                                contextName: null,
+                                useDataAnnotations: false,
+                                overwriteFiles: false,
+                                useDatabaseNames: false);
 
             var actualFileSet = new FileSet(InMemoryFiles, Path.GetFullPath(TestProjectDir))
             {

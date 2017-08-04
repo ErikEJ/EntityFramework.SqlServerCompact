@@ -1,8 +1,9 @@
-﻿using Xunit.Abstractions;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class FiltersInheritanceSqlCeTest : FiltersInheritanceTestBase<FiltersInheritanceSqlCeFixture>
+    public class FiltersInheritanceSqlCeTest : FiltersInheritanceTestBase<SqlCeTestStore, FiltersInheritanceSqlCeFixture>
     {
         public FiltersInheritanceSqlCeTest(FiltersInheritanceSqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)

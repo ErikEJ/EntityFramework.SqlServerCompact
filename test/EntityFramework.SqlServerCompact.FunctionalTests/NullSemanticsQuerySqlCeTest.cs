@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {

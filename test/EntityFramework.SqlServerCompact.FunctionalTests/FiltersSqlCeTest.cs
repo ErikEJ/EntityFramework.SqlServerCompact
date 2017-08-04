@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;

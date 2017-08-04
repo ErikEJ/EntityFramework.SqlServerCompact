@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using static Microsoft.EntityFrameworkCore.TestModels.ChangedChangingMonsterContext;
@@ -65,8 +66,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public async Task Single_Predicate_Cancellation()
         {
-            await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                await Single_Predicate_Cancellation(Fixture.TestSqlLoggerFactory.CancelQuery()));
+            await Assert.ThrowsAsync<TaskCanceledException>(
+                async () =>
+                    await Single_Predicate_Cancellation_test(Fixture.TestSqlLoggerFactory.CancelQuery()));
         }
 
         public AsyncQuerySqlCeTest(NorthwindQuerySqlCeFixture fixture)

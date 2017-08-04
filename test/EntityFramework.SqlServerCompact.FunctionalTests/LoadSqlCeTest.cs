@@ -1532,13 +1532,8 @@ WHERE 0 = 1",
             }
         }
 
-        public override void ClearLog() => Fixture.TestSqlLoggerFactory.Clear();
-
-        public override void RecordLog() => Sql = Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
-
         private const string FileLineEnding = @"
 ";
-
         private string Sql { get; set; }
 
         public class LoadSqlCeFixture : LoadFixtureBase

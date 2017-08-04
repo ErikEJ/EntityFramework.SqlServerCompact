@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System.Linq;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests

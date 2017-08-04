@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.TestModels.Inheritance;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.TestModels.Inheritance;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class InheritanceSqlCeTest : InheritanceTestBase<InheritanceSqlCeFixture>
+    public class InheritanceSqlCeTest : InheritanceTestBase<SqlCeTestStore, InheritanceSqlCeFixture>
     {
         public InheritanceSqlCeTest(InheritanceSqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Xunit;
 using Xunit.Abstractions;

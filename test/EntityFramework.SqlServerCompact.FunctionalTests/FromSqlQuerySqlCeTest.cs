@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.TestModels.Northwind;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using System;
 using System.Data.Common;
 using System.Data.SqlServerCe;

@@ -5,6 +5,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+using Microsoft.EntityFrameworkCore.Query;
 
 #if NETCOREAPP2_0
 using System.Reflection;
@@ -6426,63 +6427,6 @@ FROM [Customers] AS [c]");
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[Region] IS NULL OR (LTRIM(RTRIM([c].[Region])) = N'')");
-        }
-
-        public override void TrimStart_in_predicate()
-        {
-            base.TrimStart_in_predicate();
-
-            AssertSql(
-                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]
-WHERE LTRIM([c].[ContactTitle]) = N'Owner'");
-        }
-
-        public override void TrimStart_with_arguments_in_predicate()
-        {
-            base.TrimStart_with_arguments_in_predicate();
-
-            AssertSql(
-                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]");
-        }
-
-        public override void TrimEnd_in_predicate()
-        {
-            base.TrimEnd_in_predicate();
-
-            AssertSql(
-                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]
-WHERE RTRIM([c].[ContactTitle]) = N'Owner'");
-        }
-
-        public override void TrimEnd_with_arguments_in_predicate()
-        {
-            base.TrimEnd_with_arguments_in_predicate();
-
-            AssertSql(
-                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]");
-        }
-
-        public override void Trim_in_predicate()
-        {
-            base.Trim_in_predicate();
-
-            AssertSql(
-                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]
-WHERE LTRIM(RTRIM([c].[ContactTitle])) = N'Owner'");
-        }
-
-        public override void Trim_with_arguments_in_predicate()
-        {
-            base.Trim_with_arguments_in_predicate();
-
-            AssertSql(
-                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]");
         }
 
         public override void Projection_null_coalesce_operator()

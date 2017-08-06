@@ -5,6 +5,10 @@ using System.Text;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Xunit;
 using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 // ReSharper disable UnusedParameter.Local
 // ReSharper disable PossibleInvalidOperationException
@@ -1560,6 +1564,28 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = 4000]
 ";
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Can_get_column_types_from_built_model()
+        {
+            using (var context = CreateContext())
+            {
+                var typeMapper = context.GetService<IRelationalTypeMapper>();
+
+                foreach (var property in context.Model.GetEntityTypes().SelectMany(e => e.GetDeclaredProperties()))
+                {
+                    var columnType = property.Relational().ColumnType;
+                    Assert.NotNull(columnType);
+
+                    if (property[RelationalAnnotationNames.ColumnType] == null)
+                    {
+                        Assert.Equal(
+                            columnType.ToLowerInvariant(),
+                            typeMapper.FindMapping(property).StoreType.ToLowerInvariant());
+                    }
+                }
+            }
         }
 
         private const string FileLineEnding = @"

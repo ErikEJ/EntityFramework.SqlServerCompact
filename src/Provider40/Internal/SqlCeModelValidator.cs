@@ -45,7 +45,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
 
         protected virtual void ShowWarning(SqlCeEventId eventId, [NotNull] string message)
         { }
-        //TODO Add proper event ids (see SQLite provider)
+        //TODO ErikEJ Add proper event ids (see SQLite provider)
             //=> Dependencies.Logger.LogWarning(eventId, () => message);
     }
 }

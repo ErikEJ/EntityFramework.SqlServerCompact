@@ -132,9 +132,6 @@
     <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeTestStore.cs">
       <Link>SqlCeTestStore.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\TestModels\SqlCeNorthwindContext.cs">
-      <Link>TestModels\SqlCeNorthwindContext.cs</Link>
-    </Compile>
     <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\Utilities\DbContextOptionsBuilderExtensions.cs">
       <Link>Utilities\DbContextOptionsBuilderExtensions.cs</Link>
     </Compile>

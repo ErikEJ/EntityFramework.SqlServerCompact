@@ -210,7 +210,6 @@
     <Compile Include="SqlCeServiceCollectionExtensionsTest.cs" />
     <Compile Include="SqlCeTestHelpers.cs" />
     <Compile Include="SqlCeTestStore.cs" />
-    <Compile Include="TestModels\SqlCeNorthwindContext.cs" />
     <Compile Include="TransactionSqlCeFixture.cs" />
     <Compile Include="TransactionSqlCetest.cs" />
     <Compile Include="Utilities\DbContextOptionsBuilderExtensions.cs" />

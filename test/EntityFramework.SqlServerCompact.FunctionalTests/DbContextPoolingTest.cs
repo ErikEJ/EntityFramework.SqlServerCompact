@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
 using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+using Microsoft.EntityFrameworkCore.Specification.Tests;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
 // ReSharper disable UnusedMember.Local
@@ -23,7 +23,7 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
         => new ServiceCollection()
             .AddEntityFrameworkSqlCe()
             .AddDbContextPool<TContext>(
-                ob => ob.UseSqlCe(SqlCeNorthwindContext.GetSharedStore().ConnectionString),
+                ob => ob.UseSqlCe(SqlCeTestStore.NorthwindConnectionString),
                 poolSize)
             .BuildServiceProvider();
 

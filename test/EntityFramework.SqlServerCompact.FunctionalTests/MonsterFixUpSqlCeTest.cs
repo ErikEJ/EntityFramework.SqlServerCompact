@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlServerCe;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.TestModels;
 

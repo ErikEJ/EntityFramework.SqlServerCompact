@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -17,7 +16,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public async Task Can_query_with_implicit_services_and_OnConfiguring()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     using (var context = new NorthwindContext())
                     {
@@ -31,7 +30,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 public DbSet<Customer> Customers { get; set; }
 
                 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                    => optionsBuilder.UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration());
+                    => optionsBuilder.UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
 
                 protected override void OnModelCreating(ModelBuilder modelBuilder)
                     => ConfigureModel(modelBuilder);
@@ -43,11 +42,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public async Task Can_query_with_implicit_services_and_explicit_config()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     using (var context = new NorthwindContext(
                         new DbContextOptionsBuilder()
-                            .UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration()).Options))
+                            .UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration()).Options))
                     {
                         Assert.Equal(91, await context.Customers.CountAsync());
                     }
@@ -73,7 +72,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public async Task Can_query_with_explicit_services_and_OnConfiguring()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     using (var context = new NorthwindContext(
                         new DbContextOptionsBuilder().UseInternalServiceProvider(
@@ -96,7 +95,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 public DbSet<Customer> Customers { get; set; }
 
                 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                    => optionsBuilder.UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration());
+                    => optionsBuilder.UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
 
                 protected override void OnModelCreating(ModelBuilder modelBuilder)
                     => ConfigureModel(modelBuilder);
@@ -108,10 +107,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public async Task Can_query_with_explicit_services_and_explicit_config()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     using (var context = new NorthwindContext(new DbContextOptionsBuilder()
-                        .UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration())
+                        .UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration())
                         .UseInternalServiceProvider(new ServiceCollection()
                             .AddEntityFrameworkSqlCe()
                             .BuildServiceProvider()).Options))
@@ -140,7 +139,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public void Throws_on_attempt_to_use_SQL_Server_without_providing_connection_string()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     Assert.Equal(
                         CoreStrings.NoProviderConfigured,
@@ -176,7 +175,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public void Throws_on_attempt_to_use_context_with_no_store()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     Assert.Equal(
                         CoreStrings.NoProviderConfigured,
@@ -208,7 +207,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 new EntityFrameworkServicesBuilder(serviceCollection).TryAddCoreServices();
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     Assert.Equal(
                         CoreStrings.NoProviderConfigured,
@@ -234,7 +233,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 public DbSet<Customer> Customers { get; set; }
 
                 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-                    optionsBuilder.UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration());
+                    optionsBuilder.UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
 
                 protected override void OnModelCreating(ModelBuilder modelBuilder)
                     => ConfigureModel(modelBuilder);
@@ -253,7 +252,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     .AddSingleton(p => new DbContextOptionsBuilder().UseInternalServiceProvider(p).Options)
                     .BuildServiceProvider();
 
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     await serviceProvider.GetRequiredService<MyController>().TestAsync();
                 }
@@ -285,7 +284,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 public DbSet<Customer> Customers { get; set; }
 
                 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                    => optionsBuilder.UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration());
+                    => optionsBuilder.UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
 
                 protected override void OnModelCreating(ModelBuilder modelBuilder)
                     => ConfigureModel(modelBuilder);
@@ -301,9 +300,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     .AddTransient<MyController>()
                     .AddTransient<NorthwindContext>()
                     .AddSingleton(new DbContextOptionsBuilder()
-                        .UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration()).Options).BuildServiceProvider();
+                        .UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration()).Options).BuildServiceProvider();
 
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     await serviceProvider.GetRequiredService<MyController>().TestAsync();
                 }
@@ -344,10 +343,10 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public async Task Can_pass_context_options_to_constructor_and_use_in_builder()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     using (var context = new NorthwindContext(new DbContextOptionsBuilder()
-                        .UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration()).Options))
+                        .UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration()).Options))
                     {
                         Assert.Equal(91, await context.Customers.CountAsync());
                     }
@@ -373,9 +372,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public async Task Can_pass_connection_string_to_constructor_and_use_in_OnConfiguring()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
-                    using (var context = new NorthwindContext(SqlCeNorthwindContext.ConnectionString))
+                    using (var context = new NorthwindContext(SqlCeTestStore.NorthwindConnectionString))
                     {
                         Assert.Equal(91, await context.Customers.CountAsync());
                     }
@@ -406,7 +405,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             [Fact]
             public async Task Can_use_one_context_nested_inside_another_of_the_same_type()
             {
-                using (SqlCeNorthwindContext.GetSharedStore())
+                using (SqlCeTestStore.GetNorthwindStore())
                 {
                     var serviceProvider = new ServiceCollection()
                         .AddEntityFrameworkSqlCe()
@@ -449,7 +448,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder
                     .UseInternalServiceProvider(_serviceProvider)
-                    .UseSqlCe(SqlCeNorthwindContext.ConnectionString, b => b.ApplyConfiguration());
+                    .UseSqlCe(SqlCeTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
             }
         }
 

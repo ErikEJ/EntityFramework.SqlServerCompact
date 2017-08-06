@@ -23,11 +23,16 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public static readonly string NorthwindConnectionString = CreateConnectionString(NorthwindName);
 
+        public string Name { get; }
+
         public static SqlCeTestStore GetNorthwindStore()
             => SqlCeTestStore.GetOrCreateShared(NorthwindName, () => { });
 
         public static SqlCeTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
             new SqlCeTestStore(name).CreateShared(initializeDatabase);
+
+        public static SqlCeTestStore Create(string name)
+            => new SqlCeTestStore(name).CreateTransient(true);
 
         public static SqlCeTestStore CreateScratch(bool createDatabase)
         {

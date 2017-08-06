@@ -763,7 +763,7 @@ WHERE ([e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL)",
             base.Where_multiple_ands_with_nullable_parameter_and_constant();
 
             Assert.Equal(
-                @"@__prm3_2='Blah' (Size = 4000)
+                @"@__prm3_2='Blah'
 
 SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
@@ -998,7 +998,15 @@ WHERE [e].[NullableBoolA] = [e].[NullableBoolB]",
         }
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
 
         protected override void ClearLog()
             => Fixture.TestSqlLoggerFactory.Clear();

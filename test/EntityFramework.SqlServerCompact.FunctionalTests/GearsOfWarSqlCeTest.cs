@@ -19,6 +19,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             base.Optional_navigation_with_collection_composite_key();
         }
 
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_distinct_firstordefault()
+        {
+            base.Select_subquery_distinct_firstordefault();
+        }
+
         public override void Entity_equality_empty()
         {
             base.Entity_equality_empty();
@@ -1796,7 +1802,7 @@ WHERE ([t].[Note] <> N'K.I.A.') OR [t].[Note] IS NULL");
             base.Optional_navigation_type_compensation_works_with_projection_into_anonymous_type();
 
             AssertSql(
-                @"SELECT [t0].[SquadId] AS [SquadId]
+                @"SELECT [t0].[SquadId]
 FROM [CogTag] AS [t]
 LEFT JOIN (
     SELECT [t.Gear].*
@@ -1982,14 +1988,14 @@ WHERE (([w].[Name] <> N'Lancer') OR [w].[Name] IS NULL) AND (@_outer_FullName = 
 FROM [Gear] AS [g]
 WHERE [g].[Discriminator] = N'Officer'",
                 //
-                @"@_outer_Nickname='Marcus' (Size = 4000)
+                @"@_outer_Nickname='Marcus'
 @_outer_SquadId='1'
 
 SELECT [r].[Nickname], [r].[SquadId], [r].[AssignedCityName], [r].[CityOrBirthName], [r].[Discriminator], [r].[FullName], [r].[HasSoulPatch], [r].[LeaderNickname], [r].[LeaderSquadId], [r].[Rank]
 FROM [Gear] AS [r]
 WHERE ([r].[Discriminator] IN (N'Officer', N'Gear') AND ([r].[Nickname] <> N'Dom')) AND ((@_outer_Nickname = [r].[LeaderNickname]) AND (@_outer_SquadId = [r].[LeaderSquadId]))",
                 //
-                @"@_outer_Nickname='Baird' (Size = 4000)
+                @"@_outer_Nickname='Baird'
 @_outer_SquadId='1'
 
 SELECT [r].[Nickname], [r].[SquadId], [r].[AssignedCityName], [r].[CityOrBirthName], [r].[Discriminator], [r].[FullName], [r].[HasSoulPatch], [r].[LeaderNickname], [r].[LeaderSquadId], [r].[Rank]
@@ -2140,6 +2146,48 @@ WHERE CONVERT(date, [m].[Timeline]) > @__Date_0");
                 @"SELECT [m].[Id], [m].[CodeName], [m].[Timeline]
 FROM [Mission] AS [m]
 WHERE DATEPART(month, [m].[Timeline]) = 5");
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void DateTimeOffset_DateAdd_AddDays()
+        {
+            base.DateTimeOffset_DateAdd_AddDays();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void DateTimeOffset_DateAdd_AddHours()
+        {
+            base.DateTimeOffset_DateAdd_AddHours();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void DateTimeOffset_DateAdd_AddMilliseconds()
+        {
+            base.DateTimeOffset_DateAdd_AddMilliseconds();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void DateTimeOffset_DateAdd_AddMinutes()
+        {
+            base.DateTimeOffset_DateAdd_AddMinutes();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void DateTimeOffset_DateAdd_AddMonths()
+        {
+            base.DateTimeOffset_DateAdd_AddMonths();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void DateTimeOffset_DateAdd_AddSeconds()
+        {
+            base.DateTimeOffset_DateAdd_AddSeconds();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void DateTimeOffset_DateAdd_AddYears()
+        {
+            base.DateTimeOffset_DateAdd_AddYears();
         }
 
         public override void Orderby_added_for_client_side_GroupJoin_composite_dependent_to_principal_LOJ_when_incomplete_key_is_used()
@@ -2597,14 +2645,14 @@ WHERE @_outer_FullName = [w].[OwnerFullName]");
 FROM [Gear] AS [g]
 WHERE [g].[Discriminator] = N'Officer'",
                 //
-                @"@_outer_Nickname='Marcus' (Size = 4000)
+                @"@_outer_Nickname='Marcus'
 @_outer_SquadId='1'
 
 SELECT [g0].[Nickname], [g0].[SquadId], [g0].[AssignedCityName], [g0].[CityOrBirthName], [g0].[Discriminator], [g0].[FullName], [g0].[HasSoulPatch], [g0].[LeaderNickname], [g0].[LeaderSquadId], [g0].[Rank]
 FROM [Gear] AS [g0]
 WHERE [g0].[Discriminator] IN (N'Officer', N'Gear') AND ((@_outer_Nickname = [g0].[LeaderNickname]) AND (@_outer_SquadId = [g0].[LeaderSquadId]))",
                 //
-                @"@_outer_Nickname='Baird' (Size = 4000)
+                @"@_outer_Nickname='Baird'
 @_outer_SquadId='1'
 
 SELECT [g0].[Nickname], [g0].[SquadId], [g0].[AssignedCityName], [g0].[CityOrBirthName], [g0].[Discriminator], [g0].[FullName], [g0].[HasSoulPatch], [g0].[LeaderNickname], [g0].[LeaderSquadId], [g0].[Rank]
@@ -2928,7 +2976,15 @@ ORDER BY [t1].[Name], [t1].[Name0], [t1].[Id]");
         }
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
 
         private void AssertContainsSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected, assertOrder: false);

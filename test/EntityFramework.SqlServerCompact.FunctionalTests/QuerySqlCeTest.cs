@@ -28,6 +28,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             base.SelectMany_primitive_select_subquery();
         }
 
+        [Fact(Skip = "SQL CE limitation")]
+        public override void Average_on_float_column_in_subquery_with_cast()
+        {
+            base.Average_on_float_column_in_subquery_with_cast();
+        }
+
         public override void Lifting_when_subquery_nested_order_by_anonymous()
         {
             base.Lifting_when_subquery_nested_order_by_anonymous();
@@ -3540,7 +3546,7 @@ ORDER BY [o0].[OrderID]");
             AssertSql(
                 @"SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
 FROM [Orders] AS [o0]
-ORDER BY [o0].[CustomerID]");
+ORDER BY [o0].[CustomerID], [o0].[OrderID]");
         }
 
         public override void GroupBy_with_orderby_and_anonymous_projection()
@@ -5074,7 +5080,7 @@ WHERE @__Abs_0 < [od].[ProductID]");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE CEILING([od].[Discount]) > 0E0");
+WHERE CEILING([od].[Discount]) > 0");
         }
 
         public override void Where_math_ceiling2()
@@ -5133,7 +5139,7 @@ FROM [Customers] AS [c2]");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE POWER([od].[Discount], 2E0) > 0.0500000007450581E0");
+WHERE POWER([od].[Discount], 2) > 0.05000000074505806");
         }
 
         public override void Where_math_round()
@@ -5193,7 +5199,7 @@ WHERE ROUND([od].[UnitPrice], 0, 1) > 10.0");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (EXP([od].[Discount]) > 1E0)");
+WHERE ([od].[OrderID] = 11077) AND (EXP([od].[Discount]) > 1)");
         }
 
         [Fact(Skip = "Investigate")]
@@ -5236,7 +5242,7 @@ WHERE (([od].[OrderID] = 11077) AND ([od].[Discount] > 0E0)) AND (LOG([od].[Disc
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (SQRT([od].[Discount]) > 0E0)");
+WHERE ([od].[OrderID] = 11077) AND (SQRT([od].[Discount]) > 0)");
         }
 
         public override void Where_math_acos()
@@ -5246,7 +5252,7 @@ WHERE ([od].[OrderID] = 11077) AND (SQRT([od].[Discount]) > 0E0)");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (ACOS([od].[Discount]) > 1E0)");
+WHERE ([od].[OrderID] = 11077) AND (ACOS([od].[Discount]) > 1)");
         }
 
         public override void Where_math_asin()
@@ -5256,7 +5262,7 @@ WHERE ([od].[OrderID] = 11077) AND (ACOS([od].[Discount]) > 1E0)");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (ASIN([od].[Discount]) > 0E0)");
+WHERE ([od].[OrderID] = 11077) AND (ASIN([od].[Discount]) > 0)");
         }
 
         public override void Where_math_atan()
@@ -5266,7 +5272,7 @@ WHERE ([od].[OrderID] = 11077) AND (ASIN([od].[Discount]) > 0E0)");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (ATAN([od].[Discount]) > 0E0)");
+WHERE ([od].[OrderID] = 11077) AND (ATAN([od].[Discount]) > 0)");
         }
 
         public override void Where_math_atan2()
@@ -5276,7 +5282,7 @@ WHERE ([od].[OrderID] = 11077) AND (ATAN([od].[Discount]) > 0E0)");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (ATN2([od].[Discount], 1E0) > 0E0)");
+WHERE ([od].[OrderID] = 11077) AND (ATN2([od].[Discount], 1) > 0)");
         }
 
         public override void Where_math_cos()
@@ -5286,7 +5292,7 @@ WHERE ([od].[OrderID] = 11077) AND (ATN2([od].[Discount], 1E0) > 0E0)");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (COS([od].[Discount]) > 0E0)");
+WHERE ([od].[OrderID] = 11077) AND (COS([od].[Discount]) > 0)");
         }
 
         public override void Where_math_sin()
@@ -5296,7 +5302,7 @@ WHERE ([od].[OrderID] = 11077) AND (COS([od].[Discount]) > 0E0)");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (SIN([od].[Discount]) > 0E0)");
+WHERE ([od].[OrderID] = 11077) AND (SIN([od].[Discount]) > 0)");
         }
 
         public override void Where_math_tan()
@@ -5306,7 +5312,7 @@ WHERE ([od].[OrderID] = 11077) AND (SIN([od].[Discount]) > 0E0)");
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE ([od].[OrderID] = 11077) AND (TAN([od].[Discount]) > 0E0)");
+WHERE ([od].[OrderID] = 11077) AND (TAN([od].[Discount]) > 0)");
         }
 
         public override void Where_math_sign()
@@ -5336,7 +5342,7 @@ WHERE NEWID() <> '00000000-0000-0000-0000-000000000000'");
             AssertSql(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE POWER(LEN([c].[CustomerID]), 2E0) = 25E0");
+WHERE POWER(LEN([c].[CustomerID]), 2) = 25");
         }
 
         public override void Where_string_to_lower()
@@ -6641,7 +6647,7 @@ FROM [Orders] AS [o]");
 
             AssertSql(
                 @"@__NewLine_0='
-' (Size = 4000)
+'
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
@@ -7367,7 +7373,7 @@ ORDER BY [t0].[ContactTitle]");
             base.No_orderby_added_for_fully_translated_manually_constructed_LOJ();
 
             AssertSql(
-                @"SELECT [e1].[City] AS [City1], [e2].[City] AS [City2], [e2].[EmployeeID]
+                @"SELECT [e1].[City] AS [City1], [e2].[City] AS [City2]
 FROM [Employees] AS [e1]
 LEFT JOIN [Employees] AS [e2] ON [e1].[EmployeeID] = [e2].[ReportsTo]");
         }
@@ -8167,10 +8173,26 @@ FROM (
         }
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
 
         private void AssertContainsSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected, assertOrder: false);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed, assertOrder: false);
+        }
 
         protected override void ClearLog()
             => Fixture.TestSqlLoggerFactory.Clear();

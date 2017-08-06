@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Diagnostics;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -13,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         private readonly SqlCeTestStore _testStore = SqlCeTestStore.GetNorthwindStore();
 
-        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
+        public TestSqlLoggerFactory TestSqlLoggerFactory { [DebuggerStepThrough] get; } = new TestSqlLoggerFactory();
 
         public NorthwindQuerySqlCeFixture()
         {

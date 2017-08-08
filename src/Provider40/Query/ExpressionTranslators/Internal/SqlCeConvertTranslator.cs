@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -8,17 +7,21 @@ using Microsoft.EntityFrameworkCore.Query.Expressions;
 
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
+    /// <summary>
+    ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+    ///     directly from your code. This API may change or be removed in future releases.
+    /// </summary>
     public class SqlCeConvertTranslator : IMethodCallTranslator
     {
-        private static readonly Dictionary<string, DbType> _typeMapping = new Dictionary<string, DbType>
+        private static readonly Dictionary<string, string> _typeMapping = new Dictionary<string, string>
         {
-            [nameof(Convert.ToByte)] = DbType.Byte,
-            [nameof(Convert.ToDecimal)] = DbType.Decimal,
-            [nameof(Convert.ToDouble)] = DbType.Double,
-            [nameof(Convert.ToInt16)] = DbType.Int16,
-            [nameof(Convert.ToInt32)] = DbType.Int32,
-            [nameof(Convert.ToInt64)] = DbType.Int64,
-            [nameof(Convert.ToString)] = DbType.String,
+            [nameof(Convert.ToByte)] = "tinyint",
+            [nameof(Convert.ToDecimal)] = "decimal(18, 2)",
+            [nameof(Convert.ToDouble)] = "float",
+            [nameof(Convert.ToInt16)] = "smallint",
+            [nameof(Convert.ToInt32)] = "int",
+            [nameof(Convert.ToInt64)] = "bigint",
+            [nameof(Convert.ToString)] = "nvarchar(4000)"
         };
 
         private static readonly List<Type> _supportedTypes = new List<Type>
@@ -31,29 +34,30 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
             typeof(int),
             typeof(long),
             typeof(short),
-            typeof(string),
+            typeof(string)
         };
 
-        private static readonly IEnumerable<MethodInfo> _supportedMethods;
-
-        static SqlCeConvertTranslator()
-        {
-            _supportedMethods = _typeMapping.Keys
+        private static readonly IEnumerable<MethodInfo> _supportedMethods
+            = _typeMapping.Keys
                 .SelectMany(t => typeof(Convert).GetTypeInfo().GetDeclaredMethods(t)
-                    .Where(m => (m.GetParameters().Length == 1)
-                        && _supportedTypes.Contains(m.GetParameters().First().ParameterType)));
-        }
+                    .Where(m => m.GetParameters().Length == 1
+                                && _supportedTypes.Contains(m.GetParameters().First().ParameterType)));
 
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         public virtual Expression Translate(MethodCallExpression methodCallExpression)
-        {
-            if (_supportedMethods.Contains(methodCallExpression.Method))
-            {
-                var arguments = new[] { Expression.Constant(_typeMapping[methodCallExpression.Method.Name]), methodCallExpression.Arguments[0] };
-
-                return new SqlFunctionExpression("CONVERT", methodCallExpression.Type, arguments);
-            }
-
-            return null;
-        }
+            => _supportedMethods.Contains(methodCallExpression.Method)
+                ? new SqlFunctionExpression(
+                    "CONVERT",
+                    methodCallExpression.Type,
+                    new[]
+                    {
+                        new SqlFragmentExpression(
+                            _typeMapping[methodCallExpression.Method.Name]),
+                        methodCallExpression.Arguments[0]
+                    })
+                : null;
     }
 }

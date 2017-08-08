@@ -131,6 +131,7 @@
     <Compile Include="ComplexNavigationsQuerySqlCeFixture.cs" />
     <Compile Include="ComplexNavigationsQuerySqlCeTest.cs" />
     <Compile Include="CompositeKeyEndToEndTest.cs" />
+    <Compile Include="ConcurrencyDetectorSqlCeTest.cs" />
     <Compile Include="DataAnnotationSqlCeFixture.cs" />
     <Compile Include="DataAnnotationSqlCeTest.cs" />
     <Compile Include="DataBindingSqlCeTest.cs" />

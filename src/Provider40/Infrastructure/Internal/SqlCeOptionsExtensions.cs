@@ -1,12 +1,14 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
 {
     public class SqlCeOptionsExtension : RelationalOptionsExtension
     {
         private bool? _clientEvalForUnsupportedSqlConstructs;
+        private string _logFragment;
 
         public SqlCeOptionsExtension()
         {
@@ -38,6 +40,32 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
             services.AddEntityFrameworkSqlCe();
 
             return true;
+        }
+
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public override string LogFragment
+        {
+            get
+            {
+                if (_logFragment == null)
+                {
+                    var builder = new StringBuilder();
+
+                    builder.Append(base.LogFragment);
+
+                    if (_clientEvalForUnsupportedSqlConstructs == true)
+                    {
+                        builder.Append("ClientEvalForUnsupportedSqlConstructs ");
+                    }
+
+                    _logFragment = builder.ToString();
+                }
+
+                return _logFragment;
+            }
         }
     }
 }

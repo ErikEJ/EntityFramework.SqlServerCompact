@@ -222,68 +222,68 @@ CREATE TABLE [MountainsColumns] (
                 });
         }
 
-        //[Theory]
-        //[InlineData("nvarchar(55)", 55)]
-        //[InlineData("nchar(14)", 14)]
-        //[InlineData("ntext", null)]
-        //public void It_reads_max_length(string type, int? length)
-        //{
-        //    var tables = _fixture.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Strings';");
-        //    if (tables.Count() > 0)
-        //    {
-        //        _fixture.ExecuteNonQuery("DROP TABLE [Strings];");
-        //    }
+        [Theory]
+        [InlineData("nvarchar(55)", 55)]
+        [InlineData("nchar(14)", 14)]
+        [InlineData("ntext", null)]
+        public void It_reads_max_length(string type, int? length)
+        {
+            var tables = _fixture.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Strings';");
+            if (tables.Count() > 0)
+            {
+                _fixture.ExecuteNonQuery("DROP TABLE [Strings];");
+            }
 
-        //    var sql = new List<string>
-        //    {
-        //        "CREATE TABLE [Strings] ( CharColumn " + type + ");"
-        //    };
-        //    var db = CreateModel(sql, new TableSelectionSet(new List<string> { "Strings" }));
+            var sql = new List<string>
+            {
+                "CREATE TABLE [Strings] ( CharColumn " + type + ");"
+            };
+            var db = CreateModel(sql, new List<string> { "Strings" });
 
-        //    Assert.Equal(length, db.Tables.Single().Columns.Single().MaxLength);
-        //}
+            Assert.Equal(type, db.Tables.Single().Columns.Single().StoreType);
+        }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void It_reads_identity(bool isIdentity)
+        {
+            var tables = _fixture.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Identities';");
+            if (tables.Count() > 0)
+            {
+                _fixture.ExecuteNonQuery("DROP TABLE [Identities];");
+            }
 
-        //[Theory]
-        //[InlineData(true)]
-        //[InlineData(false)]
-        //public void It_reads_identity(bool isIdentity)
-        //{
-        //    var tables = _fixture.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Identities';");
-        //    if (tables.Count() > 0)
-        //    {
-        //        _fixture.ExecuteNonQuery("DROP TABLE [Identities];");
-        //    }
+            var sql = new List<string>
+            {
+                "CREATE TABLE [Identities] ( Id INT " + (isIdentity ? "IDENTITY(1,1)" : "") + ")"
+            };
 
-        //    var sql = new List<string>
-        //    {
-        //        "CREATE TABLE [Identities] ( Id INT " + (isIdentity ? "IDENTITY(1,1)" : "") + ")"
-        //    };
+            var dbModel = CreateModel(sql, new List<string> { "Identities" });
 
-        //    var dbInfo = CreateModel(sql, new TableSelectionSet(new List<string> { "Identities" }));
+            var column = Assert.Single(dbModel.Tables.Single().Columns);
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Equal(isIdentity ? ValueGenerated.OnAdd : default(ValueGenerated?), column.ValueGenerated);
+        }
 
-        //    var column = Assert.IsType<ColumnModel>(Assert.Single(dbInfo.Tables.Single().Columns));
-        //    Assert.Equal(isIdentity, column.SqlCe().IsIdentity);
-        //    Assert.Equal(isIdentity ? ValueGenerated.OnAdd : default(ValueGenerated?), column.ValueGenerated);
-        //}
+        [Fact]
+        public void It_filters_tables()
+        {
+            var sql = new List<string>
+            {
+                "CREATE TABLE [K2] ( Id int, A nvarchar, UNIQUE (A) );",
+                "CREATE TABLE [Kilimanjaro] ( Id int,B nvarchar, UNIQUE (B ), FOREIGN KEY (B) REFERENCES K2 (A) );"
+            };
+            var selectionSet = new List<string> { "K2" };
 
-        //[Fact]
-        //public void It_filters_tables()
-        //{
-        //    var sql = new List<string>
-        //    {
-        //        "CREATE TABLE [K2] ( Id int, A nvarchar, UNIQUE (A) );",
-        //        "CREATE TABLE [Kilimanjaro] ( Id int,B nvarchar, UNIQUE (B ), FOREIGN KEY (B) REFERENCES K2 (A) );"
-        //    };
-        //    var selectionSet = new TableSelectionSet(new List<string> { "K2" });
-
-        //    var dbInfo = CreateModel(sql, selectionSet);
-        //    var table = Assert.Single(dbInfo.Tables);
-        //    Assert.Equal("K2", table.Name);
-        //    Assert.Equal(2, table.Columns.Count);
-        //    Assert.Equal(1, table.Indexes.Count);
-        //    Assert.Empty(table.ForeignKeys);
-        //}
+            var dbModel = CreateModel(sql, selectionSet);
+            var table = Assert.Single(dbModel.Tables);
+            // ReSharper disable once PossibleNullReferenceException
+            Assert.Equal("K2", table.Name);
+            Assert.Equal(2, table.Columns.Count);
+            Assert.Equal(1, table.UniqueConstraints.Count);
+            Assert.Empty(table.ForeignKeys);
+        }
 
         private readonly SqlCeDatabaseModelFixture _fixture;
 

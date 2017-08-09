@@ -37,6 +37,7 @@
     <Compile Include="ReverseEngineering\SqlCeE2EFixture.cs" />
     <Compile Include="ReverseEngineering\SqlCeE2ETests.cs" />
     <Compile Include="ReverseEngineering\SqlCeTestStore.cs" />
+    <Compile Include="ScaffoldingTypeMapperSqlCeTest.cs" />
     <Compile Include="SqlCeDatabaseModelFactoryTest.cs" />
     <Compile Include="SqlCeDatabaseModelFixture.cs" />
   </ItemGroup>

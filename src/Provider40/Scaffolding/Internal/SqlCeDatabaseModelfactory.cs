@@ -264,6 +264,16 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 return "rowversion";
             }
 
+            if (dataTypeName == "ntext")
+            {
+                return "ntext";
+            }
+
+            if (dataTypeName == "image")
+            {
+                return "image";
+            }
+
             if (maxLength.HasValue)
             {
                 return $"{dataTypeName}({maxLength.Value})";

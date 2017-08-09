@@ -38,6 +38,7 @@
     <Compile Include="ReverseEngineering\SqlCeE2ETests.cs" />
     <Compile Include="ReverseEngineering\SqlCeTestStore.cs" />
     <Compile Include="SqlCeDatabaseModelFactoryTest.cs" />
+    <Compile Include="SqlCeDatabaseModelFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -170,9 +171,6 @@
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Relational.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Design.2.0.0-preview2-25099\lib\netstandard1.3\Microsoft.EntityFrameworkCore.Relational.Design.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests.2.0.0\lib\net461\Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests.dll</HintPath>

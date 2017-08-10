@@ -29,6 +29,7 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
 
         private class PooledContext : DbContext
         {
+            public static int DisposedCount;
             public static int InstanceCount;
 
             public static bool ModifyOptions;
@@ -54,6 +55,13 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
                 => modelBuilder.Entity<Customer>().ToTable("Customers");
+
+            public override void Dispose()
+            {
+                base.Dispose();
+
+                Interlocked.Increment(ref DisposedCount);
+            }
 
             public class Customer
             {
@@ -313,16 +321,18 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
             Assert.Null(context3.Database.CurrentTransaction);
         }
 
-        [ConditionalFact(Skip = "ErikEJ investigate fail")]
+        
+        [ConditionalFact(Skip = "Investigate fail of last assert - 2.1")]
         public async Task Concurrency_test()
         {
-            // This test is for measuring different pooling approaches.
+            PooledContext.InstanceCount = 0;
+            PooledContext.DisposedCount = 0;
 
-            WriteResults();
+            var results = WriteResults();
 
             var serviceProvider = BuildServiceProvider<PooledContext>();
 
-            Func<Task> work = async () =>
+            async Task ProcessRequest()
             {
                 while (_stopwatch.IsRunning)
                 {
@@ -335,18 +345,20 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
                         Interlocked.Increment(ref _requests);
                     }
                 }
-            };
+            }
 
             var tasks = new Task[32];
 
             for (var i = 0; i < 32; i++)
             {
-                tasks[i] = work();
+                tasks[i] = ProcessRequest();
             }
 
             await Task.WhenAll(tasks);
+            await results;
 
-            Assert.InRange(PooledContext.InstanceCount, 30, 50);
+            Assert.Equal(_requests, PooledContext.DisposedCount);
+            Assert.InRange(PooledContext.InstanceCount, 32, 64);
         }
 
         private readonly TimeSpan _duration = TimeSpan.FromSeconds(10);
@@ -357,7 +369,7 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
 
         private long _requests;
 
-        private async void WriteResults()
+        private async Task WriteResults()
         {
             if (Interlocked.Exchange(ref _stopwatchStarted, 1) == 0)
             {
@@ -367,7 +379,7 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
             var lastRequests = (long)0;
             var lastElapsed = TimeSpan.Zero;
 
-            while (true)
+            while (_stopwatch.IsRunning)
             {
                 await Task.Delay(TimeSpan.FromSeconds(1));
 
@@ -391,7 +403,6 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
                     _stopwatch.Stop();
                 }
             }
-            // ReSharper disable once FunctionNeverReturns
         }
 
         private readonly ITestOutputHelper _testOutputHelper = null;

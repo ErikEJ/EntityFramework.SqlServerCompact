@@ -3779,7 +3779,7 @@ LEFT JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
 ORDER BY [c].[CustomerID]");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact(Skip = "Investigate - assert fix underway - 2.1")]
         public override void GroupJoin_customers_orders_count_preserves_ordering()
         {
             base.GroupJoin_customers_orders_count_preserves_ordering();
@@ -5193,7 +5193,7 @@ FROM [Order Details] AS [od]
 WHERE ([od].[OrderID] = 11077) AND (EXP([od].[Discount]) > 1)");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact(Skip = "Investigate - SQLCE limitation? - 2.1")]
         public override void Where_math_log10()
         {
             base.Where_math_log10();
@@ -5204,7 +5204,7 @@ FROM [Order Details] AS [od]
 WHERE (([od].[OrderID] = 11077) AND ([od].[Discount] > 0E0)) AND (LOG10([od].[Discount]) < 0E0)");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact(Skip = "Investigate - SQLCE limitation? - 2.1")]
         public override void Where_math_log()
         {
             base.Where_math_log();
@@ -5215,7 +5215,7 @@ FROM [Order Details] AS [od]
 WHERE (([od].[OrderID] = 11077) AND ([od].[Discount] > 0E0)) AND (LOG([od].[Discount]) < 0E0)");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact(Skip = "Investigate - SQLCE limitation? - 2.1")]
         public override void Where_math_log_new_base()
         {
             base.Where_math_log_new_base();
@@ -7763,7 +7763,7 @@ ORDER BY (
 )");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact(Skip = "Investigate - fix in progress - 2.1")]
         public override void Include_with_orderby_skip_preserves_ordering()
         {
             base.Include_with_orderby_skip_preserves_ordering();

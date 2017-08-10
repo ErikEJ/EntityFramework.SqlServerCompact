@@ -11,13 +11,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             fixture.TestSqlLoggerFactory.Clear();
         }
 
-        [Fact(Skip = "ErikEJ Investigate invalid cast exception")]
+        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9377")]
         public override void Projecting_nullable_bool_with_coalesce()
         {
             base.Projecting_nullable_bool_with_coalesce();
         }
 
-        [Fact(Skip = "investigate invalid cast exception")]
+        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9377")]
         public override void Projecting_nullable_bool_with_coalesce_nested()
         {
             base.Projecting_nullable_bool_with_coalesce_nested();

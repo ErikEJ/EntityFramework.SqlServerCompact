@@ -153,7 +153,6 @@ namespace Microsoft.EntityFrameworkCore
         [Fact]
         public void It_reads_columns()
         {
-            //TODO ErikEJ add image col!
             var sql = @"
 CREATE TABLE [MountainsColumns] (
     Id int,

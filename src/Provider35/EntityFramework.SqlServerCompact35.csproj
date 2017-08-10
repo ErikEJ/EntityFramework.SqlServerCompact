@@ -107,6 +107,12 @@
     <Compile Include="..\Provider40\Design\Internal\SqlCeDesignTimeServices.cs">
       <Link>Design\Internal\SqlCeDesignTimeServices.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Diagnostics\SqlCeEventId.cs">
+      <Link>Diagnostics\SqlCeEventId.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Diagnostics\SqlCeStrings.cs">
+      <Link>Diagnostics\SqlCeStrings.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Extensions\Logging\DbLoggerProvider.cs">
       <Link>Extensions\Logging\DbLoggerProvider.cs</Link>
     </Compile>

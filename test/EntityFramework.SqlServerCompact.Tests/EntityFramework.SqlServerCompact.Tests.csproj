@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="ApiConsistencyTest.cs" />
     <Compile Include="ApiConsistencyTestBase.cs" />
+    <Compile Include="Design\DesignTimeProvidersServicesTest.cs" />
     <Compile Include="Design\SqlCeDesignTimeProviderServicesTest.cs" />
     <Compile Include="Extensions\Metadata\SqlCeBuilderExtensionsTest.cs" />
     <Compile Include="Extensions\Metadata\InternalSqlCeMetadataBuilderExtensionsTest.cs.cs" />

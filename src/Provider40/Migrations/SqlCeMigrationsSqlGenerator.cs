@@ -216,9 +216,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
             }
 
-            //TODO ErikEJ Test!
-            var indexes = model.FindEntityType(operation.Table);
-            var index = model.FindEntityType(operation.Table).GetIndexes().Single(i => _annotations.For(i).First().Name == operation.NewName);
+            var index = FindEntityTypes(model, null, operation.Table).First()
+                .GetIndexes().Single(i => i.GetAnnotation("SqlCe:Name").Value.ToString() == operation.NewName);
 
             var dropIndexOperation = new DropIndexOperation
             {

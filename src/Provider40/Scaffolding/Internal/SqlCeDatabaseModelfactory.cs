@@ -121,8 +121,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
         {
             foreach (var tableSelection in tableSelectionSet.Tables.Where(t => !t.IsMatched))
             {
-                //TODO ErikEJ Log!
-                //Logger.MissingTableWarning(tableSelection.Text);
+                Logger.MissingTableWarning(tableSelection.Text);
             }
         }
 
@@ -188,17 +187,14 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     var nullable = reader.GetValueOrDefault<bool>("nullable");
                     var precision = reader.IsDBNull(8) ? default(int?) : Convert.ToInt32(reader[8], System.Globalization.CultureInfo.InvariantCulture);
                     var scale = reader.IsDBNull(9) ? default(int?) : Convert.ToInt32(reader[9], System.Globalization.CultureInfo.InvariantCulture);
-
-                    //var precision = reader.GetValueOrDefault<long?>("precision");
-                    //var scale = reader.GetValueOrDefault<long?>("scale");
                     var maxLength = reader.GetValueOrDefault<int?>("max_length");
+                    var ordinal = reader.GetValueOrDefault<int?>("ordinal");
+                    var primaryKeyOrdinal = reader.GetValueOrDefault<int?>("primary_key_ordinal");
                     var columnName = reader.GetValueOrDefault<string>("column_name");
                     var defaultValue = reader.GetValueOrDefault<string>("default_sql");
                     var isIdentity = reader.GetValueOrDefault<bool>("is_identity");
 
-                    //Logger.ColumnFound(
-                    //                        DisplayName(schemaName, tableName), columnName, DisplayName(dataTypeSchemaName, dataTypeName), ordinal, nullable,
-                    //                        primaryKeyOrdinal, defaultValue, computedValue, precision, scale, maxLength, isIdentity, isComputed);
+                    Logger.ColumnFound(tableName, columnName, dataTypeName, nullable, defaultValue);
 
                     if (!_tableSelectionSet.Allows(tableName))
                     {
@@ -208,7 +204,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
                     if (!_tables.TryGetValue(TableKey(tableName), out var table))
                     {
-                        //Logger.MissingTableWarning(DisplayName(schemaName, tableName));
+                        Logger.MissingTableWarning(tableName);
                         continue;
                     }
 
@@ -219,7 +215,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                         defaultValue = null;
                     }
                     
-                    var isComputed = reader.GetValueOrDefault<bool>("is_computed") || (dataTypeName == "rowversion");
+                    var isComputed = reader.GetValueOrDefault<bool>("is_computed");
 
                     var column = new DatabaseColumn
                     {
@@ -302,7 +298,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     var columnName = reader.GetValueOrDefault<string>("column_name");
 
                     //Logger.IndexColumnFound(
-                    //    DisplayName(schemaName, tableName), indexName, true, columnName, indexOrdinal);
+                    //    tableName, indexName, true, columnName, indexOrdinal);
 
                     if (!_tableSelectionSet.Allows(tableName))
                     {
@@ -320,7 +316,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                         DatabaseTable table;
                         if (!_tables.TryGetValue(TableKey(tableName), out table))
                         {
-                            //Logger.IndexTableMissingWarning(indexName, DisplayName(schemaName, tableName));
+                            //Logger.IndexTableMissingWarning(indexName, tableName);
                             continue;
                         }
 
@@ -375,9 +371,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     var columnName = reader.GetValueOrDefault<string>("column_name");
                     //var indexOrdinal = reader.GetValueOrDefault<byte>("key_ordinal");
 
-                    //TODO ErikEJ fix logging
                     //Logger.IndexColumnFound(
-                    //    DisplayName(schemaName, tableName), indexName, true, columnName, indexOrdinal);
+                    //    tableName, indexName, true, columnName, indexOrdinal);
 
                     if (!_tableSelectionSet.Allows(tableName))
                     {
@@ -467,7 +462,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     DatabaseColumn column;
                     if (!_tableColumns.TryGetValue(ColumnKey(index.Table, columnName), out column))
                     {
-                        //TODO ErikEJ
                         //Logger.IndexColumnsNotMappedWarning(indexName, new[] { columnName });
                     }
                     else

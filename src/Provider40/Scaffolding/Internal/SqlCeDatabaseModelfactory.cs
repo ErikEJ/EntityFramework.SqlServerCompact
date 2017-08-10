@@ -206,12 +206,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                         continue;
                     }
 
-                    if (string.IsNullOrEmpty(columnName))
-                    {
-                        //Logger.ColumnNotNamedWarning(DisplayName(schemaName, tableName));
-                        continue;
-                    }
-
                     if (!_tables.TryGetValue(TableKey(tableName), out var table))
                     {
                         //Logger.MissingTableWarning(DisplayName(schemaName, tableName));
@@ -316,12 +310,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                         continue;
                     }
 
-                    if (string.IsNullOrEmpty(indexName))
-                    {
-                        //Logger.IndexNotNamedWarning(DisplayName(schemaName, tableName));
-                        continue;
-                    }
-
                     Debug.Assert(primaryKey == null || primaryKey.Table != null);
                     if (primaryKey == null
                         || primaryKey.Name != indexName
@@ -347,11 +335,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     }
 
                     DatabaseColumn column;
-                    if (string.IsNullOrEmpty(columnName))
-                    {
-                        //Logger.IndexColumnNotNamedWarning(indexName, DisplayName(schemaName, tableName));
-                    }
-                    else if (!_tableColumns.TryGetValue(ColumnKey(primaryKey.Table, columnName), out column))
+                    if (!_tableColumns.TryGetValue(ColumnKey(primaryKey.Table, columnName), out column))
                     {
                         //Logger.IndexColumnsNotMappedWarning(indexName, new[] { columnName });
                     }
@@ -392,19 +376,12 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     //var indexOrdinal = reader.GetValueOrDefault<byte>("key_ordinal");
 
                     //TODO ErikEJ fix logging
-
                     //Logger.IndexColumnFound(
                     //    DisplayName(schemaName, tableName), indexName, true, columnName, indexOrdinal);
 
                     if (!_tableSelectionSet.Allows(tableName))
                     {
                         //Logger.IndexColumnSkipped(columnName, indexName, DisplayName(schemaName, tableName));
-                        continue;
-                    }
-
-                    if (string.IsNullOrEmpty(indexName))
-                    {
-                        //Logger.IndexNotNamedWarning(DisplayName(schemaName, tableName));
                         continue;
                     }
 
@@ -427,11 +404,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     }
 
                     DatabaseColumn column;
-                    if (string.IsNullOrEmpty(columnName))
-                    {
-                        //Logger.IndexColumnNotNamedWarning(indexName, DisplayName(schemaName, tableName));
-                    }
-                    else if (!_tableColumns.TryGetValue(ColumnKey(uniqueConstraint.Table, columnName), out column))
+                    if (!_tableColumns.TryGetValue(ColumnKey(uniqueConstraint.Table, columnName), out column))
                     {
                         //Logger.IndexColumnsNotMappedWarning(indexName, new[] { columnName });
                     }
@@ -492,12 +465,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     }
 
                     DatabaseColumn column;
-                    if (string.IsNullOrEmpty(columnName))
-                    {
-                        //TODO ErikEJ
-                        //Logger.IndexColumnNotNamedWarning(indexName, DisplayName(schemaName, tableName));
-                    }
-                    else if (!_tableColumns.TryGetValue(ColumnKey(index.Table, columnName), out column))
+                    if (!_tableColumns.TryGetValue(ColumnKey(index.Table, columnName), out column))
                     {
                         //TODO ErikEJ
                         //Logger.IndexColumnsNotMappedWarning(indexName, new[] { columnName });
@@ -590,12 +558,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
         private DatabaseColumn FindColumnForForeignKey(string columnName, DatabaseTable table, string fkName)
         {
             DatabaseColumn column;
-            if (string.IsNullOrEmpty(columnName))
-            {
-                //Logger.ForeignKeyColumnNotNamedWarning(fkName, DisplayName(table.Schema, table.Name));
-                return null;
-            }
-
             if (!_tableColumns.TryGetValue(ColumnKey(table, columnName), out column))
             {
                 //Logger.ForeignKeyColumnsNotMappedWarning(fkName, new[] { columnName });

@@ -152,7 +152,12 @@ SELECT [UniqueNo]
 FROM [Sample]
 WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 
-",
+@p0='VeryVeryVeryVeryVeryVeryLongString'
+@p1='ValidString' (Nullable = false) (Size = 4000)
+@p2='00000000-0000-0000-0000-000000000002'
+
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
+VALUES (@p0, @p1, @p2)",
                 Sql);
         }
 
@@ -173,7 +178,11 @@ SELECT [Id]
 FROM [BookDetail]
 WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
-",
+@p0='' (DbType = Int32)
+@p1='' (Nullable = false) (Size = 256) (DbType = String)
+
+INSERT INTO [BookDetail] ([AdditionalBookDetailId], [BookId])
+VALUES (@p0, @p1)",
                 Sql);
         }
 
@@ -196,7 +205,12 @@ SELECT [UniqueNo]
 FROM [Sample]
 WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 
-",
+@p0='' (Size = 10) (DbType = String)
+@p1='' (Nullable = false) (Size = 4000) (DbType = String)
+@p2='00000000-0000-0000-0000-000000000002'
+
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
+VALUES (@p0, @p1, @p2)",
                 Sql);
         }
 
@@ -216,7 +230,10 @@ SELECT [Id], [Timestamp]
 FROM [Two]
 WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
-",
+@p0='ValidButLongString'
+
+INSERT INTO [Two] ([Data])
+VALUES (@p0)",
                 Sql);
         }
 

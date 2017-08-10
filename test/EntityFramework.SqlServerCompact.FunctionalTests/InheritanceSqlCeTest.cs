@@ -328,6 +328,7 @@ FROM [Animal] AS [k]
 WHERE [k].[Discriminator] = N'Kiwi'");
         }
 
+        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9379")]
         public override void Can_insert_update_delete()
         {
             base.Can_insert_update_delete();

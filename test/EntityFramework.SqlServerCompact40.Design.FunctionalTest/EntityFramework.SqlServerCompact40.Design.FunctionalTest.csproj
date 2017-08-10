@@ -33,10 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeTestStore.cs">
+      <Link>ReverseEngineering\SqlCeTestStore.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReverseEngineering\SqlCeE2EFixture.cs" />
     <Compile Include="ReverseEngineering\SqlCeE2ETests.cs" />
-    <Compile Include="ReverseEngineering\SqlCeTestStore.cs" />
     <Compile Include="ScaffoldingTypeMapperSqlCeTest.cs" />
     <Compile Include="SqlCeDatabaseModelFactoryTest.cs" />
     <Compile Include="SqlCeDatabaseModelFixture.cs" />

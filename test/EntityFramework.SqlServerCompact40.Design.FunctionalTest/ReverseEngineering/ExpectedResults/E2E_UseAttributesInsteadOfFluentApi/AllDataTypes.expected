@@ -13,13 +13,13 @@ namespace E2ETest.Namespace
         public long BigintColumn { get; set; }
         [Column("bitColumn")]
         public bool BitColumn { get; set; }
-        [Column("decimalColumn", TypeName = "numeric")]
+        [Column("decimalColumn", TypeName = "numeric(18, 0)")]
         public decimal DecimalColumn { get; set; }
         [Column("intColumn")]
         public int IntColumn { get; set; }
         [Column("moneyColumn", TypeName = "money")]
         public decimal MoneyColumn { get; set; }
-        [Column("numericColumn", TypeName = "numeric")]
+        [Column("numericColumn", TypeName = "numeric(18, 0)")]
         public decimal NumericColumn { get; set; }
         [Column("smallintColumn")]
         public short SmallintColumn { get; set; }
@@ -31,55 +31,49 @@ namespace E2ETest.Namespace
         public float? RealColumn { get; set; }
         [Column("datetimeColumn")]
         public DateTime? DatetimeColumn { get; set; }
-        [Column("ncharColumn", TypeName = "nchar")]
-        [MaxLength(1)]
+        [Column("ncharColumn", TypeName = "nchar(1)")]
         public string NcharColumn { get; set; }
-        [Column("nchar99Column", TypeName = "nchar")]
-        [MaxLength(99)]
+        [Column("nchar99Column", TypeName = "nchar(99)")]
         public string Nchar99Column { get; set; }
         [Column("ntextColumn", TypeName = "ntext")]
         public string NtextColumn { get; set; }
         [Column("nvarcharColumn")]
-        [MaxLength(1)]
+        [StringLength(1)]
         public string NvarcharColumn { get; set; }
         [Column("nvarchar100Column")]
-        [MaxLength(100)]
+        [StringLength(100)]
         public string Nvarchar100Column { get; set; }
-        [Column("binaryColumn", TypeName = "binary")]
-        [MaxLength(1)]
+        [Column("binaryColumn", TypeName = "binary(1)")]
         public byte[] BinaryColumn { get; set; }
-        [Column("binary111Column", TypeName = "binary")]
-        [MaxLength(111)]
+        [Column("binary111Column", TypeName = "binary(111)")]
         public byte[] Binary111Column { get; set; }
         [Column("imageColumn", TypeName = "image")]
         public byte[] ImageColumn { get; set; }
-        [Column("varbinaryColumn", TypeName = "varbinary")]
+        [Column("varbinaryColumn")]
         [MaxLength(1)]
         public byte[] VarbinaryColumn { get; set; }
-        [Column("varbinary123Column", TypeName = "varbinary")]
+        [Column("varbinary123Column")]
         [MaxLength(123)]
         public byte[] Varbinary123Column { get; set; }
         [Column("timestampColumn", TypeName = "rowversion")]
         public byte[] TimestampColumn { get; set; }
         [Column("uniqueidentifierColumn")]
         public Guid? UniqueidentifierColumn { get; set; }
-        [Column("nationalCharacterColumn", TypeName = "nchar")]
-        [MaxLength(1)]
+        [Column("nationalCharacterColumn", TypeName = "nchar(1)")]
         public string NationalCharacterColumn { get; set; }
-        [Column("nationalCharacter171Column", TypeName = "nchar")]
-        [MaxLength(171)]
+        [Column("nationalCharacter171Column", TypeName = "nchar(171)")]
         public string NationalCharacter171Column { get; set; }
         [Column("nationalCharVaryingColumn")]
-        [MaxLength(1)]
+        [StringLength(1)]
         public string NationalCharVaryingColumn { get; set; }
         [Column("nationalCharVarying177Column")]
-        [MaxLength(177)]
+        [StringLength(177)]
         public string NationalCharVarying177Column { get; set; }
         [Column("nationalCharacterVaryingColumn")]
-        [MaxLength(1)]
+        [StringLength(1)]
         public string NationalCharacterVaryingColumn { get; set; }
         [Column("nationalCharacterVarying188Column")]
-        [MaxLength(188)]
+        [StringLength(188)]
         public string NationalCharacterVarying188Column { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using System;
 using System.Collections.Generic;
@@ -230,6 +231,11 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                                 ? ValueGenerated.OnAddOrUpdate 
                                 : default(ValueGenerated?)
                     };
+
+                    if ((storeType) == "rowversion")
+                    {
+                        column[ScaffoldingAnnotationNames.ConcurrencyToken] = true;
+                    }
 
                     table.Columns.Add(column);
                     _tableColumns.Add(ColumnKey(table, column.Name), column);

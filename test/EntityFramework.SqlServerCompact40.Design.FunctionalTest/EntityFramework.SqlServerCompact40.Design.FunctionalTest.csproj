@@ -37,6 +37,21 @@
       <Link>ReverseEngineering\SqlCeTestStore.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="ReverseEngineering\ExpectedResults\NonNullBoolWithDefault.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReverseEngineering\ExpectedResults\NonNullBoolWithDefaultContext.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReverseEngineering\ExpectedResults\StringKeysBlogs.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReverseEngineering\ExpectedResults\StringKeysContext.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReverseEngineering\ExpectedResults\StringKeysPosts.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Compile Include="ReverseEngineering\SqlCeE2EFixture.cs" />
     <Compile Include="ReverseEngineering\SqlCeE2ETests.cs" />
     <Compile Include="ScaffoldingTypeMapperSqlCeTest.cs" />

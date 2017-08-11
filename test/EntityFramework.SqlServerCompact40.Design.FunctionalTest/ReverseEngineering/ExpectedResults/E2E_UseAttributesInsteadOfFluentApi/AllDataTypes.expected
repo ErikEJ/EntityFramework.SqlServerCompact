@@ -55,7 +55,7 @@ namespace E2ETest.Namespace
         [Column("varbinary123Column")]
         [MaxLength(123)]
         public byte[] Varbinary123Column { get; set; }
-        [Column("timestampColumn", TypeName = "rowversion")]
+        [Column("timestampColumn")]
         public byte[] TimestampColumn { get; set; }
         [Column("uniqueidentifierColumn")]
         public Guid? UniqueidentifierColumn { get; set; }

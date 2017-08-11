@@ -9,6 +9,7 @@ using Xunit.Abstractions;
 using Microsoft.EntityFrameworkCore.ReverseEngineering;
 using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.EntityFrameworkCore.Specification.Tests;
 
 namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngineering
 {
@@ -159,6 +160,114 @@ namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest.ReverseEngine
             AssertEqualFileContents(expectedFileSet, actualFileSet);
             //TODO ErikEJ Investigate compile issue
             //AssertCompile(actualFileSet);
+        }
+
+        [Fact]
+        public void Non_null_boolean_columns_with_default_constraint_become_nullable_properties()
+        {
+            using (var scratch = SqlCeTestStore.Create("NonNullBooleanWithDefaultConstraint"))
+            {
+                scratch.ExecuteNonQuery(@"
+CREATE TABLE NonNullBoolWithDefault
+(
+     Id int NOT NULL PRIMARY KEY,
+     BoolWithDefaultValueSql bit NOT NULL DEFAULT (CONVERT(""bit"", GETDATE())),
+     BoolWithoutDefaultValueSql bit NOT NULL
+)");
+
+                var expectedFileSet = new FileSet(new FileSystemFileService(),
+                    Path.Combine("ReverseEngineering", "ExpectedResults"),
+                    contents => contents.Replace("{{connectionString}}", scratch.ConnectionString))
+                {
+                    Files = new List<string>
+                    {
+                        "NonNullBoolWithDefaultContext.cs",
+                        "NonNullBoolWithDefault.cs",
+                    }
+                };
+
+                var filePaths = Generator.Generate(
+                        scratch.ConnectionString,
+                        Enumerable.Empty<string>(),
+                        Enumerable.Empty<string>(),
+                        TestProjectDir + Path.DirectorySeparatorChar,
+                        outputPath: null, // not used for this test
+                        rootNamespace: TestNamespace,
+                        contextName: "NonNullBoolWithDefaultContext",
+                        useDataAnnotations: false,
+                        overwriteFiles: false,
+                        useDatabaseNames: false);
+
+
+                var actualFileSet = new FileSet(InMemoryFiles, Path.GetFullPath(TestProjectDir))
+                {
+                    Files = new[] { filePaths.ContextFile }.Concat(filePaths.EntityTypeFiles).Select(Path.GetFileName).ToList()
+                };
+
+                AssertEqualFileContents(expectedFileSet, actualFileSet);
+                //AssertCompile(actualFileSet);
+            }
+        }
+
+        [ConditionalFact]
+        public void Correct_arguments_to_scaffolding_typemapper()
+        {
+            using (var scratch = SqlCeTestStore.Create("StringKeys"))
+            {
+                scratch.ExecuteNonQuery(@"
+CREATE TABLE [StringKeysBlogs] (
+    [PrimaryKey] nvarchar(256) NOT NULL,
+    [AlternateKey] nvarchar(256) NOT NULL,
+    [IndexProperty] nvarchar(256) NULL,
+    [RowVersion] rowversion NULL,
+    CONSTRAINT [PK_StringKeysBlogs] PRIMARY KEY ([PrimaryKey]),
+    CONSTRAINT [AK_StringKeysBlogs_AlternateKey] UNIQUE ([AlternateKey]));");
+                scratch.ExecuteNonQuery(@"
+CREATE INDEX [IX_StringKeysBlogs_IndexProperty] ON [StringKeysBlogs] ([IndexProperty]);");
+
+                scratch.ExecuteNonQuery(@"
+CREATE TABLE [StringKeysPosts] (
+    [Id] int NOT NULL IDENTITY,
+    [BlogAlternateKey] nvarchar(256) NULL,
+    CONSTRAINT [PK_StringKeysPosts] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_StringKeysPosts_StringKeysBlogs_BlogAlternateKey] FOREIGN KEY ([BlogAlternateKey]) REFERENCES [StringKeysBlogs] ([AlternateKey]))");
+
+                scratch.ExecuteNonQuery(@"
+CREATE INDEX [IX_StringKeysPosts_BlogAlternateKey] ON [StringKeysPosts] ([BlogAlternateKey]);
+");
+
+                var expectedFileSet = new FileSet(new FileSystemFileService(),
+                    Path.Combine("ReverseEngineering", "ExpectedResults"),
+                    contents => contents.Replace("{{connectionString}}", scratch.ConnectionString))
+                {
+                    Files = new List<string>
+                    {
+                        "StringKeysContext.cs",
+                        "StringKeysBlogs.cs",
+                        "StringKeysPosts.cs",
+                    }
+                };
+
+                var filePaths = Generator.Generate(
+                    scratch.ConnectionString,
+                    Enumerable.Empty<string>(),
+                    Enumerable.Empty<string>(),
+                    TestProjectDir + Path.DirectorySeparatorChar,
+                    outputPath: null, // not used for this test
+                    rootNamespace: TestNamespace,
+                    contextName: "StringKeysContext",
+                    useDataAnnotations: false,
+                    overwriteFiles: false,
+                    useDatabaseNames: false);
+
+                var actualFileSet = new FileSet(InMemoryFiles, Path.GetFullPath(TestProjectDir))
+                {
+                    Files = new[] { filePaths.ContextFile }.Concat(filePaths.EntityTypeFiles).Select(Path.GetFileName).ToList()
+                };
+
+                AssertEqualFileContents(expectedFileSet, actualFileSet);
+                //AssertCompile(actualFileSet);
+            }
         }
 
         protected override ICollection<BuildReference> References { get; } = new List<BuildReference>

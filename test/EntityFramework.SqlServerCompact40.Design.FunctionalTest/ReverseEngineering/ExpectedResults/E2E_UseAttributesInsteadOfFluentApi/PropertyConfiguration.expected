@@ -22,7 +22,6 @@ namespace E2ETest.Namespace
         public int A { get; set; }
         public int B { get; set; }
         [Required]
-        [Column(TypeName = "rowversion")]
         public byte[] RowversionColumn { get; set; }
     }
 }

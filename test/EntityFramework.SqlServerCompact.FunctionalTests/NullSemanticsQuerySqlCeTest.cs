@@ -1,23 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class NullSemanticsQuerySqlCeTest : NullSemanticsQueryTestBase<SqlCeTestStore, NullSemanticsQuerySqlCeFixture>
     {
-        public NullSemanticsQuerySqlCeTest(NullSemanticsQuerySqlCeFixture fixture)
+        public NullSemanticsQuerySqlCeTest(NullSemanticsQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             fixture.TestSqlLoggerFactory.Clear();
+            //fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9377")]
         public override void Projecting_nullable_bool_with_coalesce()
         {
             base.Projecting_nullable_bool_with_coalesce();
         }
 
-        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9377")]
         public override void Projecting_nullable_bool_with_coalesce_nested()
         {
             base.Projecting_nullable_bool_with_coalesce_nested();

@@ -26,7 +26,7 @@ namespace E2ETest.Namespace
         {
             if (!optionsBuilder.IsConfigured)
             {
-                #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlCe(@"Data Source=E2E.sdf");
             }
         }
@@ -41,13 +41,11 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.Binary111Column)
                     .HasColumnName("binary111Column")
-                    .HasColumnType("binary")
-                    .HasMaxLength(111);
+                    .HasColumnType("binary(111)");
 
                 entity.Property(e => e.BinaryColumn)
                     .HasColumnName("binaryColumn")
-                    .HasColumnType("binary")
-                    .HasMaxLength(1);
+                    .HasColumnType("binary(1)");
 
                 entity.Property(e => e.BitColumn).HasColumnName("bitColumn");
 
@@ -55,7 +53,7 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.DecimalColumn)
                     .HasColumnName("decimalColumn")
-                    .HasColumnType("numeric");
+                    .HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.FloatColumn).HasColumnName("floatColumn");
 
@@ -79,13 +77,11 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.NationalCharacter171Column)
                     .HasColumnName("nationalCharacter171Column")
-                    .HasColumnType("nchar")
-                    .HasMaxLength(171);
+                    .HasColumnType("nchar(171)");
 
                 entity.Property(e => e.NationalCharacterColumn)
                     .HasColumnName("nationalCharacterColumn")
-                    .HasColumnType("nchar")
-                    .HasMaxLength(1);
+                    .HasColumnType("nchar(1)");
 
                 entity.Property(e => e.NationalCharacterVarying188Column)
                     .HasColumnName("nationalCharacterVarying188Column")
@@ -97,13 +93,11 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.Nchar99Column)
                     .HasColumnName("nchar99Column")
-                    .HasColumnType("nchar")
-                    .HasMaxLength(99);
+                    .HasColumnType("nchar(99)");
 
                 entity.Property(e => e.NcharColumn)
                     .HasColumnName("ncharColumn")
-                    .HasColumnType("nchar")
-                    .HasMaxLength(1);
+                    .HasColumnType("nchar(1)");
 
                 entity.Property(e => e.NtextColumn)
                     .HasColumnName("ntextColumn")
@@ -111,7 +105,7 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.NumericColumn)
                     .HasColumnName("numericColumn")
-                    .HasColumnType("numeric");
+                    .HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.Nvarchar100Column)
                     .HasColumnName("nvarchar100Column")
@@ -136,12 +130,10 @@ namespace E2ETest.Namespace
 
                 entity.Property(e => e.Varbinary123Column)
                     .HasColumnName("varbinary123Column")
-                    .HasColumnType("varbinary")
                     .HasMaxLength(123);
 
                 entity.Property(e => e.VarbinaryColumn)
                     .HasColumnName("varbinaryColumn")
-                    .HasColumnType("varbinary")
                     .HasMaxLength(1);
             });
 
@@ -166,7 +158,7 @@ namespace E2ETest.Namespace
                 entity.HasOne(d => d.RelationA)
                     .WithMany(p => p.MultipleFksDependentRelationA)
                     .HasForeignKey(d => d.RelationAid)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RelationA");
 
                 entity.HasOne(d => d.RelationB)
@@ -195,8 +187,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<OneToManyDependent>(entity =>
             {
-                entity.HasKey(e => new { e.OneToManyDependentId1, e.OneToManyDependentId2 })
-                    .HasName("PK_OneToManyDependent");
+                entity.HasKey(e => new { e.OneToManyDependentId1, e.OneToManyDependentId2 });
 
                 entity.Property(e => e.OneToManyDependentId1).HasColumnName("OneToManyDependentID1");
 
@@ -218,8 +209,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<OneToManyPrincipal>(entity =>
             {
-                entity.HasKey(e => new { e.OneToManyPrincipalId1, e.OneToManyPrincipalId2 })
-                    .HasName("PK_OneToManyPrincipal");
+                entity.HasKey(e => new { e.OneToManyPrincipalId1, e.OneToManyPrincipalId2 });
 
                 entity.Property(e => e.OneToManyPrincipalId1).HasColumnName("OneToManyPrincipalID1");
 
@@ -232,8 +222,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<OneToOneDependent>(entity =>
             {
-                entity.HasKey(e => new { e.OneToOneDependentId1, e.OneToOneDependentId2 })
-                    .HasName("PK_OneToOneDependent");
+                entity.HasKey(e => new { e.OneToOneDependentId1, e.OneToOneDependentId2 });
 
                 entity.Property(e => e.OneToOneDependentId1).HasColumnName("OneToOneDependentID1");
 
@@ -246,14 +235,13 @@ namespace E2ETest.Namespace
                 entity.HasOne(d => d.OneToOneDependentNavigation)
                     .WithOne(p => p.OneToOneDependent)
                     .HasForeignKey<OneToOneDependent>(d => new { d.OneToOneDependentId1, d.OneToOneDependentId2 })
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OneToOneDependent");
             });
 
             modelBuilder.Entity<OneToOneFktoUniqueKeyDependent>(entity =>
             {
-                entity.HasKey(e => new { e.OneToOneFktoUniqueKeyDependentId1, e.OneToOneFktoUniqueKeyDependentId2 })
-                    .HasName("PK_OneToOneFKToUniqueKeyDependent");
+                entity.HasKey(e => new { e.OneToOneFktoUniqueKeyDependentId1, e.OneToOneFktoUniqueKeyDependentId2 });
 
                 entity.ToTable("OneToOneFKToUniqueKeyDependent");
 
@@ -282,8 +270,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<OneToOneFktoUniqueKeyPrincipal>(entity =>
             {
-                entity.HasKey(e => new { e.OneToOneFktoUniqueKeyPrincipalId1, e.OneToOneFktoUniqueKeyPrincipalId2 })
-                    .HasName("PK_OneToOneFKToUniqueKeyPrincipal");
+                entity.HasKey(e => new { e.OneToOneFktoUniqueKeyPrincipalId1, e.OneToOneFktoUniqueKeyPrincipalId2 });
 
                 entity.ToTable("OneToOneFKToUniqueKeyPrincipal");
 
@@ -306,8 +293,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<OneToOnePrincipal>(entity =>
             {
-                entity.HasKey(e => new { e.OneToOnePrincipalId1, e.OneToOnePrincipalId2 })
-                    .HasName("PK_OneToOnePrincipal");
+                entity.HasKey(e => new { e.OneToOnePrincipalId1, e.OneToOnePrincipalId2 });
 
                 entity.Property(e => e.OneToOnePrincipalId1).HasColumnName("OneToOnePrincipalID1");
 
@@ -320,8 +306,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<OneToOneSeparateFkdependent>(entity =>
             {
-                entity.HasKey(e => new { e.OneToOneSeparateFkdependentId1, e.OneToOneSeparateFkdependentId2 })
-                    .HasName("PK_OneToOneSeparateFKDependent");
+                entity.HasKey(e => new { e.OneToOneSeparateFkdependentId1, e.OneToOneSeparateFkdependentId2 });
 
                 entity.ToTable("OneToOneSeparateFKDependent");
 
@@ -349,8 +334,7 @@ namespace E2ETest.Namespace
 
             modelBuilder.Entity<OneToOneSeparateFkprincipal>(entity =>
             {
-                entity.HasKey(e => new { e.OneToOneSeparateFkprincipalId1, e.OneToOneSeparateFkprincipalId2 })
-                    .HasName("PK_OneToOneSeparateFKPrincipal");
+                entity.HasKey(e => new { e.OneToOneSeparateFkprincipalId1, e.OneToOneSeparateFkprincipalId2 });
 
                 entity.ToTable("OneToOneSeparateFKPrincipal");
 
@@ -376,13 +360,13 @@ namespace E2ETest.Namespace
                     .HasColumnType("rowversion")
                     .ValueGeneratedOnAddOrUpdate();
 
-                entity.Property(e => e.WithDateDefaultExpression).HasDefaultValueSql("getdate()");
+                entity.Property(e => e.WithDateDefaultExpression).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.WithDateFixedDefault).HasDefaultValueSql("'October 20, 2015 11am'");
 
                 entity.Property(e => e.WithDefaultValue).HasDefaultValueSql("-1");
 
-                entity.Property(e => e.WithGuidDefaultExpression).HasDefaultValueSql("NEWID()");
+                entity.Property(e => e.WithGuidDefaultExpression).HasDefaultValueSql("(NEWID())");
 
                 entity.Property(e => e.WithMoneyDefaultValue)
                     .HasColumnType("money")

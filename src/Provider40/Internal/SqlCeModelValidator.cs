@@ -21,31 +21,24 @@ namespace Microsoft.EntityFrameworkCore.Internal
         {
             base.Validate(model);
 
-            EnsureNoSchemas(model);
-            EnsureNoSequences(model);
+            ValidateNoSchemas(model);
+            ValidateNoSequences(model);
         }
 
-        protected virtual void EnsureNoSchemas([NotNull] IModel model)
+        protected virtual void ValidateNoSchemas([NotNull] IModel model)
         {
-            foreach (var entityType in model.GetEntityTypes().Where(e => e.SqlCe().Schema != null))
+            foreach (var entityType in model.GetEntityTypes().Where(e => e.Relational().Schema != null))
             {
-                ShowWarning(SqlCeEventId.SchemaConfiguredWarning,
-                    $"The entity type '{entityType.DisplayName()}' is configured to use schema '{entityType.SqlCe().Schema}'.SQL Compact does not support schemas. This configuration will be ignored by the SQL Compact provider.");
+                Dependencies.Logger.SchemaConfiguredWarning(entityType, entityType.Relational().Schema);
             }
         }
 
-        protected virtual void EnsureNoSequences([NotNull] IModel model)
+        protected virtual void ValidateNoSequences([NotNull] IModel model)
         {
-            foreach (var sequence in model.SqlCe().Sequences)
+            foreach (var sequence in model.Relational().Sequences)
             {
-                ShowWarning(SqlCeEventId.SequenceWarning, 
-                    $"The model was configured with the database sequence '{sequence.Name}'. SQL Compact does not support sequences.");
+                Dependencies.Logger.SequenceConfiguredWarning(sequence);
             }
         }
-
-        protected virtual void ShowWarning(SqlCeEventId eventId, [NotNull] string message)
-        { }
-        //TODO Add proper event ids (see SQLite provider)
-            //=> Dependencies.Logger.LogWarning(eventId, () => message);
     }
 }

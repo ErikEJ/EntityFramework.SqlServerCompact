@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -177,7 +178,7 @@ LEFT JOIN (
         {
             base.Included_one_to_many_query_with_client_eval();
 
-            AssertContains(
+            AssertSql(
                 @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[UnitPrice], [p].[UnitsInStock]
 FROM [Products] AS [p]
 ORDER BY [p].[ProductID]",
@@ -185,9 +186,11 @@ ORDER BY [p].[ProductID]",
                 @"SELECT [p1].[ProductID], [p1].[Discontinued], [p1].[ProductName], [p1].[UnitPrice], [p1].[UnitsInStock]
 FROM [Products] AS [p1]",
                 //
-                @"SELECT [o].[OrderID], [o].[ProductID], [o].[Discount], [o].[Quantity], [o].[UnitPrice]
+                @"@___quantity_0='50'
+
+SELECT [o].[OrderID], [o].[ProductID], [o].[Discount], [o].[Quantity], [o].[UnitPrice]
 FROM [Order Details] AS [o]
-WHERE [o].[Quantity] > 50");
+WHERE [o].[Quantity] > @___quantity_0");
         }
 
         public override void Navs_query()
@@ -195,7 +198,8 @@ WHERE [o].[Quantity] > 50");
             base.Navs_query();
 
             AssertSql(
-                @"@__TenantPrefix_0='B' (Size = 4000)
+                @"@___quantity_1='50'
+@__TenantPrefix_0='B' (Size = 4000)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
@@ -203,9 +207,9 @@ INNER JOIN [Orders] AS [c.Orders] ON [c].[CustomerID] = [c.Orders].[CustomerID]
 INNER JOIN (
     SELECT [o].*
     FROM [Order Details] AS [o]
-    WHERE [o].[Quantity] > 50
+    WHERE [o].[Quantity] > @___quantity_1
 ) AS [t] ON [c.Orders].[OrderID] = [t].[OrderID]
-WHERE (([c].[CompanyName] LIKE @__TenantPrefix_0 + N'%' AND (CHARINDEX(@__TenantPrefix_0, [c].[CompanyName]) = 1)) OR (@__TenantPrefix_0 = N'')) AND ([t].[Discount] < 10E0)");
+WHERE (([c].[CompanyName] LIKE @__TenantPrefix_0 + N'%' AND (CHARINDEX(@__TenantPrefix_0, [c].[CompanyName]) = 1)) OR (@__TenantPrefix_0 = N'')) AND ([t].[Discount] < 10)");
         }
 
         [ConditionalFact]
@@ -249,9 +253,25 @@ WHERE (([c].[CompanyName] LIKE @__TenantPrefix_0 + N'%' AND (CHARINDEX(@__Tenant
         }
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
 
         private void AssertContains(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected, assertOrder: false);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed, assertOrder: false);
+        }
     }
 }

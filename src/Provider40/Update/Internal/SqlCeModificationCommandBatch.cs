@@ -40,7 +40,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
 #endif
                 using (var reader = relationalCommand.RelationalCommand.ExecuteReader(connection, relationalCommand.ParameterValues))
                 {
-                    Consume(reader.DbDataReader, GetCommandText(), connection);
+                    Consume(reader, GetCommandText(), connection);
                 }
             }
             catch (DbUpdateException)
@@ -55,7 +55,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
             }
         }
 
-        private void Consume(DbDataReader reader, string returningCommandText, IRelationalConnection connection)
+        private void Consume(RelationalDataReader reader, string returningCommandText, IRelationalConnection connection)
         {
             var commandIndex = 0;
 
@@ -69,7 +69,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
                     using (var returningReader = returningCommand.RelationalCommand.ExecuteReader(connection, returningCommand.ParameterValues))
                     {
                         commandIndex = ConsumeResultSetWithPropagation(commandIndex, 
-                            reader,
+                            reader.DbDataReader,
                             returningReader.DbDataReader);
                     }
                 }
@@ -122,10 +122,10 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
             return new Tuple<string, string>(commandText.Trim(), null);
         }
 
-        protected override int ConsumeResultSetWithoutPropagation(int commandIndex, DbDataReader reader)
+        protected override int ConsumeResultSetWithoutPropagation(int commandIndex, RelationalDataReader reader)
         {
             const int expectedRowsAffected = 1;
-            var rowsAffected = reader.RecordsAffected;
+            var rowsAffected = reader.DbDataReader.RecordsAffected;
 
             ++commandIndex;
 

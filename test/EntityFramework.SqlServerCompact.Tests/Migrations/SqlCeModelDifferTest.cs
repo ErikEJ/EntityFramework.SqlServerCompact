@@ -221,6 +221,40 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
         }
 
         [Fact]
+        public void Alter_column_non_key_identity()
+        {
+            Execute(
+                source => source.Entity(
+                    "Lamb",
+                    x =>
+                    {
+                        x.ToTable("Lamb", "bah");
+                        x.Property<int>("Num").ValueGeneratedNever();
+                        x.Property<int>("Id");
+                        x.HasKey("Id");
+                    }),
+                target => target.Entity(
+                    "Lamb",
+                    x =>
+                    {
+                        x.ToTable("Lamb", "bah");
+                        x.Property<int>("Num").ValueGeneratedOnAdd();
+                        x.Property<int>("Id");
+                        x.HasKey("Id");
+                    }),
+                operations =>
+                {
+                    Assert.Equal(1, operations.Count);
+
+                    var operation = Assert.IsType<AlterColumnOperation>(operations[0]);
+                    Assert.Equal("bah", operation.Schema);
+                    Assert.Equal("Lamb", operation.Table);
+                    Assert.Equal("Num", operation.Name);
+                    Assert.Equal(SqlCeAnnotationNames.Identity, operation["SqlCe:ValueGeneration"]);
+                });
+        }
+
+        [Fact]
         public void Add_column_overridden()
         {
             Execute(

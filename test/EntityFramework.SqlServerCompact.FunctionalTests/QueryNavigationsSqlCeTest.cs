@@ -2,6 +2,7 @@
 using Xunit.Abstractions;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -53,7 +54,7 @@ FROM [Customers] AS [c]");
         {
             base.GroupJoin_with_nav_projected_in_subquery_when_client_eval();
 
-            AssertContainsSql(
+            AssertSql(
                 @"SELECT [od0].[OrderID], [od0].[ProductID], [od0].[Discount], [od0].[Quantity], [od0].[UnitPrice], [od.Product0].[ProductID], [od.Product0].[Discontinued], [od.Product0].[ProductName], [od.Product0].[UnitPrice], [od.Product0].[UnitsInStock]
 FROM [Order Details] AS [od0]
 INNER JOIN [Products] AS [od.Product0] ON [od0].[ProductID] = [od.Product0].[ProductID]",
@@ -121,7 +122,7 @@ FROM [Customers] AS [c]");
         {
             base.GroupJoin_with_nav_in_orderby_in_subquery_when_client_eval();
 
-            AssertContainsSql(
+            AssertSql(
                 @"SELECT [od0].[OrderID], [od0].[ProductID], [od0].[Discount], [od0].[Quantity], [od0].[UnitPrice], [od.Product0].[ProductID], [od.Product0].[Discontinued], [od.Product0].[ProductName], [od.Product0].[UnitPrice], [od.Product0].[UnitsInStock]
 FROM [Order Details] AS [od0]
 INNER JOIN [Products] AS [od.Product0] ON [od0].[ProductID] = [od.Product0].[ProductID]",
@@ -495,34 +496,19 @@ WHERE [e].[ReportsTo] IS NULL");
             base.Select_collection_navigation_simple();
 
             AssertSql(
-                @"SELECT [c].[CustomerID]
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [c].[CustomerID]) = 1)
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 256)
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]
-WHERE @_outer_CustomerID = [o].[CustomerID]",
-                //
-                @"@_outer_CustomerID='ANATR' (Size = 256)
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]
-WHERE @_outer_CustomerID = [o].[CustomerID]",
-                //
-                @"@_outer_CustomerID='ANTON' (Size = 256)
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]
-WHERE @_outer_CustomerID = [o].[CustomerID]",
-                //
-                @"@_outer_CustomerID='AROUT' (Size = 256)
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]
-WHERE @_outer_CustomerID = [o].[CustomerID]");
+                @"SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate]
+FROM [Orders] AS [c.Orders]
+INNER JOIN (
+    SELECT [c0].[CustomerID]
+    FROM [Customers] AS [c0]
+    WHERE [c0].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [c0].[CustomerID]) = 1)
+) AS [t] ON [c.Orders].[CustomerID] = [t].[CustomerID]
+ORDER BY [t].[CustomerID]");
         }
 
         public override void Select_collection_navigation_multi_part()
@@ -530,46 +516,21 @@ WHERE @_outer_CustomerID = [o].[CustomerID]");
             base.Select_collection_navigation_multi_part();
 
             AssertSql(
-                @"SELECT [o].[OrderID], [o.Customer].[CustomerID]
+                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate], [o.Customer].[CustomerID], [o.Customer].[Address], [o.Customer].[City], [o.Customer].[CompanyName], [o.Customer].[ContactName], [o.Customer].[ContactTitle], [o.Customer].[Country], [o.Customer].[Fax], [o.Customer].[Phone], [o.Customer].[PostalCode], [o.Customer].[Region]
 FROM [Orders] AS [o]
 LEFT JOIN [Customers] AS [o.Customer] ON [o].[CustomerID] = [o.Customer].[CustomerID]
-WHERE [o].[CustomerID] = N'ALFKI'",
+WHERE [o].[CustomerID] = N'ALFKI'
+ORDER BY [o.Customer].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 256)
-
-SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
-FROM [Orders] AS [o0]
-WHERE @_outer_CustomerID = [o0].[CustomerID]",
-                //
-                @"@_outer_CustomerID='ALFKI' (Size = 256)
-
-SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
-FROM [Orders] AS [o0]
-WHERE @_outer_CustomerID = [o0].[CustomerID]",
-                //
-                @"@_outer_CustomerID='ALFKI' (Size = 256)
-
-SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
-FROM [Orders] AS [o0]
-WHERE @_outer_CustomerID = [o0].[CustomerID]",
-                //
-                @"@_outer_CustomerID='ALFKI' (Size = 256)
-
-SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
-FROM [Orders] AS [o0]
-WHERE @_outer_CustomerID = [o0].[CustomerID]",
-                //
-                @"@_outer_CustomerID='ALFKI' (Size = 256)
-
-SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
-FROM [Orders] AS [o0]
-WHERE @_outer_CustomerID = [o0].[CustomerID]",
-                //
-                @"@_outer_CustomerID='ALFKI' (Size = 256)
-
-SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
-FROM [Orders] AS [o0]
-WHERE @_outer_CustomerID = [o0].[CustomerID]");
+                @"SELECT [o.Customer.Orders].[OrderID], [o.Customer.Orders].[CustomerID], [o.Customer.Orders].[EmployeeID], [o.Customer.Orders].[OrderDate]
+FROM [Orders] AS [o.Customer.Orders]
+INNER JOIN (
+    SELECT DISTINCT [o.Customer0].[CustomerID]
+    FROM [Orders] AS [o0]
+    LEFT JOIN [Customers] AS [o.Customer0] ON [o0].[CustomerID] = [o.Customer0].[CustomerID]
+    WHERE [o0].[CustomerID] = N'ALFKI'
+) AS [t] ON [o.Customer.Orders].[CustomerID] = [t].[CustomerID]
+ORDER BY [t].[CustomerID]");
         }
 
         [Fact(Skip = "SQLCE limitation")]
@@ -1271,10 +1232,26 @@ LEFT JOIN (
         }
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
 
         private void AssertContainsSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected, assertOrder: false);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed, assertOrder: false);
+        }
 
         protected override void ClearLog()
             => Fixture.TestSqlLoggerFactory.Clear();

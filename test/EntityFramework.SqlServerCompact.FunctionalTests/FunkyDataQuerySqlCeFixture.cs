@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.EntityFrameworkCore.TestModels.FunkyDataModel;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
 {

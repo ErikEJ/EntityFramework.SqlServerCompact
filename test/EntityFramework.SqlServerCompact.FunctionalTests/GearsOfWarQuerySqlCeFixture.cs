@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.EntityFrameworkCore.TestModels.GearsOfWarModel;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {

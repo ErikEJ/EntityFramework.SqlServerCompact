@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -11,7 +11,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
     {
         private readonly DbContextOptions _options;
 
-        private readonly SqlCeTestStore _testStore = SqlCeNorthwindContext.GetSharedStore();
+        private readonly SqlCeTestStore _testStore = SqlCeTestStore.GetNorthwindStore();
 
         public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
 

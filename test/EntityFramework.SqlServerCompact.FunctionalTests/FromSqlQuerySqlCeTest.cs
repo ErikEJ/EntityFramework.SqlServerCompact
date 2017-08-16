@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.TestModels.Northwind;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using System;
 using System.Data.Common;
 using System.Data.SqlServerCe;
@@ -96,7 +97,7 @@ WHERE [c].[CustomerID] = [o].[CustomerID]",
             base.From_sql_queryable_multiple_composed_with_parameters_and_closure_parameters();
 
             AssertSql(
-                 @"@p0='London'
+                @"@p0='London'
 @__8__locals1_startDate_1='01/01/1997 00:00:00' (DbType = DateTime)
 @__8__locals1_endDate_2='01/01/1998 00:00:00' (DbType = DateTime)
 
@@ -108,8 +109,8 @@ CROSS JOIN (
     SELECT * FROM ""Orders"" WHERE ""OrderDate"" BETWEEN @__8__locals1_startDate_1 AND @__8__locals1_endDate_2
 ) AS [o]
 WHERE [c].[CustomerID] = [o].[CustomerID]",
-                 //
-                 @"@p0='Berlin'
+                //
+                @"@p0='Berlin'
 @__8__locals1_startDate_1='04/01/1998 00:00:00' (DbType = DateTime)
 @__8__locals1_endDate_2='05/01/1998 00:00:00' (DbType = DateTime)
 
@@ -194,7 +195,7 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
 
             Assert.Equal(
                 @"@p0='London'
-@__contactTitle_1='Sales Representative'
+@__contactTitle_1='Sales Representative' (Size = 4000)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM (
@@ -341,6 +342,14 @@ WHERE ([c].[ContactName] = [c].[CompanyName]) OR ([c].[ContactName] IS NULL AND 
         private string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
     }
 }

@@ -1,22 +1,23 @@
-﻿using Xunit;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class NullSemanticsQuerySqlCeTest : NullSemanticsQueryTestBase<SqlCeTestStore, NullSemanticsQuerySqlCeFixture>
     {
-        public NullSemanticsQuerySqlCeTest(NullSemanticsQuerySqlCeFixture fixture)
+        public NullSemanticsQuerySqlCeTest(NullSemanticsQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             fixture.TestSqlLoggerFactory.Clear();
+            //fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        [Fact(Skip = "ErikEJ Investigate invalid cast exception")]
         public override void Projecting_nullable_bool_with_coalesce()
         {
             base.Projecting_nullable_bool_with_coalesce();
         }
 
-        [Fact(Skip = "investigate invalid cast exception")]
         public override void Projecting_nullable_bool_with_coalesce_nested()
         {
             base.Projecting_nullable_bool_with_coalesce_nested();
@@ -762,7 +763,7 @@ WHERE ([e].[NullableStringA] IN (N'Foo') OR [e].[NullableStringA] IS NULL)",
             base.Where_multiple_ands_with_nullable_parameter_and_constant();
 
             Assert.Equal(
-                @"@__prm3_2='Blah' (Size = 4000)
+                @"@__prm3_2='Blah'
 
 SELECT [e].[Id]
 FROM [NullSemanticsEntity1] AS [e]
@@ -997,7 +998,15 @@ WHERE [e].[NullableBoolA] = [e].[NullableBoolB]",
         }
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
 
         protected override void ClearLog()
             => Fixture.TestSqlLoggerFactory.Clear();

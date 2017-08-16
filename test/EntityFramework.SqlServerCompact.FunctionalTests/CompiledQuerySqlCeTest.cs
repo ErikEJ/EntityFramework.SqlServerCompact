@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System;
 using Xunit;
 using Xunit.Abstractions;
 

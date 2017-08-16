@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.TestModels.Inheritance;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.TestModels.Inheritance;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
-    public class InheritanceSqlCeTest : InheritanceTestBase<InheritanceSqlCeFixture>
+    public class InheritanceSqlCeTest : InheritanceTestBase<SqlCeTestStore, InheritanceSqlCeFixture>
     {
         public InheritanceSqlCeTest(InheritanceSqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
@@ -105,7 +106,7 @@ FROM [Animal] AS [a]
 WHERE [a].[Discriminator] IN (N'Kiwi', N'Eagle')");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact]
         public override void Can_use_of_type_bird()
         {
             base.Can_use_of_type_bird();
@@ -305,7 +306,7 @@ FROM [Animal] AS [k]
 WHERE [k].[Discriminator] = N'Kiwi'");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact]
         public override void Discriminator_used_when_projection_over_derived_type2()
         {
             base.Discriminator_used_when_projection_over_derived_type2();
@@ -316,7 +317,7 @@ FROM [Animal] AS [b]
 WHERE [b].[Discriminator] IN (N'Kiwi', N'Eagle')");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact]
         public override void Discriminator_used_when_projection_over_of_type()
         {
             base.Discriminator_used_when_projection_over_of_type();
@@ -327,6 +328,7 @@ FROM [Animal] AS [k]
 WHERE [k].[Discriminator] = N'Kiwi'");
         }
 
+        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9379")]
         public override void Can_insert_update_delete()
         {
             base.Can_insert_update_delete();
@@ -372,6 +374,14 @@ WHERE ([k].[Discriminator] = N'Kiwi') AND (SUBSTRING([k].[Species], (LEN([k].[Sp
         }
 
         private void AssertSql(params string[] expected)
-            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+        {
+            string[] expectedFixed = new string[expected.Length];
+            int i = 0;
+            foreach (var item in expected)
+            {
+                expectedFixed[i++] = item.Replace("\r\n", "\n");
+            }
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+        }
     }
 }

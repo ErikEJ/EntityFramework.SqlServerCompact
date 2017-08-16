@@ -127,5 +127,26 @@ namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
             }
             return base.VisitBinary(expression);
         }
+
+        protected override void GenerateProjection(Expression projection)
+        {
+            var aliasedProjection = projection as AliasExpression;
+            var expressionToProcess = aliasedProjection?.Expression ?? projection;
+            var updatedExperssion = ExplicitCastToBool(expressionToProcess);
+
+            expressionToProcess = aliasedProjection != null
+                ? new AliasExpression(aliasedProjection.Alias, updatedExperssion)
+                : updatedExperssion;
+
+            base.GenerateProjection(expressionToProcess);
+        }
+
+        private Expression ExplicitCastToBool(Expression expression)
+        {
+            return (expression as BinaryExpression)?.NodeType == ExpressionType.Coalesce
+                   && expression.Type.UnwrapNullableType() == typeof(bool)
+                ? new ExplicitCastExpression(expression, expression.Type)
+                : expression;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Xunit;
 using Xunit.Abstractions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -16,13 +17,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             //TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
 
-        [Fact(Skip ="Investigate why this fails with forced client eval")]
+        [Fact(Skip = "Investigate why this fails with forced client eval - 2.1")]
         public override void Where_subquery_on_navigation()
         {
             base.Where_subquery_on_navigation();
         }
 
-        [Fact(Skip = "Investigate why this fails with forced client eval")]
+        [Fact(Skip = "Investigate why this fails with forced client eval - 2.1")]
         public override void Where_subquery_on_navigation2()
         {
             base.Where_subquery_on_navigation2();

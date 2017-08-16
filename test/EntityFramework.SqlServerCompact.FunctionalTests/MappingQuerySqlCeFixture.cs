@@ -1,7 +1,7 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
@@ -19,7 +19,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
                 .BuildServiceProvider();
 
-            _testDatabase = SqlCeNorthwindContext.GetSharedStore();
+            _testDatabase = SqlCeTestStore.GetNorthwindStore();
 
             var optionsBuilder = new DbContextOptionsBuilder().UseModel(CreateModel());
             optionsBuilder

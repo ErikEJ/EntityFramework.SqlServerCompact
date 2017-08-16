@@ -5,6 +5,10 @@ using System.Text;
 using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Xunit;
 using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 // ReSharper disable UnusedParameter.Local
 // ReSharper disable PossibleInvalidOperationException
@@ -207,11 +211,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p6='83.3'
 @p7='0x61626364' (Nullable = false) (Size = 8000)
 @p8='81.1'
-@p9='help' (Nullable = false) (Size = 4000)
-@p10='anyone!' (Nullable = false) (Size = 4000)
-@p11='Gumball Rules OK!' (Nullable = false) (Size = 4000)
+@p9='help' (Nullable = false)
+@p10='anyone!' (Nullable = false)
+@p11='Gumball Rules OK!' (Nullable = false)
 @p12='103.3'
-@p13='don't' (Nullable = false) (Size = 4000)
+@p13='don't' (Nullable = false)
 @p14='84.4'
 @p15='79'
 @p16='80'
@@ -296,9 +300,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p8='81.1' (Nullable = true)
 @p9='help'
 @p10='anyone!'
-@p11='Gumball Rules OK!' (Size = 4000)
+@p11='Gumball Rules OK!'
 @p12='103.3' (Nullable = true)
-@p13='don't' (Size = 4000)
+@p13='don't'
 @p14='84.4' (Nullable = true)
 @p15='79' (Nullable = true)
 @p16='80' (Nullable = true)
@@ -378,11 +382,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p6='' (DbType = Double)
 @p7='' (Size = 8000) (DbType = Binary)
 @p8='' (DbType = Decimal)
-@p9='' (Size = 4000) (DbType = String)
-@p10='' (Size = 4000) (DbType = String)
-@p11='' (Size = 4000) (DbType = String)
+@p9='' (DbType = String)
+@p10='' (DbType = String)
+@p11='' (DbType = String)
 @p12='' (DbType = Decimal)
-@p13='' (Size = 4000) (DbType = String)
+@p13='' (DbType = String)
 @p14='' (DbType = Single)
 @p15='' (DbType = Int16)
 @p16='' (DbType = Byte)
@@ -622,11 +626,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p7='0x61626364' (Size = 8000)
 @p8='77'
 @p9='81.1'
-@p10='help' (Size = 4000)
-@p11='anyone!' (Size = 4000)
-@p12='Gumball Rules OK!' (Size = 4000)
+@p10='help'
+@p11='anyone!'
+@p12='Gumball Rules OK!'
 @p13='103.3'
-@p14='don't' (Size = 4000)
+@p14='don't'
 @p15='84.4'
 @p16='79'
 @p17='80'
@@ -699,7 +703,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var parameters = DumpParameters();
             Assert.Equal(
-                @"@p0: 78 (Nullable = true)
+                @"@p0='78' (Nullable = true)
 @p1='True' (Nullable = true)
 @p2='01/02/2019 14:11:12' (Nullable = true) (DbType = DateTime)
 @p3='102.2' (Nullable = true)
@@ -708,11 +712,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p6='0x61626364' (Size = 8000)
 @p7='77' (Nullable = true)
 @p8='81.1' (Nullable = true)
-@p9='help' (Size = 4000)
-@p10='anyone!' (Size = 4000)
-@p11='Gumball Rules OK!' (Size = 4000)
+@p9='help'
+@p10='anyone!'
+@p11='Gumball Rules OK!'
 @p12='103.3' (Nullable = true)
-@p13='don't' (Size = 4000)
+@p13='don't'
 @p14='84.4' (Nullable = true)
 @p15='79' (Nullable = true)
 @p16='80' (Nullable = true)
@@ -792,11 +796,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p6='' (Size = 8000) (DbType = Binary)
 @p7='78' (Nullable = true)
 @p8='' (DbType = Decimal)
-@p9='' (Size = 4000) (DbType = String)
-@p10='' (Size = 4000) (DbType = String)
-@p11='' (Size = 4000) (DbType = String)
+@p9='' (DbType = String)
+@p10='' (DbType = String)
+@p11='' (DbType = String)
 @p12='' (DbType = Decimal)
-@p13='' (Size = 4000) (DbType = String)
+@p13='' (DbType = String)
 @p14='' (DbType = Single)
 @p15='' (DbType = Int16)
 @p16='' (DbType = Byte)
@@ -1560,6 +1564,28 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = 4000]
 ";
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Can_get_column_types_from_built_model()
+        {
+            using (var context = CreateContext())
+            {
+                var typeMapper = context.GetService<IRelationalTypeMapper>();
+
+                foreach (var property in context.Model.GetEntityTypes().SelectMany(e => e.GetDeclaredProperties()))
+                {
+                    var columnType = property.Relational().ColumnType;
+                    Assert.NotNull(columnType);
+
+                    if (property[RelationalAnnotationNames.ColumnType] == null)
+                    {
+                        Assert.Equal(
+                            columnType.ToLowerInvariant(),
+                            typeMapper.FindMapping(property).StoreType.ToLowerInvariant());
+                    }
+                }
+            }
         }
 
         private const string FileLineEnding = @"

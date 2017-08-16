@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 using Microsoft.EntityFrameworkCore.TestModels.ComplexNavigationsModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 .AddEntityFrameworkSqlCe()
                 .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                 .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
-                .BuildServiceProvider();
+                .BuildServiceProvider(validateScopes: true);
 
             _options = new DbContextOptionsBuilder()
                 .EnableSensitiveDataLogging()

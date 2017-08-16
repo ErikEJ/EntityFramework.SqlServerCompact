@@ -12,10 +12,27 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class SqlCeTestStore : RelationalTestStore
     {
+#if SQLCE35
+        private const string NorthwindName = "NorthwindEF735";
+#else
+        private const string NorthwindName = "NorthwindEF7";
+#endif
+
+
         private static int _scratchCount;
+
+        public static readonly string NorthwindConnectionString = CreateConnectionString(NorthwindName);
+
+        public string Name { get; }
+
+        public static SqlCeTestStore GetNorthwindStore()
+            => SqlCeTestStore.GetOrCreateShared(NorthwindName, () => { });
 
         public static SqlCeTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
             new SqlCeTestStore(name).CreateShared(initializeDatabase);
+
+        public static SqlCeTestStore Create(string name)
+            => new SqlCeTestStore(name).CreateTransient(true);
 
         public static SqlCeTestStore CreateScratch(bool createDatabase)
         {

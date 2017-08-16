@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using static Microsoft.EntityFrameworkCore.TestModels.ChangedChangingMonsterContext;
@@ -9,6 +10,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 {
     public class AsyncQuerySqlCeTest : AsyncQueryTestBase<NorthwindQuerySqlCeFixture>
     {
+        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9378")]
+        public override Task Where_subquery_on_collection()
+        {
+            return base.Where_subquery_on_collection();
+        }
+
         [Fact(Skip = "SQL CE limitation")]
         public override async Task Sum_over_subquery_is_client_eval()
         {
@@ -45,6 +52,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             //return base.SelectMany_primitive_select_subquery();
         }
 
+        [Fact(Skip = "Investigate 2.1 - https://github.com/aspnet/EntityFramework/issues/9369")]
         public override async Task String_Contains_Literal()
         {
             await AssertQuery<Customer>(
@@ -54,6 +62,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 entryCount: 34);
         }
 
+        [Fact(Skip = "Investigate 2.1 - https://github.com/aspnet/EntityFramework/issues/9369")]
         public override async Task String_Contains_MethodCall()
         {
             await AssertQuery<Customer>(
@@ -65,8 +74,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public async Task Single_Predicate_Cancellation()
         {
-            await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                await Single_Predicate_Cancellation(Fixture.TestSqlLoggerFactory.CancelQuery()));
+            await Assert.ThrowsAsync<TaskCanceledException>(
+                async () =>
+                    await Single_Predicate_Cancellation_test(Fixture.TestSqlLoggerFactory.CancelQuery()));
         }
 
         public AsyncQuerySqlCeTest(NorthwindQuerySqlCeFixture fixture)

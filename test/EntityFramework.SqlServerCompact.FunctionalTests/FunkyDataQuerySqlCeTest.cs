@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Specification.Tests;
 using Xunit;
 using Xunit.Abstractions;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
 {

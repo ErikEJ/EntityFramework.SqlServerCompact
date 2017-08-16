@@ -19,19 +19,15 @@ namespace Microsoft.EntityFrameworkCore.Migrations
     {
         private readonly IRelationalCommandBuilderFactory _commandBuilderFactory;
         private readonly IMigrationsAnnotationProvider _annotations;
-        //private readonly IDiagnosticsLogger<DbLoggerCategory.Database> _logger;
 
         public SqlCeMigrationsSqlGenerator(
             [NotNull] MigrationsSqlGeneratorDependencies dependencies,
             [NotNull] IMigrationsAnnotationProvider migrationsAnnotations
-            //,
-            //[NotNull] IDiagnosticsLogger<DbLoggerCategory.Database> logger
             )
             : base(dependencies)
         {
             _commandBuilderFactory = dependencies.CommandBuilderFactory;
             _annotations = migrationsAnnotations;
-            //_logger = logger;
         }
 
         public override IReadOnlyList<MigrationCommand> Generate(IReadOnlyList<MigrationOperation> operations, IModel model = null)
@@ -46,15 +42,6 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                     .EndCommand();
             }
             var list = builder.GetCommandList();
-
-            //HACK to force logging of migration SQL
-            foreach (var migrationCommand in list)
-            {
-                if (!string.IsNullOrEmpty(migrationCommand.CommandText))
-                {
-                    //_logger.Logger.LogCommandExecuted(new SqlCeCommand(migrationCommand.CommandText), Stopwatch.GetTimestamp(), Stopwatch.GetTimestamp());
-                }
-            }
             return list;
         }
 
@@ -229,8 +216,8 @@ namespace Microsoft.EntityFrameworkCore.Migrations
                 throw new NotSupportedException(string.Format(NotSupported, operation.GetType().Name));
             }
 
-            //TODO ErikEJ Test!
-            var index = model.FindEntityType(operation.Table).GetIndexes().Single(i => _annotations.For(i).First().Name == operation.NewName);
+            var index = FindEntityTypes(model, null, operation.Table).First()
+                .GetIndexes().Single(i => i.GetAnnotation("SqlCe:Name").Value.ToString() == operation.NewName);
 
             var dropIndexOperation = new DropIndexOperation
             {

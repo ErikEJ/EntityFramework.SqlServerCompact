@@ -1532,13 +1532,12 @@ WHERE 0 = 1",
             }
         }
 
-        public override void ClearLog() => Fixture.TestSqlLoggerFactory.Clear();
+        protected override void ClearLog() => Fixture.TestSqlLoggerFactory.Clear();
 
-        public override void RecordLog() => Sql = Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+        protected override void RecordLog() => Sql = Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
 
         private const string FileLineEnding = @"
 ";
-
         private string Sql { get; set; }
 
         public class LoadSqlCeFixture : LoadFixtureBase
@@ -1554,7 +1553,7 @@ WHERE 0 = 1",
                     .AddEntityFrameworkSqlCe()
                     .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
                     .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
-                    .BuildServiceProvider();
+                    .BuildServiceProvider(validateScopes: true);
 
                 _options = new DbContextOptionsBuilder()
                     .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())

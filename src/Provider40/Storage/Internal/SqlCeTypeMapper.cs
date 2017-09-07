@@ -184,9 +184,9 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
 
             return clrType == typeof(string)
                 ? _nvarchar
-                : (clrType == typeof(byte[])
+                : clrType == typeof(byte[])
                     ? _varbinarymax
-                    : base.FindMapping(clrType));
+                    : base.FindMapping(clrType);
         }
 
         protected override bool RequiresKeyMapping(IProperty property)

@@ -272,17 +272,17 @@ CREATE INDEX [IX_StringKeysPosts_BlogAlternateKey] ON [StringKeysPosts] ([BlogAl
 
         protected override ICollection<BuildReference> References { get; } = new List<BuildReference>
         {
-            BuildReference.ByName("System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
-            BuildReference.ByName("System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
-            BuildReference.ByName("System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
-            BuildReference.ByName("System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
-            BuildReference.ByName("EntityFrameworkCore.SqlServerCompact40"),
-            BuildReference.ByName("System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"),
+            //BuildReference.ByName("System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+            //BuildReference.ByName("System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+            //BuildReference.ByName("System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+            //BuildReference.ByName("System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
+            //BuildReference.ByName("EntityFrameworkCore.SqlServerCompact40"),
+            //BuildReference.ByName("System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"),
 
-            BuildReference.ByName("Microsoft.EntityFrameworkCore"),
-            BuildReference.ByName("Microsoft.EntityFrameworkCore.Relational"),
-            BuildReference.ByName("Microsoft.Extensions.Caching.Abstractions"),
-            BuildReference.ByName("Microsoft.Extensions.Logging.Abstractions")
+            //BuildReference.ByName("Microsoft.EntityFrameworkCore"),
+            //BuildReference.ByName("Microsoft.EntityFrameworkCore.Relational"),
+            //BuildReference.ByName("Microsoft.Extensions.Caching.Abstractions"),
+            //BuildReference.ByName("Microsoft.Extensions.Logging.Abstractions")
         };
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.TestModels.Inheritance;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,6 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             : base(fixture)
         {
             Fixture.TestSqlLoggerFactory.Clear();
+            //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
         [Fact]
@@ -328,10 +330,94 @@ FROM [Animal] AS [k]
 WHERE [k].[Discriminator] = N'Kiwi'");
         }
 
-        [Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9379")]
+        //[Fact(Skip = "Investigate - https://github.com/aspnet/EntityFramework/issues/9379")]
+        [Fact]
         public override void Can_insert_update_delete()
         {
-            base.Can_insert_update_delete();
+            using (var context = CreateContext())
+            {
+                var kiwi = new Kiwi
+                {
+                    Species = "Apteryx owenii",
+                    Name = "Little spotted kiwi",
+                    IsFlightless = true,
+                    FoundOn = Island.North
+                };
+
+                var nz = context.Set<Country>().Single(c => c.Id == 1);
+
+                nz.Animals.Add(kiwi);
+
+                context.SaveChanges();
+            }
+            using (var context = CreateContext())
+            {
+                var kiwi = context.Set<Kiwi>().Single(k => k.Species.EndsWith("owenii"));
+
+                kiwi.EagleId = "Aquila chrysaetos canadensis";
+
+                context.SaveChanges();
+            }
+            using (var context = CreateContext())
+            {
+                var kiwi = context.Set<Kiwi>().Single(k => k.Species.EndsWith("owenii"));
+
+                Assert.Equal("Aquila chrysaetos canadensis", kiwi.EagleId);
+
+                context.Set<Bird>().Remove(kiwi);
+
+                context.SaveChanges();
+            }
+            using (var context = CreateContext())
+            {
+                var count = context.Set<Kiwi>().Count(k => k.Species.EndsWith("owenii"));
+
+                Assert.Equal(0, count);
+            }
+
+            //TestUtilities.DbContextHelpers.ExecuteWithStrategyInTransaction(
+            //        CreateContext,
+            //        UseTransaction,
+            //        context =>
+            //        {
+            //            var kiwi = new Kiwi
+            //            {
+            //                Species = "Apteryx owenii",
+            //                Name = "Little spotted kiwi",
+            //                IsFlightless = true,
+            //                FoundOn = Island.North
+            //            };
+
+            //            var nz = context.Set<Country>().Single(c => c.Id == 1);
+
+            //            nz.Animals.Add(kiwi);
+
+            //            context.SaveChanges();
+            //        },
+            //        context =>
+            //        {
+            //            var kiwi = context.Set<Kiwi>().Single(k => k.Species.EndsWith("owenii"));
+
+            //            kiwi.EagleId = "Aquila chrysaetos canadensis";
+
+            //            context.SaveChanges();
+            //        },
+            //        context =>
+            //        {
+            //            var kiwi = context.Set<Kiwi>().Single(k => k.Species.EndsWith("owenii"));
+
+            //            Assert.Equal("Aquila chrysaetos canadensis", kiwi.EagleId);
+
+            //            context.Set<Bird>().Remove(kiwi);
+
+            //            context.SaveChanges();
+            //        },
+            //        context =>
+            //        {
+            //            var count = context.Set<Kiwi>().Count(k => k.Species.EndsWith("owenii"));
+
+            //            Assert.Equal(0, count);
+            //        });
 
             AssertSql(
                 @"SELECT TOP(2) [c].[Id], [c].[Name]

@@ -15,10 +15,14 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
                 var logo = File.ReadAllBytes("EFCore.png");
-                var logoSize = logo.Length;
                 db.Blogs.Add(new Blog { Id = 99, Url = "http://erikej.blogspot.com", Logo = logo });
                 db.SaveChanges();
+            }
 
+            using (var db = new BloggingContext())
+            {
+                var logo = File.ReadAllBytes("EFCore.png");
+                var logoSize = logo.Length;
 
                 var blogs = db.Blogs.ToList();
 

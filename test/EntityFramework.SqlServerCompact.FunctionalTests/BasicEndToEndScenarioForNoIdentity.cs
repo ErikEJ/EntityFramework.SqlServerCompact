@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Specification.Tests
@@ -12,18 +14,35 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                db.Blogs.Add(new Blog { Id = 99, Url = "http://erikej.blogspot.com" });
+                var logo = File.ReadAllBytes("EFCore.png");
+                var logoSize = logo.Length;
+                db.Blogs.Add(new Blog { Id = 99, Url = "http://erikej.blogspot.com", Logo = logo });
                 db.SaveChanges();
+
 
                 var blogs = db.Blogs.ToList();
 
                 Assert.Equal(blogs.Count, 1);
                 Assert.Equal(blogs[0].Url, "http://erikej.blogspot.com");
                 Assert.Equal(blogs[0].Id, 99);
+                Assert.Equal(logoSize, blogs[0].Logo.Length);
+                Assert.True(ByteArrayCompare(logo, blogs[0].Logo));
             }
         }
 
-        public class BloggingContext : DbContext
+        private static bool ByteArrayCompare(byte[] a1, byte[] a2)
+        {
+            if (a1.Length != a2.Length)
+                return false;
+
+            for (int i = 0; i < a1.Length; i++)
+                if (a1[i] != a2[i])
+                    return false;
+
+            return true;
+        }
+
+        private class BloggingContext : DbContext
         {
             public DbSet<Blog> Blogs { get; set; }
 
@@ -41,10 +60,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             }
         }
 
-        public class Blog
+        private class Blog
         {
             public int Id { get; set; }
             public string Url { get; set; }
+
+            [Column(TypeName = "image")]
+            public byte[] Logo { get; set; }
         }
     }
 }

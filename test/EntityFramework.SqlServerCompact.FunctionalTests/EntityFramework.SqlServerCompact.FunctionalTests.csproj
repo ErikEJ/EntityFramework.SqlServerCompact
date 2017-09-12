@@ -236,5 +236,10 @@
       <Name>EntityFramework.SqlServerCompact40</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="EFCore.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

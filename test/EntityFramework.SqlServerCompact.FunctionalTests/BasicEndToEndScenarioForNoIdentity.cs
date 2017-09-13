@@ -10,16 +10,18 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public void Can_run_end_to_end_scenario()
         {
+            var logo = File.ReadAllBytes("EFCore.png");
+            var logoSize = logo.Length;
+
             using (var db = new BloggingContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                var logo = File.ReadAllBytes("EFCore.png");
-                var logoSize = logo.Length;
                 db.Blogs.Add(new Blog { Id = 99, Url = "http://erikej.blogspot.com", Logo = logo });
                 db.SaveChanges();
-
-
+            }
+            using (var db = new BloggingContext())
+            {
                 var blogs = db.Blogs.ToList();
 
                 Assert.Equal(blogs.Count, 1);
@@ -27,6 +29,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 Assert.Equal(blogs[0].Id, 99);
                 Assert.Equal(logoSize, blogs[0].Logo.Length);
                 Assert.True(ByteArrayCompare(logo, blogs[0].Logo));
+                File.WriteAllBytes("C:\\temp\\logo.png", blogs[0].Logo);
             }
         }
 

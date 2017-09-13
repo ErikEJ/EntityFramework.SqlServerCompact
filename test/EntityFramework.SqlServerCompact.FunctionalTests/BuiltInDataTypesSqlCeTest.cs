@@ -209,7 +209,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p4='102.2'
 @p5='101.1'
 @p6='83.3'
-@p7='0x61626364' (Nullable = false) (Size = 8000)
+@p7='0x61626364' (Nullable = false)
 @p8='81.1'
 @p9='help' (Nullable = false)
 @p10='anyone!' (Nullable = false)
@@ -219,7 +219,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p14='84.4'
 @p15='79'
 @p16='80'
-@p17='0x595A5B5C' (Nullable = false) (Size = 8000)",
+@p17='0x595A5B5C' (Nullable = false)",
                 parameters);
 
             using (var context = CreateContext())
@@ -296,7 +296,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p4='102.2' (Nullable = true)
 @p5='101.1' (Nullable = true)
 @p6='83.3' (Nullable = true)
-@p7='0x61626364' (Size = 8000)
+@p7='0x61626364'
 @p8='81.1' (Nullable = true)
 @p9='help'
 @p10='anyone!'
@@ -306,7 +306,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p14='84.4' (Nullable = true)
 @p15='79' (Nullable = true)
 @p16='80' (Nullable = true)
-@p17='0x595A5B5C' (Size = 8000)",
+@p17='0x595A5B5C'",
                 parameters);
 
             using (var context = CreateContext())
@@ -380,7 +380,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p4='' (DbType = Decimal)
 @p5='' (DbType = Decimal)
 @p6='' (DbType = Double)
-@p7='' (Size = 8000) (DbType = Binary)
+@p7='' (DbType = Binary)
 @p8='' (DbType = Decimal)
 @p9='' (DbType = String)
 @p10='' (DbType = String)
@@ -390,7 +390,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p14='' (DbType = Single)
 @p15='' (DbType = Int16)
 @p16='' (DbType = Byte)
-@p17='' (Size = 8000) (DbType = Binary)",
+@p17='' (DbType = Binary)",
                 parameters);
 
             using (var context = CreateContext())
@@ -617,13 +617,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             var parameters = DumpParameters();
             Assert.Equal(
                 @"@p0='78'
-@p1='0x5D5E5F60' (Size = 8000)
+@p1='0x5D5E5F60'
 @p2='True'
 @p3='01/02/2019 14:11:12' (DbType = DateTime)
 @p4='102.2'
 @p5='101.1'
 @p6='83.3'
-@p7='0x61626364' (Size = 8000)
+@p7='0x61626364'
 @p8='77'
 @p9='81.1'
 @p10='help'
@@ -634,7 +634,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p15='84.4'
 @p16='79'
 @p17='80'
-@p18='0x595A5B5C' (Size = 8000)",
+@p18='0x595A5B5C'",
                 parameters);
 
             using (var context = CreateContext())
@@ -709,7 +709,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p3='102.2' (Nullable = true)
 @p4='101.1' (Nullable = true)
 @p5='83.3' (Nullable = true)
-@p6='0x61626364' (Size = 8000)
+@p6='0x61626364'
 @p7='77' (Nullable = true)
 @p8='81.1' (Nullable = true)
 @p9='help'
@@ -720,7 +720,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p14='84.4' (Nullable = true)
 @p15='79' (Nullable = true)
 @p16='80' (Nullable = true)
-@p17='0x595A5B5C' (Size = 8000)",
+@p17='0x595A5B5C'",
                 parameters);
 
             using (var context = CreateContext())
@@ -793,7 +793,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p3='' (DbType = Decimal)
 @p4='' (DbType = Decimal)
 @p5='' (DbType = Double)
-@p6='' (Size = 8000) (DbType = Binary)
+@p6='' (DbType = Binary)
 @p7='78' (Nullable = true)
 @p8='' (DbType = Decimal)
 @p9='' (DbType = String)
@@ -804,7 +804,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 @p14='' (DbType = Single)
 @p15='' (DbType = Int16)
 @p16='' (DbType = Byte)
-@p17='' (Size = 8000) (DbType = Binary)",
+@p17='' (DbType = Binary)",
                 parameters);
 
             using (var context = CreateContext())

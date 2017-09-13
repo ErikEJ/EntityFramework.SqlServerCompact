@@ -10,16 +10,27 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [Fact]
         public void Can_run_end_to_end_scenario()
         {
+            var logo = File.ReadAllBytes("EFCore.png");
+            var logoSize = logo.Length;
+
+            var longString = new string('*', 14000);
+            var stringSize = longString.Length;
+
             using (var db = new BloggingContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                var logo = File.ReadAllBytes("EFCore.png");
-                var logoSize = logo.Length;
-                db.Blogs.Add(new Blog { Id = 99, Url = "http://erikej.blogspot.com", Logo = logo });
+                db.Blogs.Add(new Blog
+                {
+                    Id = 99,
+                    Url = "http://erikej.blogspot.com",
+                    Logo = logo,
+                    Description = longString
+                });
                 db.SaveChanges();
-
-
+            }
+            using (var db = new BloggingContext())
+            {
                 var blogs = db.Blogs.ToList();
 
                 Assert.Equal(blogs.Count, 1);
@@ -27,6 +38,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 Assert.Equal(blogs[0].Id, 99);
                 Assert.Equal(logoSize, blogs[0].Logo.Length);
                 Assert.True(ByteArrayCompare(logo, blogs[0].Logo));
+                Assert.Equal(stringSize, blogs[0].Description.Length);
+                Assert.Equal(longString, blogs[0].Description);
             }
         }
 
@@ -67,6 +80,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             [Column(TypeName = "image")]
             public byte[] Logo { get; set; }
+
+            [Column(TypeName = "ntext")]
+            public string Description { get; set; }
         }
     }
 }

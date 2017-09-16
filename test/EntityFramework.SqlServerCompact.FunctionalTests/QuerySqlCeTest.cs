@@ -6233,7 +6233,7 @@ WHERE [c0].[CustomerID] = @_outer_CustomerID",
             base.Select_expression_references_are_updated_correctly_with_subquery();
 
             Assert.Equal(
-                @"@__nextYear_0: 2017
+                @"@__nextYear_0: 2018
 
 SELECT [t].[c0]
 FROM (

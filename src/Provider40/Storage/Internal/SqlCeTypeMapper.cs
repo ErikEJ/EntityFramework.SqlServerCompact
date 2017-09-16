@@ -64,7 +64,7 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
                     { "dec", _decimal },
                     { "decimal", _decimal },
                     { "float", _double },
-                    { "image", _varbinary },
+                    { "image", _varbinarymax },
                     { "int", _int },
                     { "money", _decimal },
                     { "national char varying", _nvarchar },

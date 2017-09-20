@@ -364,6 +364,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
     WHERE ix.PRIMARY_KEY = 0
     AND ix.[UNIQUE] = 1 
     AND (SUBSTRING(TABLE_NAME, 1,2) <> '__')
+    AND (SUBSTRING(ix.COLUMN_NAME, 1,5) <> '__sys')
     ORDER BY ix.[TABLE_NAME], ix.[INDEX_NAME], ix.[ORDINAL_POSITION];";
 
             using (var reader = command.ExecuteReader())
@@ -431,6 +432,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
     WHERE ix.PRIMARY_KEY = 0
     AND ix.[UNIQUE] = 0 
     AND (SUBSTRING(TABLE_NAME, 1,2) <> '__')
+    AND (SUBSTRING(ix.COLUMN_NAME, 1,5) != '__sys')
     ORDER BY ix.[TABLE_NAME], ix.[INDEX_NAME], ix.[ORDINAL_POSITION];";
 
             using (var reader = command.ExecuteReader())

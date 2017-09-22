@@ -2976,13 +2976,13 @@ ORDER BY [t1].[Name], [t1].[Name0], [t1].[Id]");
 
         private void AssertSql(params string[] expected)
         {
-            string[] expectedFixed = new string[expected.Length];
-            int i = 0;
-            foreach (var item in expected)
-            {
-                expectedFixed[i++] = item.Replace("\r\n", "\n");
-            }
-            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+            //string[] expectedFixed = new string[expected.Length];
+            //int i = 0;
+            //foreach (var item in expected)
+            //{
+            //    expectedFixed[i++] = item.Replace("\r\n", "\n");
+            //}
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
         }
 
         private void AssertContainsSql(params string[] expected)

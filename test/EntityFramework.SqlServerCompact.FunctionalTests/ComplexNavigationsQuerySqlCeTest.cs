@@ -3246,24 +3246,24 @@ ORDER BY [t].[c], [t].[Name], [t].[Id]");
 
         private void AssertSql(params string[] expected)
         {
-            string[] expectedFixed = new string[expected.Length];
-            int i = 0;
-            foreach (var item in expected)
-            {
-                expectedFixed[i++] = item.Replace("\r\n", "\n");
-            }
-            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed);
+            //string[] expectedFixed = new string[expected.Length];
+            //int i = 0;
+            //foreach (var item in expected)
+            //{
+            //    expectedFixed[i++] = item.Replace("\r\n", "\n");
+            //}
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
         }
 
         private void AssertContainsSql(params string[] expected)
         {
-            string[] expectedFixed = new string[expected.Length];
-            int i = 0;
-            foreach (var item in expected)
-            {
-                expectedFixed[i++] = item.Replace("\r\n", "\n");
-            }
-            Fixture.TestSqlLoggerFactory.AssertBaseline(expectedFixed, assertOrder: false);
+            //string[] expectedFixed = new string[expected.Length];
+            //int i = 0;
+            //foreach (var item in expected)
+            //{
+            //    expectedFixed[i++] = item.Replace("\r\n", "\n");
+            //}
+            Fixture.TestSqlLoggerFactory.AssertBaseline(expected, assertOrder: false);
         }
     }
 }

@@ -113,14 +113,8 @@
     <Compile Include="..\Provider40\Diagnostics\SqlCeStrings.cs">
       <Link>Diagnostics\SqlCeStrings.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Extensions\Logging\DbLoggerProvider.cs">
-      <Link>Extensions\Logging\DbLoggerProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\Logging\DbSimpleLogger.cs">
-      <Link>Extensions\Logging\DbSimpleLogger.cs</Link>
-    </Compile>
-    <Compile Include="..\Provider40\Extensions\Logging\NullLogger.cs">
-      <Link>Extensions\Logging\NullLogger.cs</Link>
+    <Compile Include="..\Provider40\Extensions\Logging\ConfigureLogging.cs">
+      <Link>Extensions\Logging\ConfigureLogging.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Extensions\SqlCeDatabaseFacadeExtensions.cs">
       <Link>Extensions\SqlCeDatabaseFacadeExtensions.cs</Link>

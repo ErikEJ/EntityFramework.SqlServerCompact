@@ -16,7 +16,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             //Demo of logging using Log
             using (var db = new BloggingContext())
             {
-                db.Database.Log(AppendLog);
+                db.ConfigureLogging(AppendLog);
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
                 db.Blogs.Add(new Blog { BlogId = new Guid("b3279372-78f5-4c13-93c9-e9b281a5ed5b"), Url = "http://erikej.blogspot.com" });

@@ -49,8 +49,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
                 && methodCallExpression.Object != null
                 && _typeMapping.TryGetValue(
                     methodCallExpression.Object.Type
-                        .UnwrapNullableType()
-                        .UnwrapEnumType(),
+                        .UnwrapNullableType(),
                     out storeType))
             {
                 return new SqlFunctionExpression(

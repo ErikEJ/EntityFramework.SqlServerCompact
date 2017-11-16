@@ -33,20 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Castle.Core.4.1.0\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.2.0.1-rtm-203\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.2.0.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.1-rtm-203\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.2.0.1-rtm-203\lib\net461\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.2.0.1\lib\net461\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Specification.Tests, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Specification.Tests.2.0.1-rtm-203\lib\net461\Microsoft.EntityFrameworkCore.Specification.Tests.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Specification.Tests.2.0.1\lib\net461\Microsoft.EntityFrameworkCore.Specification.Tests.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>

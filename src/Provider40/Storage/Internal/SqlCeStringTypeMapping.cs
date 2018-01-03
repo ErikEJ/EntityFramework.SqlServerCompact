@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
-using JetBrains.Annotations;
 using System.Data.SqlServerCe;
+using JetBrains.Annotations;
 
 namespace Microsoft.EntityFrameworkCore.Storage.Internal
 {

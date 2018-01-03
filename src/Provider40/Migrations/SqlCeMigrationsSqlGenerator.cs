@@ -9,9 +9,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Data.SqlServerCe;
-using System.Diagnostics;
 
 namespace Microsoft.EntityFrameworkCore.Migrations
 {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlServerCe;
 using System.Globalization;
 using System.Text;
 using JetBrains.Annotations;
-using System.Data.SqlServerCe;
 
 namespace Microsoft.EntityFrameworkCore.Storage.Internal
 {

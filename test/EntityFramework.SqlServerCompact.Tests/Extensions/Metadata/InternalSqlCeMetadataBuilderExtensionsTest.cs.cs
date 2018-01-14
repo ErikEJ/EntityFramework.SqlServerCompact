@@ -69,13 +69,13 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions.Metadata
             entityTypeBuilder.Property("Id", typeof(int), ConfigurationSource.Convention);
             var relationshipBuilder = entityTypeBuilder.HasForeignKey("Splot", new[] { "Id" }, ConfigurationSource.Convention);
 
-            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.Convention).HasConstraintName("Splew"));
+            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splew"));
             Assert.Equal("Splew", relationshipBuilder.Metadata.SqlCe().Name);
 
-            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.DataAnnotation).HasConstraintName("Splow"));
+            Assert.True(relationshipBuilder.SqlCe(ConfigurationSource.DataAnnotation).HasName("Splow"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
 
-            Assert.False(relationshipBuilder.SqlCe(ConfigurationSource.Convention).HasConstraintName("Splod"));
+            Assert.False(relationshipBuilder.SqlCe(ConfigurationSource.Convention).HasName("Splod"));
             Assert.Equal("Splow", relationshipBuilder.Metadata.SqlCe().Name);
         }
 

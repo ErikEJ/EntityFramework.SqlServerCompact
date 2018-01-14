@@ -1,10 +1,10 @@
-﻿using System.Data.SqlServerCe;
-using System.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.Logging;
+using System.Data.SqlServerCe;
+using System.Diagnostics;
 using Xunit;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Tests
 {
@@ -36,7 +36,8 @@ namespace Microsoft.EntityFrameworkCore.Tests
                     new LoggerFactory(),
                     new LoggingOptions(),
                     new DiagnosticListener("FakeDiagnosticListener")),
-                new NamedConnectionStringResolver(options));
+                new NamedConnectionStringResolver(options),
+                new RelationalTransactionFactory(new RelationalTransactionFactoryDependencies()));
         }
     }
 }

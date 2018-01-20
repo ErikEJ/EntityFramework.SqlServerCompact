@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
     public class SqlCeTestStore : RelationalTestStore
     {
@@ -17,16 +17,12 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 #else
         private const string NorthwindName = "NorthwindEF7";
 #endif
-
-
         private static int _scratchCount;
 
         public static readonly string NorthwindConnectionString = CreateConnectionString(NorthwindName);
 
-        public string Name { get; }
-
         public static SqlCeTestStore GetNorthwindStore()
-            => SqlCeTestStore.GetOrCreateShared(NorthwindName, () => { });
+            => GetOrCreateShared(NorthwindName, () => { });
 
         public static SqlCeTestStore GetOrCreateShared(string name, Action initializeDatabase) =>
             new SqlCeTestStore(name).CreateShared(initializeDatabase);
@@ -51,55 +47,44 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             return Task.FromResult(CreateScratch(createDatabase));
         }
 
-        private SqlCeConnection _connection;
-        //private SqlCeTransaction _transaction;
-        private readonly string _name;
-        private string _connectionString;
         private bool _deleteDatabase;
+        private string _name;
 
-        public override string ConnectionString => _connectionString;
-
-        public SqlCeTestStore(string name)
+        private SqlCeTestStore(string name, bool shared = true) : base(name, shared)
         {
             _name = name;
         }
 
         private SqlCeTestStore CreateShared(Action initializeDatabase)
         {
-            _connectionString = CreateConnectionString(_name);
-            _connection = new SqlCeConnection(_connectionString);
+            ConnectionString = CreateConnectionString(_name);
 
-            CreateShared(typeof(SqlCeTestStore).Name + _name,
-                () =>
-                {
-                    if (!Exists())
-                    {
-                        initializeDatabase?.Invoke();
-                    }
-                });
+            Connection = new SqlCeConnection(ConnectionString);
+
+            if (!Exists())
+            {
+                initializeDatabase?.Invoke();
+            }
 
             return this;
         }
 
         private SqlCeTestStore CreateTransient(bool createDatabase)
         {
-            _connectionString = CreateConnectionString(_name);
+            ConnectionString = CreateConnectionString(_name);
 
-            _connection = new SqlCeConnection(_connectionString);
+            Connection = new SqlCeConnection(ConnectionString);
 
             if (createDatabase)
             {
-                _connection.CreateEmptyDatabase();
-                _connection.Open();
+                ((SqlCeConnection)Connection).CreateEmptyDatabase();
+                Connection.Open();
             }
 
             _deleteDatabase = true;
 
             return this;
         }
-
-        public override DbConnection Connection => _connection;
-        public override DbTransaction Transaction => null;
 
         public int ExecuteNonQuery(string sql, params object[] parameters)
         {
@@ -129,18 +114,18 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public bool Exists()
         {
-            return _connection.Exists();
+            return ((SqlCeConnection)Connection).Exists();
         }
 
         private DbCommand CreateCommand(string commandText, object[] parameters)
         {
-            var command = _connection.CreateCommand();
+            var command = Connection.CreateCommand();
 
             command.CommandText = commandText;
 
             for (var i = 0; i < parameters.Length; i++)
             {
-                command.Parameters.AddWithValue("p" + i, parameters[i]);
+                command.Parameters.Add(new SqlCeParameter("p" + i, parameters[i]));
             }
 
             return command;
@@ -148,11 +133,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override void Dispose()
         {
-            Transaction?.Dispose();
-
             if (_deleteDatabase)
             {
-                _connection.Drop(throwOnOpen: false);
+                ((SqlCeConnection)Connection).Drop(throwOnOpen: false);
             }
             Connection?.Dispose();
             base.Dispose();
@@ -170,5 +153,11 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             .ToString();
 #endif
         }
+
+        public override DbContextOptionsBuilder AddProviderOptions(DbContextOptionsBuilder builder)
+            => builder.UseSqlCe(Connection);
+
+        public override void Clean(DbContext context)
+            => context.Database.EnsureClean();
     }
 }

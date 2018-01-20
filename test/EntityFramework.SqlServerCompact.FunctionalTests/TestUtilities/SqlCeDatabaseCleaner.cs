@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace Microsoft.EntityFrameworkCore.Utilities
+namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
     public class SqlCeDatabaseCleaner : RelationalDatabaseCleaner
     {

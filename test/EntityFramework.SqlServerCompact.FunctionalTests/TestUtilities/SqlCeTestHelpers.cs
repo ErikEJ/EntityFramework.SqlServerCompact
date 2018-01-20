@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlServerCe;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
     public class SqlCeTestHelpers : TestHelpers
     {

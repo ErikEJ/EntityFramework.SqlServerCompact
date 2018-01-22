@@ -59,8 +59,6 @@ LEFT JOIN [Address2] AS [p.Address] ON [p].[Id] = [p.Address].[PersonId]",
                 Sql);
         }
 
-        private readonly OneToOneQuerySqlCeFixture _fixture;
-
         private string Sql => Fixture.TestSqlLoggerFactory.SqlStatements.Last();
 
         public class OneToOneQuerySqlCeFixture : OneToOneQueryFixtureBase

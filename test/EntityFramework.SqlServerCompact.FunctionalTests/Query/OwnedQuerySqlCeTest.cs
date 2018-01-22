@@ -7,8 +7,6 @@ namespace Microsoft.EntityFrameworkCore.Query
 {
     public class OwnedQuerySqlCeTest : OwnedQueryTestBase<OwnedQuerySqlCeTest.OwnedQuerySqlCeFixture>
     {
-        private readonly OwnedQuerySqlCeFixture _fixture;
-
         public OwnedQuerySqlCeTest(OwnedQuerySqlCeFixture fixture)
            : base(fixture)
         {
@@ -54,10 +52,10 @@ WHERE [o].[Discriminator] = N'LeafA'");
             base.Query_when_subquery();
         }
 
-        protected override DbContext CreateContext() => _fixture.CreateContext();
+        protected override DbContext CreateContext() => Fixture.CreateContext();
 
         private void AssertSql(params string[] expected)
-            => _fixture.TestSqlLoggerFactory.AssertBaseline(expected);
+            => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
         public class OwnedQuerySqlCeFixture : OwnedQueryFixtureBase
         {

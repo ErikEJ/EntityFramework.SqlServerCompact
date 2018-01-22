@@ -32,7 +32,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Assert.Equal(1, operations.Count);
 
                     var addTableOperation = Assert.IsType<CreateTableOperation>(operations[0]);
-                    Assert.Equal(null, addTableOperation.Schema);
+                    Assert.Null(addTableOperation.Schema);
                     Assert.Equal("People", addTableOperation.Name);
 
                     Assert.Equal("PK_People", addTableOperation.PrimaryKey.Name);
@@ -64,7 +64,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
                     var addTableOperation = Assert.IsType<RenameTableOperation>(operations[0]);
                     Assert.Equal("Person", addTableOperation.Name);
-                    Assert.Equal(null, addTableOperation.NewSchema);
+                    Assert.Null(addTableOperation.NewSchema);
                     Assert.Equal("People", addTableOperation.NewName);
                 });
         }
@@ -87,7 +87,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Assert.Equal(1, operations.Count);
 
                     var addTableOperation = Assert.IsType<DropTableOperation>(operations[0]);
-                    Assert.Equal(null, addTableOperation.Schema);
+                    Assert.Null(addTableOperation.Schema);
                     Assert.Equal("People", addTableOperation.Name);
                 });
         }

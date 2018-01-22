@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
-using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
-    public class LoadSqlCeTest
-        : LoadTestBase<SqlCeTestStore, LoadSqlCeTest.LoadSqlCeFixture>
+    public class LoadSqlCeTest : LoadTestBase<LoadSqlCeTest.LoadSqlCeFixture>
     {
         public LoadSqlCeTest(LoadSqlCeFixture fixture)
             : base(fixture)
@@ -1542,40 +1542,14 @@ WHERE 0 = 1",
 
         public class LoadSqlCeFixture : LoadFixtureBase
         {
-            private const string DatabaseName = "LoadTest";
-            private readonly DbContextOptions _options;
+            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
+            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
 
-            public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
-
-            public LoadSqlCeFixture()
-            {
-                var serviceProvider = new ServiceCollection()
-                    .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                    .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
-                    .BuildServiceProvider(validateScopes: true);
-
-                _options = new DbContextOptionsBuilder()
-                    .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
-                    .UseInternalServiceProvider(serviceProvider)
-                    .EnableSensitiveDataLogging()
-                    .Options;
-            }
-
-            public override SqlCeTestStore CreateTestStore()
-            {
-                return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
-                {
-                    using (var context = new LoadContext(_options))
-                    {
-                        context.Database.EnsureCreated();
-                        Seed(context);
-                    }
-                });
-            }
-
-            public override DbContext CreateContext(SqlCeTestStore testStore)
-                => new LoadContext(_options);
+            public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
+                => base.AddOptions(builder).ConfigureWarnings(
+                    c => c
+                        .Log(RelationalEventId.QueryClientEvaluationWarning));
         }
+
     }
 }

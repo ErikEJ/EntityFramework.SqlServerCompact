@@ -1,7 +1,30 @@
-﻿using Xunit;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
+    public abstract class GraphUpdatesSqlCeTestBase<TFixture> : GraphUpdatesTestBase<TFixture>
+        where TFixture : GraphUpdatesSqlCeTestBase<TFixture>.GraphUpdatesSqlCeFixtureBase, new()
+    {
+        protected GraphUpdatesSqlCeTestBase(TFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        protected override void UseTransaction(DatabaseFacade facade, IDbContextTransaction transaction)
+            => facade.UseTransaction(transaction.GetDbTransaction());
+
+        public abstract class GraphUpdatesSqlCeFixtureBase : GraphUpdatesFixtureBase
+        {
+            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
+            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
+        }
+    }
+
     public class GraphUpdatesWithIdentitySqlCeTest : GraphUpdatesSqlCeTestBase<GraphUpdatesWithIdentitySqlCeTest.GraphUpdatesWithIdentitySqlCeFixture>
     {
         public GraphUpdatesWithIdentitySqlCeTest(GraphUpdatesWithIdentitySqlCeFixture fixture)
@@ -11,7 +34,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public class GraphUpdatesWithIdentitySqlCeFixture : GraphUpdatesSqlCeFixtureBase
         {
-            protected override string DatabaseName => "GraphIdentityUpdatesTest";
+            protected override string StoreName { get; } = "GraphIdentityUpdatesTest";
         }
 
         [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]

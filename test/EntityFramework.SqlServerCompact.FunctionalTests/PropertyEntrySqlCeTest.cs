@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
-    public class PropertyEntrySqlCeTest : PropertyEntryTestBase<SqlCeTestStore, F1SqlCeFixture>
+    public class PropertyEntrySqlCeTest : PropertyEntryTestBase<F1SqlCeFixture>
     {
         public PropertyEntrySqlCeTest(F1SqlCeFixture fixture)
             : base(fixture)

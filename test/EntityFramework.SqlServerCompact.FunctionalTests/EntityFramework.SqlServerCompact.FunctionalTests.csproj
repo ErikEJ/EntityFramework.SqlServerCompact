@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\xunit.core.2.3.1\build\xunit.core.props" Condition="Exists('..\..\packages\xunit.core.2.3.1\build\xunit.core.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -33,54 +34,63 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.2.0.1-rtm-203\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.1-rtm-203\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Attributes, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Attributes.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Attributes.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.2.0.1-rtm-203\lib\net461\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Specification.Tests, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Specification.Tests.2.0.1-rtm-203\lib\net461\Microsoft.EntityFrameworkCore.Specification.Tests.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.2.1.0-preview1-28072\lib\net461\Microsoft.EntityFrameworkCore.Relational.Specification.Tests.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Specification.Tests, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.EntityFrameworkCore.Specification.Tests.2.1.0-preview1-28072\lib\net461\Microsoft.EntityFrameworkCore.Specification.Tests.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Memory.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Abstractions.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Caching.Memory.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Abstractions.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Logging.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Binder.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Options, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Options.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Options.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.2.1.0-preview1-28072\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Remotion.Linq.2.2.0-alpha-002\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.5.0-preview1-26102-01\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.ComponentModel.Annotations.4.4.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.4.5.0-preview1-26102-01\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -89,14 +99,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.5.0-preview1-26102-01\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Interactive.Async, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Interactive.Async.3.1.1\lib\net46\System.Interactive.Async.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0-preview1-26102-01\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="Microsoft.CSharp" />
@@ -105,64 +115,64 @@
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.assert, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\xunit.assert.2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
+    <Reference Include="xunit.assert, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.assert.2.3.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
+    <Reference Include="xunit.core, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.extensibility.core.2.3.1\lib\netstandard1.1\xunit.core.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\xunit.extensibility.execution.2.2.0\lib\net452\xunit.execution.desktop.dll</HintPath>
+    <Reference Include="xunit.execution.desktop, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.extensibility.execution.2.3.1\lib\net452\xunit.execution.desktop.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsNoTrackingSqlCeTest.cs" />
-    <Compile Include="AsyncFromSqlQuerySqlCeTest.cs" />
-    <Compile Include="AsyncQuerySqlCeTest.cs" />
+    <Compile Include="MonsterFixupChangedChangingSqlCeTest.cs" />
+    <Compile Include="Query\AsNoTrackingSqlCeTest.cs" />
+    <Compile Include="Query\AsyncFromSqlQuerySqlCeTest.cs" />
+    <Compile Include="Query\AsyncGroupByQuerySqlCeTest.cs" />
+    <Compile Include="Query\AsyncIncludeSqlCeTest.cs" />
+    <Compile Include="Query\AsyncQueryNavigationsSqlCeTests.cs" />
     <Compile Include="BasicEndToEndScenarioForNoIdentity.cs" />
     <Compile Include="BasicEndToEndScenarioForIdentity.cs" />
     <Compile Include="BasicEndToEndScenario.cs" />
     <Compile Include="BuiltInDataTypesSqlCeFixture.cs" />
     <Compile Include="BuiltInDataTypesSqlCeTest.cs" />
-    <Compile Include="ChangeTrackingSqlCeTest.cs" />
-    <Compile Include="CompiledQuerySqlCeTest.cs" />
-    <Compile Include="ComplexNavigationsOwnedQuerySqlCeFixture.cs" />
-    <Compile Include="ComplexNavigationsOwnedQuerySqlCeTest.cs" />
-    <Compile Include="ComplexNavigationsQuerySqlCeFixture.cs" />
-    <Compile Include="ComplexNavigationsQuerySqlCeTest.cs" />
+    <Compile Include="Query\ChangeTrackingSqlCeTest.cs" />
+    <Compile Include="Query\CompiledQuerySqlCeTest.cs" />
+    <Compile Include="Query\ComplexNavigationsOwnedQuerySqlCeFixture.cs" />
+    <Compile Include="Query\ComplexNavigationsOwnedQuerySqlCeTest.cs" />
+    <Compile Include="Query\ComplexNavigationsQuerySqlCeFixture.cs" />
+    <Compile Include="Query\ComplexNavigationsQuerySqlCeTest.cs" />
     <Compile Include="CompositeKeyEndToEndTest.cs" />
     <Compile Include="ConcurrencyDetectorSqlCeTest.cs" />
-    <Compile Include="DataAnnotationSqlCeFixture.cs" />
     <Compile Include="DataAnnotationSqlCeTest.cs" />
     <Compile Include="DataBindingSqlCeTest.cs" />
     <Compile Include="DbContextPoolingTest.cs" />
-    <Compile Include="DbFunctionsSqlCeTest.cs" />
+    <Compile Include="Query\DbFunctionsSqlCeTest.cs" />
     <Compile Include="DefaultValuesTest.cs" />
     <Compile Include="F1SqlCeFixture.cs" />
     <Compile Include="FieldMappingSqlCeTest.cs" />
-    <Compile Include="FiltersInheritanceSqlCeTest.cs" />
-    <Compile Include="FiltersSqlCeTest.cs" />
+    <Compile Include="Query\FiltersInheritanceSqlCeTest.cs" />
+    <Compile Include="Query\FiltersSqlCeTest.cs" />
     <Compile Include="FindSqlCeTest.cs" />
-    <Compile Include="FromSqlQuerySqlCeTest.cs" />
-    <Compile Include="FunkyDataQuerySqlCeFixture.cs" />
-    <Compile Include="FunkyDataQuerySqlCeTest.cs" />
-    <Compile Include="GearsOfWarQuerySqlCeFixture.cs" />
-    <Compile Include="GearsOfWarSqlCeTest.cs" />
-    <Compile Include="GraphUpdatesSqlCeTestbase.cs" />
+    <Compile Include="Query\FromSqlQuerySqlCeTest.cs" />
+    <Compile Include="Query\FunkyDataQuerySqlCeFixture.cs" />
+    <Compile Include="Query\FunkyDataQuerySqlCeTest.cs" />
+    <Compile Include="Query\GearsOfWarQuerySqlCeFixture.cs" />
+    <Compile Include="Query\GearsOfWarSqlCeTest.cs" />
     <Compile Include="GraphUpdateWithIdentitySqlCeTest.cs" />
-    <Compile Include="IncludeAsyncSqlCeTest.cs" />
-    <Compile Include="IncludeOneToOneSqlCeTest.cs" />
-    <Compile Include="IncludeSqlCeTest.cs" />
-    <Compile Include="InheritanceRelationshipsQuerySqlCeTest.cs" />
-    <Compile Include="InheritanceRelationshipsQuerySqlCeFixture.cs" />
-    <Compile Include="FiltersInheritanceSqlCeFixture.cs" />
-    <Compile Include="InheritanceSqlCeFixture.cs" />
-    <Compile Include="InheritanceSqlCeTest.cs" />
+    <Compile Include="Query\IncludeAsyncSqlCeTest.cs" />
+    <Compile Include="Query\IncludeOneToOneSqlCeTest.cs" />
+    <Compile Include="Query\IncludeSqlCeTest.cs" />
+    <Compile Include="Query\InheritanceRelationshipsQuerySqlCeTest.cs" />
+    <Compile Include="Query\InheritanceRelationshipsQuerySqlCeFixture.cs" />
+    <Compile Include="Query\FiltersInheritanceSqlCeFixture.cs" />
+    <Compile Include="Query\InheritanceSqlCeFixture.cs" />
+    <Compile Include="Query\InheritanceSqlCeTest.cs" />
     <Compile Include="Issue398Test.cs" />
     <Compile Include="Issue305Test.cs" />
     <Compile Include="LoadSqlCeTest.cs" />
-    <Compile Include="MappingQuerySqlCeFixture.cs" />
-    <Compile Include="MappingQuerySqlCeTest.cs" />
+    <Compile Include="Query\MappingQuerySqlCeTest.cs" />
     <Compile Include="MigrationsSqlCeFixture.cs" />
     <Compile Include="MigrationsSqlCeTest.cs" />
     <Compile Include="Migrations\20160215092248_Migration01.cs" />
@@ -183,26 +193,31 @@
     </Compile>
     <Compile Include="Migrations\BloggingContextModelSnapshot.cs" />
     <Compile Include="Migrations\TiffFilesContextModelSnapshot.cs" />
-    <Compile Include="MonsterFixUpSqlCeTest.cs" />
-    <Compile Include="NavigationTest.cs" />
-    <Compile Include="NorthwindQueryWithForcedClientEvalSqlCeFixture.cs" />
-    <Compile Include="NorthwindQuerySqlCeFixture.cs" />
+    <Compile Include="Query\NavigationTest.cs" />
+    <Compile Include="Query\NorthwindQueryWithForcedClientEvalSqlCeFixture.cs" />
+    <Compile Include="Query\AsyncSimpleQuerySqlCeTest.cs" />
+    <Compile Include="Query\IncludeSqlCeFixture.cs" />
+    <Compile Include="Query\NorthwindQuerySqlCeFixture.cs" />
     <Compile Include="NotificationEntitiesSqlCeTest.cs" />
-    <Compile Include="NullKeysSqlCeTest.cs" />
-    <Compile Include="NullSemanticsQuerySqlCeFixture.cs" />
-    <Compile Include="NullSemanticsQuerySqlCeTest.cs" />
-    <Compile Include="OneToOneQuerySqlCeFixture.cs" />
+    <Compile Include="Query\NullKeysSqlCeTest.cs" />
+    <Compile Include="Query\NullSemanticsQuerySqlCeFixture.cs" />
+    <Compile Include="Query\NullSemanticsQuerySqlCeTest.cs" />
     <Compile Include="OptimisticConcurrencySqlCeTest.cs" />
-    <Compile Include="OwnedQuerySqlCeFixture.cs" />
-    <Compile Include="OwnedQuerySqlCeTest.cs" />
+    <Compile Include="Query\OwnedQuerySqlCeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyEntrySqlCeTest.cs" />
     <Compile Include="PropertyValuesSqlCeTest.cs" />
-    <Compile Include="QueryNavigationsWithForcedClientEvalSqlCeTest.cs" />
-    <Compile Include="QueryNavigationsSqlCeTest.cs" />
-    <Compile Include="QueryNoClientEvalSqlCeFixture.cs" />
-    <Compile Include="QueryNoClientEvalSqlCeTest.cs" />
-    <Compile Include="QuerySqlCeTest.cs" />
+    <Compile Include="Query\QueryNavigationsSqlCeTest.cs" />
+    <Compile Include="Query\QueryNavigationsWithForcedClientEvalSqlCeTest.cs" />
+    <Compile Include="Query\QueryNoClientEvalSqlCeFixture.cs" />
+    <Compile Include="Query\QueryNoClientEvalSqlCeTest.cs" />
+    <Compile Include="Query\SimpleQuerySqlCeTest.cs" />
+    <Compile Include="Query\SimpleQuerySqlCeTest.Functions.cs" />
+    <Compile Include="Query\SimpleQuerySqlCeTest.JoinGroupJoin.cs" />
+    <Compile Include="Query\SimpleQuerySqlCeTest.QueryTypes.cs" />
+    <Compile Include="Query\SimpleQuerySqlCeTest.ResultOperators.cs" />
+    <Compile Include="Query\SimpleQuerySqlCeTest.Select.cs" />
+    <Compile Include="Query\SimpleQuerySqlCeTest.Where.cs" />
     <Compile Include="SqlCeCommandDisposeTest.cs" />
     <Compile Include="SqlCeConfigPatternsTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseCleaner.cs" />
@@ -216,11 +231,10 @@
     <Compile Include="TableSplittingSqlCeTest.cs" />
     <Compile Include="TestUtilities\SqlCeNorthwindTestStoreFactory.cs" />
     <Compile Include="TestUtilities\SqlCeTestStoreFactorycs.cs" />
-    <Compile Include="TransactionSqlCeFixture.cs" />
     <Compile Include="TransactionSqlCetest.cs" />
-    <Compile Include="Utilities\DbContextOptionsBuilderExtensions.cs" />
-    <Compile Include="Utilities\SqlServerConditionAttribute.cs" />
-    <Compile Include="Utilities\TestEnvironment.cs" />
+    <Compile Include="TestUtilities\DbContextOptionsBuilderExtensions.cs" />
+    <Compile Include="TestUtilities\SqlServerConditionAttribute.cs" />
+    <Compile Include="TestUtilities\TestEnvironment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -244,4 +258,12 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\xunit.core.2.3.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.core.2.3.1\build\xunit.core.props'))" />
+    <Error Condition="!Exists('..\..\packages\xunit.core.2.3.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.core.2.3.1\build\xunit.core.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\xunit.core.2.3.1\build\xunit.core.targets" Condition="Exists('..\..\packages\xunit.core.2.3.1\build\xunit.core.targets')" />
 </Project>

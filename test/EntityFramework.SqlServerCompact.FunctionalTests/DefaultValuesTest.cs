@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Utilities;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
 
 namespace Microsoft.EntityFrameworkCore
 {

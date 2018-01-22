@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
-    public class DataAnnotationSqlCeTest : DataAnnotationTestBase<SqlCeTestStore, DataAnnotationSqlCeFixture>
+    public class DataAnnotationSqlCeTest : DataAnnotationTestBase<DataAnnotationSqlCeTest.DataAnnotationSqlCeFixture>
     {
         public DataAnnotationSqlCeTest(DataAnnotationSqlCeFixture fixture)
             : base(fixture)
@@ -77,15 +80,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
-            //TODO ErikEJ Why is fixture not running?
-            using (var context = CreateContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                DataAnnotationModelInitializer.Seed(context);
-
-                Fixture.TestSqlLoggerFactory.Clear();
-            }
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();
 
             Assert.Equal(@"SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion]
@@ -239,15 +233,6 @@ VALUES (@p0)",
 
         public override void TimestampAttribute_throws_if_value_in_database_changed()
         {
-            using (var context = CreateContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                DataAnnotationModelInitializer.Seed(context);
-
-                Assert.True(context.Model.FindEntityType(typeof(Two)).FindProperty("Timestamp").IsConcurrencyToken);
-            }
-
             base.TimestampAttribute_throws_if_value_in_database_changed();
 
             // Not validating SQL because not significantly different from other tests and 
@@ -257,5 +242,11 @@ VALUES (@p0)",
         private const string FileLineEnding = @"
 ";
         private  string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+
+        public class DataAnnotationSqlCeFixture : DataAnnotationFixtureBase
+        {
+            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
+            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
+        }
     }
 }

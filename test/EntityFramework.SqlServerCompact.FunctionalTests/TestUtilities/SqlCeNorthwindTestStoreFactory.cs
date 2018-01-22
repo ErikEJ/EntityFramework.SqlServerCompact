@@ -1,12 +1,12 @@
 ﻿namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
-    public class SqlServerNorthwindTestStoreFactory : SqlCeTestStoreFactory
+    public class SqlCeNorthwindTestStoreFactory : SqlCeTestStoreFactory
     {
         public const string Name = "Northwind";
         public static readonly string NorthwindConnectionString = SqlCeTestStore.CreateConnectionString(Name);
-        public new static SqlServerNorthwindTestStoreFactory Instance { get; } = new SqlServerNorthwindTestStoreFactory();
+        public new static SqlCeNorthwindTestStoreFactory Instance { get; } = new SqlCeNorthwindTestStoreFactory();
 
-        protected SqlServerNorthwindTestStoreFactory()
+        protected SqlCeNorthwindTestStoreFactory()
         {
         }
 

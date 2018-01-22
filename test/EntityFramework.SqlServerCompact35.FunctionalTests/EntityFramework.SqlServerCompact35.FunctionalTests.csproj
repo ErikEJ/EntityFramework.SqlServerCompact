@@ -8,7 +8,7 @@
     <ProjectGuid>{54867677-196E-4C26-832B-3846A937E649}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Data.Entity.FunctionalTests</RootNamespace>
+    <RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
     <AssemblyName>EntityFramework.SqlServerCompact.Legacy.FunctionalTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -129,7 +129,7 @@
     <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\BasicEndToEndScenarioForIdentity.cs">
       <Link>BasicEndToEndScenarioForIdentity.cs</Link>
     </Compile>
-    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\NorthwindQuerySqlCeFixture.cs">
+    <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\Query\NorthwindQuerySqlCeFixture.cs">
       <Link>NorthwindQuerySqlCeFixture.cs</Link>
     </Compile>
     <Compile Include="..\EntityFramework.SqlServerCompact.FunctionalTests\SqlCeDatabaseCreationTest.cs">
@@ -176,9 +176,7 @@
       <Name>EntityFramework.SqlServerCompact35</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

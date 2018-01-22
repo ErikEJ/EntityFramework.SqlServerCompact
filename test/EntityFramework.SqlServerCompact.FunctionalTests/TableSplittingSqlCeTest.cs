@@ -1,50 +1,47 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.TestModels.TransportationModel;
-using Microsoft.EntityFrameworkCore.Utilities;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
-using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+﻿using Microsoft.EntityFrameworkCore.TestUtilities;
+using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore
 {
-    public class TableSplittingSqlCeTest : TableSplittingTestBase<SqlCeTestStore>
+    public class TableSplittingSqlCeTest : TableSplittingTestBase
     {
-        private readonly string _connectionString = SqlCeTestStore.CreateConnectionString(DatabaseName);
-        public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
-
-        public override SqlCeTestStore CreateTestStore(Action<ModelBuilder> onModelCreating)
-            => SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder()
-                    .UseSqlCe(_connectionString, b => b.ApplyConfiguration().CommandTimeout(300))
-                    .EnableSensitiveDataLogging()
-                    .UseInternalServiceProvider(BuildServiceProvider(onModelCreating));
-
-                using (var context = new TransportationContext(optionsBuilder.Options))
-                {
-                    context.Database.EnsureCreated();
-                    context.Seed();
-                }
-            });
-
-        public override TransportationContext CreateContext(SqlCeTestStore testStore, Action<ModelBuilder> onModelCreating)
+        public TableSplittingSqlCeTest(ITestOutputHelper testOutputHelper)
+            : base(testOutputHelper)
         {
-            var optionsBuilder = new DbContextOptionsBuilder()
-                .UseSqlCe(testStore.Connection, b => b.ApplyConfiguration().CommandTimeout(300))
-                .EnableSensitiveDataLogging()
-                .UseInternalServiceProvider(BuildServiceProvider(onModelCreating));
-
-            var context = new TransportationContext(optionsBuilder.Options);
-            context.Database.UseTransaction(testStore.Transaction);
-            return context;
         }
 
-        private IServiceProvider BuildServiceProvider(Action<ModelBuilder> onModelCreating)
-            => new ServiceCollection()
-                .AddEntityFrameworkSqlCe()
-                .AddSingleton(TestModelSource.GetFactory(onModelCreating))
-                .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
-                .BuildServiceProvider();
+        protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
+
+        public override void Can_change_dependent_instance_non_derived()
+        {
+            base.Can_change_dependent_instance_non_derived();
+
+            TestSqlLoggerFactory.AssertBaseline(new[]{
+                @"@p3='Trek Pro Fit Madone 6 Series' (Nullable = false) (Size = 450)
+@p0='LicensedOperator' (Nullable = false) (Size = 4000)
+@p1='repairman' (Size = 4000)
+@p2='Repair' (Size = 4000)
+
+SET NOCOUNT ON;
+UPDATE [Vehicles] SET [Operator_Discriminator] = @p0, [Operator_Name] = @p1, [LicenseType] = @p2
+WHERE [Name] = @p3;
+SELECT @@ROWCOUNT;"
+            }, assertOrder: false);
+        }
+
+        public override void Can_change_principal_instance_non_derived()
+        {
+            base.Can_change_principal_instance_non_derived();
+
+            TestSqlLoggerFactory.AssertBaseline(new[]{
+                @"@p1='Trek Pro Fit Madone 6 Series' (Nullable = false) (Size = 450)
+@p0='2'
+
+SET NOCOUNT ON;
+UPDATE [Vehicles] SET [SeatingCapacity] = @p0
+WHERE [Name] = @p1;
+SELECT @@ROWCOUNT;"
+            }, assertOrder: false);
+        }
     }
 }

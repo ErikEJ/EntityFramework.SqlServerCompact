@@ -18,11 +18,11 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal
             var sqlCeTypeMapper = new SqlCeTypeMapper(new RelationalTypeMapperDependencies());
 
             return new SqlCeConventionSetBuilder(
-                    new RelationalConventionSetBuilderDependencies(sqlCeTypeMapper, null, null, null),
+                    new RelationalConventionSetBuilderDependencies(null, null, null, null, sqlCeTypeMapper),
                     new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()))
                 .AddConventions(
                     new CoreConventionSetBuilder(
-                            new CoreConventionSetBuilderDependencies(sqlCeTypeMapper, null, null))
+                            new CoreConventionSetBuilderDependencies(null, null, null, sqlCeTypeMapper))
                         .CreateConventionSet());
         }
     }

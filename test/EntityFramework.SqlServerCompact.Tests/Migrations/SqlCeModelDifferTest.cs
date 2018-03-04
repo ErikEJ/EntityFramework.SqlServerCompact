@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.EntityFrameworkCore.Update.Internal;
@@ -598,17 +599,34 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
         protected override ModelBuilder CreateModelBuilder() => SqlCeTestHelpers.Instance.CreateConventionBuilder();
 
-
         protected override MigrationsModelDiffer CreateModelDiffer(IModel model)
+
         {
             var ctx = SqlCeTestHelpers.Instance.CreateContext(model);
+
             return new MigrationsModelDiffer(
-                TestServiceFactory.Instance.Create<SqlCeTypeMapper>(),
+                new FallbackRelationalCoreTypeMapper(
+                    TestServiceFactory.Instance.Create<CoreTypeMapperDependencies>(),
+                    TestServiceFactory.Instance.Create<RelationalTypeMapperDependencies>(),
+                    TestServiceFactory.Instance.Create<SqlCeTypeMapper>()),
                 new SqlCeMigrationsAnnotationProvider(
                     new MigrationsAnnotationProviderDependencies()),
                 ctx.GetService<IChangeDetector>(),
                 ctx.GetService<StateManagerDependencies>(),
                 ctx.GetService<CommandBatchPreparerDependencies>());
         }
+
+
+        //protected override MigrationsModelDiffer CreateModelDiffer(IModel model)
+        //{
+        //    var ctx = SqlCeTestHelpers.Instance.CreateContext(model);
+        //    return new MigrationsModelDiffer(
+        //        TestServiceFactory.Instance.Create<SqlCeTypeMapper>(),
+        //        new SqlCeMigrationsAnnotationProvider(
+        //            new MigrationsAnnotationProviderDependencies()),
+        //        ctx.GetService<IChangeDetector>(),
+        //        ctx.GetService<StateManagerDependencies>(),
+        //        ctx.GetService<CommandBatchPreparerDependencies>());
+        //}
     }
 }

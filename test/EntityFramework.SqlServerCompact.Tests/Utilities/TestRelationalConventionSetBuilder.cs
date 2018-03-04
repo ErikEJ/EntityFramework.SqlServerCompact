@@ -3,7 +3,8 @@
 
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
@@ -13,16 +14,29 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             : base(dependencies)
         {
         }
-
         public static ConventionSet Build()
             => new TestRelationalConventionSetBuilder(
                 new RelationalConventionSetBuilderDependencies(
-                    TestServiceFactory.Instance.Create<TestRelationalTypeMapper>(),
+                    new FallbackRelationalCoreTypeMapper(
+                        TestServiceFactory.Instance.Create<CoreTypeMapperDependencies>(),
+                        TestServiceFactory.Instance.Create<RelationalTypeMapperDependencies>(),
+                        TestServiceFactory.Instance.Create<TestRelationalTypeMapper>()),
                     new FakeDiagnosticsLogger<DbLoggerCategory.Model>(),
                     null,
                     null))
                 .AddConventions(
                     TestServiceFactory.Instance.Create<CoreConventionSetBuilder>()
                         .CreateConventionSet());
+
+        //public static ConventionSet Build()
+        //    => new TestRelationalConventionSetBuilder(
+        //        new RelationalConventionSetBuilderDependencies(
+        //            TestServiceFactory.Instance.Create<TestRelationalTypeMapper>(),
+        //            new FakeDiagnosticsLogger<DbLoggerCategory.Model>(),
+        //            null,
+        //            null))
+        //        .AddConventions(
+        //            TestServiceFactory.Instance.Create<CoreConventionSetBuilder>()
+        //                .CreateConventionSet());
     }
 }

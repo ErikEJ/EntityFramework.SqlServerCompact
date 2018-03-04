@@ -61,7 +61,7 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
         public TestRelationalTypeMapper(
             CoreTypeMapperDependencies coreDependencies,
             RelationalTypeMapperDependencies dependencies)
-            : base(coreDependencies, dependencies)
+            : base(dependencies)
         {
         }
 

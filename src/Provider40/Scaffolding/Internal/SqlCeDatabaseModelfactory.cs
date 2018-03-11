@@ -1,8 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿using EFCore.SqlCe.Internal;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Scaffolding;
+using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
@@ -15,7 +18,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
+namespace EFCore.SqlCe.Scaffolding.Internal
 {
     public class SqlCeDatabaseModelFactory : IDatabaseModelFactory
     {

@@ -1,6 +1,8 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Query.Internal
+namespace EFCore.SqlCe.Query.Internal
 {
     public class SqlCeQueryCompilationContext : RelationalQueryCompilationContext
     {

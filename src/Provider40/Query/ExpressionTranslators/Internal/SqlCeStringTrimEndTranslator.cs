@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 
-namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
+namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
 {
     public class SqlCeStringTrimEndTranslator : IMethodCallTranslator
     {

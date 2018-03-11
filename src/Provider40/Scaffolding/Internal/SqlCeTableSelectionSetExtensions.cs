@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using System;
 using System.Linq;
 
-namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
+namespace EFCore.SqlCe.Scaffolding.Internal
 {
     internal static class SqlCeTableSelectionSetExtensions
     {

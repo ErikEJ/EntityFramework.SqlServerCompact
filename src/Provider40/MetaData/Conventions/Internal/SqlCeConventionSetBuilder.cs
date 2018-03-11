@@ -1,8 +1,10 @@
-﻿using JetBrains.Annotations;
+﻿using EFCore.SqlCe.Storage.Internal;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal
+namespace EFCore.SqlCe.Metadata.Conventions.Internal
 {
     public class SqlCeConventionSetBuilder : RelationalConventionSetBuilder
     {

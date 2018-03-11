@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
+﻿using EFCore.SqlCe.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -160,22 +160,22 @@ VALUES (@p0, @p1, @p2)",
             base.RequiredAttribute_for_navigation_throws_while_inserting_null_value();
 
             Assert.Equal(@"@p0='' (DbType = Int32)
-@p1='Book1' (Nullable = false) (Size = 256)
+@p1='1'
 
-INSERT INTO [BookDetail] ([AdditionalBookDetailId], [BookId])
+INSERT INTO [BookDetails] ([AdditionalBookDetailsId], [AnotherBookId])
 VALUES (@p0, @p1)
 
 @p0='' (DbType = Int32)
-@p1='Book1' (Nullable = false) (Size = 256)
+@p1='1'
 
 SELECT [Id]
-FROM [BookDetail]
+FROM [BookDetails]
 WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
 @p0='' (DbType = Int32)
-@p1='' (Nullable = false) (Size = 256) (DbType = String)
+@p1='' (Nullable = false) (DbType = Int32)
 
-INSERT INTO [BookDetail] ([AdditionalBookDetailId], [BookId])
+INSERT INTO [BookDetails] ([AdditionalBookDetailsId], [AnotherBookId])
 VALUES (@p0, @p1)",
                 Sql);
         }

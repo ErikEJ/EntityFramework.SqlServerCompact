@@ -1,4 +1,5 @@
 ﻿using System;
+using EFCore.SqlCe.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Xunit;

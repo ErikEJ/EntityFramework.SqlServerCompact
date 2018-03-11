@@ -1,9 +1,10 @@
 ﻿using System.Data.SqlServerCe;
 using System.IO;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Storage.Internal
+namespace EFCore.SqlCe.Storage.Internal
 {
     public static class SqlCeConnectionExtensions
     {

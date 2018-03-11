@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using EFCore.SqlCe.Metadata.Internal;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Microsoft.EntityFrameworkCore.Migrations.Internal
+namespace EFCore.SqlCe.Migrations.Internal
 {
     public class SqlCeMigrationsAnnotationProvider : MigrationsAnnotationProvider
     {

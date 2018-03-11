@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Utilities;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using EFCore.SqlCe.Infrastructure.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
 {

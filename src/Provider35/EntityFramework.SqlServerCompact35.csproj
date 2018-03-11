@@ -146,9 +146,6 @@
     <Compile Include="..\Provider40\Infrastructure\SqlCeDbContextOptionsBuilder.cs">
       <Link>Infrastructure\SqlCeDbContextOptionsBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Infrastructure\SqlCeEventId.cs">
-      <Link>Infrastructure\SqlCeEventId.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Internal\SqlCeLoggerExtensions.cs">
       <Link>Internal\SqlCeLoggerExtensions.cs</Link>
     </Compile>

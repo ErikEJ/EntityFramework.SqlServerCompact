@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Design;
+using EFCore.SqlCe.Scaffolding.Internal;
+using EFCore.SqlCe.Storage.Internal;
 
 namespace EntityFramework.SqlServerCompact40.Design.FunctionalTest
 {

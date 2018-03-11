@@ -1,9 +1,10 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
-namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
+namespace EFCore.SqlCe.Infrastructure.Internal
 {
     public class SqlCeOptionsExtension : RelationalOptionsExtension
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
+using EFCore.SqlCe.Infrastructure.Internal;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 
 // ReSharper disable AssignNullToNotNullAttribute

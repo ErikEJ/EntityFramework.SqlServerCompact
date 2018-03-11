@@ -115,7 +115,6 @@
     <Compile Include="Diagnostics\SqlCeStrings.cs" />
     <Compile Include="Extensions\Logging\ConfigureLogging.cs" />
     <Compile Include="Infrastructure\Internal\ISqlCeOptions.cs" />
-    <Compile Include="Infrastructure\SqlCeEventId.cs" />
     <Compile Include="Internal\SqlCeLoggerExtensions.cs" />
     <Compile Include="Internal\SqlCeModelValidator.cs" />
     <Compile Include="Internal\SqlCeOptions.cs" />

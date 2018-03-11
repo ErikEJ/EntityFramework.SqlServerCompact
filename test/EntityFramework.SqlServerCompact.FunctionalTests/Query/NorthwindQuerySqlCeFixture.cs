@@ -43,5 +43,10 @@ namespace Microsoft.EntityFrameworkCore.Query
                 .Property(p => p.UnitPrice)
                 .HasColumnType("money");
         }
+
+        protected override void Seed(NorthwindContext context)
+        {
+            //base.Seed(context);
+        }
     }
 }

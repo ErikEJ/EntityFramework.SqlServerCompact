@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using EFCore.SqlCe.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Xunit;
 

@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+﻿using EFCore.SqlCe.Infrastructure.Internal;
+using JetBrains.Annotations;
 
 namespace Microsoft.EntityFrameworkCore.Infrastructure
 {

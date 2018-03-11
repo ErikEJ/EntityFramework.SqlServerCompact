@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
+using EFCore.SqlCe.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
@@ -53,6 +53,15 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
         private SqlCeTestStore(string name, bool shared = true) : base(name, shared)
         {
             _name = name;
+        }
+
+        protected override void Initialize(Func<DbContext> createContext, Action<DbContext> seed)
+        {
+            using (var context = createContext())
+            {
+                context.Database.EnsureCreated();
+                seed(context);
+            }
         }
 
         private SqlCeTestStore CreateShared(Action initializeDatabase)
@@ -158,6 +167,7 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             => builder.UseSqlCe(Connection);
 
         public override void Clean(DbContext context)
-            => context.Database.EnsureClean();
+        {
+        }
     }
 }

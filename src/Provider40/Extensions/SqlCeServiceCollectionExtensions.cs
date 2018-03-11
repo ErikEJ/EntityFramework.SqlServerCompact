@@ -1,21 +1,22 @@
-﻿using JetBrains.Annotations;
+﻿using EFCore.SqlCe.Infrastructure.Internal;
+using EFCore.SqlCe.Internal;
+using EFCore.SqlCe.Metadata.Conventions.Internal;
+using EFCore.SqlCe.Migrations.Internal;
+using EFCore.SqlCe.Query.ExpressionTranslators.Internal;
+using EFCore.SqlCe.Query.Internal;
+using EFCore.SqlCe.Query.Sql.Internal;
+using EFCore.SqlCe.Storage.Internal;
+using EFCore.SqlCe.Update.Internal;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
-using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.Sql;
-using Microsoft.EntityFrameworkCore.Query.Sql.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Update;
-using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 
 // ReSharper disable CheckNamespace

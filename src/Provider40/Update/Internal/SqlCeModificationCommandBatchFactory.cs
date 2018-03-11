@@ -1,9 +1,10 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Update.Internal
+namespace EFCore.SqlCe.Update.Internal
 {
     public class SqlCeModificationCommandBatchFactory : IModificationCommandBatchFactory
     {

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -14,6 +15,11 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
+        [Fact(Skip= "SQLCE limitation")]
+        public override async Task Select_nested_collection_with_groupby()
+        {
+            //return base.Select_nested_collection_with_groupby();
+        }
         public override async Task GroupBy_Composite_Select_Average()
         {
             await base.GroupBy_Composite_Select_Average();

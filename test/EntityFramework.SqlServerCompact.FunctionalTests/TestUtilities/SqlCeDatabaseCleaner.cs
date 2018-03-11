@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.Extensions.Logging;
 using System;
+using EFCore.SqlCe.Scaffolding.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities
 {

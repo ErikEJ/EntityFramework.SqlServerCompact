@@ -1,4 +1,6 @@
-﻿namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
+﻿using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
+
+namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
 {
     public class SqlCeStringToUpperTranslator : ParameterlessInstanceMethodCallTranslator
     {

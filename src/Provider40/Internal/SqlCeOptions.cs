@@ -1,8 +1,10 @@
 ﻿using System;
+using EFCore.SqlCe.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Internal
+namespace EFCore.SqlCe.Internal
 {
     /// <summary>
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -31,6 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
 
             if (ClientEvalForUnsupportedSqlConstructs != (sqlCeOptions.ClientEvalForUnsupportedSqlConstructs ?? false))
             {
+                //TODO Use other strings
                 throw new InvalidOperationException(
                     CoreStrings.SingletonOptionChanged(
                         nameof(SqlCeDbContextOptionsBuilder.UseClientEvalForUnsupportedSqlConstructs),

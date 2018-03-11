@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
+using EFCore.SqlCe.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests
@@ -25,7 +25,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             Assert.Equal("real", GetTypeMapping(typeof(float)).StoreType);
            
         }
-
         
         [Fact(Skip = "ErikEJ to investigate why no exception for 2.1")]
         public void Breaks_Mapping_To_Unsupported()

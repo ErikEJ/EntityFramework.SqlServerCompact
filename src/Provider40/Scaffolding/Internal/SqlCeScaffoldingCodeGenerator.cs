@@ -1,4 +1,7 @@
-﻿namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Scaffolding;
+
+namespace EFCore.SqlCe.Scaffolding.Internal
 {
     public class SqlCeScaffoldingCodeGenerator : IScaffoldingProviderCodeGenerator
     {

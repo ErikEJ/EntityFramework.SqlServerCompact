@@ -17,7 +17,6 @@ namespace Microsoft.EntityFrameworkCore
         {
             using (var context = new ChipsContext(_serviceProvider, TestStore.Name))
             {
-                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
                 context.Chippers.Add(new Chipper { Id = "Default" });

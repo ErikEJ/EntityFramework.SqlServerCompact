@@ -1,6 +1,6 @@
 ﻿using System;
+using EFCore.SqlCe.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests

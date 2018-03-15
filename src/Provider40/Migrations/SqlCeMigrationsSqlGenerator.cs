@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using EFCore.SqlCe.Metadata.Internal;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Migrations
+namespace EFCore.SqlCe.Query.Migrations
 {
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {

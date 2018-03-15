@@ -1,14 +1,17 @@
 ﻿using Xunit;
+using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore
 {
     public class PropertyEntrySqlCeTest : PropertyEntryTestBase<F1SqlCeFixture>
     {
-        public PropertyEntrySqlCeTest(F1SqlCeFixture fixture)
+        public PropertyEntrySqlCeTest(F1SqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
+            fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
+        [Fact(Skip="Logged issue https://github.com/aspnet/EntityFrameworkCore/issues/11285")]
         public override void Property_entry_original_value_is_set()
         {
             base.Property_entry_original_value_is_set();

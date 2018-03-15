@@ -28,7 +28,7 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             new SqlCeTestStore(name).CreateShared(initializeDatabase);
 
         public static SqlCeTestStore Create(string name)
-            => new SqlCeTestStore(name).CreateTransient(true);
+            => SqlCeTestStore.CreateScratch(true);
 
         public static SqlCeTestStore CreateScratch(bool createDatabase)
         {

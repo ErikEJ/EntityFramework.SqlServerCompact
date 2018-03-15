@@ -82,11 +82,11 @@ namespace Microsoft.EntityFrameworkCore
         {
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();
 
-            Assert.Equal(@"SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion]
+            Assert.Equal(@"SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion], [r].[UniqueNo], [r].[Details_Name], [r].[UniqueNo], [r].[AdditionalDetails_Name]
 FROM [Sample] AS [r]
 WHERE [r].[UniqueNo] = 1
 
-SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion]
+SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion], [r].[UniqueNo], [r].[Details_Name], [r].[UniqueNo], [r].[AdditionalDetails_Name]
 FROM [Sample] AS [r]
 WHERE [r].[UniqueNo] = 1
 
@@ -113,13 +113,17 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3", Sql);
             Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
 @p1='Third' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000003'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)
 
 @p0='' (Size = 10) (DbType = String)
 @p1='Third' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000003'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -134,13 +138,17 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)",
             Assert.Equal(@"@p0='Short' (Size = 10)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)
 
 @p0='Short' (Size = 10)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -149,9 +157,11 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 @p0='VeryVeryVeryVeryVeryVeryLongString'
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000002'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)",
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)",
                 Sql);
         }
 
@@ -187,13 +197,17 @@ VALUES (@p0, @p1)",
             Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Two' (Size = 4000)
+@p4='One' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)
 
 @p0='' (Size = 10) (DbType = String)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Two' (Size = 4000)
+@p4='One' (Size = 4000)
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -202,9 +216,11 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 @p0='' (Size = 10) (DbType = String)
 @p1='' (Nullable = false) (Size = 4000) (DbType = String)
 @p2='00000000-0000-0000-0000-000000000002'
+@p3='Two' (Size = 4000)
+@p4='One' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)",
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)",
                 Sql);
         }
 

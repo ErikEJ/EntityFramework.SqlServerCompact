@@ -135,7 +135,9 @@
   <ItemGroup>
     <Compile Include="MonsterFixupChangedChangingSqlCeTest.cs" />
     <Compile Include="Query\AsNoTrackingSqlCeTest.cs" />
+    <Compile Include="Query\AsTrackingSqlCeTest.cs" />
     <Compile Include="Query\AsyncFromSqlQuerySqlCeTest.cs" />
+    <Compile Include="Query\AsyncGearsOfWarSqlCeTest.cs" />
     <Compile Include="Query\AsyncGroupByQuerySqlCeTest.cs" />
     <Compile Include="Query\AsyncIncludeSqlCeTest.cs" />
     <Compile Include="Query\AsyncQueryNavigationsSqlCeTests.cs" />

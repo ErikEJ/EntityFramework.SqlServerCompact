@@ -45,6 +45,12 @@ namespace Microsoft.EntityFrameworkCore.Query
             base.Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause();
         }
 
+        [ConditionalFact(Skip = "SQLCE limitation")]
+        public override void Member_doesnt_get_pushed_down_into_subquery_with_result_operator()
+        {
+            base.Member_doesnt_get_pushed_down_into_subquery_with_result_operator();
+        }
+
         [Fact]
         public override void Simple_owned_level1()
         {

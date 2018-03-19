@@ -78,8 +78,8 @@ WHERE [c].[CustomerID] = [o].[CustomerID]",
             base.From_sql_queryable_multiple_composed_with_closure_parameters();
 
             Assert.Equal(
-                @"@__8__locals1_startDate_1='01/01/1997 00:00:00' (DbType = DateTime)
-@__8__locals1_endDate_2='01/01/1998 00:00:00' (DbType = DateTime)
+                @"@__8__locals1_startDate_1='1997-01-01T00:00:00' (DbType = DateTime)
+@__8__locals1_endDate_2='1998-01-01T00:00:00' (DbType = DateTime)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region], [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM (
@@ -97,9 +97,9 @@ WHERE [c].[CustomerID] = [o].[CustomerID]",
             base.From_sql_queryable_multiple_composed_with_parameters_and_closure_parameters();
 
             AssertSql(
-                @"@p0='London'
-@__8__locals1_startDate_1='01/01/1997 00:00:00' (DbType = DateTime)
-@__8__locals1_endDate_2='01/01/1998 00:00:00' (DbType = DateTime)
+                @"@p0='London' (Size = 4000)
+@__8__locals1_startDate_1='1997-01-01T00:00:00' (DbType = DateTime)
+@__8__locals1_endDate_2='1998-01-01T00:00:00' (DbType = DateTime)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region], [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM (
@@ -110,9 +110,9 @@ CROSS JOIN (
 ) AS [o]
 WHERE [c].[CustomerID] = [o].[CustomerID]",
                 //
-                @"@p0='Berlin'
-@__8__locals1_startDate_1='04/01/1998 00:00:00' (DbType = DateTime)
-@__8__locals1_endDate_2='05/01/1998 00:00:00' (DbType = DateTime)
+                @"@p0='Berlin' (Size = 4000)
+@__8__locals1_startDate_1='1998-04-01T00:00:00' (DbType = DateTime)
+@__8__locals1_endDate_2='1998-05-01T00:00:00' (DbType = DateTime)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region], [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM (
@@ -154,8 +154,8 @@ WHERE [c].[City] = N'London'",
             base.From_sql_queryable_with_parameters();
 
             Assert.Equal(
-                @"@p0='London'
-@p1='Sales Representative'
+                @"@p0='London' (Size = 4000)
+@p1='Sales Representative' (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 Sql);
@@ -166,8 +166,8 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
             base.From_sql_queryable_with_parameters_inline();
 
             Assert.Equal(
-                @"@p0='London'
-@p1='Sales Representative'
+                @"@p0='London' (Size = 4000)
+@p1='Sales Representative' (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 Sql);
@@ -194,7 +194,7 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
             base.From_sql_queryable_with_parameters_and_closure();
 
             Assert.Equal(
-                @"@p0='London'
+                @"@p0='London' (Size = 4000)
 @__contactTitle_1='Sales Representative' (Size = 4000)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
@@ -221,13 +221,13 @@ SELECT * FROM ""Customers"" WHERE ""City"" = 'Seattle'",
             base.From_sql_queryable_with_parameters_cache_key_includes_parameters();
 
             Assert.Equal(
-                @"@p0='London'
-@p1='Sales Representative'
+                @"@p0='London' (Size = 4000)
+@p1='Sales Representative' (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1
 
-@p0='Madrid'
-@p1='Accounting Manager'
+@p0='Madrid' (Size = 4000)
+@p1='Accounting Manager' (Size = 4000)
 
 SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 Sql);
@@ -250,9 +250,9 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1",
                 @"SELECT [p].[ProductName]
 FROM (
     SELECT *
-    FROM Products
-    WHERE Discontinued <> 1
-    AND ((UnitsInStock + UnitsOnOrder) < ReorderLevel)
+    FROM ""Products""
+    WHERE ""Discontinued"" <> 1
+    AND ((""UnitsInStock"" + ""UnitsOnOrder"") < ""ReorderLevel"")
 ) AS [p]",
                 Sql);
         }

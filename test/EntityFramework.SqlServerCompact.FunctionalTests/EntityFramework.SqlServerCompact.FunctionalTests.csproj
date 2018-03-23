@@ -170,6 +170,7 @@
     <Compile Include="Query\GearsOfWarQuerySqlCeFixture.cs" />
     <Compile Include="Query\GearsOfWarSqlCeTest.cs" />
     <Compile Include="GraphUpdateWithIdentitySqlCeTest.cs" />
+    <Compile Include="Query\GroupBySqlCeTest.cs" />
     <Compile Include="Query\IncludeAsyncSqlCeTest.cs" />
     <Compile Include="Query\IncludeOneToOneSqlCeTest.cs" />
     <Compile Include="Query\IncludeSqlCeTest.cs" />

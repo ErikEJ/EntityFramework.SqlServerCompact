@@ -429,7 +429,7 @@ WHERE [c].[Id] = 1",
 @p3='Little spotted kiwi' (Size = 4000)
 @p4='' (Size = 100) (DbType = String)
 @p5='True'
-@p6='North'
+@p6='0'
 
 INSERT INTO [Animal] ([Species], [CountryId], [Discriminator], [Name], [EagleId], [IsFlightless], [FoundOn])
 VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)",

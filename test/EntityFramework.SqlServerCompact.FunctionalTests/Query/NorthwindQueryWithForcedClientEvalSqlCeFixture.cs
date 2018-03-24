@@ -3,20 +3,15 @@ using Microsoft.EntityFrameworkCore.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class NorthwindQueryWithForcedClientEvalSqlCeFixture<TModelCustomizer> : NorthwindQueryRelationalFixture<TModelCustomizer>
-        where TModelCustomizer : IModelCustomizer, new()
+    public class NorthwindQueryWithForcedClientEvalSqlCeFixture : NorthwindQuerySqlCeFixture<NoopModelCustomizer>
     {
         protected override ITestStoreFactory TestStoreFactory => SqlCeNorthwindTestStoreFactory.Instance;
 
         public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlCe(
-                    TestStore.ConnectionString,
-                    b =>
-                    {
-                        b.UseClientEvalForUnsupportedSqlConstructs(true);
-                    });
-            return base.AddOptions(builder);
+            var optionsBuilder = base.AddOptions(builder);
+            new SqlCeDbContextOptionsBuilder(optionsBuilder).UseClientEvalForUnsupportedSqlConstructs();
+            return optionsBuilder;
         }
     }
 }

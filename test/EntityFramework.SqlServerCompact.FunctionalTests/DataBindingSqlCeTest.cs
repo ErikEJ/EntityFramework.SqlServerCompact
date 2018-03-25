@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Specification.Tests;
-
-namespace Microsoft.EntityFrameworkCore.SqlCe.FunctionalTests
+﻿namespace Microsoft.EntityFrameworkCore
 {
-    public class DatabindingSqlCeTest : DatabindingTestBase<SqlCeTestStore, F1SqlCeFixture>
+    public class DatabindingSqlCeTest : DatabindingTestBase<F1SqlCeFixture>
     {
         public DatabindingSqlCeTest(F1SqlCeFixture fixture)
             : base(fixture)

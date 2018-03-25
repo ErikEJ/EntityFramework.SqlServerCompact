@@ -2,9 +2,11 @@
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Utilities;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using EFCore.SqlCe.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
+using Microsoft.EntityFrameworkCore.Query;
 
-namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
+namespace EFCore.SqlCe.Query.ExpressionVisitors
 {
     /// <summary>
     ///     A factory for creating instances of <see cref="SqlCeTranslatingExpressionVisitor" />.

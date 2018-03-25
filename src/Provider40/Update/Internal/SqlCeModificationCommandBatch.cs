@@ -4,11 +4,13 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Update.Internal
+namespace EFCore.SqlCe.Update.Internal
 {
     public class SqlCeModificationCommandBatch : AffectedCountModificationCommandBatch
     {
@@ -86,6 +88,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
             }
             catch (Exception ex)
             {
+                //TODO Stop using RelationalStrings
                 throw new DbUpdateException(
                     RelationalStrings.UpdateStoreException,
                     ex,

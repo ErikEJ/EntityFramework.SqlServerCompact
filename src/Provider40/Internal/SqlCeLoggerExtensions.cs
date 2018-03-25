@@ -1,9 +1,9 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Internal
+namespace EFCore.SqlCe.Internal
 {
     public static class SqlCeLoggerExtensions
     {
@@ -21,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
             // Checking for enabled here to avoid string formatting if not needed.
             if (diagnostics.GetLogBehavior(definition.EventId, definition.Level) != WarningBehavior.Ignore)
             {
-                definition.Log(diagnostics, entityType.DisplayName(), schema);
+                definition.Log(diagnostics, entityType.Name, schema);
             }
 
             if (diagnostics.DiagnosticSource.IsEnabled(definition.EventId.Name))
@@ -41,7 +41,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
             var d = (EventDefinition<string, string>)definition;
             var p = (EntityTypeSchemaEventData)payload;
             return d.GenerateMessage(
-                p.EntityType.DisplayName(),
+                p.EntityType.Name,
                 p.Schema);
         }
 

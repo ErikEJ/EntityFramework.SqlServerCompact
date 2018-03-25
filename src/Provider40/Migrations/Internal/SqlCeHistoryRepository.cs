@@ -1,7 +1,8 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Microsoft.EntityFrameworkCore.Migrations.Internal
+namespace EFCore.SqlCe.Migrations.Internal
 {
     public class SqlCeHistoryRepository : HistoryRepository
     {

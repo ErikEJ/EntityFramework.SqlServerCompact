@@ -1,11 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using EFCore.SqlCe.Metadata.Internal;
+using EFCore.SqlCe.Migrations.Internal;
+using EFCore.SqlCe.Storage.Internal;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using System;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Migrations
@@ -30,7 +35,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Assert.Equal(1, operations.Count);
 
                     var addTableOperation = Assert.IsType<CreateTableOperation>(operations[0]);
-                    Assert.Equal(null, addTableOperation.Schema);
+                    Assert.Null(addTableOperation.Schema);
                     Assert.Equal("People", addTableOperation.Name);
 
                     Assert.Equal("PK_People", addTableOperation.PrimaryKey.Name);
@@ -62,7 +67,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
                     var addTableOperation = Assert.IsType<RenameTableOperation>(operations[0]);
                     Assert.Equal("Person", addTableOperation.Name);
-                    Assert.Equal(null, addTableOperation.NewSchema);
+                    Assert.Null(addTableOperation.NewSchema);
                     Assert.Equal("People", addTableOperation.NewName);
                 });
         }
@@ -85,7 +90,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                     Assert.Equal(1, operations.Count);
 
                     var addTableOperation = Assert.IsType<DropTableOperation>(operations[0]);
-                    Assert.Equal(null, addTableOperation.Schema);
+                    Assert.Null(addTableOperation.Schema);
                     Assert.Equal("People", addTableOperation.Name);
                 });
         }
@@ -596,9 +601,34 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
         protected override ModelBuilder CreateModelBuilder() => SqlCeTestHelpers.Instance.CreateConventionBuilder();
 
-        protected override MigrationsModelDiffer CreateModelDiffer()
-            => new MigrationsModelDiffer(
-        new SqlCeTypeMapper(new RelationalTypeMapperDependencies()),
-        new SqlCeMigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies()));
+        protected override MigrationsModelDiffer CreateModelDiffer(IModel model)
+
+        {
+            var ctx = SqlCeTestHelpers.Instance.CreateContext(model);
+
+            return new MigrationsModelDiffer(
+                new FallbackRelationalCoreTypeMapper(
+                    TestServiceFactory.Instance.Create<CoreTypeMapperDependencies>(),
+                    TestServiceFactory.Instance.Create<RelationalTypeMapperDependencies>(),
+                    TestServiceFactory.Instance.Create<SqlCeTypeMapper>()),
+                new SqlCeMigrationsAnnotationProvider(
+                    new MigrationsAnnotationProviderDependencies()),
+                ctx.GetService<IChangeDetector>(),
+                ctx.GetService<StateManagerDependencies>(),
+                ctx.GetService<CommandBatchPreparerDependencies>());
+        }
+
+
+        //protected override MigrationsModelDiffer CreateModelDiffer(IModel model)
+        //{
+        //    var ctx = SqlCeTestHelpers.Instance.CreateContext(model);
+        //    return new MigrationsModelDiffer(
+        //        TestServiceFactory.Instance.Create<SqlCeTypeMapper>(),
+        //        new SqlCeMigrationsAnnotationProvider(
+        //            new MigrationsAnnotationProviderDependencies()),
+        //        ctx.GetService<IChangeDetector>(),
+        //        ctx.GetService<StateManagerDependencies>(),
+        //        ctx.GetService<CommandBatchPreparerDependencies>());
+        //}
     }
 }

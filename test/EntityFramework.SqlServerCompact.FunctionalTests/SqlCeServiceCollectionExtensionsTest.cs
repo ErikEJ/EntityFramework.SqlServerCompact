@@ -1,4 +1,6 @@
-﻿namespace Microsoft.EntityFrameworkCore.Specification.Tests
+﻿using Microsoft.EntityFrameworkCore.TestUtilities;
+
+namespace Microsoft.EntityFrameworkCore
 {
     public class SqlCeServiceCollectionExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
     {

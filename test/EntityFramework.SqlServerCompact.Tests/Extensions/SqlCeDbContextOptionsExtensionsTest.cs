@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlServerCe;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using EFCore.SqlCe.Infrastructure.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Extensions

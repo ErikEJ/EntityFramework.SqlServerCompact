@@ -1,10 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿using EFCore.SqlCe.Storage.Internal;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
+namespace EFCore.SqlCe.Scaffolding.Internal
 { 
     public class SqlCeDesignTimeServices : IDesignTimeServices
     {

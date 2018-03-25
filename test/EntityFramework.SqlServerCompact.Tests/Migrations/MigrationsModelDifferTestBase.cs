@@ -3,11 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.EntityFrameworkCore.Update.Internal;
+using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Migrations.Internal
 {
@@ -17,13 +22,21 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
             Action<ModelBuilder> buildSourceAction,
             Action<ModelBuilder> buildTargetAction,
             Action<IReadOnlyList<MigrationOperation>> assertAction)
-            => Execute(m => { }, buildSourceAction, buildTargetAction, assertAction);
+            => Execute(m => { }, buildSourceAction, buildTargetAction, assertAction, null);
 
         protected void Execute(
             Action<ModelBuilder> buildCommonAction,
             Action<ModelBuilder> buildSourceAction,
             Action<ModelBuilder> buildTargetAction,
             Action<IReadOnlyList<MigrationOperation>> assertAction)
+            => Execute(buildCommonAction, buildSourceAction, buildTargetAction, assertAction, null);
+
+        protected void Execute(
+            Action<ModelBuilder> buildCommonAction,
+            Action<ModelBuilder> buildSourceAction,
+            Action<ModelBuilder> buildTargetAction,
+            Action<IReadOnlyList<MigrationOperation>> assertActionUp,
+            Action<IReadOnlyList<MigrationOperation>> assertActionDown)
         {
             var sourceModelBuilder = CreateModelBuilder();
             buildCommonAction(sourceModelBuilder);
@@ -33,28 +46,89 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
             buildCommonAction(targetModelBuilder);
             buildTargetAction(targetModelBuilder);
 
-            var modelDiffer = CreateModelDiffer();
+            var modelDiffer = CreateModelDiffer(targetModelBuilder.Model);
 
-            var operations = modelDiffer.GetDifferences(sourceModelBuilder.Model, targetModelBuilder.Model);
+            var operationsUp = modelDiffer.GetDifferences(sourceModelBuilder.Model, targetModelBuilder.Model);
+            assertActionUp(operationsUp);
 
-            assertAction(operations);
+            if (assertActionDown != null)
+            {
+                modelDiffer = CreateModelDiffer(sourceModelBuilder.Model);
+
+                var operationsDown = modelDiffer.GetDifferences(targetModelBuilder.Model, sourceModelBuilder.Model);
+                assertActionDown(operationsDown);
+            }
+        }
+
+        protected void AssertMultidimensionalArray<T>(T[,] values, params Action<T>[] assertions)
+        {
+            Assert.Collection(ToOnedimensionalArray(values), assertions);
+        }
+
+        protected static T[] ToOnedimensionalArray<T>(T[,] values, bool firstDimension = false)
+        {
+            Debug.Assert(
+                values.GetLength(firstDimension ? 1 : 0) == 1,
+                $"Length of dimension {(firstDimension ? 1 : 0)} is not 1.");
+
+            var result = new T[values.Length];
+            for (var i = 0; i < values.Length; i++)
+            {
+                result[i] = firstDimension
+                    ? values[i, 0]
+                    : values[0, i];
+            }
+
+            return result;
+        }
+
+        protected static T[][] ToJaggedArray<T>(T[,] twoDimensionalArray, bool firstDimension = false)
+        {
+            var rowsFirstIndex = twoDimensionalArray.GetLowerBound(0);
+            var rowsLastIndex = twoDimensionalArray.GetUpperBound(0);
+            var numberOfRows = rowsLastIndex - rowsFirstIndex + 1;
+
+            var columnsFirstIndex = twoDimensionalArray.GetLowerBound(1);
+            var columnsLastIndex = twoDimensionalArray.GetUpperBound(1);
+            var numberOfColumns = columnsLastIndex - columnsFirstIndex + 1;
+
+            var jaggedArray = new T[numberOfRows][];
+            for (var i = 0; i < numberOfRows; i++)
+            {
+                jaggedArray[i] = new T[numberOfColumns];
+
+                for (var j = 0; j < numberOfColumns; j++)
+                {
+                    jaggedArray[i][j] = twoDimensionalArray[i + rowsFirstIndex, j + columnsFirstIndex];
+                }
+            }
+            return jaggedArray;
         }
 
         protected abstract ModelBuilder CreateModelBuilder();
 
-        protected virtual MigrationsModelDiffer CreateModelDiffer()
-            => new MigrationsModelDiffer(
-                new ConcreteTypeMapper(new RelationalTypeMapperDependencies()),
-                new MigrationsAnnotationProvider(new MigrationsAnnotationProviderDependencies()));
+        protected virtual MigrationsModelDiffer CreateModelDiffer(IModel model)
+        {
+            var ctx = RelationalTestHelpers.Instance.CreateContext(model);
+            return new MigrationsModelDiffer(
+                new FallbackRelationalCoreTypeMapper(
+                    TestServiceFactory.Instance.Create<CoreTypeMapperDependencies>(),
+                    TestServiceFactory.Instance.Create<RelationalTypeMapperDependencies>(),
+                    TestServiceFactory.Instance.Create<ConcreteTypeMapper>()),
+                new MigrationsAnnotationProvider(
+                    new MigrationsAnnotationProviderDependencies()),
+                ctx.GetService<IChangeDetector>(),
+                ctx.GetService<StateManagerDependencies>(),
+                ctx.GetService<CommandBatchPreparerDependencies>());
+        }
 
         private class ConcreteTypeMapper : RelationalTypeMapper
         {
-            public ConcreteTypeMapper(RelationalTypeMapperDependencies dependencies)
+            public ConcreteTypeMapper(
+                RelationalTypeMapperDependencies dependencies)
                 : base(dependencies)
             {
             }
-
-            protected override string GetColumnType(IProperty property) => property.TestProvider().ColumnType;
 
             public override RelationalTypeMapping FindMapping(Type clrType)
                 => clrType == typeof(string)
@@ -70,13 +144,16 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
                 = new Dictionary<Type, RelationalTypeMapping>
                 {
                     { typeof(int), new IntTypeMapping("int") },
-                    { typeof(bool), new BoolTypeMapping("boolean") }
+                    { typeof(short), new ShortTypeMapping("smallint") },
+                    { typeof(long), new LongTypeMapping("bigint") },
+                    { typeof(bool), new BoolTypeMapping("boolean") },
+                    { typeof(DateTime), new DateTimeTypeMapping("datetime") }
                 };
 
             private readonly IReadOnlyDictionary<string, RelationalTypeMapping> _simpleNameMappings
                 = new Dictionary<string, RelationalTypeMapping>
                 {
-                    { "varchar", new StringTypeMapping("varchar", dbType: null, unicode: false, size: null) },
+                    { "varchar", new StringTypeMapping("varchar") },
                     { "bigint", new LongTypeMapping("bigint") }
                 };
 

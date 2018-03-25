@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Utilities;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
 
 namespace Microsoft.EntityFrameworkCore
 {
@@ -19,7 +17,6 @@ namespace Microsoft.EntityFrameworkCore
         {
             using (var context = new ChipsContext(_serviceProvider, TestStore.Name))
             {
-                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
                 context.Chippers.Add(new Chipper { Id = "Default" });

@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
     public class Issue305Test
     {

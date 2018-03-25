@@ -36,6 +36,7 @@ namespace Microsoft.EntityFrameworkCore.Utilities
             }
             else if (value.Trim().Length == 0)
             {
+                //TODO Stop using CoreStrings
                 e = new ArgumentException(CoreStrings.ArgumentIsEmpty(parameterName));
             }
 
@@ -56,6 +57,7 @@ namespace Microsoft.EntityFrameworkCore.Utilities
             {
                 NotEmpty(parameterName, nameof(parameterName));
 
+                //TODO Stop using CoreStrings
                 throw new ArgumentException(CoreStrings.ArgumentIsEmpty(parameterName));
             }
 

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Specification.Tests.Utilities;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
-    public abstract class FindSqlCeTest :  FindTestBase<SqlCeTestStore, FindSqlCeTest.FindSqlCeFixture>
+    public abstract class FindSqlCeTest :  FindTestBase<FindSqlCeTest.FindSqlCeFixture>
     {
         protected FindSqlCeTest(FindSqlCeFixture fixture)
             : base(fixture)
@@ -317,40 +317,8 @@ WHERE [e].[Id] = @__get_Item_0", Sql);
 
         public class FindSqlCeFixture : FindFixtureBase
         {
-            private const string DatabaseName = "FindTest";
-            private readonly DbContextOptions _options;
-
-            public TestSqlLoggerFactory TestSqlLoggerFactory { get; } = new TestSqlLoggerFactory();
-
-            public FindSqlCeFixture()
-            {
-                var serviceProvider = new ServiceCollection()
-                    .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                    .AddSingleton<ILoggerFactory>(TestSqlLoggerFactory)
-                    .BuildServiceProvider();
-                    
-                _options = new DbContextOptionsBuilder()
-                    .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName), b => b.ApplyConfiguration())
-                    .UseInternalServiceProvider(serviceProvider)
-                    .EnableSensitiveDataLogging()
-                    .Options;
-            }
-
-            public override SqlCeTestStore CreateTestStore()
-            {
-                return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
-                {
-                    using (var context = new FindContext(_options))
-                    {
-                        context.Database.EnsureClean();
-                        Seed(context);
-                    }
-                });
-            }
-
-            public override DbContext CreateContext(SqlCeTestStore testStore)
-                => new FindContext(_options);
+            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
+            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
         }
     }
 }

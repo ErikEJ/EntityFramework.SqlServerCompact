@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlServerCe;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Tests

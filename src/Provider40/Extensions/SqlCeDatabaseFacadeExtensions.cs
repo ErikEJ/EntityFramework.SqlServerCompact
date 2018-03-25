@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
+using EFCore.SqlCe.Infrastructure.Internal;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
 // ReSharper disable once CheckNamespace
 

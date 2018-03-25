@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
     public class BasicEndToEndScenarioForIdentity
     {

@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
     public class SqlCeMigrationsTest
     {
@@ -33,7 +34,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder
-                .UseSqlCe(testStore.Connection.ConnectionString)
+                .UseSqlCe(testStore.ConnectionString)
                 .UseInternalServiceProvider(serviceProvider);
 
             return new BloggingContext(serviceProvider, optionsBuilder.Options);

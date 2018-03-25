@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
+﻿using EFCore.SqlCe.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
-    public class DataAnnotationSqlCeTest : DataAnnotationTestBase<SqlCeTestStore, DataAnnotationSqlCeFixture>
+    public class DataAnnotationSqlCeTest : DataAnnotationTestBase<DataAnnotationSqlCeTest.DataAnnotationSqlCeFixture>
     {
         public DataAnnotationSqlCeTest(DataAnnotationSqlCeFixture fixture)
             : base(fixture)
@@ -77,22 +80,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public override void ConcurrencyCheckAttribute_throws_if_value_in_database_changed()
         {
-            //TODO ErikEJ Why is fixture not running?
-            using (var context = CreateContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                DataAnnotationModelInitializer.Seed(context);
-
-                Fixture.TestSqlLoggerFactory.Clear();
-            }
             base.ConcurrencyCheckAttribute_throws_if_value_in_database_changed();
 
-            Assert.Equal(@"SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion]
+            Assert.Equal(@"SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion], [r].[UniqueNo], [r].[Details_Name], [r].[UniqueNo], [r].[AdditionalDetails_Name]
 FROM [Sample] AS [r]
 WHERE [r].[UniqueNo] = 1
 
-SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion]
+SELECT TOP(1) [r].[UniqueNo], [r].[MaxLengthProperty], [r].[Name], [r].[RowVersion], [r].[UniqueNo], [r].[Details_Name], [r].[UniqueNo], [r].[AdditionalDetails_Name]
 FROM [Sample] AS [r]
 WHERE [r].[UniqueNo] = 1
 
@@ -119,13 +113,17 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3", Sql);
             Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
 @p1='Third' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000003'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)
 
 @p0='' (Size = 10) (DbType = String)
 @p1='Third' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000003'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -140,13 +138,17 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)",
             Assert.Equal(@"@p0='Short' (Size = 10)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)
 
 @p0='Short' (Size = 10)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -155,9 +157,11 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 @p0='VeryVeryVeryVeryVeryVeryLongString'
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000002'
+@p3='Third Additional Name' (Size = 4000)
+@p4='Third Name' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)",
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)",
                 Sql);
         }
 
@@ -166,22 +170,22 @@ VALUES (@p0, @p1, @p2)",
             base.RequiredAttribute_for_navigation_throws_while_inserting_null_value();
 
             Assert.Equal(@"@p0='' (DbType = Int32)
-@p1='Book1' (Nullable = false) (Size = 256)
+@p1='1'
 
-INSERT INTO [BookDetail] ([AdditionalBookDetailId], [BookId])
+INSERT INTO [BookDetails] ([AdditionalBookDetailsId], [AnotherBookId])
 VALUES (@p0, @p1)
 
 @p0='' (DbType = Int32)
-@p1='Book1' (Nullable = false) (Size = 256)
+@p1='1'
 
 SELECT [Id]
-FROM [BookDetail]
+FROM [BookDetails]
 WHERE 1 = 1 AND [Id] = CAST (@@IDENTITY AS int)
 
 @p0='' (DbType = Int32)
-@p1='' (Nullable = false) (Size = 256) (DbType = String)
+@p1='' (Nullable = false) (DbType = Int32)
 
-INSERT INTO [BookDetail] ([AdditionalBookDetailId], [BookId])
+INSERT INTO [BookDetails] ([AdditionalBookDetailsId], [AnotherBookId])
 VALUES (@p0, @p1)",
                 Sql);
         }
@@ -193,13 +197,17 @@ VALUES (@p0, @p1)",
             Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Two' (Size = 4000)
+@p4='One' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)
 
 @p0='' (Size = 10) (DbType = String)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
+@p3='Two' (Size = 4000)
+@p4='One' (Size = 4000)
 
 SELECT [UniqueNo]
 FROM [Sample]
@@ -208,9 +216,11 @@ WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 @p0='' (Size = 10) (DbType = String)
 @p1='' (Nullable = false) (Size = 4000) (DbType = String)
 @p2='00000000-0000-0000-0000-000000000002'
+@p3='Two' (Size = 4000)
+@p4='One' (Size = 4000)
 
-INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion])
-VALUES (@p0, @p1, @p2)",
+INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
+VALUES (@p0, @p1, @p2, @p3, @p4)",
                 Sql);
         }
 
@@ -239,15 +249,6 @@ VALUES (@p0)",
 
         public override void TimestampAttribute_throws_if_value_in_database_changed()
         {
-            using (var context = CreateContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                DataAnnotationModelInitializer.Seed(context);
-
-                Assert.True(context.Model.FindEntityType(typeof(Two)).FindProperty("Timestamp").IsConcurrencyToken);
-            }
-
             base.TimestampAttribute_throws_if_value_in_database_changed();
 
             // Not validating SQL because not significantly different from other tests and 
@@ -257,5 +258,11 @@ VALUES (@p0)",
         private const string FileLineEnding = @"
 ";
         private  string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+
+        public class DataAnnotationSqlCeFixture : DataAnnotationFixtureBase
+        {
+            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
+            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
+        }
     }
 }

@@ -4,9 +4,9 @@ using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using EFCore.SqlCe.Infrastructure.Internal;
 
 // ReSharper disable CheckNamespace
 

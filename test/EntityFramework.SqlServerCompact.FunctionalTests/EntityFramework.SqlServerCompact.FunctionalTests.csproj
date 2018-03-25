@@ -227,6 +227,8 @@
     <Compile Include="Query\SimpleQuerySqlCeTest.ResultOperators.cs" />
     <Compile Include="Query\SimpleQuerySqlCeTest.Select.cs" />
     <Compile Include="Query\SimpleQuerySqlCeTest.Where.cs" />
+    <Compile Include="Scaffolding\SqlCeDatabaseModelFactoryTest.cs" />
+    <Compile Include="Scaffolding\SqlCeDatabaseModelFixture.cs" />
     <Compile Include="SqlCeCommandDisposeTest.cs" />
     <Compile Include="SqlCeConfigPatternsTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseCleaner.cs" />

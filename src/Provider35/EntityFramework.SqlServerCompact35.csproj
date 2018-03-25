@@ -272,9 +272,6 @@
     <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeScaffoldingCodeGenerator.cs">
       <Link>Scaffolding\Internal\SqlCeScaffoldingCodeGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Scaffolding\Internal\SqlCeTableSelectionSetExtensions.cs">
-      <Link>Scaffolding\Internal\SqlCeTableSelectionSetExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Provider40\Scaffolding\Internal\SqlDataReaderExtensions.cs">
       <Link>Scaffolding\Internal\SqlDataReaderExtensions.cs</Link>
     </Compile>

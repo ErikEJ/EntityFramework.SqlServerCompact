@@ -23,8 +23,8 @@ namespace EFCore.SqlCe.Scaffolding.Internal
         private SqlCeConnection _connection;
         private List<string> _tableSelection;
         private DatabaseModel _databaseModel;
-        private Dictionary<string, DatabaseTable> _tables;
-        private Dictionary<string, DatabaseColumn> _tableColumns;
+        private Dictionary<string, DatabaseTable> _tables = new Dictionary<string, DatabaseTable>();
+        private Dictionary<string, DatabaseColumn> _tableColumns = new Dictionary<string, DatabaseColumn>();
 
         private static string TableKey(DatabaseTable table) => TableKey(table.Name);
         private static string TableKey(string name) => "[" + name + "]";
@@ -62,6 +62,8 @@ namespace EFCore.SqlCe.Scaffolding.Internal
         {
             Check.NotNull(connection, nameof(connection));
             Check.NotNull(tables, nameof(tables));
+
+            _databaseModel = new DatabaseModel();
 
             _connection = connection as SqlCeConnection;
 
@@ -192,10 +194,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
 
                     var storeType = GetStoreType(dataTypeName, precision, scale, maxLength);
 
-                    if (defaultValue == "(NULL)")
-                    {
-                        defaultValue = null;
-                    }
+                    defaultValue = FilterClrDefaults(dataTypeName, nullable, defaultValue);
                     
                     var isComputed = reader.GetValueOrDefault<bool>("is_computed");
 
@@ -548,6 +547,55 @@ namespace EFCore.SqlCe.Scaffolding.Internal
             }
 
             return column;
+        }
+
+        private static string FilterClrDefaults(string dataTypeName, bool nullable, string defaultValue)
+        {
+            if (defaultValue == null
+                || defaultValue == "(NULL)")
+            {
+                return null;
+            }
+            if (nullable)
+            {
+                return defaultValue;
+            }
+            if (defaultValue == "((0))")
+            {
+                if (dataTypeName == "bigint"
+                    || dataTypeName == "bit"
+                    || dataTypeName == "decimal"
+                    || dataTypeName == "float"
+                    || dataTypeName == "int"
+                    || dataTypeName == "money"
+                    || dataTypeName == "numeric"
+                    || dataTypeName == "real"
+                    || dataTypeName == "smallint"
+                    || dataTypeName == "tinyint")
+                {
+                    return null;
+                }
+            }
+            else if (defaultValue == "((0.0))")
+            {
+                if (dataTypeName == "decimal"
+                    || dataTypeName == "float"
+                    || dataTypeName == "money"
+                    || dataTypeName == "numeric"
+                    || dataTypeName == "real")
+                {
+                    return null;
+                }
+            }
+            else if ((defaultValue == "(CONVERT([real],(0)))" && dataTypeName == "real")
+                || (defaultValue == "((0.0000000000000000e+000))" && dataTypeName == "float")
+                || (defaultValue == "('1900-01-01T00:00:00.000')" && (dataTypeName == "datetime" || dataTypeName == "smalldatetime"))
+                || (defaultValue == "('00000000-0000-0000-0000-000000000000')" && dataTypeName == "uniqueidentifier"))
+            {
+                return null;
+            }
+
+            return defaultValue;
         }
 
         private static ReferentialAction? ConvertToReferentialAction(string onDeleteAction)

@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Scaffolding;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using System;
 using System.Collections.Generic;
@@ -23,7 +21,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
     public class SqlCeDatabaseModelFactory : IDatabaseModelFactory
     {
         private SqlCeConnection _connection;
-        private TableSelectionSet _tableSelectionSet;
+        private List<string> _tableSelection;
         private DatabaseModel _databaseModel;
         private Dictionary<string, DatabaseTable> _tables;
         private Dictionary<string, DatabaseColumn> _tableColumns;
@@ -40,15 +38,6 @@ namespace EFCore.SqlCe.Scaffolding.Internal
         }
 
         public virtual IDiagnosticsLogger<DbLoggerCategory.Scaffolding> Logger { get; }
-
-        private void ResetState()
-        {
-            _connection = null;
-            _tableSelectionSet = null;
-            _databaseModel = new DatabaseModel();
-            _tables = new Dictionary<string, DatabaseTable>();
-            _tableColumns = new Dictionary<string, DatabaseColumn>(StringComparer.OrdinalIgnoreCase);
-        }
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -74,8 +63,6 @@ namespace EFCore.SqlCe.Scaffolding.Internal
             Check.NotNull(connection, nameof(connection));
             Check.NotNull(tables, nameof(tables));
 
-            ResetState();
-
             _connection = connection as SqlCeConnection;
 
             var connectionStartedOpen = (_connection != null) && (_connection.State == ConnectionState.Open);
@@ -85,7 +72,8 @@ namespace EFCore.SqlCe.Scaffolding.Internal
             }
             try
             {
-                _tableSelectionSet = new TableSelectionSet(tables, schemas);
+
+                _tableSelection = tables.ToList();
 
                 string databaseName = null;
                 try
@@ -108,8 +96,6 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                 GetIndexes();
                 GetForeignKeys();
 
-                CheckSelectionsMatched(_tableSelectionSet);
-
                 return _databaseModel;
             }
             finally
@@ -118,14 +104,6 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                 {
                     _connection?.Close();
                 }
-            }
-        }
-
-        private void CheckSelectionsMatched(TableSelectionSet tableSelectionSet)
-        {
-            foreach (var tableSelection in tableSelectionSet.Tables.Where(t => !t.IsMatched))
-            {
-                Logger.MissingTableWarning(tableSelection.Text);
             }
         }
 
@@ -144,7 +122,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                         Name = reader.GetValueOrDefault<string>("TABLE_NAME")
                     };
 
-                    if (_tableSelectionSet.Allows(table.Name))
+                    if (_tableSelection.Contains(table.Name))
                     {
                         _databaseModel.Tables.Add(table);
                         _tables[TableKey(table)] = table;
@@ -200,7 +178,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
 
                     Logger.ColumnFound(tableName, columnName, dataTypeName, nullable, defaultValue);
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         //Logger.ColumnSkipped(DisplayName(schemaName, tableName), columnName);
                         continue;
@@ -237,7 +215,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
 
                     if ((storeType) == "rowversion")
                     {
-                        column[ScaffoldingAnnotationNames.ConcurrencyToken] = true;
+                        column["ConcurrencyToken"] = true;
                     }
 
                     table.Columns.Add(column);
@@ -309,7 +287,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     //Logger.IndexColumnFound(
                     //    tableName, indexName, true, columnName, indexOrdinal);
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         //Logger.IndexColumnSkipped(columnName, indexName, DisplayName(schemaName, tableName));
                         continue;
@@ -384,7 +362,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     //Logger.IndexColumnFound(
                     //    tableName, indexName, true, columnName, indexOrdinal);
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         //Logger.IndexColumnSkipped(columnName, indexName, DisplayName(schemaName, tableName));
                         continue;
@@ -447,7 +425,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     var tableName = reader.GetValueOrDefault<string>("table_name");
                     var columnName = reader.GetValueOrDefault<string>("column_name");
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         continue;
                     }
@@ -518,7 +496,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     var fromColumnName = reader.GetValueOrDefault<string>("FK_COLUMN_NAME");
                     var toColumnName = reader.GetValueOrDefault<string>("UQ_COLUMN_NAME");
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         continue;
                     }

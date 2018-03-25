@@ -215,6 +215,9 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringIndexOfTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeStringIndexOfTranslator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs</Link>
     </Compile>

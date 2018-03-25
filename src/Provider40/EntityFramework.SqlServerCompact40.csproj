@@ -127,6 +127,7 @@
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeObjectToStringTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStartsWithOptimizedTranslator.cs" />
+    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringIndexOfTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringIsNullOrWhiteSpaceTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimStartTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeStringTrimTranslator.cs" />

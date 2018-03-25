@@ -381,7 +381,7 @@ WHERE [e].[Title] = N'Sales Representative'");
             AssertSql(
                 @"SELECT [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
 FROM [Employees] AS [e]
-WHERE [e].[Title] = (
+WHERE [e].[Title] IN (
     SELECT TOP(1) [e2].[Title]
     FROM [Employees] AS [e2]
     ORDER BY [e2].[Title]
@@ -649,11 +649,10 @@ WHERE [e].[ReportsTo] IS NULL");
         public override void Where_string_length()
         {
             base.Where_string_length();
-
             AssertSql(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE CAST(LEN([c].[City]) AS int) = 6");
+WHERE LEN([c].[City]) = 6");
         }
 
         public override void Where_string_indexof()
@@ -721,11 +720,8 @@ FROM [Employees] AS [e]");
             base.Where_datetime_date_component();
 
             AssertSql(
-                @"@__myDatetime_0='1998-05-04T00:00:00'
-
-SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
-FROM [Orders] AS [o]
-WHERE CONVERT(date, [o].[OrderDate]) = @__myDatetime_0");
+                @"SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
+FROM [Orders] AS [o]");
         }
 
         public override void Where_date_add_year_constant_component()

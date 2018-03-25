@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.TestUtilities;
+﻿using Microsoft.EntityFrameworkCore.TestModels.Northwind;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
@@ -8,6 +9,11 @@ namespace Microsoft.EntityFrameworkCore.Query
             : base(fixture)
         {
         }
+
+        protected override NorthwindContext CreateNoTrackingContext()
+            => new NorthwindRelationalContext(
+                new DbContextOptionsBuilder(Fixture.CreateOptions())
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).Options);
     }
 }
 

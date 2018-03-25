@@ -18,6 +18,12 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
+        [Fact(Skip = "SQLCE limitation")]
+        public override void SelectMany_primitive_select_subquery()
+        {
+            base.SelectMany_primitive_select_subquery();
+        }
+
         public override void Shaper_command_caching_when_parameter_names_different()
         {
             base.Shaper_command_caching_when_parameter_names_different();
@@ -549,6 +555,7 @@ FROM [Customers] AS [c2]
 WHERE @_outer_CustomerID1 = [c2].[CustomerID]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_Where_Subquery_Deep_First()
         {
             base.Select_Where_Subquery_Deep_First();
@@ -685,10 +692,10 @@ ORDER BY [c].[CustomerID]");
             AssertSql(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')
+WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5)
+                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
 
 SELECT CASE
     WHEN EXISTS (
@@ -698,7 +705,7 @@ SELECT CASE
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5)
+                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
 
 SELECT CASE
     WHEN EXISTS (
@@ -708,7 +715,7 @@ SELECT CASE
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END",
                 //
-                @"@_outer_CustomerID='ANTON' (Size = 5)
+                @"@_outer_CustomerID='ANTON' (Size = 5) (DbType = StringFixedLength)
 
 SELECT CASE
     WHEN EXISTS (
@@ -718,7 +725,7 @@ SELECT CASE
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5)
+                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
 
 SELECT CASE
     WHEN EXISTS (
@@ -765,6 +772,8 @@ ORDER BY CASE
 END, [p].[ProductID]");
         }
 
+
+        [Fact(Skip = "SQLCE limitation")]
         public override void OrderBy_any()
         {
             base.OrderBy_any();
@@ -1161,7 +1170,7 @@ END");
     WHEN EXISTS (
         SELECT 1
         FROM [Customers] AS [c]
-        WHERE [c].[ContactName] LIKE N'A' + N'%' AND (LEFT([c].[ContactName], LEN(N'A')) = N'A'))
+        WHERE [c].[ContactName] LIKE N'A' + N'%' AND (SUBSTRING([c].[ContactName], 1, LEN(N'A')) = N'A'))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END");
         }
@@ -1176,7 +1185,7 @@ FROM [Customers] AS [c]
 WHERE NOT EXISTS (
     SELECT 1
     FROM [Orders] AS [o]
-    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (LEFT([o].[CustomerID], LEN(N'A')) = N'A'))");
+    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([o].[CustomerID], 1, LEN(N'A')) = N'A'))");
         }
 
         public override void Any_nested_negated2()
@@ -1189,7 +1198,7 @@ FROM [Customers] AS [c]
 WHERE (([c].[City] <> N'London') OR [c].[City] IS NULL) AND NOT EXISTS (
     SELECT 1
     FROM [Orders] AS [o]
-    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (LEFT([o].[CustomerID], LEN(N'A')) = N'A'))");
+    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([o].[CustomerID], 1, LEN(N'A')) = N'A'))");
         }
 
         public override void Any_nested_negated3()
@@ -1202,7 +1211,7 @@ FROM [Customers] AS [c]
 WHERE NOT EXISTS (
     SELECT 1
     FROM [Orders] AS [o]
-    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (LEFT([o].[CustomerID], LEN(N'A')) = N'A')) AND (([c].[City] <> N'London') OR [c].[City] IS NULL)");
+    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([o].[CustomerID], 1, LEN(N'A')) = N'A')) AND (([c].[City] <> N'London') OR [c].[City] IS NULL)");
         }
 
         public override void Any_nested()
@@ -1241,7 +1250,7 @@ FROM [Customers] AS [c]
 WHERE EXISTS (
     SELECT 1
     FROM [Orders] AS [o]
-    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (LEFT([o].[CustomerID], LEN(N'A')) = N'A')) AND (([c].[City] <> N'London') OR [c].[City] IS NULL)");
+    WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([o].[CustomerID], 1, LEN(N'A')) = N'A')) AND (([c].[City] <> N'London') OR [c].[City] IS NULL)");
         }
 
         public override void Any_with_multiple_conditions_still_uses_exists()
@@ -1280,7 +1289,7 @@ END");
     WHEN NOT EXISTS (
         SELECT 1
         FROM [Customers] AS [c]
-        WHERE (NOT ([c].[ContactName] LIKE [c].[ContactName] + N'%') OR (LEFT([c].[ContactName], LEN([c].[ContactName])) <> [c].[ContactName])) AND (([c].[ContactName] <> N'') OR [c].[ContactName] IS NULL))
+        WHERE (NOT ([c].[ContactName] LIKE [c].[ContactName] + N'%') OR (SUBSTRING([c].[ContactName], 1, LEN([c].[ContactName])) <> [c].[ContactName])) AND (([c].[ContactName] <> N'') OR [c].[ContactName] IS NULL))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END");
         }
@@ -1294,7 +1303,7 @@ END");
     WHEN NOT EXISTS (
         SELECT 1
         FROM [Customers] AS [c1]
-        WHERE NOT ((
+        WHERE NOT (1 IN (
             SELECT CASE
                 WHEN EXISTS (
                     SELECT 1
@@ -1305,7 +1314,7 @@ END");
                         WHERE [c1].[CustomerID] = [c3].[CustomerID]))
                 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
             END
-        ) = 1))
+        )))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END");
         }
@@ -1319,7 +1328,7 @@ END");
     WHEN NOT EXISTS (
         SELECT 1
         FROM [Customers] AS [c1]
-        WHERE NOT ((
+        WHERE NOT (1 IN (
             SELECT CASE
                 WHEN EXISTS (
                     SELECT 1
@@ -1330,7 +1339,7 @@ END");
                         WHERE [c1].[CustomerID] = [c3].[CustomerID]))
                 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
             END
-        ) = 1))
+        )))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END");
         }
@@ -1851,7 +1860,7 @@ SELECT CASE
             ORDER BY [c].[CustomerID]
             OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
         ) AS [t]
-        WHERE NOT ([t].[CustomerID] LIKE N'B' + N'%') OR (LEFT([t].[CustomerID], LEN(N'B')) <> N'B'))
+        WHERE NOT ([t].[CustomerID] LIKE N'B' + N'%') OR (SUBSTRING([t].[CustomerID], 1, LEN(N'B')) <> N'B'))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END");
         }
@@ -1872,7 +1881,7 @@ SELECT CASE
             FROM [Customers] AS [c]
             ORDER BY [c].[CustomerID]
         ) AS [t]
-        WHERE NOT ([t].[CustomerID] LIKE N'A' + N'%') OR (LEFT([t].[CustomerID], LEN(N'A')) <> N'A'))
+        WHERE NOT ([t].[CustomerID] LIKE N'A' + N'%') OR (SUBSTRING([t].[CustomerID], 1, LEN(N'A')) <> N'A'))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END");
         }
@@ -1895,7 +1904,7 @@ SELECT CASE
             ORDER BY [c].[CustomerID]
             OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
         ) AS [t]
-        WHERE [t].[CustomerID] LIKE N'C' + N'%' AND (LEFT([t].[CustomerID], LEN(N'C')) = N'C'))
+        WHERE [t].[CustomerID] LIKE N'C' + N'%' AND (SUBSTRING([t].[CustomerID], 1, LEN(N'C')) = N'C'))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END");
         }
@@ -2079,6 +2088,7 @@ ORDER BY [c].[Country], [c].[CustomerID]");
 END");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void OrderBy_correlated_subquery1()
         {
             base.OrderBy_correlated_subquery1();
@@ -2098,6 +2108,7 @@ ORDER BY (
 )");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void OrderBy_correlated_subquery2()
         {
             base.OrderBy_correlated_subquery2();
@@ -2195,6 +2206,7 @@ FROM [Orders] AS [o]
 WHERE [o].[OrderID] < 10300");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_nested_collection_count_using_DTO()
         {
             base.Select_nested_collection_count_using_DTO();
@@ -2236,7 +2248,7 @@ CROSS JOIN (
     FROM [Orders] AS [o]
     WHERE [o].[OrderID] < 10300
 ) AS [t]
-WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')");
+WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')");
         }
 
         public override void Select_correlated_subquery_projection()
@@ -3257,6 +3269,7 @@ FROM (
 ) AS [t]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         [SqlServerCondition(SqlServerCondition.SupportsOffset)]
         public override void OrderBy_coalesce_take_distinct()
         {
@@ -3273,6 +3286,7 @@ FROM (
 ) AS [t]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         [SqlServerCondition(SqlServerCondition.SupportsOffset)]
         public override void OrderBy_coalesce_skip_take_distinct()
         {
@@ -3291,6 +3305,7 @@ FROM (
 ) AS [t]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         [SqlServerCondition(SqlServerCondition.SupportsOffset)]
         public override void OrderBy_coalesce_skip_take_distinct_take()
         {
@@ -3546,6 +3561,7 @@ FROM [Customers] AS [c]
 ORDER BY [A]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Anonymous_subquery_orderby()
         {
             base.Anonymous_subquery_orderby();
@@ -3659,6 +3675,7 @@ FROM [Customers] AS [c]
 ORDER BY [Property]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void DTO_subquery_orderby()
         {
             base.DTO_subquery_orderby();
@@ -3723,6 +3740,7 @@ FROM [Orders] AS [o]
 WHERE [o].[OrderID] = 10300");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Subquery_is_null_translated_correctly()
         {
             base.Subquery_is_null_translated_correctly();
@@ -3738,6 +3756,7 @@ WHERE (
 ) IS NULL");
         }
 
+        [Fact(Skip="SQLCE limitation")]
         public override void Subquery_is_not_null_translated_correctly()
         {
             base.Subquery_is_not_null_translated_correctly();
@@ -4071,6 +4090,7 @@ FROM (
 ) AS [t]");
         }
 
+        [Fact(Skip = "Investigate")]
         public override void Comparing_to_fixed_string_parameter()
         {
             base.Comparing_to_fixed_string_parameter();
@@ -4251,6 +4271,7 @@ WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(
 ORDER BY [c].[CustomerID] DESC");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Complex_nested_query_doesnt_try_binding_to_grandparent_when_parent_returns_complex_result()
         {
             base.Complex_nested_query_doesnt_try_binding_to_grandparent_when_parent_returns_complex_result();
@@ -4273,6 +4294,7 @@ FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Complex_nested_query_properly_binds_to_grandparent_when_parent_returns_scalar_result()
         {
             base.Complex_nested_query_properly_binds_to_grandparent_when_parent_returns_scalar_result();
@@ -4349,6 +4371,7 @@ FROM (
 ) AS [t0]");
         }
 
+        [Fact(Skip = "Investigate")]
         public override void OrderBy_empty_list_contains()
         {
             base.OrderBy_empty_list_contains();
@@ -4359,6 +4382,7 @@ FROM [Customers] AS [c]
 ORDER BY GETDATE()");
         }
 
+        [Fact(Skip = "Investigate")]
         public override void OrderBy_empty_list_does_not_contains()
         {
             base.OrderBy_empty_list_does_not_contains();

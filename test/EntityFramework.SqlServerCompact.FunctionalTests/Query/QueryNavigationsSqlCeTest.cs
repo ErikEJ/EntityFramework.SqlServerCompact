@@ -476,7 +476,7 @@ WHERE (([o].[OrderID] < 10300) AND ([o0].[OrderID] < 10400)) AND (([o.Customer].
                 @"SELECT [o1].[OrderID], [o1].[CustomerID], [o1].[EmployeeID], [o1].[OrderDate], [o2].[OrderID], [o2].[CustomerID], [o2].[EmployeeID], [o2].[OrderDate]
 FROM [Orders] AS [o1]
 CROSS JOIN [Orders] AS [o2]
-WHERE (([o1].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [o1].[CustomerID]) = 1)) AND ([o2].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [o2].[CustomerID]) = 1))) AND (([o1].[CustomerID] = [o2].[CustomerID]) OR ([o1].[CustomerID] IS NULL AND [o2].[CustomerID] IS NULL))");
+WHERE (([o1].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([o1].[CustomerID], 1, LEN(N'A')) = N'A')) AND ([o2].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([o2].[CustomerID], 1, LEN(N'A')) = N'A'))) AND (([o1].[CustomerID] = [o2].[CustomerID]) OR ([o1].[CustomerID] IS NULL AND [o2].[CustomerID] IS NULL))");
         }
 
         public override void Select_Where_Navigation_Null()
@@ -515,17 +515,17 @@ WHERE [e].[ReportsTo] IS NULL");
             base.Select_collection_navigation_simple();
 
             AssertSql(
-                            @"SELECT [c].[CustomerID]
+                @"SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [c].[CustomerID]) = 1)
+WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')
 ORDER BY [c].[CustomerID]",
-                            //
-                            @"SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate], [t].[CustomerID]
+                //
+                @"SELECT [c.Orders].[OrderID], [c.Orders].[CustomerID], [c.Orders].[EmployeeID], [c.Orders].[OrderDate], [t].[CustomerID]
 FROM [Orders] AS [c.Orders]
 INNER JOIN (
     SELECT [c0].[CustomerID]
     FROM [Customers] AS [c0]
-    WHERE [c0].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [c0].[CustomerID]) = 1)
+    WHERE [c0].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c0].[CustomerID], 1, LEN(N'A')) = N'A')
 ) AS [t] ON [c.Orders].[CustomerID] = [t].[CustomerID]
 ORDER BY [t].[CustomerID]");
         }
@@ -857,7 +857,7 @@ WHERE @_outer_CustomerID = [o].[CustomerID]");
             AssertSql(
                 @"SELECT [e].[CustomerID]
 FROM [Customers] AS [e]
-WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)
+WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([e].[CustomerID], 1, LEN(N'A')) = N'A')
 ORDER BY [e].[CustomerID]",
                 //
                 @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
@@ -912,7 +912,7 @@ WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (LEFT([e].[CustomerID], LEN(N'A')) =
             AssertSql(
                 @"SELECT 1
 FROM [Customers] AS [e]
-WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[CustomerID]) = 1)",
+WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([e].[CustomerID], 1, LEN(N'A')) = N'A')",
                 //
                 @"SELECT TOP(2) [o.Customer0].[City]
 FROM [Orders] AS [o0]
@@ -1169,7 +1169,7 @@ FROM [Customers] AS [c]");
             AssertSql(
                 @"SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [c].[CustomerID]) = 1)
+WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')
 ORDER BY [c].[CustomerID]",
                 //
                 @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)

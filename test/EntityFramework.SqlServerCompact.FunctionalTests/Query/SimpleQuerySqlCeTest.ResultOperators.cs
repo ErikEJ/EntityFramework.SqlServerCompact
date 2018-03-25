@@ -83,6 +83,7 @@ FROM [Products] AS [p]
 WHERE [p].[ProductID] < 40");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Sum_over_subquery_is_client_eval()
         {
             base.Sum_over_subquery_is_client_eval();
@@ -106,6 +107,7 @@ FROM [Order Details] AS [od]
 WHERE [od].[ProductID] = 1");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Sum_on_float_column_in_subquery()
         {
             base.Sum_on_float_column_in_subquery();
@@ -184,6 +186,7 @@ FROM [Products] AS [p]
 WHERE [p].[ProductID] < 40");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Average_over_subquery_is_client_eval()
         {
             base.Average_over_subquery_is_client_eval();
@@ -227,6 +230,7 @@ WHERE @_outer_OrderID = [od0].[OrderID]");
                 Fixture.TestSqlLoggerFactory.Log);
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Average_on_float_column_in_subquery_with_cast()
         {
             base.Average_on_float_column_in_subquery_with_cast();
@@ -269,6 +273,7 @@ FROM [Products] AS [p]
 WHERE [p].[ProductID] < 40");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Min_over_subquery_is_client_eval()
         {
             base.Min_over_subquery_is_client_eval();
@@ -310,6 +315,7 @@ FROM [Products] AS [p]
 WHERE [p].[ProductID] < 40");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Max_over_subquery_is_client_eval()
         {
             base.Max_over_subquery_is_client_eval();

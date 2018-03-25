@@ -894,7 +894,7 @@ FROM [Entities1] AS [e]
 WHERE CASE
     WHEN @__prm_0 = 0
     THEN CAST(1 AS BIT) ELSE CASE
-        WHEN [e].[StringA] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[StringA]) = 1)
+        WHEN [e].[StringA] LIKE N'A' + N'%' AND (SUBSTRING([e].[StringA], 1, LEN(N'A')) = N'A')
         THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
     END
 END = 1");
@@ -905,7 +905,7 @@ END = 1");
             base.Where_nested_conditional_search_condition_in_result();
 
             AssertSql(
-                @"@__prm1_0='True'
+    @"@__prm1_0='True'
 @__prm2_1='False'
 
 SELECT [e].[Id]
@@ -917,7 +917,7 @@ WHERE CASE
         THEN CASE
             WHEN [e].[BoolA] = 1
             THEN CASE
-                WHEN [e].[StringA] LIKE N'A' + N'%' AND (CHARINDEX(N'A', [e].[StringA]) = 1)
+                WHEN [e].[StringA] LIKE N'A' + N'%' AND (SUBSTRING([e].[StringA], 1, LEN(N'A')) = N'A')
                 THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
             END ELSE CAST(0 AS BIT)
         END ELSE CAST(1 AS BIT)

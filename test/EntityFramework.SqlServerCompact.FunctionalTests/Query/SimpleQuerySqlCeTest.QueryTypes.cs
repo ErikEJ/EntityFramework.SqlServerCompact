@@ -1,4 +1,6 @@
-﻿namespace Microsoft.EntityFrameworkCore.Query
+﻿using Xunit;
+
+namespace Microsoft.EntityFrameworkCore.Query
 {
     public partial class SimpleQuerySqlCeTest
     {
@@ -21,6 +23,7 @@ FROM [Customers] AS [c]
 WHERE [c].[City] = N'London'");
         }
 
+        [Fact(Skip = "SQLCE limitation - views not supported")]
         public override void Query_backed_by_database_view()
         {
             base.Query_backed_by_database_view();
@@ -29,7 +32,8 @@ WHERE [c].[City] = N'London'");
                 @"SELECT [a].[CategoryName], [a].[ProductID], [a].[ProductName]
 FROM [Alphabetical list of products] AS [a]");
         }
-        
+
+        [Fact(Skip = "SQLCE limitation")]
         public override void QueryType_with_nav_defining_query()
         {
             base.QueryType_with_nav_defining_query();

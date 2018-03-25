@@ -1370,7 +1370,7 @@ ORDER BY [t1].[c] DESC, [t1].[CustomerID], [t1].[OrderID]");
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 ORDER BY CASE
-    WHEN [c].[CustomerID] LIKE N'S' + N'%' AND (CHARINDEX(N'S', [c].[CustomerID]) = 1)
+    WHEN [c].[CustomerID] LIKE N'S' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'S')) = N'S')
     THEN 1 ELSE 2
 END, [c].[CustomerID]",
                 //
@@ -1378,7 +1378,7 @@ END, [c].[CustomerID]",
 FROM [Orders] AS [c.Orders]
 INNER JOIN (
     SELECT [c0].[CustomerID], CASE
-        WHEN [c0].[CustomerID] LIKE N'S' + N'%' AND (CHARINDEX(N'S', [c0].[CustomerID]) = 1)
+        WHEN [c0].[CustomerID] LIKE N'S' + N'%' AND (SUBSTRING([c0].[CustomerID], 1, LEN(N'S')) = N'S')
         THEN 1 ELSE 2
     END AS [c]
     FROM [Customers] AS [c0]

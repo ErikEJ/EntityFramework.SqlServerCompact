@@ -302,6 +302,7 @@ FROM [Orders] AS [o]
 WHERE ([o].[OrderID] < 10500) AND (@_outer_CustomerID = [o].[CustomerID])");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_nested_collection_multi_level2()
         {
             base.Select_nested_collection_multi_level2();
@@ -316,6 +317,7 @@ FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_nested_collection_multi_level3()
         {
             base.Select_nested_collection_multi_level3();
@@ -330,6 +332,7 @@ FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_nested_collection_multi_level4()
         {
             base.Select_nested_collection_multi_level4();
@@ -348,6 +351,7 @@ FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_nested_collection_multi_level5()
         {
             base.Select_nested_collection_multi_level5();
@@ -370,6 +374,7 @@ FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_nested_collection_multi_level6()
         {
             base.Select_nested_collection_multi_level6();

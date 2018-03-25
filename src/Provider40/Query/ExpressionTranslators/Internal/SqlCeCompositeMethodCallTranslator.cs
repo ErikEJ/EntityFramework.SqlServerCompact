@@ -22,7 +22,8 @@ namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
                 new SqlCeStringToUpperTranslator(),
                 new SqlCeStringTrimEndTranslator(),
                 new SqlCeStringTrimStartTranslator(),
-                new SqlCeStringTrimTranslator()
+                new SqlCeStringTrimTranslator(),
+                new SqlCeStringIndexOfTranslator()
         };
 
         public SqlCeCompositeMethodCallTranslator(

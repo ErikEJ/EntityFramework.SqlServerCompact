@@ -22,18 +22,31 @@ namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
             if (Equals(methodCallExpression.Method, _methodInfo))
             {
                 var patternExpression = methodCallExpression.Arguments[0];
-                var patternConstantExpression = patternExpression as ConstantExpression;
 
                 var startsWithExpression = Expression.AndAlso(
                     new LikeExpression(
                         // ReSharper disable once AssignNullToNotNullAttribute
                         methodCallExpression.Object,
-                        Expression.Add(methodCallExpression.Arguments[0], Expression.Constant("%", typeof(string)), _concat)),
-                    Expression.Equal(
-                        new SqlFunctionExpression("CHARINDEX", typeof(int), new[] { patternExpression, methodCallExpression.Object }),
-                        Expression.Constant(1)));
+                        Expression.Add(
+                            methodCallExpression.Arguments[0],
+                            Expression.Constant("%", typeof(string)),
+                            _concat)),
+                    //SUBSTRING(a, 1, LEN(b)) = b
+                    //LEFT(a, LEN(b)) = b
+                    new NullCompensatedExpression(
+                        Expression.Equal(
+                            new SqlFunctionExpression(
+                                "SUBSTRING",
+                                typeof(string),
+                                new[]
+                                {
+                                    methodCallExpression.Object,
+                                    Expression.Constant(1),
+                                    new SqlFunctionExpression("LEN", typeof(int), new[] { patternExpression })
+                                }),
+                                patternExpression)));
 
-                return patternConstantExpression != null
+                return patternExpression is ConstantExpression patternConstantExpression
                     ? (string)patternConstantExpression.Value == string.Empty
                         ? (Expression)Expression.Constant(true)
                         : startsWithExpression

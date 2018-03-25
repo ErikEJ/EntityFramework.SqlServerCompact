@@ -456,7 +456,7 @@ WHERE ([o].[CustomerID] <> N'ALFKI') OR [o].[CustomerID] IS NULL");
 
 SELECT TOP(@__p_1) [o].[EmployeeID], [o].[City], [o].[Country], [o].[FirstName], [o].[ReportsTo], [o].[Title]
 FROM [Employees] AS [o]
-ORDER BY (SELECT 1)");
+ORDER BY GETDATE()");
         }
 
         public override void Distinct()
@@ -567,11 +567,11 @@ WHERE [c].[CustomerID] = N'ALFKI'");
             AssertSql(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE ([c].[CustomerID] = N'ALFKI') AND ((
+WHERE ([c].[CustomerID] = N'ALFKI') AND (N'ALFKI' IN (
     SELECT TOP(1) [o].[CustomerID]
     FROM [Orders] AS [o]
     WHERE ([o].[CustomerID] = N'ALFKI') AND ([c].[CustomerID] = [o].[CustomerID])
-) = N'ALFKI')");
+))");
         }
 
         public override void First_inside_subquery_gets_client_evaluated()
@@ -583,7 +583,7 @@ WHERE ([c].[CustomerID] = N'ALFKI') AND ((
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] = N'ALFKI'",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5)
+                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
 
 SELECT TOP(1) [o0].[CustomerID]
 FROM [Orders] AS [o0]
@@ -774,13 +774,13 @@ WHERE [c].[CustomerID] IN (N'ABCDE', N'ALFKI')");
             base.Contains_with_local_list_inline_closure_mix();
 
             AssertSql(
-                @"@__id_0='ALFKI' (Size = 5)
+                @"@__id_0='ALFKI' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN (N'ABCDE', @__id_0)",
                 //
-                @"@__id_0='ANATR' (Size = 5)
+                @"@__id_0='ANATR' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
@@ -935,7 +935,7 @@ ORDER BY [o].[OrderID]");
             AssertSql(
                 @"SELECT AVG(CAST([o].[OrderID] AS float))
 FROM [Orders] AS [o]
-WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (LEFT([o].[CustomerID], LEN(N'A')) = N'A')");
+WHERE [o].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([o].[CustomerID], 1, LEN(N'A')) = N'A')");
         }
     }
 }

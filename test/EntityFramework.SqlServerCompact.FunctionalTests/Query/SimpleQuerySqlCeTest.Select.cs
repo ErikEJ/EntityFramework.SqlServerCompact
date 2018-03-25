@@ -1,4 +1,6 @@
-﻿namespace Microsoft.EntityFrameworkCore.Query
+﻿using Xunit;
+
+namespace Microsoft.EntityFrameworkCore.Query
 {
     public partial class SimpleQuerySqlCeTest
     {
@@ -146,7 +148,7 @@ FROM [Customers] AS [c]");
             base.Select_anonymous_constant_in_expression();
 
             AssertSql(
-                @"SELECT [c].[CustomerID], CAST(LEN([c].[CustomerID]) AS int) + 5 AS [Expression]
+                @"SELECT [c].[CustomerID], LEN([c].[CustomerID]) + 5 AS [Expression]
 FROM [Customers] AS [c]");
         }
 
@@ -223,42 +225,42 @@ FROM [Customers] AS [c]
 WHERE [c].[City] = N'London'
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5)
+                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='BSBEV' (Size = 5)
+                @"@_outer_CustomerID='BSBEV' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='CONSH' (Size = 5)
+                @"@_outer_CustomerID='CONSH' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='EASTC' (Size = 5)
+                @"@_outer_CustomerID='EASTC' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='NORTS' (Size = 5)
+                @"@_outer_CustomerID='NORTS' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='SEVES' (Size = 5)
+                @"@_outer_CustomerID='SEVES' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
@@ -273,27 +275,27 @@ ORDER BY [o].[OrderID]");
             AssertSql(
                 @"SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')",
+WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5)
+                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]
 WHERE ([o].[OrderID] < 10500) AND (@_outer_CustomerID = [o].[CustomerID])",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5)
+                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]
 WHERE ([o].[OrderID] < 10500) AND (@_outer_CustomerID = [o].[CustomerID])",
                 //
-                @"@_outer_CustomerID='ANTON' (Size = 5)
+                @"@_outer_CustomerID='ANTON' (Size = 5) (DbType = StringFixedLength)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]
 WHERE ([o].[OrderID] < 10500) AND (@_outer_CustomerID = [o].[CustomerID])",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5)
+                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]
@@ -386,6 +388,7 @@ FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_nested_collection_count_using_anonymous_type()
         {
             base.Select_nested_collection_count_using_anonymous_type();
@@ -407,7 +410,7 @@ WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) =
             AssertSql(
                 @"SELECT 1
 FROM [Customers] AS [c]
-WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')");
+WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')");
         }
 
         public override void Select_non_matching_value_types_int_to_long_introduces_explicit_cast()
@@ -503,7 +506,7 @@ ORDER BY [o].[OrderID]");
             base.Select_non_matching_value_types_from_length_introduces_explicit_cast();
 
             AssertSql(
-                @"SELECT CAST(CAST(LEN([o].[CustomerID]) AS int) AS bigint)
+                @"SELECT CAST(LEN([o].[CustomerID]) AS bigint)
 FROM [Orders] AS [o]
 WHERE [o].[CustomerID] = N'ALFKI'
 ORDER BY [o].[OrderID]");

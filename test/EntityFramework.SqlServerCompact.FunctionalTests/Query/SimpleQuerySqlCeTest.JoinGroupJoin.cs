@@ -58,7 +58,7 @@ FROM (
 FROM (
     SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
     FROM [Employees] AS [e1]
-    ORDER BY (SELECT 1)
+    ORDER BY GETDATE()
     OFFSET 6 ROWS FETCH NEXT 2 ROWS ONLY
 ) AS [t1]",
                 //
@@ -66,7 +66,7 @@ FROM (
 FROM (
     SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
     FROM [Employees] AS [e1]
-    ORDER BY (SELECT 1)
+    ORDER BY GETDATE()
     OFFSET 6 ROWS FETCH NEXT 2 ROWS ONLY
 ) AS [t1]");
         }
@@ -534,7 +534,7 @@ ORDER BY [c].[CustomerID] DESC");
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region], [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Customers] AS [c]
 LEFT JOIN [Orders] AS [o] ON [c].[CustomerID] = [o].[CustomerID]
-WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (LEFT([c].[CustomerID], LEN(N'A')) = N'A')
+WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')
 ORDER BY [c].[CustomerID] DESC");
         }
     }

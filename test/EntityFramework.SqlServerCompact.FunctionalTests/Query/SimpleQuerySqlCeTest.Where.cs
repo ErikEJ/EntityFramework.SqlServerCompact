@@ -335,7 +335,7 @@ WHERE [e].[ReportsTo] = @__reportsTo_0");
             base.Where_subquery_closure_via_query_cache();
 
             AssertSql(
-                @"@__customerID_0='ALFKI' (Size = 5)
+                @"@__customerID_0='ALFKI' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
@@ -344,7 +344,7 @@ WHERE EXISTS (
     FROM [Orders] AS [o]
     WHERE ([o].[CustomerID] = @__customerID_0) AND ([o].[CustomerID] = [c].[CustomerID]))",
                 //
-                @"@__customerID_0='ANATR' (Size = 5)
+                @"@__customerID_0='ANATR' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
@@ -424,31 +424,31 @@ FROM (
 ) AS [t]
 ORDER BY [t].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5)
+                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c2].[CustomerID], [c2].[Address], [c2].[City], [c2].[CompanyName], [c2].[ContactName], [c2].[ContactTitle], [c2].[Country], [c2].[Fax], [c2].[Phone], [c2].[PostalCode], [c2].[Region]
 FROM [Customers] AS [c2]
 WHERE @_outer_CustomerID = [c2].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5)
+                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c2].[CustomerID], [c2].[Address], [c2].[City], [c2].[CompanyName], [c2].[ContactName], [c2].[ContactTitle], [c2].[Country], [c2].[Fax], [c2].[Phone], [c2].[PostalCode], [c2].[Region]
 FROM [Customers] AS [c2]
 WHERE @_outer_CustomerID = [c2].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ANTON' (Size = 5)
+                @"@_outer_CustomerID='ANTON' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c2].[CustomerID], [c2].[Address], [c2].[City], [c2].[CompanyName], [c2].[ContactName], [c2].[ContactTitle], [c2].[Country], [c2].[Fax], [c2].[Phone], [c2].[PostalCode], [c2].[Region]
 FROM [Customers] AS [c2]
 WHERE @_outer_CustomerID = [c2].[CustomerID]",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5)
+                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c2].[CustomerID], [c2].[Address], [c2].[City], [c2].[CompanyName], [c2].[ContactName], [c2].[ContactTitle], [c2].[Country], [c2].[Fax], [c2].[Phone], [c2].[PostalCode], [c2].[Region]
 FROM [Customers] AS [c2]
 WHERE @_outer_CustomerID = [c2].[CustomerID]",
                 //
-                @"@_outer_CustomerID='BERGS' (Size = 5)
+                @"@_outer_CustomerID='BERGS' (Size = 5) (DbType = StringFixedLength)
 
 SELECT [c2].[CustomerID], [c2].[Address], [c2].[City], [c2].[CompanyName], [c2].[ContactName], [c2].[ContactTitle], [c2].[Country], [c2].[Fax], [c2].[Phone], [c2].[PostalCode], [c2].[Region]
 FROM [Customers] AS [c2]
@@ -691,7 +691,7 @@ WHERE SUBSTRING([c].[City], 2, 2) = N'ea'");
             base.Where_datetime_now();
 
             AssertSql(
-                @"@__myDatetime_0='2015-04-10T00:00:00'
+                @"@__myDatetime_0='2015-04-10T00:00:00' (DbType = DateTime)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
@@ -703,11 +703,8 @@ WHERE GETDATE() <> @__myDatetime_0");
             base.Where_datetime_utcnow();
 
             AssertSql(
-                @"@__myDatetime_0='2015-04-10T00:00:00'
-
-SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
-FROM [Customers] AS [c]
-WHERE GETUTCDATE() <> @__myDatetime_0");
+                @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]");
         }
 
         public override void Where_datetime_today()
@@ -716,8 +713,7 @@ WHERE GETUTCDATE() <> @__myDatetime_0");
 
             AssertSql(
              @"SELECT [e].[EmployeeID], [e].[City], [e].[Country], [e].[FirstName], [e].[ReportsTo], [e].[Title]
-FROM [Employees] AS [e]
-WHERE CONVERT(date, GETDATE()) = CONVERT(date, GETDATE())");
+FROM [Employees] AS [e]");
         }
 
         public override void Where_datetime_date_component()
@@ -1205,7 +1201,7 @@ WHERE [p].[UnitsInStock] > 10");
             AssertSql(
                 @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
-WHERE RIGHT([c].[CustomerID], LEN(N'KI')) = N'KI'");
+WHERE SUBSTRING([c].[CustomerID], (LEN([c].[CustomerID]) + 1) - LEN(N'KI'), LEN(N'KI')) = N'KI'");
         }
 
         public override void Where_true()
@@ -1256,7 +1252,7 @@ WHERE [c].[CustomerID] = N'ALFKI'");
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE ([c].[CustomerID] + CAST(@__i_0 AS nvarchar(max))) = [c].[CompanyName]");
+WHERE ([c].[CustomerID] + CAST(@__i_0 AS nvarchar(4000))) = [c].[CompanyName]");
         }
 
         public override void Where_concat_string_int_comparison2()
@@ -1268,7 +1264,7 @@ WHERE ([c].[CustomerID] + CAST(@__i_0 AS nvarchar(max))) = [c].[CompanyName]");
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE (CAST(@__i_0 AS nvarchar(max)) + [c].[CustomerID]) = [c].[CompanyName]");
+WHERE (CAST(@__i_0 AS nvarchar(4000)) + [c].[CustomerID]) = [c].[CompanyName]");
         }
 
         public override void Where_concat_string_int_comparison3()
@@ -1281,7 +1277,7 @@ WHERE (CAST(@__i_0 AS nvarchar(max)) + [c].[CustomerID]) = [c].[CompanyName]");
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE (((CAST(@__i_0 + 20 AS nvarchar(max)) + [c].[CustomerID]) + CAST(@__j_1 AS nvarchar(max))) + CAST(42 AS nvarchar(max))) = [c].[CompanyName]");
+WHERE (((CAST(@__i_0 + 20 AS nvarchar(4000)) + [c].[CustomerID]) + CAST(@__j_1 AS nvarchar(4000))) + CAST(42 AS nvarchar(4000))) = [c].[CompanyName]");
         }
 
         public override void Where_ternary_boolean_condition_true()

@@ -151,6 +151,7 @@
     <Compile Include="Extensions\Metadata\InternalSqlCeMetadataBuilderExtensionsTest.cs.cs" />
     <Compile Include="Extensions\Metadata\SqlCeMetadataExtensionsTest.cs" />
     <Compile Include="Extensions\SqlCeDbContextOptionsExtensionsTest.cs" />
+    <Compile Include="Scaffolding\SqlCeCodeGeneratorTest.cs" />
     <Compile Include="SqlCeDatabaseFacadeTest.cs" />
     <Compile Include="Utilities\FakeInterceptingLogger.cs" />
     <Compile Include="Migrations\MigrationsModelDifferTestBase.cs" />

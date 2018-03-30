@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EFCore.SqlCe.Storage.Internal
@@ -18,8 +17,8 @@ namespace EFCore.SqlCe.Storage.Internal
         /// <param name="storeType"> The name of the database type. </param>
         /// <param name="dbType"> The <see cref="System.Data.DbType" /> to be used. </param>
         public SqlCeDateTimeTypeMapping(
-            [NotNull] string storeType,
-            [CanBeNull] DbType? dbType = null)
+            string storeType,
+            DbType? dbType = null)
             : base(storeType, dbType)
         {
         }

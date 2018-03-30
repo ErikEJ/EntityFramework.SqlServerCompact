@@ -13,7 +13,8 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure
     ///         and it is not designed to be directly constructed in your application code.
     ///     </para>
     /// </summary>
-    public class SqlCeDbContextOptionsBuilder : RelationalDbContextOptionsBuilder<SqlCeDbContextOptionsBuilder, SqlCeOptionsExtension>
+    public class SqlCeDbContextOptionsBuilder
+        : RelationalDbContextOptionsBuilder<SqlCeDbContextOptionsBuilder, SqlCeOptionsExtension>
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="SqlCeDbContextOptionsBuilder"/> class.

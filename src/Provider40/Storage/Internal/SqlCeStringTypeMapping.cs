@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlServerCe;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EFCore.SqlCe.Storage.Internal
@@ -21,8 +20,8 @@ namespace EFCore.SqlCe.Storage.Internal
         /// <param name="storeType"> The name of the database type. </param>
         /// <param name="dbType"> The <see cref="DbType" /> to be used. </param>
         public SqlCeStringTypeMapping(
-            [NotNull] string storeType,
-            [CanBeNull] DbType? dbType)
+            string storeType,
+            DbType? dbType)
             : this(storeType, dbType, size: null)
         {
         }
@@ -34,8 +33,8 @@ namespace EFCore.SqlCe.Storage.Internal
         /// <param name="dbType"> The <see cref="DbType" /> to be used. </param>
         /// <param name="size"> The size of data the property is configured to store, or null if no size is configured. </param>
         public SqlCeStringTypeMapping(
-            [NotNull] string storeType,
-            [CanBeNull] DbType? dbType,
+            string storeType,
+            DbType? dbType,
             int? size)
             : base(storeType, dbType, true, size)
         {

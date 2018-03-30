@@ -24,8 +24,8 @@ namespace EFCore.SqlCe.Storage.Internal
         /// <param name="dbType"> The <see cref="System.Data.DbType" /> to be used. </param>
         /// <param name="size"> The size of data the property is configured to store, or null if no size is configured. </param>
         public SqlCeByteArrayTypeMapping(
-            [NotNull] string storeType,
-            [CanBeNull] DbType? dbType = System.Data.DbType.Binary,
+            string storeType,
+            DbType? dbType = System.Data.DbType.Binary,
             int? size = null)
             : base(storeType, dbType, size)
         {

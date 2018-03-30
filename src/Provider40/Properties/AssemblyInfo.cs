@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore.Design;
 
-[assembly: DesignTimeProviderServices("EFCore.SqlCe.Scaffolding.Internal.SqlCeDesignTimeServices")]
+[assembly: DesignTimeProviderServices("EFCore.SqlCe.Design.Internal.SqlCeDesignTimeServices")]
 #if SQLCE35
 [assembly: AssemblyTitle("EntityFrameworkCore.SqlServerCompact35")]
 [assembly: AssemblyProduct("EntityFrameworkCore.SqlServerCompact35")]

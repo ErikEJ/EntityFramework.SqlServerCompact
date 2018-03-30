@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Utilities;
 
 namespace EFCore.SqlCe.Metadata.Conventions.Internal
 {
@@ -13,6 +14,17 @@ namespace EFCore.SqlCe.Metadata.Conventions.Internal
             [NotNull] ISqlGenerationHelper sqlGenerationHelper)
             : base(dependencies)
         {
+        }
+
+        public override ConventionSet AddConventions(ConventionSet conventionSet)
+        {
+            Check.NotNull(conventionSet, nameof(conventionSet));
+
+            base.AddConventions(conventionSet);
+
+            conventionSet.ModelInitializedConventions.Add(new RelationalMaxIdentifierLengthConvention(128));
+
+            return conventionSet;
         }
 
         public static ConventionSet Build()

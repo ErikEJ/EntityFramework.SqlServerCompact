@@ -18,10 +18,11 @@ namespace EFCore.SqlCe.Internal
         {
             var definition = SqlCeStrings.LogSchemaConfigured;
 
+            var warningBehavior = definition.GetLogBehavior(diagnostics);
             // Checking for enabled here to avoid string formatting if not needed.
-            if (diagnostics.GetLogBehavior(definition.EventId, definition.Level) != WarningBehavior.Ignore)
+            if (warningBehavior != WarningBehavior.Ignore)
             {
-                definition.Log(diagnostics, entityType.Name, schema);
+                definition.Log(diagnostics, warningBehavior, entityType.Name, schema);
             }
 
             if (diagnostics.DiagnosticSource.IsEnabled(definition.EventId.Name))
@@ -55,7 +56,9 @@ namespace EFCore.SqlCe.Internal
         {
             var definition = SqlCeStrings.LogSequenceConfigured;
 
-            definition.Log(diagnostics, sequence.Name);
+            var warningBehavior = definition.GetLogBehavior(diagnostics);
+
+            definition.Log(diagnostics, warningBehavior, sequence.Name);
 
             if (diagnostics.DiagnosticSource.IsEnabled(definition.EventId.Name))
             {

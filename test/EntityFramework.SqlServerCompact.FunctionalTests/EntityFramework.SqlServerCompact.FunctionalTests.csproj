@@ -133,6 +133,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoggingSqlCeTest.cs" />
     <Compile Include="MonsterFixupChangedChangingSqlCeTest.cs" />
     <Compile Include="Query\AsNoTrackingSqlCeTest.cs" />
     <Compile Include="Query\AsTrackingSqlCeTest.cs" />

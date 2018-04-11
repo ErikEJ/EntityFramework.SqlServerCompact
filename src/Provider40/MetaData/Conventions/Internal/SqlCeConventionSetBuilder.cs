@@ -36,7 +36,7 @@ namespace EFCore.SqlCe.Metadata.Conventions.Internal
                     new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()))
                 .AddConventions(
                     new CoreConventionSetBuilder(
-                            new CoreConventionSetBuilderDependencies(null, null, null, sqlCeTypeMapper))
+                            new CoreConventionSetBuilderDependencies(null, null, null, null, sqlCeTypeMapper))
                         .CreateConventionSet());
         }
     }

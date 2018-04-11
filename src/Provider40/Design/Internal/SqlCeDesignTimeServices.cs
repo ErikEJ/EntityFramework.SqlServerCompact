@@ -13,7 +13,7 @@ namespace EFCore.SqlCe.Design.Internal
             => serviceCollection
                 .AddSingleton<IRelationalTypeMapper, SqlCeTypeMapper>()
                 .AddSingleton<IDatabaseModelFactory, SqlCeDatabaseModelFactory>()
-                .AddSingleton<IProviderCodeGenerator, SqlCeCodeGenerator>()
+                .AddSingleton<IProviderConfigurationCodeGenerator, SqlCeCodeGenerator>()
                 .AddSingleton<IAnnotationCodeGenerator, AnnotationCodeGenerator>();
     }
 }

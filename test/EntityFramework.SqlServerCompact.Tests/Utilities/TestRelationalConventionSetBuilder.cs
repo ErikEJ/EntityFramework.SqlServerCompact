@@ -4,7 +4,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
@@ -14,29 +13,19 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             : base(dependencies)
         {
         }
+
         public static ConventionSet Build()
             => new TestRelationalConventionSetBuilder(
-                new RelationalConventionSetBuilderDependencies(
-                    new FallbackRelationalCoreTypeMapper(
-                        TestServiceFactory.Instance.Create<CoreTypeMapperDependencies>(),
-                        TestServiceFactory.Instance.Create<RelationalTypeMapperDependencies>(),
-                        TestServiceFactory.Instance.Create<TestRelationalTypeMapper>()),
-                    new FakeDiagnosticsLogger<DbLoggerCategory.Model>(),
-                    null,
-                    null))
+                    new RelationalConventionSetBuilderDependencies(
+                        new TestRelationalTypeMappingSource(
+                            TestServiceFactory.Instance.Create<TypeMappingSourceDependencies>(),
+                            TestServiceFactory.Instance.Create<RelationalTypeMappingSourceDependencies>()),
+                        new FakeDiagnosticsLogger<DbLoggerCategory.Model>(),
+                        null,
+                        null,
+                        null))
                 .AddConventions(
                     TestServiceFactory.Instance.Create<CoreConventionSetBuilder>()
                         .CreateConventionSet());
-
-        //public static ConventionSet Build()
-        //    => new TestRelationalConventionSetBuilder(
-        //        new RelationalConventionSetBuilderDependencies(
-        //            TestServiceFactory.Instance.Create<TestRelationalTypeMapper>(),
-        //            new FakeDiagnosticsLogger<DbLoggerCategory.Model>(),
-        //            null,
-        //            null))
-        //        .AddConventions(
-        //            TestServiceFactory.Instance.Create<CoreConventionSetBuilder>()
-        //                .CreateConventionSet());
     }
 }

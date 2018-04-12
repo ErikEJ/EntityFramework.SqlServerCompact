@@ -10,7 +10,12 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
         {
             var codeGenerator = new SqlCeCodeGenerator(new ProviderCodeGeneratorDependencies());
 
-            Assert.Equal("UseSqlCe", codeGenerator.UseProviderMethod);
+            var result = codeGenerator.GenerateUseProvider("Data Source=Test");
+
+            Assert.Equal("UseSqlCe", result.Method);
+            Assert.Collection(
+                result.Arguments,
+                a => Assert.Equal("Data Source=Test", a));
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
             Assert.Equal(
                 "DELETE FROM [__EFMigrationsHistory]" + EOL +
-                "WHERE [MigrationId] = 'Migration1'" + EOL + EOL,
+                "WHERE [MigrationId] = N'Migration1'" + EOL + EOL,
                 sql);
         }
 
@@ -57,7 +57,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 
             Assert.Equal(
                 "INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])" + EOL +
-                "VALUES ('Migration1', '1.0.0')" + EOL + EOL,
+                "VALUES (N'Migration1', N'1.0.0')" + EOL + EOL,
                 sql);
         }
 

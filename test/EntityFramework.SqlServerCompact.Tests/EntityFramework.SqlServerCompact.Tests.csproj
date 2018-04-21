@@ -292,6 +292,8 @@
     <Compile Include="Extensions\SqlCeDbContextOptionsExtensionsTest.cs" />
     <Compile Include="Scaffolding\SqlCeCodeGeneratorTest.cs" />
     <Compile Include="SqlCeDatabaseFacadeTest.cs" />
+    <Compile Include="Storage\SqlCeSqlGenerationHelperTest.cs" />
+    <Compile Include="Storage\SqlGenerationHelperTestBase.cs" />
     <Compile Include="Utilities\FakeInterceptingLogger.cs" />
     <Compile Include="Migrations\MigrationsModelDifferTestBase.cs" />
     <Compile Include="Migrations\SqlCeHistoryRepositoryTest.cs" />

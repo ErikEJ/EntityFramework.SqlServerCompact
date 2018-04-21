@@ -263,6 +263,7 @@
     <Compile Include="Query\Expressions\Internal\DatePartExpression.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeContainsOptimizedTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateAddTranslator.cs" />
+    <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateDiffTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeEndsWithOptimizedTranslator.cs" />
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeMathTranslator.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Design\Internal\SqlCeDesignTimeServices.cs" />
     <Compile Include="Scaffolding\Internal\SqlCeCodeGenerator.cs" />
     <Compile Include="Scaffolding\Internal\SqlDataReaderExtensions.cs" />
+    <Compile Include="SqlCeDbFunctionsExtensions.cs" />
     <Compile Include="Storage\Internal\SqlCeByteArrayTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlCeDatabaseFacadeExtensions.cs" />

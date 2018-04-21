@@ -333,6 +333,9 @@
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateAddTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeDateAddTranslator.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateDiffTranslator.cs">
+      <Link>Query\ExpressionTranslators\Internal\SqlCeDateDiffTranslator.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs">
       <Link>Query\ExpressionTranslators\Internal\SqlCeDateTimeDatePartComponentTranslator.cs</Link>
     </Compile>
@@ -413,6 +416,9 @@
     </Compile>
     <Compile Include="..\Provider40\Scaffolding\Internal\SqlDataReaderExtensions.cs">
       <Link>Scaffolding\Internal\SqlDataReaderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\SqlCeDbFunctionsExtensions.cs">
+      <Link>SqlCeDbFunctionsExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Storage\Internal\ISqlCeDatabaseConnection.cs">
       <Link>Storage\Internal\ISqlCeDatabaseConnection.cs</Link>

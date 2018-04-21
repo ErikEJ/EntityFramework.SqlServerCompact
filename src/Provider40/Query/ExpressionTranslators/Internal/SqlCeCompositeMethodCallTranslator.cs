@@ -10,6 +10,7 @@ namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
                 new SqlCeContainsOptimizedTranslator(),
                 new SqlCeConvertTranslator(),
                 new SqlCeDateAddTranslator(),
+                new SqlCeDateDiffTranslator(),
                 new SqlCeEndsWithOptimizedTranslator(),
                 new SqlCeMathTranslator(),
                 new SqlCeNewGuidTranslator(),

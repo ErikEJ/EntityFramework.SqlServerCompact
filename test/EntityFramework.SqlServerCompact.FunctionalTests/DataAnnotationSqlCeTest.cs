@@ -58,16 +58,6 @@ namespace Microsoft.EntityFrameworkCore
             return modelBuilder;
         }
 
-        public override ModelBuilder Timestamp_takes_precedence_over_MaxLength_with_value()
-        {
-            var modelBuilder = base.Timestamp_takes_precedence_over_MaxLength_with_value();
-
-            var property = GetProperty<TimestampAndMaxlen>(modelBuilder, "NonMaxTimestamp");
-            Assert.Equal("rowversion", new SqlCeTypeMapper(new RelationalTypeMapperDependencies()).FindMapping(property).StoreType);
-
-            return modelBuilder;
-        }
-
         public override ModelBuilder TableNameAttribute_affects_table_name_in_TPH()
         {
             var modelBuilder = base.TableNameAttribute_affects_table_name_in_TPH();
@@ -110,7 +100,7 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3", Sql);
         public override void DatabaseGeneratedAttribute_autogenerates_values_when_set_to_identity()
         {
             base.DatabaseGeneratedAttribute_autogenerates_values_when_set_to_identity();
-            Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
+            Assert.Equal(@"@p0='' (Size = 10)
 @p1='Third' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000003'
 @p3='Third Additional Name' (Size = 4000)
@@ -119,7 +109,7 @@ WHERE [UniqueNo] = @p2 AND [RowVersion] = @p3", Sql);
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
 VALUES (@p0, @p1, @p2, @p3, @p4)
 
-@p0='' (Size = 10) (DbType = String)
+@p0='' (Size = 10)
 @p1='Third' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000003'
 @p3='Third Additional Name' (Size = 4000)
@@ -194,7 +184,7 @@ VALUES (@p0, @p1)",
         {
             base.RequiredAttribute_for_property_throws_while_inserting_null_value();
 
-            Assert.Equal(@"@p0='' (Size = 10) (DbType = String)
+            Assert.Equal(@"@p0='' (Size = 10)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
 @p3='Two' (Size = 4000)
@@ -203,7 +193,7 @@ VALUES (@p0, @p1)",
 INSERT INTO [Sample] ([MaxLengthProperty], [Name], [RowVersion], [AdditionalDetails_Name], [Details_Name])
 VALUES (@p0, @p1, @p2, @p3, @p4)
 
-@p0='' (Size = 10) (DbType = String)
+@p0='' (Size = 10)
 @p1='ValidString' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000001'
 @p3='Two' (Size = 4000)
@@ -213,8 +203,8 @@ SELECT [UniqueNo]
 FROM [Sample]
 WHERE 1 = 1 AND [UniqueNo] = CAST (@@IDENTITY AS int)
 
-@p0='' (Size = 10) (DbType = String)
-@p1='' (Nullable = false) (Size = 4000) (DbType = String)
+@p0='' (Size = 10)
+@p1='' (Nullable = false) (Size = 4000)
 @p2='00000000-0000-0000-0000-000000000002'
 @p3='Two' (Size = 4000)
 @p4='One' (Size = 4000)

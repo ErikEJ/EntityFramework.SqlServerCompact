@@ -16,6 +16,25 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         [ConditionalFact(Skip = "SQLCE limitation")]
+        public override void Select_join_with_key_selector_being_a_subquery()
+        {
+            base.Select_join_with_key_selector_being_a_subquery();
+        }
+
+        [ConditionalFact(Skip = "SQLCE limitation")]
+        public override void Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision()
+        {
+            base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision();
+        }
+
+        [ConditionalFact(Skip = "SQLCE limitation")]
+        public override void Join_navigation_in_inner_selector_translated_to_subquery()
+        {
+            base.Join_navigation_in_inner_selector_translated_to_subquery();
+        }
+
+
+        [ConditionalFact(Skip = "SQLCE limitation")]
         public override void GroupJoin_in_subquery_with_client_projection_nested1()
         {
             base.GroupJoin_in_subquery_with_client_projection_nested1();

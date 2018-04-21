@@ -32,21 +32,21 @@ namespace Microsoft.EntityFrameworkCore
         {
         }
 
+        [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
+        public override DbUpdateException Optional_One_to_one_with_AK_relationships_are_one_to_one()
+        {
+            return base.Optional_One_to_one_with_AK_relationships_are_one_to_one();
+        }
+
+        [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
+        public override DbUpdateException Optional_One_to_one_relationships_are_one_to_one()
+        {
+            return base.Optional_One_to_one_relationships_are_one_to_one();
+        }
+
         public class GraphUpdatesWithIdentitySqlCeFixture : GraphUpdatesSqlCeFixtureBase
         {
             protected override string StoreName { get; } = "GraphIdentityUpdatesTest";
-        }
-
-        [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
-        public override void Optional_One_to_one_with_AK_relationships_are_one_to_one()
-        {
-            base.Optional_One_to_one_with_AK_relationships_are_one_to_one();
-        }
-
-        [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
-        public override void Optional_One_to_one_relationships_are_one_to_one()
-        {
-            base.Optional_One_to_one_relationships_are_one_to_one();
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using EFCore.SqlCe.Storage.Internal;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EFCore.SqlCe.Metadata.Conventions.Internal
 {
@@ -29,15 +30,18 @@ namespace EFCore.SqlCe.Metadata.Conventions.Internal
 
         public static ConventionSet Build()
         {
-            var sqlCeTypeMapper = new SqlCeTypeMapper(new RelationalTypeMapperDependencies());
+            var serviceProvider = new ServiceCollection()
+                .AddEntityFrameworkSqlCe()
+                .AddDbContext<DbContext>(o => o.UseSqlCe("Data Source=_.sdf"))
+                .BuildServiceProvider();
 
-            return new SqlCeConventionSetBuilder(
-                    new RelationalConventionSetBuilderDependencies(null, null, null, null, sqlCeTypeMapper),
-                    new SqlCeSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()))
-                .AddConventions(
-                    new CoreConventionSetBuilder(
-                            new CoreConventionSetBuilderDependencies(null, null, null, sqlCeTypeMapper))
-                        .CreateConventionSet());
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<DbContext>())
+                {
+                    return ConventionSet.CreateConventionSet(context);
+                }
+            }
         }
     }
 }

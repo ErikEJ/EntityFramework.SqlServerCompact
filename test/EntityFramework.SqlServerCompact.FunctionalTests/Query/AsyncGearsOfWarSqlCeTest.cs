@@ -14,6 +14,18 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
+        [Fact(Skip = "SQLCE limitation")]
+        public override async Task Filter_on_subquery_projecting_one_value_type_from_empty_collection()
+        {
+            await base.Filter_on_subquery_projecting_one_value_type_from_empty_collection();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override async Task Project_one_value_type_from_empty_collection()
+        {
+            await base.Project_one_value_type_from_empty_collection();
+        }
+
         public override async Task Correlated_collections_basic_projection()
         {
             await base.Correlated_collections_basic_projection();

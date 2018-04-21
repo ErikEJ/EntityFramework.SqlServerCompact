@@ -18,8 +18,15 @@ namespace Microsoft.EntityFrameworkCore.Query
         [Fact(Skip= "SQLCE limitation")]
         public override async Task Select_nested_collection_with_groupby()
         {
-            //return base.Select_nested_collection_with_groupby();
+            await base.Select_nested_collection_with_groupby();
         }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override async Task GroupBy_OrderBy_count_Select_sum()
+        {
+            await base.GroupBy_OrderBy_count_Select_sum();
+        }
+
         public override async Task GroupBy_Composite_Select_Average()
         {
             await base.GroupBy_Composite_Select_Average();

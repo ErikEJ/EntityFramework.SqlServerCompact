@@ -4,10 +4,10 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class NullSemanticsQuerySqlServerTest : NullSemanticsQueryTestBase<NullSemanticsQuerySqlCeFixture>
+    public class NullSemanticsQuerySqlCeTest : NullSemanticsQueryTestBase<NullSemanticsQuerySqlCeFixture>
     {
         // ReSharper disable once UnusedParameter.Local
-        public NullSemanticsQuerySqlServerTest(NullSemanticsQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
+        public NullSemanticsQuerySqlCeTest(NullSemanticsQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             Fixture.TestSqlLoggerFactory.Clear();
@@ -1033,13 +1033,13 @@ WHERE [e].[NullableBoolA] <> [e].[NullableBoolB]");
             base.Where_comparison_null_constant_and_null_parameter();
 
             AssertSql(
-                @"@__prm_0='' (Size = 4000) (DbType = String)
+                @"@__prm_0='' (Size = 4000)
 
 SELECT [e].[Id]
 FROM [Entities1] AS [e]
 WHERE @__prm_0 IS NULL",
                 //
-                @"@__prm_0='' (Size = 4000) (DbType = String)
+                @"@__prm_0='' (Size = 4000)
 
 SELECT [e].[Id]
 FROM [Entities1] AS [e]

@@ -431,6 +431,7 @@ LEFT JOIN [LevelOne] AS [e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_In
 INNER JOIN [LevelOne] AS [e1] ON [e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse].[Id] = [e1].[Id]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Join_navigation_in_inner_selector_translated_to_subquery()
         {
             base.Join_navigation_in_inner_selector_translated_to_subquery();
@@ -445,6 +446,7 @@ INNER JOIN [LevelOne] AS [e1] ON [e2].[Id] IN (
 )");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision()
         {
             base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision();
@@ -2158,6 +2160,7 @@ INNER JOIN (
 ) AS [t] ON [l1].[Id] = [t].[Level1_Optional_Id]");
         }
 
+        [Fact(Skip = "SQLCE limitation")]
         public override void Select_join_with_key_selector_being_a_subquery()
         {
             base.Select_join_with_key_selector_being_a_subquery();

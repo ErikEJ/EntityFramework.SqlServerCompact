@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -283,6 +285,7 @@
     <Compile Include="Scaffolding\Internal\SqlDataReaderExtensions.cs" />
     <Compile Include="SqlCeDbFunctionsExtensions.cs" />
     <Compile Include="Storage\Internal\SqlCeByteArrayTypeMapping.cs" />
+    <Compile Include="Storage\Internal\SqlCeByteTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeConnectionExtensions.cs" />
     <Compile Include="Extensions\SqlCeDatabaseFacadeExtensions.cs" />
     <Compile Include="Infrastructure\SqlCeDbContextOptionsBuilder.cs" />
@@ -309,11 +312,15 @@
     <Compile Include="Query\ExpressionTranslators\Internal\SqlCeCompositeMethodCallTranslator.cs" />
     <Compile Include="Query\Sql\Internal\SqlCeQuerySqlGeneratorFactory.cs" />
     <Compile Include="MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs" />
-    <Compile Include="Storage\Internal\SqlCeDateTimeMapping.cs" />
+    <Compile Include="Storage\Internal\SqlCeDateTimeTypeMapping.cs" />
+    <Compile Include="Storage\Internal\SqlCeDecimalTypeMapping.cs" />
+    <Compile Include="Storage\Internal\SqlCeFloatTypeMapping.cs" />
+    <Compile Include="Storage\Internal\SqlCeLongTypeMapping.cs" />
+    <Compile Include="Storage\Internal\SqlCeShortTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeSqlGenerationHelper.cs" />
     <Compile Include="Storage\Internal\ISqlCeDatabaseConnection.cs" />
     <Compile Include="Storage\Internal\SqlCeStringTypeMapping.cs" />
-    <Compile Include="Storage\Internal\SqlCeTypeMapper.cs" />
+    <Compile Include="Storage\Internal\SqlCeTypeMapppingSource.cs" />
     <Compile Include="Update\Internal\ISqlCeUpdateSqlGenerator.cs" />
     <Compile Include="Update\Internal\SqlCeUpdateSqlGenerator.cs" />
     <Compile Include="Strings.Designer.cs">
@@ -346,6 +353,7 @@
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -292,6 +292,7 @@
     <Compile Include="Extensions\SqlCeDbContextOptionsExtensionsTest.cs" />
     <Compile Include="Scaffolding\SqlCeCodeGeneratorTest.cs" />
     <Compile Include="SqlCeDatabaseFacadeTest.cs" />
+    <Compile Include="Storage\RelationalTypeMapperTestBase.cs" />
     <Compile Include="Storage\SqlCeSqlGenerationHelperTest.cs" />
     <Compile Include="Storage\SqlGenerationHelperTestBase.cs" />
     <Compile Include="Utilities\FakeInterceptingLogger.cs" />
@@ -303,7 +304,6 @@
     <Compile Include="RelationalModelValidatorTest.cs" />
     <Compile Include="SqlCeDataStoreConnectionTest.cs" />
     <Compile Include="SqlCeDataStoreSourceTest.cs" />
-    <Compile Include="SqlCeSqlGeneratorTest.cs" />
     <Compile Include="SqlCeTestHelpers.cs" />
     <Compile Include="SqlCeTypeMapperTest.cs" />
     <Compile Include="Storage\RelationalTypeMappingTest.cs" />

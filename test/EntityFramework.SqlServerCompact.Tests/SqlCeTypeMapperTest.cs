@@ -18,7 +18,7 @@ namespace Microsoft.EntityFrameworkCore
         public void Does_simple_SQL_Server_mappings_to_DDL_types()
         {
             Assert.Equal("int", GetTypeMapping(typeof(int)).StoreType);
-            Assert.Equal("datetime2", GetTypeMapping(typeof(DateTime)).StoreType);
+            Assert.Equal("datetime", GetTypeMapping(typeof(DateTime)).StoreType);
             Assert.Equal("uniqueidentifier", GetTypeMapping(typeof(Guid)).StoreType);
             Assert.Equal("tinyint", GetTypeMapping(typeof(byte)).StoreType);
             Assert.Equal("float", GetTypeMapping(typeof(double)).StoreType);
@@ -205,7 +205,7 @@ namespace Microsoft.EntityFrameworkCore
             var typeMapping = CreateTypeMapper().GetMapping(property);
 
             Assert.Null(typeMapping.DbType);
-            Assert.Equal("nvarchar(450)", typeMapping.StoreType);
+            Assert.Equal("nvarchar(256)", typeMapping.StoreType);
             Assert.Equal(450, typeMapping.Size);
             Assert.True(typeMapping.IsUnicode);
             Assert.Equal(450, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
@@ -231,7 +231,7 @@ namespace Microsoft.EntityFrameworkCore
             var typeMapping = CreateTypeMapper().GetMapping(fkProperty);
 
             Assert.Null(typeMapping.DbType);
-            Assert.Equal("nvarchar(450)", typeMapping.StoreType);
+            Assert.Equal("nvarchar(256)", typeMapping.StoreType);
             Assert.Equal(450, typeMapping.Size);
             Assert.True(typeMapping.IsUnicode);
             Assert.Equal(450, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
@@ -253,7 +253,7 @@ namespace Microsoft.EntityFrameworkCore
             var typeMapping = CreateTypeMapper().GetMapping(fkProperty);
 
             Assert.Null(typeMapping.DbType);
-            Assert.Equal("nvarchar(450)", typeMapping.StoreType);
+            Assert.Equal("nvarchar(256)", typeMapping.StoreType);
             Assert.Equal(450, typeMapping.Size);
             Assert.True(typeMapping.IsUnicode);
             Assert.Equal(450, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
@@ -272,7 +272,7 @@ namespace Microsoft.EntityFrameworkCore
             var typeMapping = CreateTypeMapper().GetMapping(property);
 
             Assert.Null(typeMapping.DbType);
-            Assert.Equal("nvarchar(450)", typeMapping.StoreType);
+            Assert.Equal("nvarchar(256)", typeMapping.StoreType);
             Assert.Equal(450, typeMapping.Size);
             Assert.True(typeMapping.IsUnicode);
             Assert.Equal(450, typeMapping.CreateParameter(new TestCommand(), "Name", "Value").Size);
@@ -938,7 +938,7 @@ namespace Microsoft.EntityFrameworkCore
                 mapper.GetMapping(model.FindEntityType(typeof(MyRelatedType3)).FindProperty("Id")).StoreType);
 
             Assert.Equal(
-                "nvarchar(450)",
+                "nvarchar(256)",
                 mapper.GetMapping(model.FindEntityType(typeof(MyRelatedType4)).FindProperty("Relationship2Id")).StoreType);
         }
 

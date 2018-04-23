@@ -30,13 +30,11 @@ namespace Microsoft.EntityFrameworkCore.Query
             base.Where_subquery_FirstOrDefault_is_null();
         }
 
-        [Fact(Skip = "ErikEJ investigate fail")]
         public override void Select_short_constant()
         {
             base.Select_short_constant();
         }
 
-        [Fact(Skip = "ErikEJ investigate fail")]
         public override void Select_byte_constant()
         {
             base.Select_byte_constant();

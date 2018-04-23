@@ -225,42 +225,42 @@ FROM [Customers] AS [c]
 WHERE [c].[City] = N'London'
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='AROUT' (Size = 5)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='BSBEV' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='BSBEV' (Size = 5)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='CONSH' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='CONSH' (Size = 5)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='EASTC' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='EASTC' (Size = 5)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='NORTS' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='NORTS' (Size = 5)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE ([o].[CustomerID] = @_outer_CustomerID) AND (DATEPART(year, [o].[OrderDate]) = 1997)
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='SEVES' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='SEVES' (Size = 5)
 
 SELECT [o].[OrderID]
 FROM [Orders] AS [o]
@@ -277,25 +277,25 @@ ORDER BY [o].[OrderID]");
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]
 WHERE ([o].[OrderID] < 10500) AND (@_outer_CustomerID = [o].[CustomerID])",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]
 WHERE ([o].[OrderID] < 10500) AND (@_outer_CustomerID = [o].[CustomerID])",
                 //
-                @"@_outer_CustomerID='ANTON' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANTON' (Size = 5)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]
 WHERE ([o].[OrderID] < 10500) AND (@_outer_CustomerID = [o].[CustomerID])",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='AROUT' (Size = 5)
 
 SELECT TOP(3) [o].[OrderDate] AS [Date]
 FROM [Orders] AS [o]

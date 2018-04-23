@@ -43,7 +43,7 @@ namespace EFCore.SqlCe.Storage.Internal
             = new IntTypeMapping("int", DbType.Int32);
 
         private readonly BoolTypeMapping _bool
-            = new BoolTypeMapping("bit");
+            = new BoolTypeMapping("bit", DbType.Boolean);
 
         private readonly SqlCeStringTypeMapping _fixedLengthUnicodeString
             = new SqlCeStringTypeMapping("nchar", dbType: DbType.String, fixedLength: true);

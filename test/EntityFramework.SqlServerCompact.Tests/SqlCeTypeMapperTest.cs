@@ -71,7 +71,7 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte)).DbType);
             Assert.Null(GetTypeMapping(typeof(double)).DbType);
-            Assert.Null(GetTypeMapping(typeof(bool)).DbType);
+            Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool)).DbType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short)).DbType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long)).DbType);
             Assert.Null(GetTypeMapping(typeof(float)).DbType);
@@ -88,7 +88,7 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid?)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte?)).DbType);
             Assert.Null(GetTypeMapping(typeof(double?)).DbType);
-            Assert.Null(GetTypeMapping(typeof(bool?)).DbType);
+            Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool?)).DbType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short?)).DbType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long?)).DbType);
             Assert.Null(GetTypeMapping(typeof(float?)).DbType);

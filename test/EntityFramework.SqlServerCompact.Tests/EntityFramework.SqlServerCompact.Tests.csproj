@@ -322,7 +322,6 @@
     <Compile Include="Utilities\FakeProvider\FakeRelationalConnection.cs" />
     <Compile Include="Utilities\FakeProvider\FakeRelationalDatabaseCreator.cs" />
     <Compile Include="Utilities\FakeProvider\FakeRelationalOptionsExtension.cs" />
-    <Compile Include="Utilities\FakeProvider\FakeRelationalTypeMapper.cs" />
     <Compile Include="Utilities\FakeProvider\FakeSqlGenerator.cs" />
     <Compile Include="Utilities\RelationalTestHelpers.cs" />
     <Compile Include="Utilities\TestModificationCommandBatchFactory.cs" />
@@ -334,7 +333,6 @@
     <Compile Include="Utilities\TestRelationalConventionSetBuilder.cs" />
     <Compile Include="Utilities\TestRelationalMetadataExtensions.cs" />
     <Compile Include="Utilities\TestRelationalMigrationSqlGenerator.cs" />
-    <Compile Include="Utilities\TestRelationalTypeMapper.cs" />
     <Compile Include="Utilities\TestRelationalTypeMappingSource.cs" />
   </ItemGroup>
   <ItemGroup>

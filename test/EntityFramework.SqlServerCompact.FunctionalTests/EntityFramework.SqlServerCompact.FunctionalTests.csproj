@@ -285,7 +285,6 @@
     <Compile Include="BasicEndToEndScenarioForNoIdentity.cs" />
     <Compile Include="BasicEndToEndScenarioForIdentity.cs" />
     <Compile Include="BasicEndToEndScenario.cs" />
-    <Compile Include="BuiltInDataTypesSqlCeFixture.cs" />
     <Compile Include="BuiltInDataTypesSqlCeTest.cs" />
     <Compile Include="Query\ChangeTrackingSqlCeTest.cs" />
     <Compile Include="Query\CompiledQuerySqlCeTest.cs" />

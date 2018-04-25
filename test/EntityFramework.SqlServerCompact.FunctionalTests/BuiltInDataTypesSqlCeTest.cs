@@ -674,7 +674,6 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Equal("Col", entity.StringAsNationalCharacterVarying3);
             Assert.Equal(new byte[] { 10, 11, 12 }, entity.BytesAsBinary3);
             Assert.Equal(new byte[] { 11, 12, 13 }, entity.BytesAsVarbinary3);
-            Assert.Equal(new byte[] { 12, 13, 14 }, entity.BytesAsBinaryVarying3);
             Assert.Equal('D', entity.CharAsNvarchar3);
             Assert.Equal('E', entity.CharAsNationalCharVarying3);
             Assert.Equal('F', entity.CharAsNationalCharacterVarying3);
@@ -691,7 +690,6 @@ namespace Microsoft.EntityFrameworkCore
                 StringAsNationalCharacterVarying3 = "Col",
                 BytesAsBinary3 = new byte[] { 10, 11, 12 },
                 BytesAsVarbinary3 = new byte[] { 11, 12, 13 },
-                BytesAsBinaryVarying3 = new byte[] { 12, 13, 14 },
                 CharAsNvarchar3 = 'D',
                 CharAsNationalCharVarying3 = 'E',
                 CharAsNationalCharacterVarying3 = 'F'
@@ -748,7 +746,6 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Null(entity.StringAsNationalCharacterVarying3);
             Assert.Null(entity.BytesAsBinary3);
             Assert.Null(entity.BytesAsVarbinary3);
-            Assert.Null(entity.BytesAsBinaryVarying3);
             Assert.Null(entity.CharAsNvarchar3);
             Assert.Null(entity.CharAsNationalCharVarying3);
             Assert.Null(entity.CharAsNationalCharacterVarying3);
@@ -789,8 +786,6 @@ namespace Microsoft.EntityFrameworkCore
         private static void AssertMappedScaledDataTypes(MappedScaledDataTypes entity, int id)
         {
             Assert.Equal(id, entity.Id);
-            Assert.Equal(83.3f, entity.FloatAsFloat3);
-            Assert.Equal(83.33f, entity.FloatAsFloat25);
             Assert.Equal(101m, entity.DecimalAsDecimal3);
             Assert.Equal(102m, entity.DecimalAsDec3);
             Assert.Equal(103m, entity.DecimalAsNumeric3);
@@ -800,8 +795,6 @@ namespace Microsoft.EntityFrameworkCore
             => new MappedScaledDataTypes
             {
                 Id = id,
-                FloatAsFloat3 = 83.3f,
-                FloatAsFloat25 = 83.33f,
                 DecimalAsDecimal3 = 101.1m,
                 DecimalAsDec3 = 102.2m,
                 DecimalAsNumeric3 = 103.3m
@@ -1279,7 +1272,6 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Equal("Col", entity.StringAsNationalCharacterVarying3);
             Assert.Equal(new byte[] { 10, 11, 12 }, entity.BytesAsBinary3);
             Assert.Equal(new byte[] { 11, 12, 13 }, entity.BytesAsVarbinary3);
-            Assert.Equal(new byte[] { 12, 13, 14 }, entity.BytesAsBinaryVarying3);
             Assert.Equal('D', entity.CharAsNvarchar3);
             Assert.Equal('E', entity.CharAsNationalCharVarying3);
             Assert.Equal('F', entity.CharAsNationalCharacterVarying3);
@@ -1296,7 +1288,6 @@ namespace Microsoft.EntityFrameworkCore
                 StringAsNationalCharacterVarying3 = "Col",
                 BytesAsBinary3 = new byte[] { 10, 11, 12 },
                 BytesAsVarbinary3 = new byte[] { 11, 12, 13 },
-                BytesAsBinaryVarying3 = new byte[] { 12, 13, 14 },
                 CharAsNvarchar3 = 'D',
                 CharAsNationalCharVarying3 = 'E',
                 CharAsNationalCharacterVarying3 = 'F'
@@ -1353,7 +1344,6 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Null(entity.StringAsNationalCharacterVarying3);
             Assert.Null(entity.BytesAsBinary3);
             Assert.Null(entity.BytesAsVarbinary3);
-            Assert.Null(entity.BytesAsBinaryVarying3);
             Assert.Null(entity.CharAsNvarchar3);
             Assert.Null(entity.CharAsNationalCharVarying3);
             Assert.Null(entity.CharAsNationalCharacterVarying3);
@@ -1394,8 +1384,6 @@ namespace Microsoft.EntityFrameworkCore
         private static void AssertMappedScaledDataTypesWithIdentity(MappedScaledDataTypesWithIdentity entity, int id)
         {
             Assert.Equal(id, entity.Int);
-            Assert.Equal(83.3f, entity.FloatAsFloat3);
-            Assert.Equal(83.33f, entity.FloatAsFloat25);
             Assert.Equal(101m, entity.DecimalAsDecimal3);
             Assert.Equal(102m, entity.DecimalAsDec3);
             Assert.Equal(103m, entity.DecimalAsNumeric3);
@@ -1405,8 +1393,6 @@ namespace Microsoft.EntityFrameworkCore
             => new MappedScaledDataTypesWithIdentity
             {
                 Int = id,
-                FloatAsFloat3 = 83.3f,
-                FloatAsFloat25 = 83.33f,
                 DecimalAsDecimal3 = 101.1m,
                 DecimalAsDec3 = 102.2m,
                 DecimalAsNumeric3 = 103.3m
@@ -2502,9 +2488,6 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = -1]
             [Column(TypeName = "varbinary(3)")]
             public byte[] BytesAsVarbinary3 { get; set; }
 
-            [Column(TypeName = "binary varying(3)")]
-            public byte[] BytesAsBinaryVarying3 { get; set; }
-
             [Column(TypeName = "nvarchar(3)")]
             public char? CharAsNvarchar3 { get; set; }
 
@@ -2518,12 +2501,6 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = -1]
         protected class MappedScaledDataTypes
         {
             public int Id { get; set; }
-
-            [Column(TypeName = "float(3)")]
-            public float FloatAsFloat3 { get; set; }
-
-            [Column(TypeName = "float(25)")]
-            public float FloatAsFloat25 { get; set; }
 
             [Column(TypeName = "decimal(3)")]
             public decimal DecimalAsDecimal3 { get; set; }
@@ -2739,9 +2716,6 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = -1]
             [Column(TypeName = "varbinary(3)")]
             public byte[] BytesAsVarbinary3 { get; set; }
 
-            [Column(TypeName = "binary varying(3)")]
-            public byte[] BytesAsBinaryVarying3 { get; set; }
-
             [Column(TypeName = "nvarchar(3)")]
             public char? CharAsNvarchar3 { get; set; }
 
@@ -2756,12 +2730,6 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = -1]
         {
             public int Id { get; set; }
             public int Int { get; set; }
-
-            [Column(TypeName = "float(3)")]
-            public float FloatAsFloat3 { get; set; }
-
-            [Column(TypeName = "float(25)")]
-            public float FloatAsFloat25 { get; set; }
 
             [Column(TypeName = "decimal(3)")]
             public decimal DecimalAsDecimal3 { get; set; }

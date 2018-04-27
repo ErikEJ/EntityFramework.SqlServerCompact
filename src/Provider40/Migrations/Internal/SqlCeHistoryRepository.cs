@@ -12,10 +12,17 @@ namespace EFCore.SqlCe.Migrations.Internal
         }
 
         protected override string ExistsSql
+        {
+            get
+            {
+                var stringTypeMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
 
-            => "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" +
-                SqlGenerationHelper.EscapeLiteral(TableName) + 
-                "' AND TABLE_TYPE <> N'SYSTEM TABLE'";
+                return "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = " +
+                    stringTypeMapping.GenerateSqlLiteral(
+                        SqlGenerationHelper.DelimitIdentifier(TableName)) +
+                " AND TABLE_TYPE <> N'SYSTEM TABLE'";
+            }
+        }
 
         protected override bool InterpretExistsResult(object value) => value != DBNull.Value;
 

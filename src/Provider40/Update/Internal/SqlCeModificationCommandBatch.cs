@@ -38,7 +38,7 @@ namespace EFCore.SqlCe.Update.Internal
             try
             {
 #if DEBUG
-                //System.Diagnostics.Debug.WriteLine(GetCommandText());
+                System.Diagnostics.Debug.WriteLine(GetCommandText());
 #endif
                 using (var reader = relationalCommand.RelationalCommand.ExecuteReader(connection, relationalCommand.ParameterValues))
                 {

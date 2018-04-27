@@ -34,6 +34,11 @@ namespace Microsoft.EntityFrameworkCore
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
+        public override void Can_query_using_any_nullable_data_type_as_literal()
+        {
+            base.Can_query_using_any_nullable_data_type_as_literal();
+        }
+
         [Fact]
         public virtual void Can_query_using_any_mapped_data_type()
         {
@@ -2218,9 +2223,9 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = -1]
                             DataType = reader.GetString(2),
                             IsNullable = reader.IsDBNull(3) ? null : (bool?)(reader.GetString(3) == "YES"),
                             MaxLength = reader.IsDBNull(4) ? null : (int?)reader.GetInt32(4),
-                            NumericPrecision = reader.IsDBNull(5) ? null : (int?)reader.GetByte(5),
-                            NumericScale = reader.IsDBNull(6) ? null : (int?)reader.GetInt32(6),
-                            DateTimePrecision = reader.IsDBNull(7) ? null : (int?)reader.GetInt16(7)
+                            NumericPrecision = reader.IsDBNull(5) ? null : (int?)reader.GetInt16(5),
+                            NumericScale = reader.IsDBNull(6) ? null : (int?)reader.GetInt16(6),
+                            DateTimePrecision = null
                         };
 
                         columns.Add(columnInfo);
@@ -2290,11 +2295,11 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = -1]
         {
             public override bool StrictEquality => true;
 
-            public override bool SupportsAnsi => true;
+            public override bool SupportsAnsi => false;
 
-            public override bool SupportsUnicodeToAnsiConversion => true;
+            public override bool SupportsUnicodeToAnsiConversion => false;
 
-            public override bool SupportsLargeStringComparisons => true;
+            public override bool SupportsLargeStringComparisons => false;
 
             protected override ITestStoreFactory TestStoreFactory
                 => SqlCeTestStoreFactory.Instance;
@@ -2363,7 +2368,7 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = -1]
 
             public override bool SupportsBinaryKeys => true;
 
-            public override DateTime DefaultDateTime => new DateTime();
+            public override DateTime DefaultDateTime => new DateTime(1753, 1, 1);
         }
 
         [Flags]

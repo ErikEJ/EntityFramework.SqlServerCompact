@@ -35,7 +35,7 @@ namespace Microsoft.EntityFrameworkCore
         {
             public int FileInfoId { get; set; }
             public string Path { get; set; }
-            public String BlindedName { get; set; }
+            public string BlindedName { get; set; }
             public bool ContainsSynapse { get; set; }
             public int Quality { get; set; }
         }

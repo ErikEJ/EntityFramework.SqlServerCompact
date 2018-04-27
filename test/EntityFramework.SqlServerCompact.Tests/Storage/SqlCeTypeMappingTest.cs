@@ -87,6 +87,7 @@ namespace Microsoft.EntityFrameworkCore.Storage
         protected override DbType DefaultParameterType
             => DbType.Int32;
 
+        [Theory]
         [InlineData(typeof(SqlCeDateTimeTypeMapping), typeof(DateTime))]
         [InlineData(typeof(SqlCeFloatTypeMapping), typeof(float))]
         public override void Create_and_clone_with_converter(Type mappingType, Type clrType)
@@ -94,12 +95,14 @@ namespace Microsoft.EntityFrameworkCore.Storage
             base.Create_and_clone_with_converter(mappingType, clrType);
         }
 
+        [Theory]
         [InlineData(typeof(SqlCeByteArrayTypeMapping), typeof(byte[]))]
         public override void Create_and_clone_sized_mappings_with_converter(Type mappingType, Type clrType)
         {
             base.Create_and_clone_sized_mappings_with_converter(mappingType, clrType);
         }
 
+        [Theory]
         [InlineData(typeof(SqlCeStringTypeMapping), typeof(string))]
         public override void Create_and_clone_unicode_sized_mappings_with_converter(Type mappingType, Type clrType)
         {

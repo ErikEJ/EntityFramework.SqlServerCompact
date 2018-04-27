@@ -11,7 +11,7 @@ namespace EFCore.SqlCe.Design.Internal
     {
         public virtual void ConfigureDesignTimeServices(IServiceCollection serviceCollection) 
             => serviceCollection
-                .AddSingleton<IRelationalTypeMapper, SqlCeTypeMapper>()
+                .AddSingleton<IRelationalTypeMappingSource, SqlCeTypeMappingSource>()
                 .AddSingleton<IDatabaseModelFactory, SqlCeDatabaseModelFactory>()
                 .AddSingleton<IProviderConfigurationCodeGenerator, SqlCeCodeGenerator>()
                 .AddSingleton<IAnnotationCodeGenerator, AnnotationCodeGenerator>();

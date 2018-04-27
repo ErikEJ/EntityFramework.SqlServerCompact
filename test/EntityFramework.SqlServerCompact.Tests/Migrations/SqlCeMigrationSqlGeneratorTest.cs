@@ -1,6 +1,5 @@
 ﻿using System;
 using EFCore.SqlCe.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Xunit;
 
@@ -8,31 +7,37 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
 {
     public class SqlCeMigrationSqlGeneratorTest : MigrationSqlGeneratorTestBase
     {
+        [Fact]
         public override void AlterSequenceOperation_without_minValue_and_maxValue()
         {
             Assert.Throws<NotSupportedException>(() => base.AlterSequenceOperation_without_minValue_and_maxValue());
         }
 
+        [Fact]
         public override void AlterSequenceOperation_with_minValue_and_maxValue()
         {
             Assert.Throws<NotSupportedException>(() => base.AlterSequenceOperation_with_minValue_and_maxValue());
         }
 
+        [Fact]
         public override void CreateSequenceOperation_without_minValue_and_maxValue()
         {
             Assert.Throws<NotSupportedException>(() => base.CreateSequenceOperation_without_minValue_and_maxValue());
         }
 
+        [Fact]
         public override void CreateSequenceOperation_with_minValue_and_maxValue()
         {
             Assert.Throws<NotSupportedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue());
         }
 
+        [Fact]
         public override void CreateSequenceOperation_with_minValue_and_maxValue_not_long()
         {
             Assert.Throws<NotSupportedException>(() => base.CreateSequenceOperation_with_minValue_and_maxValue_not_long());
         }
 
+        [Fact]
         public override void DropSequenceOperation()
         {
             Assert.Throws<NotSupportedException>(() => base.DropSequenceOperation());
@@ -54,6 +59,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
             Assert.Empty(Sql);
         }
 
+        [Fact]
         public override void DropIndexOperation()
         {
             base.DropIndexOperation();
@@ -211,6 +217,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Migrations
                 Sql);
         }
 
+        [Fact]
         public override void AlterColumnOperation()
         {
             base.AlterColumnOperation();

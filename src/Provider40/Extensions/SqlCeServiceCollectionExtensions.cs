@@ -67,10 +67,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var builder = new EntityFrameworkRelationalServicesBuilder(serviceCollection)
                 .TryAdd<IDatabaseProvider, DatabaseProvider<SqlCeOptionsExtension>>()
-                .TryAdd<IRelationalTypeMapper, SqlCeTypeMapper>()
+                .TryAdd<IRelationalTypeMappingSource, SqlCeTypeMappingSource>()
                 .TryAdd<ISqlGenerationHelper, SqlCeSqlGenerationHelper>()
                 .TryAdd<IMigrationsAnnotationProvider, SqlCeMigrationsAnnotationProvider>()
-                .TryAdd<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
+                //.TryAdd<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
                 .TryAdd<IModelValidator, SqlCeModelValidator>()
                 .TryAdd<IConventionSetBuilder, SqlCeConventionSetBuilder>()
                 .TryAdd<IUpdateSqlGenerator>(p => p.GetService<ISqlCeUpdateSqlGenerator>())

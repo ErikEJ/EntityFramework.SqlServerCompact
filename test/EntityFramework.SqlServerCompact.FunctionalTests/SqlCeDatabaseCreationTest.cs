@@ -246,7 +246,7 @@ namespace Microsoft.EntityFrameworkCore
                 Assert.Equal(
                     new[]
                         {
-                            "Blogs.AndChew (varbinary)",
+                            "Blogs.AndChew (image)",
                             "Blogs.AndRow (rowversion)",
                             "Blogs.Cheese (nvarchar)",
                             "Blogs.ErMilan (int)",

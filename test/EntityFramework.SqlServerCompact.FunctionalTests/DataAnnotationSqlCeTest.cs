@@ -43,7 +43,10 @@ namespace Microsoft.EntityFrameworkCore
             var modelBuilder = base.Key_and_MaxLength_64_produce_nvarchar_64();
 
             var property = GetProperty<ColumnKeyAnnotationClass2>(modelBuilder, "PersonFirstName");
-            Assert.Equal("nvarchar(64)", new SqlCeTypeMapper(new RelationalTypeMapperDependencies()).FindMapping(property).StoreType);
+
+            var storeType = TestServiceFactory.Instance.Create<SqlCeTypeMappingSource>().GetMapping(property).StoreType;
+
+            Assert.Equal("nvarchar(64)", storeType);
 
             return modelBuilder;
         }
@@ -53,7 +56,10 @@ namespace Microsoft.EntityFrameworkCore
             var modelBuilder = base.Timestamp_takes_precedence_over_MaxLength();
 
             var property = GetProperty<TimestampAndMaxlen>(modelBuilder, "MaxTimestamp");
-            Assert.Equal("rowversion", new SqlCeTypeMapper(new RelationalTypeMapperDependencies()).FindMapping(property).StoreType);
+
+            var storeType = TestServiceFactory.Instance.Create<SqlCeTypeMappingSource>().GetMapping(property).StoreType;
+
+            Assert.Equal("rowversion", storeType);
 
             return modelBuilder;
         }

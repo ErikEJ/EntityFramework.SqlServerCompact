@@ -90,7 +90,7 @@ namespace EFCore.SqlCe.Internal
             bool notNull,
             [CanBeNull] string defaultValue)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogFoundColumn.Log(diagnostics, tableName, columnName, dataTypeName, notNull, defaultValue);
+            => SqlCeStrings.LogFoundColumn.Log(diagnostics, WarningBehavior.Log, tableName, columnName, dataTypeName, notNull, defaultValue);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -99,7 +99,7 @@ namespace EFCore.SqlCe.Internal
         public static void SchemasNotSupportedWarning(
             [NotNull] this IDiagnosticsLogger<DbLoggerCategory.Scaffolding> diagnostics)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogUsingSchemaSelectionsWarning.Log(diagnostics);
+            => SqlCeStrings.LogUsingSchemaSelectionsWarning.Log(diagnostics, WarningBehavior.Log);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -109,7 +109,7 @@ namespace EFCore.SqlCe.Internal
             [NotNull] this IDiagnosticsLogger<DbLoggerCategory.Scaffolding> diagnostics,
             [CanBeNull] string foreignKeyName)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogForeignKeyScaffoldErrorPrincipalTableNotFound.Log(diagnostics, foreignKeyName);
+            => SqlCeStrings.LogForeignKeyScaffoldErrorPrincipalTableNotFound.Log(diagnostics, WarningBehavior.Log, foreignKeyName);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -119,7 +119,7 @@ namespace EFCore.SqlCe.Internal
             [NotNull] this IDiagnosticsLogger<DbLoggerCategory.Scaffolding> diagnostics,
             [CanBeNull] string tableName)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogFoundTable.Log(diagnostics, tableName);
+            => SqlCeStrings.LogFoundTable.Log(diagnostics,WarningBehavior.Log, tableName);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -129,7 +129,7 @@ namespace EFCore.SqlCe.Internal
             [NotNull] this IDiagnosticsLogger<DbLoggerCategory.Scaffolding> diagnostics,
             [CanBeNull] string tableName)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogMissingTable.Log(diagnostics, tableName);
+            => SqlCeStrings.LogMissingTable.Log(diagnostics, WarningBehavior.Log, tableName);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -142,7 +142,7 @@ namespace EFCore.SqlCe.Internal
             [CanBeNull] string principalColumnName,
             [CanBeNull] string principalTableName)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogPrincipalColumnNotFound.Log(diagnostics, foreignKeyName, tableName, principalColumnName, principalTableName);
+            => SqlCeStrings.LogPrincipalColumnNotFound.Log(diagnostics, WarningBehavior.Log, foreignKeyName, tableName, principalColumnName, principalTableName);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -154,7 +154,7 @@ namespace EFCore.SqlCe.Internal
             [CanBeNull] string tableName,
             bool? unique)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogFoundIndex.Log(diagnostics, indexName, tableName, unique);
+            => SqlCeStrings.LogFoundIndex.Log(diagnostics, WarningBehavior.Log, indexName, tableName, unique);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -167,7 +167,7 @@ namespace EFCore.SqlCe.Internal
             [CanBeNull] string principalTableName,
             [CanBeNull] string deleteAction)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogFoundForeignKey.Log(diagnostics, tableName, id, principalTableName, deleteAction);
+            => SqlCeStrings.LogFoundForeignKey.Log(diagnostics, WarningBehavior.Log, tableName, id, principalTableName, deleteAction);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -178,7 +178,7 @@ namespace EFCore.SqlCe.Internal
             [CanBeNull] string primaryKeyName,
             [CanBeNull] string tableName)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogFoundPrimaryKey.Log(diagnostics, primaryKeyName, tableName);
+            => SqlCeStrings.LogFoundPrimaryKey.Log(diagnostics, WarningBehavior.Log, primaryKeyName, tableName);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -189,6 +189,6 @@ namespace EFCore.SqlCe.Internal
             [CanBeNull] string uniqueConstraintName,
             [CanBeNull] string tableName)
             // No DiagnosticsSource events because these are purely design-time messages
-            => SqlCeStrings.LogFoundUniqueConstraint.Log(diagnostics, uniqueConstraintName, tableName);
+            => SqlCeStrings.LogFoundUniqueConstraint.Log(diagnostics,  WarningBehavior.Log, uniqueConstraintName, tableName);
     }
 }

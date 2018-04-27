@@ -426,6 +426,9 @@
     <Compile Include="..\Provider40\Storage\Internal\SqlCeByteArrayTypeMapping.cs">
       <Link>Storage\Internal\SqlCeByteArrayTypeMapping.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeByteTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeByteTypeMapping.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Storage\Internal\SqlCeConnectionExtensions.cs">
       <Link>Storage\Internal\SqlCeConnectionExtensions.cs</Link>
     </Compile>
@@ -435,8 +438,20 @@
     <Compile Include="..\Provider40\Storage\Internal\SqlCeDatabaseCreator.cs">
       <Link>Storage\Internal\SqlCeDatabaseCreator.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Storage\Internal\SqlCeDateTimeMapping.cs">
-      <Link>Storage\Internal\SqlCeDateTimeMapping.cs</Link>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeDateTimeTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeDateTimeTypeMapping.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeDecimalTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeDecimalTypeMapping.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeFloatTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeFloatTypeMapping.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeLongTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeLongTypeMapping.cs</Link>
+    </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeShortTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeShortTypeMapping.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Storage\Internal\SqlCeSqlGenerationHelper.cs">
       <Link>Storage\Internal\SqlCeSqlGenerationHelper.cs</Link>
@@ -444,8 +459,8 @@
     <Compile Include="..\Provider40\Storage\Internal\SqlCeStringTypeMapping.cs">
       <Link>Storage\Internal\SqlCeStringTypeMapping.cs</Link>
     </Compile>
-    <Compile Include="..\Provider40\Storage\Internal\SqlCeTypeMapper.cs">
-      <Link>Storage\Internal\SqlCeTypeMapper.cs</Link>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeTypeMapppingSource.cs">
+      <Link>Storage\Internal\SqlCeTypeMapppingSource.cs</Link>
     </Compile>
     <Compile Include="..\Provider40\Strings.Designer.cs">
       <Link>Strings.Designer.cs</Link>

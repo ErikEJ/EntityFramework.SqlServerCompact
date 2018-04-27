@@ -589,7 +589,7 @@ WHERE ([c].[CustomerID] = N'ALFKI') AND (N'ALFKI' IN (
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] = N'ALFKI'",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(1) [o0].[CustomerID]
 FROM [Orders] AS [o0]
@@ -780,13 +780,13 @@ WHERE [c].[CustomerID] IN (N'ABCDE', N'ALFKI')");
             base.Contains_with_local_list_inline_closure_mix();
 
             AssertSql(
-                @"@__id_0='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@__id_0='ALFKI' (Size = 5)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]
 WHERE [c].[CustomerID] IN (N'ABCDE', @__id_0)",
                 //
-                @"@__id_0='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@__id_0='ANATR' (Size = 5)
 
 SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
 FROM [Customers] AS [c]

@@ -182,14 +182,14 @@ SELECT TOP(@__p_0) [c].[CustomerID]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
@@ -242,14 +242,14 @@ SELECT TOP(@__p_0) [c].[CustomerID]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(1) [o].[CustomerID], [o].[OrderID]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT TOP(1) [o].[CustomerID], [o].[OrderID]
 FROM [Orders] AS [o]
@@ -268,14 +268,14 @@ SELECT TOP(@__p_0) [c].[CustomerID]
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
@@ -297,28 +297,28 @@ FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]
 OFFSET @__p_0 ROWS",
                     //
-                    @"@_outer_CustomerID='FAMIA' (Size = 5) (DbType = StringFixedLength)
+                    @"@_outer_CustomerID='FAMIA' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                     //
-                    @"@_outer_CustomerID='FISSA' (Size = 5) (DbType = StringFixedLength)
+                    @"@_outer_CustomerID='FISSA' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                     //
-                    @"@_outer_CustomerID='FOLIG' (Size = 5) (DbType = StringFixedLength)
+                    @"@_outer_CustomerID='FOLIG' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                     //
-                    @"@_outer_CustomerID='FOLKO' (Size = 5) (DbType = StringFixedLength)
+                    @"@_outer_CustomerID='FOLKO' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
@@ -640,13 +640,13 @@ FROM [Customers] AS [c]");
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
 FROM [Orders] AS [o0]
 WHERE @_outer_CustomerID = [o0].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT [o0].[OrderID], [o0].[CustomerID], [o0].[EmployeeID], [o0].[OrderDate]
 FROM [Orders] AS [o0]
@@ -675,13 +675,13 @@ WHERE NOT EXISTS (
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
@@ -837,13 +837,13 @@ WHERE (
 FROM [Customers] AS [c]
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
@@ -860,28 +860,28 @@ FROM [Customers] AS [e]
 WHERE [e].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([e].[CustomerID], 1, LEN(N'A')) = N'A')
 ORDER BY [e].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(1) [e.Customer].[CustomerID], [e.Customer].[Address], [e.Customer].[City], [e.Customer].[CompanyName], [e.Customer].[ContactName], [e.Customer].[ContactTitle], [e.Customer].[Country], [e.Customer].[Fax], [e.Customer].[Phone], [e.Customer].[PostalCode], [e.Customer].[Region]
 FROM [Orders] AS [e0]
 LEFT JOIN [Customers] AS [e.Customer] ON [e0].[CustomerID] = [e.Customer].[CustomerID]
 WHERE [e0].[OrderID] IN (10643, 10692, 10702, 10835, 10952, 11011) AND (@_outer_CustomerID = [e0].[CustomerID])",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT TOP(1) [e.Customer].[CustomerID], [e.Customer].[Address], [e.Customer].[City], [e.Customer].[CompanyName], [e.Customer].[ContactName], [e.Customer].[ContactTitle], [e.Customer].[Country], [e.Customer].[Fax], [e.Customer].[Phone], [e.Customer].[PostalCode], [e.Customer].[Region]
 FROM [Orders] AS [e0]
 LEFT JOIN [Customers] AS [e.Customer] ON [e0].[CustomerID] = [e.Customer].[CustomerID]
 WHERE [e0].[OrderID] IN (10643, 10692, 10702, 10835, 10952, 11011) AND (@_outer_CustomerID = [e0].[CustomerID])",
                 //
-                @"@_outer_CustomerID='ANTON' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANTON' (Size = 5)
 
 SELECT TOP(1) [e.Customer].[CustomerID], [e.Customer].[Address], [e.Customer].[City], [e.Customer].[CompanyName], [e.Customer].[ContactName], [e.Customer].[ContactTitle], [e.Customer].[Country], [e.Customer].[Fax], [e.Customer].[Phone], [e.Customer].[PostalCode], [e.Customer].[Region]
 FROM [Orders] AS [e0]
 LEFT JOIN [Customers] AS [e.Customer] ON [e0].[CustomerID] = [e.Customer].[CustomerID]
 WHERE [e0].[OrderID] IN (10643, 10692, 10702, 10835, 10952, 11011) AND (@_outer_CustomerID = [e0].[CustomerID])",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='AROUT' (Size = 5)
 
 SELECT TOP(1) [e.Customer].[CustomerID], [e.Customer].[Address], [e.Customer].[City], [e.Customer].[CompanyName], [e.Customer].[ContactName], [e.Customer].[ContactTitle], [e.Customer].[Country], [e.Customer].[Fax], [e.Customer].[Phone], [e.Customer].[PostalCode], [e.Customer].[Region]
 FROM [Orders] AS [e0]
@@ -1030,7 +1030,7 @@ WHERE EXISTS (
     INNER JOIN (
         SELECT TOP(1) [o0].[OrderID], [o0].[ProductID]
         FROM [Order Details] AS [o0]
-        WHERE [o0].[Quantity] = 1
+        WHERE [o0].[Quantity] = CAST(1 AS smallint)
         ORDER BY [o0].[OrderID] DESC, [o0].[ProductID]
     ) AS [t1] ON ([t0].[OrderID] = [t1].[OrderID]) AND ([t0].[ProductID] = [t1].[ProductID]))");
         }
@@ -1068,7 +1068,7 @@ ORDER BY [c].[CustomerID]",
                 @"SELECT [o4].[OrderID]
 FROM [Orders] AS [o4]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT [o2].[OrderID]
 FROM [Orders] AS [o2]
@@ -1077,7 +1077,7 @@ WHERE @_outer_CustomerID = [o2].[CustomerID]",
                 @"SELECT [o4].[OrderID]
 FROM [Orders] AS [o4]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT [o2].[OrderID]
 FROM [Orders] AS [o2]
@@ -1172,28 +1172,28 @@ FROM [Customers] AS [c]
 WHERE [c].[CustomerID] LIKE N'A' + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(N'A')) = N'A')
 ORDER BY [c].[CustomerID]",
                 //
-                @"@_outer_CustomerID='ALFKI' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ALFKI' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='ANATR' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANATR' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='ANTON' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='ANTON' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]
 WHERE @_outer_CustomerID = [o].[CustomerID]
 ORDER BY [o].[OrderID]",
                 //
-                @"@_outer_CustomerID='AROUT' (Size = 5) (DbType = StringFixedLength)
+                @"@_outer_CustomerID='AROUT' (Size = 5)
 
 SELECT TOP(1) [o].[OrderID], [o].[CustomerID], [o].[EmployeeID], [o].[OrderDate]
 FROM [Orders] AS [o]

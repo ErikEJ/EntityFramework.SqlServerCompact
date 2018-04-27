@@ -158,7 +158,7 @@ FROM [Customers] AS [c]");
 
             AssertSql(
                 @"SELECT [p].[ProductID], CASE
-    WHEN [p].[UnitsInStock] > 0
+    WHEN [p].[UnitsInStock] > CAST(0 AS smallint)
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END AS [IsAvailable]
 FROM [Products] AS [p]");

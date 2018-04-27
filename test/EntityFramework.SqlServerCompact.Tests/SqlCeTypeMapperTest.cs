@@ -27,9 +27,7 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Equal("smallint", GetTypeMapping(typeof(short)).StoreType);
             Assert.Equal("bigint", GetTypeMapping(typeof(long)).StoreType);
             Assert.Equal("real", GetTypeMapping(typeof(float)).StoreType);
-
-            //TODO ErikEJ Investigate
-            //Assert.Equal("datetimeoffset", GetTypeMapping(typeof(DateTimeOffset)).StoreType);
+            Assert.Equal("nvarchar(48)", GetTypeMapping(typeof(DateTimeOffset)).StoreType);
         }
 
         [Fact]
@@ -44,8 +42,7 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Equal("smallint", GetTypeMapping(typeof(short?)).StoreType);
             Assert.Equal("bigint", GetTypeMapping(typeof(long?)).StoreType);
             Assert.Equal("real", GetTypeMapping(typeof(float?)).StoreType);
-
-            //Assert.Equal("datetimeoffset", GetTypeMapping(typeof(DateTimeOffset?)).StoreType);
+            Assert.Equal("nvarchar(48)", GetTypeMapping(typeof(DateTimeOffset?)).StoreType);
         }
 
         [Fact]

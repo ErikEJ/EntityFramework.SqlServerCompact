@@ -318,7 +318,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         private string DumpParameters()
-            => Fixture.TestSqlLoggerFactory.Parameters.Single().Replace(", ", _eol);
+            => Fixture.TestSqlLoggerFactory.Parameters.First().Replace(", ", _eol);
 
         private static void AssertMappedDataTypes(MappedDataTypes entity, int id)
         {

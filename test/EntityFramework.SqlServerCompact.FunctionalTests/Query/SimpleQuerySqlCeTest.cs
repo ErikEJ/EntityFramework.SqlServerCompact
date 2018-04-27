@@ -213,7 +213,7 @@ WHERE [c].[CustomerID] = [c].[CustomerID]");
             base.Entity_equality_local();
 
             AssertSql(
-                @"@__local_0_CustomerID='ANATR' (Nullable = false) (Size = 5) (DbType = StringFixedLength)
+                @"@__local_0_CustomerID='ANATR' (Nullable = false) (Size = 5)
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
@@ -430,7 +430,7 @@ WHERE [e20].[EmployeeID] = @_outer_ReportsTo");
             AssertSql(
                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
 FROM [Employees] AS [e1]
-WHERE 0 IN (
+WHERE CAST(0 AS bigint) IN (
     SELECT TOP(1) [e2].[EmployeeID]
     FROM [Employees] AS [e2]
     WHERE [e2].[EmployeeID] = [e1].[ReportsTo]
@@ -470,7 +470,7 @@ WHERE [e20].[EmployeeID] = 42");
             AssertSql(
                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
 FROM [Employees] AS [e1]
-WHERE 0 IN (
+WHERE CAST(0 AS bigint) IN (
     SELECT TOP(1) [e2].[EmployeeID]
     FROM [Employees] AS [e2]
     WHERE [e2].[EmployeeID] = 42
@@ -484,7 +484,7 @@ WHERE 0 IN (
             AssertSql(
                 @"SELECT [e1].[EmployeeID], [e1].[City], [e1].[Country], [e1].[FirstName], [e1].[ReportsTo], [e1].[Title]
 FROM [Employees] AS [e1]
-WHERE 0 IN (
+WHERE CAST(0 AS bigint) IN (
     SELECT TOP(1) [e2].[EmployeeID]
     FROM [Employees] AS [e2]
     WHERE ([e2].[EmployeeID] <> [e1].[ReportsTo]) OR [e1].[ReportsTo] IS NULL
@@ -821,7 +821,7 @@ ORDER BY [e].[EmployeeID] - [e].[EmployeeID]");
                 @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[SupplierID], [p].[UnitPrice], [p].[UnitsInStock]
 FROM [Products] AS [p]
 ORDER BY CASE
-    WHEN [p].[UnitsInStock] > 0
+    WHEN [p].[UnitsInStock] > CAST(0 AS smallint)
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END, [p].[ProductID]");
         }
@@ -834,7 +834,7 @@ END, [p].[ProductID]");
                 @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[SupplierID], [p].[UnitPrice], [p].[UnitsInStock]
 FROM [Products] AS [p]
 ORDER BY CASE
-    WHEN (([p].[UnitsInStock] > 10) AND ([p].[ProductID] > 40)) OR (([p].[UnitsInStock] <= 10) AND ([p].[ProductID] <= 40))
+    WHEN (([p].[UnitsInStock] > CAST(10 AS smallint)) AND ([p].[ProductID] > 40)) OR (([p].[UnitsInStock] <= CAST(10 AS smallint)) AND ([p].[ProductID] <= 40))
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
 END, [p].[ProductID]");
         }
@@ -2423,7 +2423,7 @@ WHERE N'Chai' IN (
             AssertSql(
                 @"SELECT [p].[ProductID], [p].[Discontinued], [p].[ProductName], [p].[SupplierID], [p].[UnitPrice], [p].[UnitsInStock]
 FROM [Products] AS [p]
-WHERE 5 IN (
+WHERE CAST(5 AS smallint) IN (
     SELECT [o].[Quantity]
     FROM [Order Details] AS [o]
     WHERE [o].[ProductID] = [p].[ProductID]

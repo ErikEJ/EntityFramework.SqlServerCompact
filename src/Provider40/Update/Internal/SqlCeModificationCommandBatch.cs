@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Utilities;
@@ -88,9 +87,8 @@ namespace EFCore.SqlCe.Update.Internal
             }
             catch (Exception ex)
             {
-                //TODO Stop using RelationalStrings
                 throw new DbUpdateException(
-                    RelationalStrings.UpdateStoreException,
+                    "An error occurred while updating the entries. See the inner exception for details.",
                     ex,
                     ModificationCommands[commandIndex].Entries);
             }

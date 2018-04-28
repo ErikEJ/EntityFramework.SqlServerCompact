@@ -14,12 +14,6 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        [Fact(Skip = "ErikEJ investigate fail?")]
-        public override void Byte_enum_value_constant_used_in_projection()
-        {
-            base.Byte_enum_value_constant_used_in_projection();
-        }
-
         [Fact]
         public virtual void Common_property_shares_column()
         {
@@ -466,12 +460,6 @@ WHERE ([k].[Discriminator] = N'Kiwi') AND (SUBSTRING([k].[Species], (LEN([k].[Sp
 
         private void AssertSql(params string[] expected)
         {
-            //string[] expectedFixed = new string[expected.Length];
-            //int i = 0;
-            //foreach (var item in expected)
-            //{
-            //    expectedFixed[i++] = item.Replace("\r\n", "\n");
-            //}
             Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
         }
     }

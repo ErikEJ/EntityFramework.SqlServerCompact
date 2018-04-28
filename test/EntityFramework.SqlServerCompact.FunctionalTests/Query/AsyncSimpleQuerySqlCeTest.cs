@@ -39,25 +39,25 @@ namespace Microsoft.EntityFrameworkCore.Query
             return base.OrderBy_correlated_subquery_lol();
         }
 
-        [Fact(Skip = "SQLCE limitation, investigate")]
+        [Fact(Skip = "SQLCE limitation")]
         public override Task Min_over_subquery_is_client_eval()
         {
             return base.Min_over_subquery_is_client_eval();
         }
 
-        [Fact(Skip = "SQLCE limitation, investigate")]
+        [Fact(Skip = "SQLCE limitation")]
         public override Task Average_over_subquery_is_client_eval()
         {
             return base.Average_over_subquery_is_client_eval();
         }
 
-        [Fact(Skip = "SQLCE limitation, investigate")]
+        [Fact(Skip = "SQLCE limitation")]
         public override Task Max_over_subquery_is_client_eval()
         {
             return base.Max_over_subquery_is_client_eval();
         }
 
-        [Fact(Skip = "SQLCE limitation, investigate")]
+        [Fact(Skip = "SQLCE limitation")]
         public override Task Sum_over_subquery_is_client_eval()
         {
             return base.Sum_over_subquery_is_client_eval();

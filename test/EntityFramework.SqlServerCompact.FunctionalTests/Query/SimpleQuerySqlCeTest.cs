@@ -83,7 +83,7 @@ namespace Microsoft.EntityFrameworkCore.Query
             base.Project_single_element_from_collection_with_OrderBy_Distinct_and_FirstOrDefault();
         }
 
-        [Fact(Skip = "ErikEJ investigate fail - fixed post preview1?")]
+        [Fact(Skip = "SQLCE limitation")]
         public override void Projection_containing_DateTime_subtraction()
         {
             base.Projection_containing_DateTime_subtraction();
@@ -4154,7 +4154,6 @@ FROM (
 ) AS [t]");
         }
 
-        [Fact(Skip = "Investigate")]
         public override void Comparing_to_fixed_string_parameter()
         {
             base.Comparing_to_fixed_string_parameter();
@@ -4164,7 +4163,7 @@ FROM (
 
 SELECT [c].[CustomerID]
 FROM [Customers] AS [c]
-WHERE ([c].[CustomerID] LIKE @__prefix_0 + N'%' AND (LEFT([c].[CustomerID], LEN(@__prefix_0)) = @__prefix_0)) OR (@__prefix_0 = N'')");
+WHERE ([c].[CustomerID] LIKE @__prefix_0 + N'%' AND (SUBSTRING([c].[CustomerID], 1, LEN(@__prefix_0)) = @__prefix_0)) OR (@__prefix_0 = N'')");
         }
 
         public override void Comparing_entities_using_Equals()
@@ -4446,7 +4445,7 @@ FROM [Customers] AS [c]
 ORDER BY GETDATE()");
         }
 
-        [Fact(Skip = "Investigate")]
+        [Fact(Skip = "SQLCE limitation")]
         public override void OrderBy_empty_list_does_not_contains()
         {
             base.OrderBy_empty_list_does_not_contains();

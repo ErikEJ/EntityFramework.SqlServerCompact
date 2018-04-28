@@ -610,7 +610,6 @@ FROM [Order Details] AS [od]
 WHERE ([od].[OrderID] = 11077) AND (EXP([od].[Discount]) > 1)");
         }
 
-        [Fact(Skip = "Investigate")]
         public override void Where_math_log10()
         {
             base.Where_math_log10();
@@ -621,7 +620,6 @@ FROM [Order Details] AS [od]
 WHERE (([od].[OrderID] = 11077) AND ([od].[Discount] > CAST(0 AS real))) AND (LOG10([od].[Discount]) < 0)");
         }
 
-        [Fact(Skip = "Investigate")]
         public override void Where_math_log()
         {
             base.Where_math_log();

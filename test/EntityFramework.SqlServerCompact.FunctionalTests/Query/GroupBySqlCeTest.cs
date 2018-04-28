@@ -927,6 +927,7 @@ ORDER BY [Count], [Key]");
         }
 
         [Fact(Skip ="ErikEJ investigate fail")]
+        //System.Data.SqlServerCe.SqlCeException : Expressions in the ORDER BY list cannot contain aggregate functions.
         public override void GroupBy_OrderBy_count_Select_sum()
         {
             base.GroupBy_OrderBy_count_Select_sum();

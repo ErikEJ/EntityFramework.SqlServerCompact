@@ -18,14 +18,14 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         //System.Data.SqlServerCe.SqlCeException : The data was truncated while converting from one data type to another. [ Name of function(if known) =  ]
-        [Fact(Skip ="ErikEJ Investigate")]
+        [Fact(Skip ="SQLCE limitation")]
         public override void Can_insert_and_read_with_max_length_set()
         {
             base.Can_insert_and_read_with_max_length_set();
         }
 
         //System.Data.SqlServerCe.SqlCeException : The data was truncated while converting from one data type to another. [ Name of function(if known) =  ]
-        [Fact(Skip = "ErikEJ Investigate")]
+        [Fact(Skip = "SQLCE limitation")]
         public override void Can_perform_query_with_max_length()
         {
             base.Can_perform_query_with_max_length();
@@ -34,7 +34,7 @@ namespace Microsoft.EntityFrameworkCore
         [Fact(Skip = "SQLCE does not support ANSI")]
         public override void Can_perform_query_with_ansi_strings_test()
         {
-            //base.Can_perform_query_with_ansi_strings_test();
+            base.Can_perform_query_with_ansi_strings_test();
         }
 
         //TODO ErikEJ Await log string update

@@ -25,15 +25,13 @@ namespace Microsoft.EntityFrameworkCore
             base.Can_perform_query_with_ansi_strings_test();
         }
 
-        //System.Data.SqlServerCe.SqlCeException : The data was truncated while converting from one data type to another. [ Name of function(if known) =  ]
-        [Fact(Skip = "ErikEJ Investigate")]
         public override void Can_insert_and_read_with_max_length_set()
         {
             base.Can_insert_and_read_with_max_length_set();
         }
 
-        //System.Data.SqlServerCe.SqlCeException : The data was truncated while converting from one data type to another. [ Name of function(if known) =  ]
-        [Fact(Skip = "ErikEJ Investigate")]
+        //System.Data.SqlServerCe.SqlCeException : The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.
+        [Fact(Skip = "SQLCE limitation")]
         public override void Can_perform_query_with_max_length()
         {
             base.Can_perform_query_with_max_length();

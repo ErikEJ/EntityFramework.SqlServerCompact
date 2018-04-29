@@ -630,7 +630,6 @@ FROM [Order Details] AS [od]
 WHERE (([od].[OrderID] = 11077) AND ([od].[Discount] > CAST(0 AS real))) AND (LOG([od].[Discount]) < 0)");
         }
 
-        [Fact(Skip = "Investigate")]
         public override void Where_math_log_new_base()
         {
             base.Where_math_log_new_base();
@@ -638,7 +637,7 @@ WHERE (([od].[OrderID] = 11077) AND ([od].[Discount] > CAST(0 AS real))) AND (LO
             AssertSql(
                 @"SELECT [od].[OrderID], [od].[ProductID], [od].[Discount], [od].[Quantity], [od].[UnitPrice]
 FROM [Order Details] AS [od]
-WHERE (([od].[OrderID] = 11077) AND ([od].[Discount] > CAST(0 AS real))) AND (LOG([od].[Discount], 7E0) < 0)");
+WHERE ([od].[OrderID] = 11077) AND ([od].[Discount] > CAST(0 AS real))");
         }
 
         public override void Where_math_sqrt()

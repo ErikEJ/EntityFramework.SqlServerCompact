@@ -34,11 +34,6 @@ namespace Microsoft.EntityFrameworkCore
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        public override void Can_query_using_any_nullable_data_type_as_literal()
-        {
-            base.Can_query_using_any_nullable_data_type_as_literal();
-        }
-
         [Fact]
         public virtual void Can_query_using_any_mapped_data_type()
         {

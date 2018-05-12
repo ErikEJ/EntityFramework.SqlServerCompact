@@ -2,11 +2,15 @@
 using Xunit;
 using Xunit.Abstractions;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.EntityFrameworkCore.TestModels.FunkyDataModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class FunkyDataQuerySqlCeTest : FunkyDataQueryTestBase<FunkyDataQuerySqlCeFixture>
-    {
+    public class FunkyDataQuerySqlCeTest : FunkyDataQueryTestBase<FunkyDataQuerySqlCeTest.FunkyDataQuerySqlCeFixture>
+     {
         public FunkyDataQuerySqlCeTest(FunkyDataQuerySqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
@@ -84,5 +88,19 @@ END <> [c].[NullableBool]) OR [c].[NullableBool] IS NULL",
 ";
 
         private string Sql => Fixture.TestSqlLoggerFactory.Sql.Replace(Environment.NewLine, FileLineEnding);
+
+        public class FunkyDataQuerySqlCeFixture : FunkyDataQueryFixtureBase
+        {
+            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
+
+            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
+
+            public override FunkyDataContext CreateContext()
+            {
+                var context = base.CreateContext();
+                context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                return context;
+            }
+        }
     }
 }

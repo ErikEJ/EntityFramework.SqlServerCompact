@@ -6,7 +6,7 @@ using Xunit;
 // ReSharper disable InconsistentNaming
 namespace Microsoft.EntityFrameworkCore
 {
-    public class LoggingSqlCeTest : LoggingRelationalTest<SqlCeDbContextOptionsBuilder, SqlCeOptionsExtension>
+    public class LoggingSqlCeTest : LoggingRelationalTestBase<SqlCeDbContextOptionsBuilder, SqlCeOptionsExtension>
     {
         [Fact]
         public void Logs_context_initialization_()

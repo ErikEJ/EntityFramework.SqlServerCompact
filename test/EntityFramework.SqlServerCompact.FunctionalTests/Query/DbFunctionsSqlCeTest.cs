@@ -16,9 +16,9 @@ namespace Microsoft.EntityFrameworkCore.Query
             Fixture.TestSqlLoggerFactory.Clear();
         }
 
-        public override void String_Like_Literal()
+        public override void Like_literal()
         {
-            base.String_Like_Literal();
+            base.Like_literal();
 
             AssertSql(
                 @"SELECT COUNT(*)
@@ -26,9 +26,9 @@ FROM [Customers] AS [c]
 WHERE [c].[ContactName] LIKE N'%M%'");
         }
 
-        public override void String_Like_Identity()
+        public override void Like_identity()
         {
-            base.String_Like_Identity();
+            base.Like_identity();
 
             AssertSql(
                 @"SELECT COUNT(*)
@@ -36,9 +36,9 @@ FROM [Customers] AS [c]
 WHERE [c].[ContactName] LIKE [c].[ContactName]");
         }
 
-        public override void String_Like_Literal_With_Escape()
+        public override void Like_literal_with_escape()
         {
-            base.String_Like_Literal_With_Escape();
+            base.Like_literal_with_escape();
 
             AssertSql(
                 @"SELECT COUNT(*)

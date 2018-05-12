@@ -19,6 +19,24 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         [Fact(Skip = "SQLCE limitation")]
+        public override void Let_entity_equality_to_other_entity()
+        {
+            base.Let_entity_equality_to_other_entity();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Let_entity_equality_to_null()
+        {
+            base.Let_entity_equality_to_null();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Let_subquery_with_multiple_occurences()
+        {
+            base.Let_subquery_with_multiple_occurences();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
         public override void SelectMany_primitive_select_subquery()
         {
             base.SelectMany_primitive_select_subquery();
@@ -2248,7 +2266,7 @@ FROM [Customers] AS [c2]");
             base.Select_DTO_distinct_translated_to_server();
 
             AssertSql(
-                @"SELECT DISTINCT 1
+                @"SELECT 1
 FROM [Orders] AS [o]
 WHERE [o].[OrderID] < 10300");
         }

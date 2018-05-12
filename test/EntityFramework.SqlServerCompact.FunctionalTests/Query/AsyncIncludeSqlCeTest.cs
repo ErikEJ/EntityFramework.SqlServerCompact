@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -10,6 +11,12 @@ namespace Microsoft.EntityFrameworkCore.Query
             : base(fixture)
         {
             //fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override Task Include_collection_order_by_subquery()
+        {
+            return base.Include_collection_order_by_subquery();
         }
 
         [SqlServerCondition(SqlServerCondition.SupportsOffset)] 

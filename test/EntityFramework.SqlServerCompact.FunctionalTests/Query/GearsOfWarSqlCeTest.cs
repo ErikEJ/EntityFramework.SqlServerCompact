@@ -16,6 +16,90 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_projecting_single_constant_string()
+        {
+            base.Select_subquery_projecting_single_constant_string();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_projecting_single_constant_int()
+        {
+            base.Select_subquery_projecting_single_constant_int();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_projecting_single_constant_bool()
+        {
+            base.Select_subquery_projecting_single_constant_bool();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_boolean_empty()
+        {
+            base.Select_subquery_boolean_empty();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Correlated_collections_basic_projecting_constant_bool()
+        {
+            base.Correlated_collections_basic_projecting_constant_bool();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_boolean()
+        {
+            base.Select_subquery_boolean();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_boolean_with_pushdown()
+        {
+            base.Select_subquery_boolean_with_pushdown();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Select_subquery_boolean_empty_with_pushdown()
+        {
+            base.Select_subquery_boolean_empty_with_pushdown();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Include_collection_OrderBy_aggregate()
+        {
+            base.Include_collection_OrderBy_aggregate();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Where_enum_has_flag_subquery_with_pushdown()
+        {
+            base.Where_enum_has_flag_subquery_with_pushdown();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Correlated_collection_with_very_complex_order_by()
+        {
+            base.Correlated_collection_with_very_complex_order_by();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Correlated_collection_with_complex_OrderBy()
+        {
+            base.Correlated_collection_with_complex_OrderBy();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Include_collection_with_complex_OrderBy2()
+        {
+            base.Include_collection_with_complex_OrderBy2();
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override void Include_collection_with_complex_OrderBy3()
+        {
+            base.Include_collection_with_complex_OrderBy3();
+        }
+
         [Fact(Skip ="SQLCE limitation")]
         public override void Project_one_value_type_from_empty_collection()
         {
@@ -1557,43 +1641,6 @@ FROM (
     WHERE @_outer_FullName = [w0].[OwnerFullName]
 ) AS [t0]
 ORDER BY [t0].[Id]");
-        }
-
-        public override void Where_subquery_distinct_singleordefault_boolean()
-        {
-            base.Where_subquery_distinct_singleordefault_boolean();
-
-            AssertSql(
-                @"SELECT [g].[Nickname], [g].[SquadId], [g].[AssignedCityName], [g].[CityOrBirthName], [g].[Discriminator], [g].[FullName], [g].[HasSoulPatch], [g].[LeaderNickname], [g].[LeaderSquadId], [g].[Rank]
-FROM [Gears] AS [g]
-WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND ([g].[HasSoulPatch] = 1)
-ORDER BY [g].[Nickname]",
-                //
-                @"@_outer_FullName='Damon Baird' (Size = 256)
-
-SELECT TOP(2) [t0].[IsAutomatic]
-FROM (
-    SELECT DISTINCT [w0].*
-    FROM [Weapons] AS [w0]
-    WHERE (CHARINDEX(N'Lancer', [w0].[Name]) > 0) AND (@_outer_FullName = [w0].[OwnerFullName])
-) AS [t0]",
-                //
-                @"@_outer_FullName='Marcus Fenix' (Size = 256)
-
-SELECT TOP(2) [t0].[IsAutomatic]
-FROM (
-    SELECT DISTINCT [w0].*
-    FROM [Weapons] AS [w0]
-    WHERE (CHARINDEX(N'Lancer', [w0].[Name]) > 0) AND (@_outer_FullName = [w0].[OwnerFullName])
-) AS [t0]");
-        }
-
-        public override void Where_subquery_distinct_lastordefault_boolean()
-        {
-            base.Where_subquery_distinct_lastordefault_boolean();
-
-            AssertSql(
-                @"");
         }
 
         public override void Where_subquery_distinct_last_boolean()
@@ -3921,7 +3968,7 @@ WHERE ([f].[Discriminator] = N'LocustHorde') AND ([f].[Discriminator] = N'Locust
             base.Project_collection_navigation_with_inheritance1();
 
             AssertSql(
-                @"SELECT [h].[Id] AS [Id0], [t0].[Id]
+                @"SELECT [h].[Id], [t0].[Id]
 FROM [Factions] AS [h]
 LEFT JOIN (
     SELECT [h.Commander].*
@@ -4606,7 +4653,7 @@ FROM [Gears] AS [g]
 WHERE [g].[Discriminator] IN (N'Officer', N'Gear') AND ([g].[Nickname] <> N'Marcus')
 ORDER BY [g].[Nickname], [g].[SquadId], [g].[FullName]",
                 //
-                @"SELECT [t].[Nickname], [t].[SquadId], [t].[FullName], [g.Weapons].[OwnerFullName]
+                @"SELECT [t].[Nickname], [t].[SquadId], [t].[FullName], N'BFG', [g.Weapons].[OwnerFullName]
 FROM [Weapons] AS [g.Weapons]
 INNER JOIN (
     SELECT [g0].[Nickname], [g0].[SquadId], [g0].[FullName]
@@ -4670,7 +4717,7 @@ ORDER BY [t].[Id]");
 FROM [Squads] AS [s]
 ORDER BY [s].[Id]",
                 //
-                @"SELECT [t].[Id], [m.Mission].[Id], [s.Missions].[SquadId]
+                @"SELECT [t].[Id], [s.Missions].[SquadId], [m.Mission].[Id]
 FROM [SquadMissions] AS [s.Missions]
 INNER JOIN [Missions] AS [m.Mission] ON [s.Missions].[MissionId] = [m.Mission].[Id]
 INNER JOIN (
@@ -4947,7 +4994,7 @@ ORDER BY [t0].[FullName], [t0].[Nickname], [t0].[SquadId], [o.Reports].[FullName
             base.Correlated_collections_multiple_nested_complex_collections();
 
             AssertSql(
-                @"SELECT [o].[FullName] AS [FullName0], [o].[Nickname], [o].[SquadId], [t].[FullName]
+                @"SELECT [o].[FullName], [o].[Nickname], [o].[SquadId], [t].[FullName]
 FROM [Gears] AS [o]
 LEFT JOIN [Tags] AS [o.Tag] ON ([o].[Nickname] = [o.Tag].[GearNickName]) AND ([o].[SquadId] = [o.Tag].[GearSquadId])
 LEFT JOIN (
@@ -4980,7 +5027,7 @@ INNER JOIN (
 WHERE [o.Reports].[Discriminator] IN (N'Officer', N'Gear') AND ([o.Reports].[FullName] <> N'Foo')
 ORDER BY [t1].[HasSoulPatch] DESC, [t1].[Note], [t1].[Nickname], [t1].[SquadId], [o.Reports].[Rank], [o.Reports].[Nickname], [o.Reports].[SquadId], [o.Reports].[FullName]",
                 //
-                @"SELECT [t5].[HasSoulPatch], [t5].[Note], [t5].[Nickname], [t5].[SquadId], [t5].[Rank], [t5].[Nickname0], [t5].[SquadId0], [t5].[FullName], [o.Reports.Weapons].[Id] AS [Id0], [t2].[FullName], [w.Owner.Squad].[Id], [o.Reports.Weapons].[OwnerFullName]
+                @"SELECT [t5].[HasSoulPatch], [t5].[Note], [t5].[Nickname], [t5].[SquadId], [t5].[Rank], [t5].[Nickname0], [t5].[SquadId0], [t5].[FullName], [o.Reports.Weapons].[Id], [o.Reports.Weapons].[OwnerFullName], [t2].[FullName], [w.Owner.Squad].[Id]
 FROM [Weapons] AS [o.Reports.Weapons]
 LEFT JOIN (
     SELECT [w.Owner].*
@@ -5508,7 +5555,7 @@ LEFT JOIN (
 LEFT JOIN [Squads] AS [g.Squad] ON [t0].[SquadId] = [g.Squad].[Id]
 ORDER BY [t].[Note], [t0].[Nickname] DESC, [t0].[SquadId], [g.Squad].[Id]",
                 //
-                @"SELECT [t3].[Note], [t3].[Nickname], [t3].[SquadId], [t3].[Id], [g.Squad.Members].[Nickname] AS [Nickname0], [g.Squad.Members].[FullName], [g.Squad.Members].[SquadId]
+                @"SELECT [t3].[Note], [t3].[Nickname], [t3].[SquadId], [t3].[Id], [g.Squad.Members].[Nickname] AS [Nickname0], [g.Squad.Members].[SquadId], [g.Squad.Members].[FullName]
 FROM [Gears] AS [g.Squad.Members]
 INNER JOIN (
     SELECT [t1].[Note], [t2].[Nickname], [t2].[SquadId], [g.Squad0].[Id]
@@ -5559,7 +5606,7 @@ LEFT JOIN (
 LEFT JOIN [Squads] AS [w.Owner.Squad] ON [t].[SquadId] = [w.Owner.Squad].[Id]
 ORDER BY [w].[Name], [w].[Id], [w.Owner.Squad].[Id]",
                 //
-                @"SELECT [t1].[Name], [t1].[Id], [t1].[Id0], [w.Owner.Squad.Members].[FullName], [w.Owner.Squad.Members].[Rank], [w.Owner.Squad.Members].[SquadId]
+                @"SELECT [t1].[Name], [t1].[Id], [t1].[Id0], [w.Owner.Squad.Members].[Rank], [w.Owner.Squad.Members].[SquadId], [w.Owner.Squad.Members].[FullName]
 FROM [Gears] AS [w.Owner.Squad.Members]
 INNER JOIN (
     SELECT [w0].[Name], [w0].[Id], [w.Owner.Squad0].[Id] AS [Id0]
@@ -5605,7 +5652,7 @@ FROM [Gears] AS [r]
 WHERE [r].[Discriminator] IN (N'Officer', N'Gear')
 ORDER BY [r].[Nickname], [r].[SquadId], [r].[FullName]",
                 //
-                @"SELECT [t0].[Nickname], [t0].[SquadId], [t0].[FullName], [r.Weapons].[Id] AS [Id0], [w.Owner.Squad].[Id], [r.Weapons].[OwnerFullName]
+                @"SELECT [t0].[Nickname], [t0].[SquadId], [t0].[FullName], [r.Weapons].[Id], [r.Weapons].[OwnerFullName], [w.Owner.Squad].[Id]
 FROM [Weapons] AS [r.Weapons]
 LEFT JOIN (
     SELECT [w.Owner].*
@@ -5661,7 +5708,7 @@ INNER JOIN (
 WHERE [o.Reports].[Discriminator] IN (N'Officer', N'Gear')
 ORDER BY [t].[Nickname], [t].[SquadId], [o.Reports].[Nickname], [o.Reports].[SquadId], [o.Reports].[FullName]",
                 //
-                @"SELECT [t2].[Nickname], [t2].[SquadId], [t2].[Nickname0], [t2].[SquadId0], [t2].[FullName], [o.Reports.Weapons].[Id] AS [Id0], [w.Owner.Squad].[Id], [o.Reports.Weapons].[OwnerFullName]
+                @"SELECT [t2].[Nickname], [t2].[SquadId], [t2].[Nickname0], [t2].[SquadId0], [t2].[FullName], [o.Reports.Weapons].[Id], [o.Reports.Weapons].[OwnerFullName], [w.Owner.Squad].[Id]
 FROM [Weapons] AS [o.Reports.Weapons]
 LEFT JOIN (
     SELECT [w.Owner].*

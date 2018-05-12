@@ -2,7 +2,7 @@
 
 namespace Microsoft.EntityFrameworkCore
 {
-    public class SqlCeServiceCollectionExtensionsTest : EntityFrameworkServiceCollectionExtensionsTest
+    public class SqlCeServiceCollectionExtensionsTest : EntityFrameworkServiceCollectionExtensionsTestBase
     {
         public SqlCeServiceCollectionExtensionsTest()
             : base(SqlCeTestHelpers.Instance)

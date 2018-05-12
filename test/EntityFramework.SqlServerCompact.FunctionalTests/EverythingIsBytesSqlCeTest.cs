@@ -236,7 +236,7 @@ UnicodeDataTypes.StringUnicode ---> [nullable image] [MaxLength = 1073741823]
                     };
             }
 
-            protected override RelationalTypeMapping FindMapping(RelationalTypeMappingInfo mappingInfo)
+            protected override RelationalTypeMapping FindMapping(in RelationalTypeMappingInfo mappingInfo)
                 => FindRawMapping(mappingInfo)?.Clone(mappingInfo);
 
             private RelationalTypeMapping FindRawMapping(RelationalTypeMappingInfo mappingInfo)

@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
     public class Issue305Test
     {
@@ -35,7 +35,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
             public int FileInfoId { get; set; }
             public string Path { get; set; }
-            public String BlindedName { get; set; }
+            public string BlindedName { get; set; }
             public bool ContainsSynapse { get; set; }
             public int Quality { get; set; }
         }

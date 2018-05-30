@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using EFCore.SqlCe.Metadata.Internal;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Data.SqlServerCe;
-using System.Diagnostics;
 
-namespace Microsoft.EntityFrameworkCore.Migrations
+namespace EFCore.SqlCe.Query.Migrations
 {
     public class SqlCeMigrationsSqlGenerator : MigrationsSqlGenerator
     {
@@ -255,7 +254,7 @@ namespace Microsoft.EntityFrameworkCore.Migrations
             }
         }
 
-        protected override void Generate([NotNull] SqlOperation operation, [CanBeNull] IModel model, [NotNull] MigrationCommandListBuilder builder)
+        protected override void Generate(SqlOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
@@ -345,22 +344,22 @@ namespace Microsoft.EntityFrameworkCore.Migrations
         }
 
         protected virtual void ColumnDefinition(
-            [CanBeNull] string schema,
-            [NotNull] string table,
-            [NotNull] string name,
-            [NotNull] Type clrType,
-            [CanBeNull] string type,
-            [CanBeNull] bool? unicode,
-            [CanBeNull] int? maxLength,
+            string schema,
+            string table,
+            string name,
+            Type clrType,
+            string type,
+            bool? unicode,
+            int? maxLength,
             bool rowVersion,
             bool nullable,
-            [CanBeNull] object defaultValue,
-            [CanBeNull] string defaultValueSql,
-            [CanBeNull] string computedColumnSql,
+            object defaultValue,
+            string defaultValueSql,
+            string computedColumnSql,
             bool identity,
-            [NotNull] IAnnotatable annotatable,
-            [CanBeNull] IModel model,
-            [NotNull] MigrationCommandListBuilder builder)
+            IAnnotatable annotatable,
+            IModel model,
+            MigrationCommandListBuilder builder)
         {
             Check.NotEmpty(name, nameof(name));
             Check.NotNull(clrType, nameof(clrType));

@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore.TestUtilities;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
     public class PropertyValuesSqlCeTest
-        : PropertyValuesTestBase<SqlCeTestStore, PropertyValuesSqlCeTest.PropertyValuesSqlCeFixture>
+        : PropertyValuesTestBase<PropertyValuesSqlCeTest.PropertyValuesSqlCeFixture>
     {
         public PropertyValuesSqlCeTest(PropertyValuesSqlCeFixture fixture)
             : base(fixture)
@@ -13,44 +12,17 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
         public class PropertyValuesSqlCeFixture : PropertyValuesFixtureBase
         {
-            private const string DatabaseName = "PropertyValues";
+            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
 
-            private readonly IServiceProvider _serviceProvider;
-
-            public PropertyValuesSqlCeFixture()
+            protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
             {
-                _serviceProvider = new ServiceCollection()
-                    .AddEntityFrameworkSqlCe()
-                    .AddSingleton(TestModelSource.GetFactory(OnModelCreating))
-                    .BuildServiceProvider();
-            }
+                base.OnModelCreating(modelBuilder, context);
 
-            public override SqlCeTestStore CreateTestStore()
-            {
-                return SqlCeTestStore.GetOrCreateShared(DatabaseName, () =>
-                {
-                    var optionsBuilder = new DbContextOptionsBuilder()
-                        .UseSqlCe(SqlCeTestStore.CreateConnectionString(DatabaseName))
-                        .UseInternalServiceProvider(_serviceProvider);
+                modelBuilder.Entity<Building>()
+                    .Property(b => b.Value).HasColumnType("decimal(18,2)");
 
-                    using (var context = new AdvancedPatternsMasterContext(optionsBuilder.Options))
-                    {
-                        context.Database.EnsureClean();
-                        Seed(context);
-                    }
-                });
-            }
-
-            public override DbContext CreateContext(SqlCeTestStore testStore)
-            {
-                var optionsBuilder = new DbContextOptionsBuilder()
-                    .UseSqlCe(testStore.Connection)
-                    .UseInternalServiceProvider(_serviceProvider);
-
-                var context = new AdvancedPatternsMasterContext(optionsBuilder.Options);
-                context.Database.UseTransaction(testStore.Transaction);
-
-                return context;
+                modelBuilder.Entity<CurrentEmployee>()
+                    .Property(ce => ce.LeaveBalance).HasColumnType("decimal(18,2)");
             }
         }
     }

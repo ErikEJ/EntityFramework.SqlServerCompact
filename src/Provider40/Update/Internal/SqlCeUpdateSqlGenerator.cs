@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Text;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Update.Internal
+namespace EFCore.SqlCe.Update.Internal
 {
     public class SqlCeUpdateSqlGenerator : UpdateSqlGenerator, ISqlCeUpdateSqlGenerator
     {

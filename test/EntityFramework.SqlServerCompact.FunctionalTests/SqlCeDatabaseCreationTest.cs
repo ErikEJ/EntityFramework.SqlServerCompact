@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+// ReSharper disable InconsistentNaming
+namespace Microsoft.EntityFrameworkCore
 {
     public class SqlCeDatabaseCreationTest
     {
@@ -96,7 +98,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             {
                 if (!openConnection)
                 {
-                    testDatabase.Connection.Close();
+                    testDatabase.CloseConnection();
                 }
 
                 using (var context = new BloggingContext(testDatabase))
@@ -228,9 +230,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 Assert.Equal(ConnectionState.Closed, context.Database.GetDbConnection().State);
 
-                if (testStore.Connection.State != ConnectionState.Open)
+                if (testStore.ConnectionState != ConnectionState.Open)
                 {
-                    await testStore.Connection.OpenAsync();
+                    await testStore.OpenConnectionAsync();
                 }
 
                 var tables = testStore.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES ");
@@ -244,7 +246,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 Assert.Equal(
                     new[]
                         {
-                            "Blogs.AndChew (varbinary)",
+                            "Blogs.AndChew (image)",
                             "Blogs.AndRow (rowversion)",
                             "Blogs.Cheese (nvarchar)",
                             "Blogs.ErMilan (int)",
@@ -318,7 +320,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder
-                    .UseSqlCe(_testStore.Connection.ConnectionString)
+                    .UseSqlCe(_testStore.ConnectionString)
                     .UseInternalServiceProvider(CreateServiceProvider());
             }
 

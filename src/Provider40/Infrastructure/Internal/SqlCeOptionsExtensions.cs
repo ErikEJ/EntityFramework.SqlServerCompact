@@ -1,12 +1,14 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
-namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
+namespace EFCore.SqlCe.Infrastructure.Internal
 {
     public class SqlCeOptionsExtension : RelationalOptionsExtension
     {
+        private long? _serviceProviderHash;
         private bool? _clientEvalForUnsupportedSqlConstructs;
         private string _logFragment;
 
@@ -31,6 +33,16 @@ namespace Microsoft.EntityFrameworkCore.Infrastructure.Internal
             var clone = (SqlCeOptionsExtension)Clone();
             clone._clientEvalForUnsupportedSqlConstructs = clientEvalForUnsupportedSqlConstructs;
             return clone;
+        }
+
+        public override long GetServiceProviderHashCode()
+        {
+            if (_serviceProviderHash == null)
+            {
+                _serviceProviderHash = (base.GetServiceProviderHashCode() * 397) ^ (_clientEvalForUnsupportedSqlConstructs?.GetHashCode() ?? 0L);
+            }
+
+            return _serviceProviderHash.Value;
         }
 
         public override bool ApplyServices(IServiceCollection services)

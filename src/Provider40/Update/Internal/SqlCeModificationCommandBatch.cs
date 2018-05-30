@@ -4,11 +4,12 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Update.Internal
+namespace EFCore.SqlCe.Update.Internal
 {
     public class SqlCeModificationCommandBatch : AffectedCountModificationCommandBatch
     {
@@ -36,7 +37,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
             try
             {
 #if DEBUG
-                //System.Diagnostics.Debug.WriteLine(GetCommandText());
+                System.Diagnostics.Debug.WriteLine(GetCommandText());
 #endif
                 using (var reader = relationalCommand.RelationalCommand.ExecuteReader(connection, relationalCommand.ParameterValues))
                 {
@@ -87,7 +88,7 @@ namespace Microsoft.EntityFrameworkCore.Update.Internal
             catch (Exception ex)
             {
                 throw new DbUpdateException(
-                    RelationalStrings.UpdateStoreException,
+                    "An error occurred while updating the entries. See the inner exception for details.",
                     ex,
                     ModificationCommands[commandIndex].Entries);
             }

@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlServerCe;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using EFCore.SqlCe.Infrastructure.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests.Extensions
@@ -16,7 +16,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
 
             Assert.Equal("Data Source=C:\\data\\Unicorn.sdf", extension.ConnectionString);
-            Assert.Equal(1, extension.MaxBatchSize);
+            Assert.Null(extension.MaxBatchSize);
             Assert.Null(extension.Connection);
         }
 
@@ -29,7 +29,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
 
             Assert.Equal("Data Source=C:\\data\\Multicorn.sdf", extension.ConnectionString);
-            Assert.Equal(1, extension.MaxBatchSize);
+            Assert.Null(extension.MaxBatchSize);
             Assert.Null(extension.Connection);
         }
 
@@ -44,7 +44,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
 
             Assert.Same(connection, extension.Connection);
-            Assert.Equal(1, extension.MaxBatchSize);
+            Assert.Null(extension.MaxBatchSize);
             Assert.Null(extension.ConnectionString);
         }
 
@@ -59,7 +59,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
 
             Assert.Same(connection, extension.Connection);
-            Assert.Equal(1, extension.MaxBatchSize);
+            Assert.Null(extension.MaxBatchSize);
             Assert.Null(extension.ConnectionString);
         }
 
@@ -73,7 +73,7 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
 
             Assert.Equal("Data Source=C:\\data\\Multicorn.sdf", extension.ConnectionString);
-            Assert.Equal(1, extension.MaxBatchSize);
+            Assert.Null(extension.MaxBatchSize);
             Assert.Null(extension.Connection);
         }
 
@@ -87,12 +87,11 @@ namespace Microsoft.EntityFrameworkCore.Tests.Extensions
             var extension = optionsBuilder.Options.Extensions.OfType<SqlCeOptionsExtension>().Single();
 
             Assert.Equal("Data Source=C:\\data\\Multicorn.sdf", extension.ConnectionString);
-            Assert.Equal(1, extension.MaxBatchSize);
+            Assert.Null(extension.MaxBatchSize);
             Assert.Null(extension.Connection);
         }
 
         [Fact]
-
         public void Can_add_extension_with_legacy_paging()
         {
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();

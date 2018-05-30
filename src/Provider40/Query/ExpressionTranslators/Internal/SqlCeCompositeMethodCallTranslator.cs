@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 
-namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
+namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
 {
     public class SqlCeCompositeMethodCallTranslator : RelationalCompositeMethodCallTranslator
     {
@@ -9,6 +10,7 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
                 new SqlCeContainsOptimizedTranslator(),
                 new SqlCeConvertTranslator(),
                 new SqlCeDateAddTranslator(),
+                new SqlCeDateDiffTranslator(),
                 new SqlCeEndsWithOptimizedTranslator(),
                 new SqlCeMathTranslator(),
                 new SqlCeNewGuidTranslator(),
@@ -21,7 +23,8 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
                 new SqlCeStringToUpperTranslator(),
                 new SqlCeStringTrimEndTranslator(),
                 new SqlCeStringTrimStartTranslator(),
-                new SqlCeStringTrimTranslator()
+                new SqlCeStringTrimTranslator(),
+                new SqlCeStringIndexOfTranslator()
         };
 
         public SqlCeCompositeMethodCallTranslator(

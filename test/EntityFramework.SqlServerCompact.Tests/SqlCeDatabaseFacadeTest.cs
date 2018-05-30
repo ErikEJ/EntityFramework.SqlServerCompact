@@ -9,7 +9,7 @@ namespace Microsoft.EntityFrameworkCore
         [Fact]
         public void IsSqlCe_when_using_OnConfguring()
         {
-            using (var context = new SqlServerOnConfiguringContext())
+            using (var context = new SqlCeOnConfiguringContext())
             {
                 Assert.True(context.Database.IsSqlCe());
             }
@@ -18,7 +18,7 @@ namespace Microsoft.EntityFrameworkCore
         [Fact]
         public void IsSqlCe_in_OnModelCreating_when_using_OnConfguring()
         {
-            using (var context = new SqlServerOnModelContext())
+            using (var context = new SqlCeOnModelContext())
             {
                 var _ = context.Model; // Trigger context initialization
                 Assert.True(context.IsSqlCeSet);
@@ -28,7 +28,7 @@ namespace Microsoft.EntityFrameworkCore
         [Fact]
         public void IsSqlCe_in_constructor_when_using_OnConfguring()
         {
-            using (var context = new SqlServerConstructorContext())
+            using (var context = new SqlCeConstructorContext())
             {
                 var _ = context.Model; // Trigger context initialization
                 Assert.True(context.IsSqlCeSet);
@@ -38,7 +38,7 @@ namespace Microsoft.EntityFrameworkCore
         [Fact]
         public void Cannot_use_IsSqlCe_in_OnConfguring()
         {
-            using (var context = new SqlServerUseInOnConfiguringContext())
+            using (var context = new SqlCeUseInOnConfiguringContext())
             {
                 Assert.Equal(
                     CoreStrings.RecursiveOnConfiguring,
@@ -122,25 +122,25 @@ namespace Microsoft.EntityFrameworkCore
             public bool? IsSqlCeSet { get; protected set; }
         }
 
-        private class SqlServerOnConfiguringContext : ProviderContext
+        private class SqlCeOnConfiguringContext : ProviderContext
         {
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlCe("Database=Maltesers");
         }
 
-        private class SqlServerOnModelContext : SqlServerOnConfiguringContext
+        private class SqlCeOnModelContext : SqlCeOnConfiguringContext
         {
             protected override void OnModelCreating(ModelBuilder modelBuilder)
                 => IsSqlCeSet = Database.IsSqlCe();
         }
 
-        private class SqlServerConstructorContext : SqlServerOnConfiguringContext
+        private class SqlCeConstructorContext : SqlCeOnConfiguringContext
         {
-            public SqlServerConstructorContext()
+            public SqlCeConstructorContext()
                 => IsSqlCeSet = Database.IsSqlCe();
         }
 
-        private class SqlServerUseInOnConfiguringContext : SqlServerOnConfiguringContext
+        private class SqlCeUseInOnConfiguringContext : SqlCeOnConfiguringContext
         {
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {

@@ -1,10 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿using EFCore.SqlCe.Internal;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
+namespace EFCore.SqlCe.Scaffolding.Internal
 {
     public class SqlCeDatabaseModelFactory : IDatabaseModelFactory
     {
         private SqlCeConnection _connection;
-        private TableSelectionSet _tableSelectionSet;
+        private List<string> _tableSelection;
         private DatabaseModel _databaseModel;
-        private Dictionary<string, DatabaseTable> _tables;
-        private Dictionary<string, DatabaseColumn> _tableColumns;
+        private Dictionary<string, DatabaseTable> _tables = new Dictionary<string, DatabaseTable>();
+        private Dictionary<string, DatabaseColumn> _tableColumns = new Dictionary<string, DatabaseColumn>();
 
         private static string TableKey(DatabaseTable table) => TableKey(table.Name);
         private static string TableKey(string name) => "[" + name + "]";
@@ -37,15 +38,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
         }
 
         public virtual IDiagnosticsLogger<DbLoggerCategory.Scaffolding> Logger { get; }
-
-        private void ResetState()
-        {
-            _connection = null;
-            _tableSelectionSet = null;
-            _databaseModel = new DatabaseModel();
-            _tables = new Dictionary<string, DatabaseTable>();
-            _tableColumns = new Dictionary<string, DatabaseColumn>(StringComparer.OrdinalIgnoreCase);
-        }
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -71,7 +63,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             Check.NotNull(connection, nameof(connection));
             Check.NotNull(tables, nameof(tables));
 
-            ResetState();
+            _databaseModel = new DatabaseModel();
 
             _connection = connection as SqlCeConnection;
 
@@ -82,7 +74,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             }
             try
             {
-                _tableSelectionSet = new TableSelectionSet(tables, schemas);
+
+                _tableSelection = tables.ToList();
 
                 string databaseName = null;
                 try
@@ -105,8 +98,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 GetIndexes();
                 GetForeignKeys();
 
-                CheckSelectionsMatched(_tableSelectionSet);
-
                 return _databaseModel;
             }
             finally
@@ -115,14 +106,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 {
                     _connection?.Close();
                 }
-            }
-        }
-
-        private void CheckSelectionsMatched(TableSelectionSet tableSelectionSet)
-        {
-            foreach (var tableSelection in tableSelectionSet.Tables.Where(t => !t.IsMatched))
-            {
-                Logger.MissingTableWarning(tableSelection.Text);
             }
         }
 
@@ -141,7 +124,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                         Name = reader.GetValueOrDefault<string>("TABLE_NAME")
                     };
 
-                    if (_tableSelectionSet.Allows(table.Name))
+                    if (_tableSelection.Contains(table.Name))
                     {
                         _databaseModel.Tables.Add(table);
                         _tables[TableKey(table)] = table;
@@ -197,7 +180,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
                     Logger.ColumnFound(tableName, columnName, dataTypeName, nullable, defaultValue);
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         //Logger.ColumnSkipped(DisplayName(schemaName, tableName), columnName);
                         continue;
@@ -211,10 +194,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
                     var storeType = GetStoreType(dataTypeName, precision, scale, maxLength);
 
-                    if (defaultValue == "(NULL)")
-                    {
-                        defaultValue = null;
-                    }
+                    defaultValue = FilterClrDefaults(dataTypeName, nullable, defaultValue);
                     
                     var isComputed = reader.GetValueOrDefault<bool>("is_computed");
 
@@ -234,7 +214,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
                     if ((storeType) == "rowversion")
                     {
-                        column[ScaffoldingAnnotationNames.ConcurrencyToken] = true;
+                        column["ConcurrencyToken"] = true;
                     }
 
                     table.Columns.Add(column);
@@ -306,7 +286,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     //Logger.IndexColumnFound(
                     //    tableName, indexName, true, columnName, indexOrdinal);
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         //Logger.IndexColumnSkipped(columnName, indexName, DisplayName(schemaName, tableName));
                         continue;
@@ -381,7 +361,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     //Logger.IndexColumnFound(
                     //    tableName, indexName, true, columnName, indexOrdinal);
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         //Logger.IndexColumnSkipped(columnName, indexName, DisplayName(schemaName, tableName));
                         continue;
@@ -444,7 +424,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     var tableName = reader.GetValueOrDefault<string>("table_name");
                     var columnName = reader.GetValueOrDefault<string>("column_name");
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         continue;
                     }
@@ -515,7 +495,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                     var fromColumnName = reader.GetValueOrDefault<string>("FK_COLUMN_NAME");
                     var toColumnName = reader.GetValueOrDefault<string>("UQ_COLUMN_NAME");
 
-                    if (!_tableSelectionSet.Allows(tableName))
+                    if (!_tableSelection.Contains(tableName))
                     {
                         continue;
                     }
@@ -567,6 +547,55 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             }
 
             return column;
+        }
+
+        private static string FilterClrDefaults(string dataTypeName, bool nullable, string defaultValue)
+        {
+            if (defaultValue == null
+                || defaultValue == "(NULL)")
+            {
+                return null;
+            }
+            if (nullable)
+            {
+                return defaultValue;
+            }
+            if (defaultValue == "((0))")
+            {
+                if (dataTypeName == "bigint"
+                    || dataTypeName == "bit"
+                    || dataTypeName == "decimal"
+                    || dataTypeName == "float"
+                    || dataTypeName == "int"
+                    || dataTypeName == "money"
+                    || dataTypeName == "numeric"
+                    || dataTypeName == "real"
+                    || dataTypeName == "smallint"
+                    || dataTypeName == "tinyint")
+                {
+                    return null;
+                }
+            }
+            else if (defaultValue == "((0.0))")
+            {
+                if (dataTypeName == "decimal"
+                    || dataTypeName == "float"
+                    || dataTypeName == "money"
+                    || dataTypeName == "numeric"
+                    || dataTypeName == "real")
+                {
+                    return null;
+                }
+            }
+            else if ((defaultValue == "(CONVERT([real],(0)))" && dataTypeName == "real")
+                || (defaultValue == "((0.0000000000000000e+000))" && dataTypeName == "float")
+                || (defaultValue == "('1900-01-01T00:00:00.000')" && (dataTypeName == "datetime" || dataTypeName == "smalldatetime"))
+                || (defaultValue == "('00000000-0000-0000-0000-000000000000')" && dataTypeName == "uniqueidentifier"))
+            {
+                return null;
+            }
+
+            return defaultValue;
         }
 
         private static ReferentialAction? ConvertToReferentialAction(string onDeleteAction)

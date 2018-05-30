@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
     public class MigrationsSqlCeTest : MigrationsTestBase<MigrationsSqlCeFixture>
     {
@@ -36,7 +36,7 @@ CREATE TABLE [Table1] (
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES ('00000000000001_Migration1', '7.0.0-test')
+VALUES (N'00000000000001_Migration1', N'7.0.0-test')
 
 
 GO
@@ -45,13 +45,13 @@ sp_rename N'Table1', N'Table2'
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES ('00000000000002_Migration2', '7.0.0-test')
+VALUES (N'00000000000002_Migration2', N'7.0.0-test')
 
 
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES ('00000000000003_Migration3', '7.0.0-test')
+VALUES (N'00000000000003_Migration3', N'7.0.0-test')
 
 
 GO
@@ -74,7 +74,7 @@ GO
 GO
 
 DELETE FROM [__EFMigrationsHistory]
-WHERE [MigrationId] = '00000000000002_Migration2'
+WHERE [MigrationId] = N'00000000000002_Migration2'
 
 
 GO
@@ -85,7 +85,7 @@ DROP TABLE [Table1]
 GO
 
 DELETE FROM [__EFMigrationsHistory]
-WHERE [MigrationId] = '00000000000001_Migration1'
+WHERE [MigrationId] = N'00000000000001_Migration1'
 
 
 GO

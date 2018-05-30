@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq.Expressions;
+using EFCore.SqlCe.Infrastructure.Internal;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
 
 // ReSharper disable AssignNullToNotNullAttribute
-namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors
+namespace EFCore.SqlCe.Query.ExpressionVisitors
 {
     public class SqlCeTranslatingExpressionVisitor : SqlTranslatingExpressionVisitor
     {

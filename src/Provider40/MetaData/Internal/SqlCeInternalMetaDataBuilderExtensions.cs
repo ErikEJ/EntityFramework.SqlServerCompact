@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Metadata.Internal
+namespace EFCore.SqlCe.Metadata.Internal
 {
     public static class SqlCeInternalMetadataBuilderExtensions
     {

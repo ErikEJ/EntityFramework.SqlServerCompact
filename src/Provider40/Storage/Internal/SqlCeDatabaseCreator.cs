@@ -2,9 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Storage.Internal
+namespace EFCore.SqlCe.Storage.Internal
 {
     public class SqlCeDatabaseCreator : RelationalDatabaseCreator
     {

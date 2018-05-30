@@ -1,8 +1,9 @@
 ﻿ using System;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
+using EFCore.SqlCe.Query.Expressions.Internal;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 
-namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
+namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
 {
     public class SqlCeDateTimeDatePartComponentTranslator : IMemberTranslator
     {

@@ -4,9 +4,9 @@ using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using EFCore.SqlCe.Infrastructure.Internal;
 
 // ReSharper disable CheckNamespace
 
@@ -33,8 +33,8 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotEmpty(connectionString, nameof(connectionString));
 
             var extension = GetOrCreateExtension(optionsBuilder)
-            .WithConnectionString(connectionString)
-            .WithMaxBatchSize(1);
+            .WithConnectionString(connectionString);
+            //.WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);
@@ -62,8 +62,8 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(connectionStringBuilder, nameof(connectionStringBuilder));
 
             var extension = GetOrCreateExtension(optionsBuilder)
-            .WithConnectionString(connectionStringBuilder.ConnectionString)
-            .WithMaxBatchSize(1);
+            .WithConnectionString(connectionStringBuilder.ConnectionString);
+            //.WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);
@@ -108,8 +108,8 @@ namespace Microsoft.EntityFrameworkCore
             Check.NotNull(connection, nameof(connection));
 
             var extension = GetOrCreateExtension(optionsBuilder)
-            .WithConnection(connection)
-            .WithMaxBatchSize(1);
+            .WithConnection(connection);
+            //.WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);

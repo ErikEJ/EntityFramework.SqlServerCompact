@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Text;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Storage.Internal
+namespace EFCore.SqlCe.Storage.Internal
 {
     public class SqlCeSqlGenerationHelper : RelationalSqlGenerationHelper
     {

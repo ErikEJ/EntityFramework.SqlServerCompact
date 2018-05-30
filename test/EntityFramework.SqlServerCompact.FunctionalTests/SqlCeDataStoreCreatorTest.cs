@@ -4,13 +4,15 @@ using System.Data.SqlServerCe;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EFCore.SqlCe.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+// ReSharper disable InconsistentNaming
+namespace Microsoft.EntityFrameworkCore
 {
     public class SqlCeDataStoreCreatorTest
     {
@@ -148,7 +150,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         {
             using (var testDatabase = SqlCeTestStore.CreateScratch(createDatabase: true))
             {
-                testDatabase.Connection.Close();
+                testDatabase.CloseConnection();
 
                 var creator = GetDatabaseCreator(testDatabase);
 
@@ -219,7 +221,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
                 var optionsBuilder = new DbContextOptionsBuilder();
-                optionsBuilder.UseSqlCe(testDatabase.Connection.ConnectionString);
+                optionsBuilder.UseSqlCe(testDatabase.ConnectionString);
 
                 using (var context = new BloggingContext(optionsBuilder.Options))
                 {
@@ -234,9 +236,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                         creator.CreateTables();
                     }
 
-                    if (testDatabase.Connection.State != ConnectionState.Open)
+                    if (testDatabase.ConnectionState != ConnectionState.Open)
                     {
-                        await testDatabase.Connection.OpenAsync();
+                        await testDatabase.OpenConnectionAsync();
                     }
 
                     var tables = testDatabase.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
@@ -311,9 +313,9 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
                 Assert.True(creator.Exists());
 
-                if (testDatabase.Connection.State != ConnectionState.Open)
+                if (testDatabase.ConnectionState != ConnectionState.Open)
                 {
-                    await testDatabase.Connection.OpenAsync();
+                    await testDatabase.OpenConnectionAsync();
                 }
 
                 Assert.Equal(0, (testDatabase.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES")).Count());

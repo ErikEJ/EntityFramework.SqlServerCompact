@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
-using JetBrains.Annotations;
 using System.Data.SqlServerCe;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Microsoft.EntityFrameworkCore.Storage.Internal
+namespace EFCore.SqlCe.Storage.Internal
 {
     /// <summary>
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -12,47 +14,64 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
     /// </summary>
     public class SqlCeStringTypeMapping : StringTypeMapping
     {
+        private const int UnicodeMax = 4000;
+
         private readonly int _maxSpecificSize;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SqlCeStringTypeMapping" /> class.
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        /// <param name="storeType"> The name of the database type. </param>
-        /// <param name="dbType"> The <see cref="DbType" /> to be used. </param>
         public SqlCeStringTypeMapping(
             [NotNull] string storeType,
-            [CanBeNull] DbType? dbType)
-            : this(storeType, dbType, size: null)
+            DbType? dbType,
+            int? size = null,
+            bool fixedLength = false)
+            : this(
+                new RelationalTypeMappingParameters(
+                    new CoreTypeMappingParameters(typeof(string)),
+                    storeType,
+                    GetStoreTypePostfix(size),
+                    dbType,
+                    true,
+                    size,
+                    fixedLength))
         {
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SqlCeStringTypeMapping" /> class.
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        /// <param name="storeType"> The name of the database type. </param>
-        /// <param name="dbType"> The <see cref="DbType" /> to be used. </param>
-        /// <param name="size"> The size of data the property is configured to store, or null if no size is configured. </param>
-        public SqlCeStringTypeMapping(
-            [NotNull] string storeType,
-            [CanBeNull] DbType? dbType,
-            int? size)
-            : base(storeType, dbType, true, size)
+        protected SqlCeStringTypeMapping(RelationalTypeMappingParameters parameters)
+            : base(parameters)
         {
-            _maxSpecificSize = CalculateSize(size);
+            _maxSpecificSize = CalculateSize(parameters.Size);
         }
 
+        private static StoreTypePostfix GetStoreTypePostfix(int? size)
+            => size.HasValue && size <= UnicodeMax
+                    ? StoreTypePostfix.Size
+                    : StoreTypePostfix.None;
+
         private static int CalculateSize(int? size)
-            => size.HasValue && size < 4000 ? size.Value : 4000;
+            => size.HasValue && size <= UnicodeMax
+                    ? size.Value
+                    : UnicodeMax;
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public override RelationalTypeMapping Clone(string storeType, int? size)
-            => new SqlCeStringTypeMapping(
-                storeType,
-                DbType,
-                size);
+            => new SqlCeStringTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size, GetStoreTypePostfix(size)));
+
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public override CoreTypeMapping Clone(ValueConverter converter)
+            => new SqlCeStringTypeMapping(Parameters.WithComposedConverter(converter));
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -69,26 +88,24 @@ namespace Microsoft.EntityFrameworkCore.Storage.Internal
             // -1 (unbounded) to avoid SQL client size inference.
 
             var value = parameter.Value;
-            var length = (value as string)?.Length ?? (value as byte[])?.Length;
+            var length = (value as string)?.Length;
 
-            if (Size != null)
+            parameter.Size = (value == null) || (value == DBNull.Value) || ((length != null) && (length <= _maxSpecificSize))
+                ? _maxSpecificSize
+                : 0;
+
+            if ((length == null) || (length.Value <= _maxSpecificSize))
             {
-                parameter.Size = (value == null) || (value == DBNull.Value) || ((length != null) && (length <= Size.Value))
-                    ? Size.Value
-                    : 0;
+                parameter.DbType = System.Data.DbType.String;
+                return;
             }
-
-            if ((length == null) || (length.Value <= _maxSpecificSize)) return;
             ((SqlCeParameter)parameter).SqlDbType = SqlDbType.NText;
         }
 
         /// <summary>
-        ///     Generates the SQL representation of a literal value.
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        /// <param name="value">The literal value.</param>
-        /// <returns>
-        ///     The generated string.
-        /// </returns>
         protected override string GenerateNonNullSqlLiteral(object value)
             => $"N'{EscapeSqlLiteral((string)value)}'"; // Interpolation okay; strings
     }

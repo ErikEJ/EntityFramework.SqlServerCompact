@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
+using System;
 
-namespace Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal
+namespace EFCore.SqlCe.Query.ExpressionTranslators.Internal
 {
     public class SqlCeNewGuidTranslator : SingleOverloadStaticMethodCallTranslator
     {

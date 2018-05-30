@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
+using EFCore.SqlCe.Query.Expressions.Internal;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
+namespace EFCore.SqlCe.Query.Sql.Internal
 {
     public interface ISqlCeExpressionVisitor
     {

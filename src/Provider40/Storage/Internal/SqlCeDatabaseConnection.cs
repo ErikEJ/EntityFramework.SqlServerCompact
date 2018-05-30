@@ -1,8 +1,9 @@
 ﻿using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Microsoft.EntityFrameworkCore.Storage.Internal
+namespace EFCore.SqlCe.Storage.Internal
 {
     public class SqlCeDatabaseConnection : RelationalConnection, ISqlCeDatabaseConnection
     {

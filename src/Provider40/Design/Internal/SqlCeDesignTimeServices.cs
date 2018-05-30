@@ -1,18 +1,19 @@
-﻿using JetBrains.Annotations;
+﻿using EFCore.SqlCe.Scaffolding.Internal;
+using EFCore.SqlCe.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
+namespace EFCore.SqlCe.Design.Internal
 { 
     public class SqlCeDesignTimeServices : IDesignTimeServices
     {
-        public virtual void ConfigureDesignTimeServices([NotNull] IServiceCollection serviceCollection) 
+        public virtual void ConfigureDesignTimeServices(IServiceCollection serviceCollection) 
             => serviceCollection
-                .AddSingleton<IRelationalTypeMapper, SqlCeTypeMapper>()
+                .AddSingleton<IRelationalTypeMappingSource, SqlCeTypeMappingSource>()
                 .AddSingleton<IDatabaseModelFactory, SqlCeDatabaseModelFactory>()
-                .AddSingleton<IScaffoldingProviderCodeGenerator, SqlCeScaffoldingCodeGenerator>()
+                .AddSingleton<IProviderConfigurationCodeGenerator, SqlCeCodeGenerator>()
                 .AddSingleton<IAnnotationCodeGenerator, AnnotationCodeGenerator>();
     }
 }

@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Specification.Tests;
+using Microsoft.EntityFrameworkCore.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore
 {
-    public class ConcurrencyDetectorSqlServerTest : ConcurrencyDetectorRelationalTest<NorthwindQuerySqlCeFixture>
+    public class ConcurrencyDetectorSqlCeTest : ConcurrencyDetectorRelationalTestBase<NorthwindQuerySqlCeFixture<NoopModelCustomizer>>
     {
-        public ConcurrencyDetectorSqlServerTest(NorthwindQuerySqlCeFixture fixture)
+        public ConcurrencyDetectorSqlCeTest(NorthwindQuerySqlCeFixture<NoopModelCustomizer> fixture)
             : base(fixture)
         {
         }

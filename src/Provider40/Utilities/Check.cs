@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Internal;
 
 // ReSharper disable once CheckNamespace
 
@@ -16,7 +15,9 @@ namespace Microsoft.EntityFrameworkCore.Utilities
         [ContractAnnotation("value:null => halt")]
         public static T NotNull<T>([NoEnumeration] T value, [InvokerParameterName] [NotNull] string parameterName)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(value, null))
+#pragma warning restore IDE0041 // Use 'is null' check
             {
                 NotEmpty(parameterName, nameof(parameterName));
 
@@ -30,13 +31,13 @@ namespace Microsoft.EntityFrameworkCore.Utilities
         public static string NotEmpty(string value, [InvokerParameterName] [NotNull] string parameterName)
         {
             Exception e = null;
-            if (ReferenceEquals(value, null))
+            if (value is null)
             {
                 e = new ArgumentNullException(parameterName);
             }
             else if (value.Trim().Length == 0)
             {
-                e = new ArgumentException(CoreStrings.ArgumentIsEmpty(parameterName));
+                e = new ArgumentException($"The string argument '{parameterName}' cannot be empty.");
             }
 
             if (e != null)
@@ -51,12 +52,12 @@ namespace Microsoft.EntityFrameworkCore.Utilities
 
         public static string NullButNotEmpty(string value, [InvokerParameterName] [NotNull] string parameterName)
         {
-            if (!ReferenceEquals(value, null)
+            if (!(value is null)
                 && (value.Length == 0))
             {
                 NotEmpty(parameterName, nameof(parameterName));
 
-                throw new ArgumentException(CoreStrings.ArgumentIsEmpty(parameterName));
+                throw new ArgumentException($"The string argument '{parameterName}' cannot be empty.");
             }
 
             return value;

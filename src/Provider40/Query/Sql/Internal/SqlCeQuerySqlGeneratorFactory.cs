@@ -1,8 +1,9 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Microsoft.EntityFrameworkCore.Query.Sql;
 using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Query.Sql.Internal
+namespace EFCore.SqlCe.Query.Sql.Internal
 {
     public class SqlCeQuerySqlGeneratorFactory : QuerySqlGeneratorFactoryBase
     {

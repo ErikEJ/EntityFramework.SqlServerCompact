@@ -1,7 +1,8 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Microsoft.EntityFrameworkCore.Migrations.Internal
+namespace EFCore.SqlCe.Migrations.Internal
 {
     public class SqlCeHistoryRepository : HistoryRepository
     {
@@ -11,10 +12,17 @@ namespace Microsoft.EntityFrameworkCore.Migrations.Internal
         }
 
         protected override string ExistsSql
+        {
+            get
+            {
+                var stringTypeMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
 
-            => "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" +
-                SqlGenerationHelper.EscapeLiteral(TableName) + 
-                "' AND TABLE_TYPE <> N'SYSTEM TABLE'";
+                return "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = " +
+                    stringTypeMapping.GenerateSqlLiteral(
+                        SqlGenerationHelper.DelimitIdentifier(TableName)) +
+                " AND TABLE_TYPE <> N'SYSTEM TABLE'";
+            }
+        }
 
         protected override bool InterpretExistsResult(object value) => value != DBNull.Value;
 

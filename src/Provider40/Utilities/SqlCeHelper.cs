@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Utilities;
 
 // ReSharper disable once CheckNamespace
 
-namespace Microsoft.EntityFrameworkCore
+namespace EFCore.SqlCe
 {
     public static class SqlCeHelper
     {

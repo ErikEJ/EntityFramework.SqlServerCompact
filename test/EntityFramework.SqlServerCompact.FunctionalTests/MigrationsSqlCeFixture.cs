@@ -1,35 +1,28 @@
-﻿using System;
-using System.Data.SqlServerCe;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore.TestUtilities;
+using System.IO;
 
-namespace Microsoft.EntityFrameworkCore.Specification.Tests
+namespace Microsoft.EntityFrameworkCore
 {
     public class MigrationsSqlCeFixture : MigrationsFixtureBase
     {
-        private readonly DbContextOptions _options;
-        private readonly IServiceProvider _serviceProvider;
+        protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
 
         public MigrationsSqlCeFixture()
         {
-            _serviceProvider = new ServiceCollection()
-                .AddEntityFrameworkSqlCe()
-                .BuildServiceProvider();
-
-            var connectionStringBuilder = new SqlCeConnectionStringBuilder
+            if (File.Exists("TransactionSuppressed.sdf"))
             {
-                DataSource = nameof(MigrationsSqlCeTest)
-            };
-            //connectionStringBuilder.ApplyConfiguration();
-
-            var optionsBuilder = new DbContextOptionsBuilder();
-            optionsBuilder
-                .UseSqlCe(connectionStringBuilder.ConnectionString)
-                .UseInternalServiceProvider(_serviceProvider);
-            _options = optionsBuilder.Options;
+                File.Delete("TransactionSuppressed.sdf");
+            }
         }
 
-        public override MigrationsContext CreateContext() => new MigrationsContext(_options);
-
-        public override EmptyMigrationsContext CreateEmptyContext() => new EmptyMigrationsContext(_options);
+        public override MigrationsContext CreateContext()
+        {
+            var options = AddOptions(
+                    new DbContextOptionsBuilder()
+                        .UseSqlCe(TestStore.ConnectionString, b => b.ApplyConfiguration()))
+                .UseInternalServiceProvider(ServiceProvider)
+                .Options;
+            return new MigrationsContext(options);
+        }
     }
 }

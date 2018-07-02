@@ -34,7 +34,6 @@ namespace Microsoft.EntityFrameworkCore
 
             var extension = GetOrCreateExtension(optionsBuilder)
             .WithConnectionString(connectionString);
-            //.WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);
@@ -63,7 +62,6 @@ namespace Microsoft.EntityFrameworkCore
 
             var extension = GetOrCreateExtension(optionsBuilder)
             .WithConnectionString(connectionStringBuilder.ConnectionString);
-            //.WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);
@@ -109,7 +107,6 @@ namespace Microsoft.EntityFrameworkCore
 
             var extension = GetOrCreateExtension(optionsBuilder)
             .WithConnection(connection);
-            //.WithMaxBatchSize(1);
             ((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 
             ConfigureWarnings(optionsBuilder);

@@ -151,6 +151,7 @@
     <Compile Include="CustomConvertersSqlCeTest.cs" />
     <Compile Include="EverythingIsBytesSqlCeTest.cs" />
     <Compile Include="EverythingIsStringsSqlCeTest.cs" />
+    <Compile Include="Issue541Test.cs" />
     <Compile Include="LoggingSqlCeTest.cs" />
     <Compile Include="MonsterFixupChangedChangingSqlCeTest.cs" />
     <Compile Include="Query\AsNoTrackingSqlCeTest.cs" />

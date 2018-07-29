@@ -151,6 +151,7 @@
     <Compile Include="CustomConvertersSqlCeTest.cs" />
     <Compile Include="EverythingIsBytesSqlCeTest.cs" />
     <Compile Include="EverythingIsStringsSqlCeTest.cs" />
+    <Compile Include="GearsOfWarFromSqlQuerySqlCeTest.cs" />
     <Compile Include="Issue541Test.cs" />
     <Compile Include="LazyLoadProxySqlCeTest.cs" />
     <Compile Include="LoggingSqlCeTest.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="TestUtilities\DbContextOptionsBuilderExtensions.cs" />
     <Compile Include="TestUtilities\SqlServerConditionAttribute.cs" />
     <Compile Include="TestUtilities\TestEnvironment.cs" />
+    <Compile Include="WarningsSqlCeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -152,8 +152,10 @@
     <Compile Include="EverythingIsBytesSqlCeTest.cs" />
     <Compile Include="EverythingIsStringsSqlCeTest.cs" />
     <Compile Include="Issue541Test.cs" />
+    <Compile Include="LazyLoadProxySqlCeTest.cs" />
     <Compile Include="LoggingSqlCeTest.cs" />
     <Compile Include="MonsterFixupChangedChangingSqlCeTest.cs" />
+    <Compile Include="ProxyGraphUpdatesSqlCeTest.cs" />
     <Compile Include="Query\AsNoTrackingSqlCeTest.cs" />
     <Compile Include="Query\AsTrackingSqlCeTest.cs" />
     <Compile Include="Query\AsyncFromSqlQuerySqlCeTest.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="Scaffolding\SqlCeDatabaseModelFactoryTest.cs" />
     <Compile Include="Scaffolding\SqlCeDatabaseModelFixture.cs" />
     <Compile Include="SqlCeCommandDisposeTest.cs" />
+    <Compile Include="SqlCeComplianceTest.cs" />
     <Compile Include="SqlCeConfigPatternsTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseCleaner.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />

@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.TestUtilities;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class OwnedQuerySqlCeTest : OwnedQueryTestBase<OwnedQuerySqlCeTest.OwnedQuerySqlCeFixture>
+    public class OwnedQuerySqlCeTest : RelationalOwnedQueryTestBase<OwnedQuerySqlCeTest.OwnedQuerySqlCeFixture>
     {
         public OwnedQuerySqlCeTest(OwnedQuerySqlCeFixture fixture)
             : base(fixture)
@@ -28,11 +26,10 @@ namespace Microsoft.EntityFrameworkCore.Query
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class OwnedQuerySqlCeFixture : OwnedQueryFixtureBase
+        public class OwnedQuerySqlCeFixture : RelationalOwnedQueryFixture
         {
             protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
-            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
-
+            
             protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
             {
                 modelBuilder.Entity<OwnedPerson>()

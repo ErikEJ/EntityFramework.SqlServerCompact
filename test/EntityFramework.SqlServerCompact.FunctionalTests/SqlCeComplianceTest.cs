@@ -18,6 +18,8 @@ namespace Microsoft.EntityFrameworkCore
     //        typeof(TransactionTestBase<>),
     //        //TODO ErikEJ await fixes to base test
     //        typeof(WithConstructorsTestBase<>),
+              // same with QueryFilterFuncletizationTestBase`1
+
 
     //    };
 

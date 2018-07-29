@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class InheritanceSqlCeTest : InheritanceTestBase<InheritanceSqlCeFixture>
+    public class InheritanceSqlCeTest : InheritanceRelationalTestBase<InheritanceSqlCeFixture>
     {
         public InheritanceSqlCeTest(InheritanceSqlCeFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)

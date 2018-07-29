@@ -16,8 +16,8 @@ namespace Microsoft.EntityFrameworkCore
 
                 db.ServerData.AddRange(new List<ServerData>
                 {
-                    new ServerData { ServerId = 6, Type = 1, Value = 5 },
-                    new ServerData { ServerId = 6, Type = 2, Value = 6.56m },
+                    new ServerData { ServerId = 6, Type = 1, Value = 5, Date = DateTime.UtcNow },
+                    new ServerData { ServerId = 6, Type = 2, Value = 6.56m, Date = DateTime.UtcNow },
                 });
 
                 //Fix issue by supplying a date

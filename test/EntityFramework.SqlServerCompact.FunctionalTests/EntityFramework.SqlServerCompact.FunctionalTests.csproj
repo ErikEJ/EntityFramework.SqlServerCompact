@@ -253,6 +253,8 @@
     <Compile Include="SqlCeCommandDisposeTest.cs" />
     <Compile Include="SqlCeComplianceTest.cs" />
     <Compile Include="SqlCeConfigPatternsTest.cs" />
+    <Compile Include="StoreGeneratedFixUpSqlCeTest.cs" />
+    <Compile Include="StoreGeneratedSqlCeTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseCleaner.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseFacadeTestExtensions.cs" />
@@ -268,6 +270,8 @@
     <Compile Include="TestUtilities\DbContextOptionsBuilderExtensions.cs" />
     <Compile Include="TestUtilities\SqlServerConditionAttribute.cs" />
     <Compile Include="TestUtilities\TestEnvironment.cs" />
+    <Compile Include="UpdatesSqlCeFixture.cs" />
+    <Compile Include="UpdatesSqlCeTest.cs" />
     <Compile Include="WarningsSqlCeTest.cs" />
   </ItemGroup>
   <ItemGroup>

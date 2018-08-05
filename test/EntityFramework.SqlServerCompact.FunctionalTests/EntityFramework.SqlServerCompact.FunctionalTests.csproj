@@ -253,6 +253,7 @@
     <Compile Include="SqlCeCommandDisposeTest.cs" />
     <Compile Include="SqlCeComplianceTest.cs" />
     <Compile Include="SqlCeConfigPatternsTest.cs" />
+    <Compile Include="SqlCeMigrationsSqlGeneratorTest.cs" />
     <Compile Include="StoreGeneratedFixUpSqlCeTest.cs" />
     <Compile Include="StoreGeneratedSqlCeTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseCleaner.cs" />

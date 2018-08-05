@@ -52,7 +52,7 @@ namespace EFCore.SqlCe.Internal
         ///     SQL Compact does not support sequences. For more information, see http://go.microsoft.com/fwlink/?LinkId=723262.
         /// </summary>
         public static string SequencesNotSupported
-            => "SQL Compact does not support sequences. For more information, see http://go.microsoft.com/fwlink/?LinkId=723262.";
+            => "SQL Server Compact does not support this migration operation ('{0}').";
 
         /// <summary>
         ///     SQL Compact doesn't support schemas. The specified schema selection arguments will be ignored.

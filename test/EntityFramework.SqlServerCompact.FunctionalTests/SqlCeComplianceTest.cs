@@ -15,13 +15,7 @@ namespace Microsoft.EntityFrameworkCore
             //No roundtrip of GUIDs with SQL CE
             typeof(StoreGeneratedFixupTestBase<>),
 
-            //TODO Add!!
-            typeof(MigrationSqlGeneratorTestBase),
-
-            //TODO ErikEJ Implement!?
-            typeof(TransactionTestBase<>),
-
-            //TODO ErikEJ await fixes to base test
+            //TODO ErikEJ await fixes to base test, see #513
             typeof(WithConstructorsTestBase<>),
             typeof(QueryFilterFuncletizationTestBase<>),
         };

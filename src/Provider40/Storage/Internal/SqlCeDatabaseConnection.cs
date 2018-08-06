@@ -15,5 +15,7 @@ namespace EFCore.SqlCe.Storage.Internal
         protected override DbConnection CreateDbConnection() => new SqlCeConnection(ConnectionString);
 
         public override bool IsMultipleActiveResultSetsEnabled => true;
+
+        protected override bool SupportsAmbientTransactions => true;
     }
 }

@@ -70,7 +70,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IRelationalTypeMappingSource, SqlCeTypeMappingSource>()
                 .TryAdd<ISqlGenerationHelper, SqlCeSqlGenerationHelper>()
                 .TryAdd<IMigrationsAnnotationProvider, SqlCeMigrationsAnnotationProvider>()
-                //.TryAdd<IRelationalValueBufferFactoryFactory, UntypedRelationalValueBufferFactoryFactory>()
                 .TryAdd<IModelValidator, SqlCeModelValidator>()
                 .TryAdd<IConventionSetBuilder, SqlCeConventionSetBuilder>()
                 .TryAdd<IUpdateSqlGenerator>(p => p.GetService<ISqlCeUpdateSqlGenerator>())

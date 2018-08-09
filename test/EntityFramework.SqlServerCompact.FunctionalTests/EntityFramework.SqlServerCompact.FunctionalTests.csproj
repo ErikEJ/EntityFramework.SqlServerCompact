@@ -151,8 +151,12 @@
     <Compile Include="CustomConvertersSqlCeTest.cs" />
     <Compile Include="EverythingIsBytesSqlCeTest.cs" />
     <Compile Include="EverythingIsStringsSqlCeTest.cs" />
+    <Compile Include="GearsOfWarFromSqlQuerySqlCeTest.cs" />
+    <Compile Include="Issue541Test.cs" />
+    <Compile Include="LazyLoadProxySqlCeTest.cs" />
     <Compile Include="LoggingSqlCeTest.cs" />
     <Compile Include="MonsterFixupChangedChangingSqlCeTest.cs" />
+    <Compile Include="ProxyGraphUpdatesSqlCeTest.cs" />
     <Compile Include="Query\AsNoTrackingSqlCeTest.cs" />
     <Compile Include="Query\AsTrackingSqlCeTest.cs" />
     <Compile Include="Query\AsyncFromSqlQuerySqlCeTest.cs" />
@@ -247,7 +251,11 @@
     <Compile Include="Scaffolding\SqlCeDatabaseModelFactoryTest.cs" />
     <Compile Include="Scaffolding\SqlCeDatabaseModelFixture.cs" />
     <Compile Include="SqlCeCommandDisposeTest.cs" />
+    <Compile Include="SqlCeComplianceTest.cs" />
     <Compile Include="SqlCeConfigPatternsTest.cs" />
+    <Compile Include="SqlCeMigrationsSqlGeneratorTest.cs" />
+    <Compile Include="StoreGeneratedFixUpSqlCeTest.cs" />
+    <Compile Include="StoreGeneratedSqlCeTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseCleaner.cs" />
     <Compile Include="SqlCeDatabaseCreationTest.cs" />
     <Compile Include="TestUtilities\SqlCeDatabaseFacadeTestExtensions.cs" />
@@ -263,6 +271,9 @@
     <Compile Include="TestUtilities\DbContextOptionsBuilderExtensions.cs" />
     <Compile Include="TestUtilities\SqlServerConditionAttribute.cs" />
     <Compile Include="TestUtilities\TestEnvironment.cs" />
+    <Compile Include="UpdatesSqlCeFixture.cs" />
+    <Compile Include="UpdatesSqlCeTest.cs" />
+    <Compile Include="WarningsSqlCeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

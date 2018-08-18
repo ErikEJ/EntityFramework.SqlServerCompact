@@ -101,12 +101,6 @@ namespace Microsoft.EntityFrameworkCore.Query
             base.Project_single_element_from_collection_with_OrderBy_Distinct_and_FirstOrDefault();
         }
 
-        [Fact(Skip = "SQLCE limitation")]
-        public override void Projection_containing_DateTime_subtraction()
-        {
-            base.Projection_containing_DateTime_subtraction();
-        }
-
         public override void Shaper_command_caching_when_parameter_names_different()
         {
             base.Shaper_command_caching_when_parameter_names_different();

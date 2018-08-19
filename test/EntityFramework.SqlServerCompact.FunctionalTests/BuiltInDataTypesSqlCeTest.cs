@@ -490,11 +490,11 @@ namespace Microsoft.EntityFrameworkCore
 @p4='' (DbType = Int32)
 @p5='' (Size = 1)
 @p6='' (DbType = DateTime)
-@p7=''
-@p8=''
-@p9=''
-@p10=''
-@p11=''
+@p7='' (DbType = Decimal)
+@p8='' (DbType = Decimal)
+@p9='' (DbType = Decimal)
+@p10='' (DbType = Decimal)
+@p11='' (DbType = Double)
 @p12='' (Size = 20)
 @p13=''
 @p14='' (DbType = Guid)
@@ -508,7 +508,7 @@ namespace Microsoft.EntityFrameworkCore
 @p22='' (DbType = Int64)
 @p23='' (DbType = Int32)
 @p24='' (DbType = Int64)
-@p25=''",
+@p25='' (DbType = Decimal)",
                 parameters,
                 ignoreLineEndingDifferences: true);
 #endif
@@ -984,11 +984,11 @@ namespace Microsoft.EntityFrameworkCore
 @p3='' (DbType = Int32)
 @p4='' (Size = 1)
 @p5='' (DbType = DateTime)
-@p6=''
-@p7=''
-@p8=''
-@p9=''
-@p10=''
+@p6='' (DbType = Decimal)
+@p7='' (DbType = Decimal)
+@p8='' (DbType = Decimal)
+@p9='' (DbType = Decimal)
+@p10='' (DbType = Double)
 @p11='' (Size = 20)
 @p12=''
 @p13='' (DbType = Guid)
@@ -1002,7 +1002,7 @@ namespace Microsoft.EntityFrameworkCore
 @p21='' (DbType = Int64)
 @p22='' (DbType = Int32)
 @p23='' (DbType = Int64)
-@p24=''
+@p24='' (DbType = Decimal)
 @p25='' (DbType = Int16)",
                 parameters,
                 ignoreLineEndingDifferences: true);

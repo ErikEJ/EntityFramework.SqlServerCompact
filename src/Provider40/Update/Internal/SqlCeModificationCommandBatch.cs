@@ -94,7 +94,7 @@ namespace EFCore.SqlCe.Update.Internal
             }
         }
 
-        public override Task ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken = default)
         {
             Check.NotNull(connection, nameof(connection));
 

@@ -48,17 +48,6 @@ namespace Microsoft.EntityFrameworkCore.Query
             base.Where_subquery_FirstOrDefault_is_null();
         }
 
-        public override void Select_short_constant()
-        {
-            base.Select_short_constant();
-        }
-
-        public override void Select_byte_constant()
-        {
-            base.Select_byte_constant();
-        }
-
-
         [Fact(Skip = "SQLCE limitation")]
         public override void Project_single_element_from_collection_with_multiple_OrderBys_Take_and_FirstOrDefault_2()
         {

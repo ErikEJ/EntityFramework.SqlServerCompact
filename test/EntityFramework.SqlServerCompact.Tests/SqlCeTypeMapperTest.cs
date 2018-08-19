@@ -67,7 +67,7 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Null(GetTypeMapping(typeof(TimeSpan)).DbType);
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte)).DbType);
-            Assert.Null(GetTypeMapping(typeof(double)).DbType);
+            Assert.Equal(DbType.Double, GetTypeMapping(typeof(double)).DbType);
             Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool)).DbType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short)).DbType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long)).DbType);
@@ -84,7 +84,7 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Null(GetTypeMapping(typeof(TimeSpan?)).DbType);
             Assert.Equal(DbType.Guid, GetTypeMapping(typeof(Guid?)).DbType);
             Assert.Equal(DbType.Byte, GetTypeMapping(typeof(byte?)).DbType);
-            Assert.Null(GetTypeMapping(typeof(double?)).DbType);
+            Assert.Equal(DbType.Double, GetTypeMapping(typeof(double?)).DbType);
             Assert.Equal(DbType.Boolean, GetTypeMapping(typeof(bool?)).DbType);
             Assert.Equal(DbType.Int16, GetTypeMapping(typeof(short?)).DbType);
             Assert.Equal(DbType.Int64, GetTypeMapping(typeof(long?)).DbType);
@@ -110,7 +110,7 @@ namespace Microsoft.EntityFrameworkCore
         {
             var typeMapping = GetTypeMapping(typeof(decimal));
 
-            Assert.Null(typeMapping.DbType);
+            Assert.Equal(DbType.Decimal, typeMapping.DbType);
             Assert.Equal("decimal(18, 2)", typeMapping.StoreType);
         }
 
@@ -119,7 +119,7 @@ namespace Microsoft.EntityFrameworkCore
         {
             var typeMapping = GetTypeMapping(typeof(decimal?));
 
-            Assert.Null(typeMapping.DbType);
+            Assert.Equal(DbType.Decimal, typeMapping.DbType);
             Assert.Equal("decimal(18, 2)", typeMapping.StoreType);
         }
 

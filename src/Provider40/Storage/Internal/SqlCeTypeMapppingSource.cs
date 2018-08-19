@@ -61,13 +61,13 @@ namespace EFCore.SqlCe.Storage.Internal
             = new SqlCeDateTimeTypeMapping("datetime", dbType: DbType.DateTime);
 
         private readonly DoubleTypeMapping _double
-            = new DoubleTypeMapping("float");
+            = new DoubleTypeMapping("float", DbType.Double);
 
         private readonly GuidTypeMapping _uniqueidentifier
             = new GuidTypeMapping("uniqueidentifier", DbType.Guid);
 
         private readonly DecimalTypeMapping _decimal
-            = new SqlCeDecimalTypeMapping("decimal(18, 2)", null, 18, 2);
+            = new SqlCeDecimalTypeMapping("decimal(18, 2)", DbType.Decimal, 18, 2);
 
         private readonly Dictionary<Type, RelationalTypeMapping> _clrTypeMappings;
 

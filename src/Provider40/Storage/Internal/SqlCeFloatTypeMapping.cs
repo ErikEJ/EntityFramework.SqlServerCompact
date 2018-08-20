@@ -9,8 +9,10 @@ namespace EFCore.SqlCe.Storage.Internal
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public class SqlCeFloatTypeMapping : FloatTypeMapping
+    public class SqlCeFloatTypeMapping : RelationalTypeMapping
     {
+        //TODO ErikEJ Inherit FloatTypeMapping with 2.2 bits
+
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -18,7 +20,7 @@ namespace EFCore.SqlCe.Storage.Internal
         public SqlCeFloatTypeMapping(
             [NotNull] string storeType,
             DbType? dbType = null)
-            : base(storeType, dbType)
+            : base(storeType, typeof(float), dbType)
         {
         }
 

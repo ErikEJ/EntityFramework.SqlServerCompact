@@ -16,8 +16,8 @@ namespace EFCore.SqlCe.Storage.Internal
     /// </summary>
     public class SqlCeTypeMappingSource : RelationalTypeMappingSource
     {
-        private readonly FloatTypeMapping _real
-            = new SqlCeFloatTypeMapping("real");
+        private readonly RelationalTypeMapping _real
+            = new SqlCeFloatTypeMapping("real", DbType.Single);
 
         private readonly ByteTypeMapping _byte
             = new SqlCeByteTypeMapping("tinyint", DbType.Byte);

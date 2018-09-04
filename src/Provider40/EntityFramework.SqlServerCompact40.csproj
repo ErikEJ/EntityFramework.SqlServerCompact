@@ -218,7 +218,6 @@
     <Compile Include="Utilities\SqlCeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="EntityFrameworkCore.SqlServerCompact40.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

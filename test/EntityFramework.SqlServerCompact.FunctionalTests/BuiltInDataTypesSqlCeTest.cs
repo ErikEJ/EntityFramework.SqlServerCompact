@@ -496,7 +496,7 @@ namespace Microsoft.EntityFrameworkCore
 @p10='' (DbType = Decimal)
 @p11='' (DbType = Double)
 @p12='' (Size = 20)
-@p13=''
+@p13='' (DbType = Single)
 @p14='' (DbType = Guid)
 @p15='' (DbType = Int64)
 @p16='' (DbType = Int16)
@@ -990,7 +990,7 @@ namespace Microsoft.EntityFrameworkCore
 @p9='' (DbType = Decimal)
 @p10='' (DbType = Double)
 @p11='' (Size = 20)
-@p12=''
+@p12='' (DbType = Single)
 @p13='' (DbType = Guid)
 @p14='78' (Nullable = true)
 @p15='' (DbType = Int64)

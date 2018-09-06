@@ -94,7 +94,7 @@ namespace EFCore.SqlCe.Storage.Internal
                 ? _maxSpecificSize
                 : 0;
 
-            if ((length == null) || (length.Value <= _maxSpecificSize))
+            if ((length == null) || (length.Value <= UnicodeMax))
             {
                 parameter.DbType = System.Data.DbType.String;
                 return;

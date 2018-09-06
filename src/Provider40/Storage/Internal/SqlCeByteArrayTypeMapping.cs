@@ -100,7 +100,7 @@ namespace EFCore.SqlCe.Storage.Internal
                     ? maxSpecificSize
                     : 0;
 
-            if ((length == null) || (length.Value <= MaxSize))
+            if ((length == null) || (length.Value <= maxSpecificSize))
             {
                 return;
             }

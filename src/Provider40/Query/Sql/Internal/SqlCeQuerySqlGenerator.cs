@@ -129,21 +129,22 @@ namespace EFCore.SqlCe.Query.Sql.Internal
             return base.VisitBinary(expression);
         }
 
-        protected override Expression ApplyExplicitCastToBoolInProjectionOptimization(Expression expression)
+        protected override void GenerateProjection(Expression projection)
         {
-            var aliasedProjection = expression as AliasExpression;
-            var expressionToProcess = aliasedProjection?.Expression ?? expression;
-
+            var aliasedProjection = projection as AliasExpression;
+            var expressionToProcess = aliasedProjection?.Expression ?? projection;
             var updatedExperssion = ExplicitCastToBool(expressionToProcess);
 
-            return aliasedProjection != null
+            expressionToProcess = aliasedProjection != null
                 ? new AliasExpression(aliasedProjection.Alias, updatedExperssion)
                 : updatedExperssion;
+
+            base.GenerateProjection(expressionToProcess);
         }
 
         private Expression ExplicitCastToBool(Expression expression)
         {
-            return ((expression as BinaryExpression)?.NodeType == ExpressionType.Coalesce || expression.NodeType == ExpressionType.Constant)
+            return (expression as BinaryExpression)?.NodeType == ExpressionType.Coalesce
                    && expression.Type.UnwrapNullableType() == typeof(bool)
                 ? new ExplicitCastExpression(expression, expression.Type)
                 : expression;

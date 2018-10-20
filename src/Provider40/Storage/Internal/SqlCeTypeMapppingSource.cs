@@ -168,7 +168,8 @@ namespace EFCore.SqlCe.Storage.Internal
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         protected override RelationalTypeMapping FindMapping(in RelationalTypeMappingInfo mappingInfo)
-            => FindRawMapping(mappingInfo)?.Clone(mappingInfo);
+            => FindRawMapping(mappingInfo)?.Clone(mappingInfo)
+                ?? base.FindMapping(mappingInfo);
 
         private RelationalTypeMapping FindRawMapping(RelationalTypeMappingInfo mappingInfo)
         {

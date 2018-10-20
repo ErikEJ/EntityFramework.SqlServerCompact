@@ -4,7 +4,6 @@ using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCore.SqlCe.Storage.Internal
 {
@@ -32,12 +31,16 @@ namespace EFCore.SqlCe.Storage.Internal
                     new CoreTypeMappingParameters(typeof(string)),
                     storeType,
                     GetStoreTypePostfix(size),
-                    dbType,
+                    GetDbType(fixedLength),
                     true,
                     size,
                     fixedLength))
         {
         }
+
+        private static string GetStoreName(bool fixedLength) => fixedLength ? "nchar" : "nvarchar";
+
+        private static DbType? GetDbType(bool fixedLength) => fixedLength ? System.Data.DbType.String : (DbType?)null;
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

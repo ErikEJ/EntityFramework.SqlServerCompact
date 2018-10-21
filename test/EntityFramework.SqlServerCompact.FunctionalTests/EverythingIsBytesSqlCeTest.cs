@@ -25,11 +25,6 @@ namespace Microsoft.EntityFrameworkCore
             base.Can_perform_query_with_ansi_strings_test();
         }
 
-        public override void Can_insert_and_read_with_max_length_set()
-        {
-            base.Can_insert_and_read_with_max_length_set();
-        }
-
         //System.Data.SqlServerCe.SqlCeException : The ntext and image data types cannot be used in WHERE, HAVING, GROUP BY, ON, or IN clauses, except when these data types are used with the LIKE or IS NULL predicates.
         [Fact(Skip = "SQLCE limitation")]
         public override void Can_perform_query_with_max_length()
@@ -153,6 +148,8 @@ BuiltInNullableDataTypesShadow.TestNullableUnsignedInt16 ---> [nullable varbinar
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt32 ---> [nullable varbinary] [MaxLength = 4]
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt64 ---> [nullable varbinary] [MaxLength = 8]
 BuiltInNullableDataTypesShadow.TestString ---> [nullable image] [MaxLength = 1073741823]
+EmailTemplate.Id ---> [varbinary] [MaxLength = 16]
+EmailTemplate.TemplateType ---> [varbinary] [MaxLength = 4]
 MaxLengthDataTypes.ByteArray5 ---> [nullable varbinary] [MaxLength = 5]
 MaxLengthDataTypes.ByteArray9000 ---> [nullable image] [MaxLength = 1073741823]
 MaxLengthDataTypes.Id ---> [varbinary] [MaxLength = 4]

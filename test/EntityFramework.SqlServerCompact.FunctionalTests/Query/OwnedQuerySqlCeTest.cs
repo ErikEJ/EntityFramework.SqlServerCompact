@@ -29,7 +29,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         public class OwnedQuerySqlCeFixture : RelationalOwnedQueryFixture
         {
             protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
-            
+
             protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
             {
                 modelBuilder.Entity<OwnedPerson>()

@@ -157,7 +157,7 @@
     <Compile Include="CustomConvertersSqlCeTest.cs" />
     <Compile Include="EverythingIsBytesSqlCeTest.cs" />
     <Compile Include="EverythingIsStringsSqlCeTest.cs" />
-    <Compile Include="GearsOfWarFromSqlQuerySqlCeTest.cs" />
+    <Compile Include="Query\GearsOfWarFromSqlQuerySqlCeTest.cs" />
     <Compile Include="Issue541Test.cs" />
     <Compile Include="LazyLoadProxySqlCeTest.cs" />
     <Compile Include="LoggingSqlCeTest.cs" />

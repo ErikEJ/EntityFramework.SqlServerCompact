@@ -148,6 +148,8 @@ BuiltInNullableDataTypesShadow.TestNullableUnsignedInt16 ---> [nullable nvarchar
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt32 ---> [nullable nvarchar] [MaxLength = 64]
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt64 ---> [nullable nvarchar] [MaxLength = 64]
 BuiltInNullableDataTypesShadow.TestString ---> [nullable nvarchar] [MaxLength = 4000]
+EmailTemplate.Id ---> [nvarchar] [MaxLength = 36]
+EmailTemplate.TemplateType ---> [nvarchar] [MaxLength = 4000]
 MaxLengthDataTypes.ByteArray5 ---> [nullable nvarchar] [MaxLength = 8]
 MaxLengthDataTypes.ByteArray9000 ---> [nullable nvarchar] [MaxLength = 4000]
 MaxLengthDataTypes.Id ---> [nvarchar] [MaxLength = 64]

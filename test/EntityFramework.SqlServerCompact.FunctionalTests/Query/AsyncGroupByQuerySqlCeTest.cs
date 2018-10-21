@@ -15,16 +15,10 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        //[Fact(Skip= "SQLCE limitation")]
-        //public override async Task Select_nested_collection_with_groupby()
-        //{
-        //    await base.Select_nested_collection_with_groupby();
-        //}
-
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override async Task GroupBy_OrderBy_count_Select_sum()
-        //{
-        //    await base.GroupBy_OrderBy_count_Select_sum();
-        //}
+        [Fact(Skip= "SQLCE limitation")]        
+        public override async Task Select_nested_collection_with_groupby()
+        {
+            await base.Select_nested_collection_with_groupby();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using Xunit;
@@ -16,6 +17,12 @@ namespace Microsoft.EntityFrameworkCore.Query
         {
             Fixture.TestSqlLoggerFactory.Clear();
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
+        }
+
+        [Fact(Skip = "SQLCE limitation")]
+        public override async Task Select_bool_closure_with_order_by_property_with_cast_to_nullable(bool isAsync)
+        {
+            await base.Select_bool_closure_with_order_by_property_with_cast_to_nullable(isAsync);
         }
 
         //[Fact(Skip = "SQLCE limitation")]

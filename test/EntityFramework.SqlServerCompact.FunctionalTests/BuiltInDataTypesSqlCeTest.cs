@@ -1646,6 +1646,8 @@ BuiltInNullableDataTypesShadow.TestNullableUnsignedInt16 ---> [nullable int] [Pr
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt32 ---> [nullable bigint] [Precision = 19]
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt64 ---> [nullable numeric] [Precision = 20 Scale = 0]
 BuiltInNullableDataTypesShadow.TestString ---> [nullable nvarchar] [MaxLength = 4000]
+EmailTemplate.Id ---> [uniqueidentifier]
+EmailTemplate.TemplateType ---> [int] [Precision = 10]
 MappedDataTypes.BoolAsBit ---> [bit] [Precision = 1 Scale = 0]
 MappedDataTypes.ByteAsTinyint ---> [tinyint] [Precision = 3]
 MappedDataTypes.BytesAsImage ---> [image] [MaxLength = 1073741823]

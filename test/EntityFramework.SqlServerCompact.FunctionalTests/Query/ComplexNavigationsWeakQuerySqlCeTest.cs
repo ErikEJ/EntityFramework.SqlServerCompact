@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -14,60 +15,76 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void Select_join_with_key_selector_being_a_subquery()
-        //{
-        //    base.Select_join_with_key_selector_being_a_subquery();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Select_join_with_key_selector_being_a_subquery(bool isAsync)
+        {
+            await base.Select_join_with_key_selector_being_a_subquery(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision()
-        //{
-        //    base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Where_navigation_property_to_collection2(bool isAsync)
+        {
+            await base.Where_navigation_property_to_collection2(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void Join_navigation_in_inner_selector_translated_to_subquery()
-        //{
-        //    base.Join_navigation_in_inner_selector_translated_to_subquery();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Where_navigation_property_to_collection(bool isAsync)
+        {
+            await base.Where_navigation_property_to_collection(isAsync);
+        }
 
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Where_navigation_property_to_collection_of_original_entity_type(bool isAsync)
+        {
+            await base.Where_navigation_property_to_collection_of_original_entity_type(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void GroupJoin_in_subquery_with_client_projection_nested1()
-        //{
-        //    base.GroupJoin_in_subquery_with_client_projection_nested1();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Join_navigation_in_inner_selector_translated_to_subquery(bool isAsync)
+        {
+            await base.Join_navigation_in_inner_selector_translated_to_subquery(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void GroupJoin_in_subquery_with_client_projection_nested2()
-        //{
-        //    base.GroupJoin_in_subquery_with_client_projection_nested2();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task GroupJoin_in_subquery_with_client_result_operator(bool isAsync)
+        {
+            await base.GroupJoin_in_subquery_with_client_result_operator(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void GroupJoin_in_subquery_with_client_result_operator()
-        //{
-        //    base.GroupJoin_in_subquery_with_client_result_operator();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task GroupJoin_in_subquery_with_client_projection_nested2(bool isAsync)
+        {
+            await base.GroupJoin_in_subquery_with_client_projection_nested2(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void Explicit_GroupJoin_in_subquery_with_scalar_result_operator()
-        //{
-        //    base.Explicit_GroupJoin_in_subquery_with_scalar_result_operator();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision(bool isAsync)
+        {
+            await base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause()
-        //{
-        //    base.Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Project_collection_navigation_count(bool isAsync)
+        {
+            await base.Project_collection_navigation_count(isAsync);
+        }
 
-        //[ConditionalFact(Skip = "SQLCE limitation")]
-        //public override void Member_doesnt_get_pushed_down_into_subquery_with_result_operator()
-        //{
-        //    base.Member_doesnt_get_pushed_down_into_subquery_with_result_operator();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Explicit_GroupJoin_in_subquery_with_scalar_result_operator(bool isAsync)
+        {
+            await base.Explicit_GroupJoin_in_subquery_with_scalar_result_operator(isAsync);
+        }
 
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause(bool isAsync)
+        {
+            await base.Explicit_GroupJoin_in_subquery_with_multiple_result_operator_distinct_count_materializes_main_clause(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override async Task Member_doesnt_get_pushed_down_into_subquery_with_result_operator(bool isAsync)
+        {
+            await base.Member_doesnt_get_pushed_down_into_subquery_with_result_operator(isAsync);
+        }
     }
 }

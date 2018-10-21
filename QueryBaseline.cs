@@ -54,3 +54,11 @@ WHERE [p].[DependentId] = @__category_PrincipalId_0");
 
 
 
+Microsoft.EntityFrameworkCore.Query.DbFunctionsSqlCeTest.DateDiff_Millisecond() : line 155
+            AssertSql(
+                @"SELECT COUNT(*)
+FROM [Orders] AS [c]
+WHERE DATEDIFF(MILLISECOND, GETDATE(), DATEADD(day, 1.0, GETDATE())) = 0");
+
+
+

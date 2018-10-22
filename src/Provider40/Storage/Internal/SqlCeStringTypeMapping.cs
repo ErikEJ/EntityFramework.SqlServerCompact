@@ -25,20 +25,19 @@ namespace EFCore.SqlCe.Storage.Internal
             [NotNull] string storeType,
             DbType? dbType,
             int? size = null,
-            bool fixedLength = false)
+            bool fixedLength = false,
+            StoreTypePostfix? storeTypePostfix = null)
             : this(
                 new RelationalTypeMappingParameters(
                     new CoreTypeMappingParameters(typeof(string)),
                     storeType,
-                    GetStoreTypePostfix(size),
+                    storeTypePostfix ?? StoreTypePostfix.Size,
                     GetDbType(fixedLength),
                     true,
                     size,
                     fixedLength))
         {
         }
-
-        private static string GetStoreName(bool fixedLength) => fixedLength ? "nchar" : "nvarchar";
 
         private static DbType? GetDbType(bool fixedLength) => fixedLength ? System.Data.DbType.String : (DbType?)null;
 
@@ -51,11 +50,6 @@ namespace EFCore.SqlCe.Storage.Internal
         {
             _maxSpecificSize = CalculateSize(parameters.Size);
         }
-
-        private static StoreTypePostfix GetStoreTypePostfix(int? size)
-            => size.HasValue && size <= UnicodeMax
-                    ? StoreTypePostfix.Size
-                    : StoreTypePostfix.None;
 
         private static int CalculateSize(int? size)
             => size.HasValue && size <= UnicodeMax

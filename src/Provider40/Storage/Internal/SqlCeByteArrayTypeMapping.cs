@@ -1,7 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlServerCe;
@@ -38,17 +35,13 @@ namespace EFCore.SqlCe.Storage.Internal
                 new RelationalTypeMappingParameters(
                     new CoreTypeMappingParameters(typeof(byte[]), null, comparer),
                     storeType,
-                    GetStoreTypePostfix(storeTypePostfix, size),
+                    storeTypePostfix ?? StoreTypePostfix.Size,
                     dbType,
                     size: size,
                     fixedLength: fixedLength))
         {
             _storeTypePostfix = storeTypePostfix;
         }
-
-        private static StoreTypePostfix GetStoreTypePostfix(StoreTypePostfix? storeTypePostfix, int? size)
-            => storeTypePostfix
-               ?? (size != null && size <= MaxSize ? StoreTypePostfix.Size : StoreTypePostfix.None);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

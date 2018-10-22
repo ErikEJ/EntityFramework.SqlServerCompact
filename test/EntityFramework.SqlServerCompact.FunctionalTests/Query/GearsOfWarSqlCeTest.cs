@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,6 +16,123 @@ namespace Microsoft.EntityFrameworkCore.Query
             Fixture.TestSqlLoggerFactory.Clear();
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_int_with_inside_cast_and_coalesce(bool isAsync)
+        {
+            return base.Select_subquery_int_with_inside_cast_and_coalesce(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task DateTimeOffset_DateAdd_AddDays(bool isAsync)
+        {
+            return base.DateTimeOffset_DateAdd_AddDays(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task DateTimeOffset_DateAdd_AddHours(bool isAsync)
+        {
+            return base.DateTimeOffset_DateAdd_AddHours(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task DateTimeOffset_DateAdd_AddMilliseconds(bool isAsync)
+        {
+            return base.DateTimeOffset_DateAdd_AddMilliseconds(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task DateTimeOffset_DateAdd_AddMinutes(bool isAsync)
+        {
+            return base.DateTimeOffset_DateAdd_AddMinutes(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task DateTimeOffset_DateAdd_AddMonths(bool isAsync)
+        {
+            return base.DateTimeOffset_DateAdd_AddMonths(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task DateTimeOffset_DateAdd_AddSeconds(bool isAsync)
+        {
+            return base.DateTimeOffset_DateAdd_AddSeconds(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task DateTimeOffset_DateAdd_AddYears(bool isAsync)
+        {
+            return base.DateTimeOffset_DateAdd_AddYears(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_date_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_date_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_dayofyear_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_dayofyear_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_day_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_day_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_hour_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_hour_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_millisecond_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_millisecond_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_minute_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_minute_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_month_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_month_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_now(bool isAsync)
+        {
+            return base.Where_datetimeoffset_now(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_second_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_second_component(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_utcnow(bool isAsync)
+        {
+            return base.Where_datetimeoffset_utcnow(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_datetimeoffset_year_component(bool isAsync)
+        {
+            return base.Where_datetimeoffset_year_component(isAsync);
+        }
+
+
+
 
         //[Fact(Skip = "SQLCE limitation")]
         //public override void Select_subquery_projecting_single_constant_string()

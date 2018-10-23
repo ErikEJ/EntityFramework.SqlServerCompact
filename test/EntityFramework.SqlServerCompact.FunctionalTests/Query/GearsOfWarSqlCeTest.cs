@@ -126,110 +126,178 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         [Theory(Skip = "SQLCE limitation")]
+        public override Task GetValueOrDefault_on_DateTimeOffset(bool isAsync)
+        {
+            return base.GetValueOrDefault_on_DateTimeOffset(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Time_of_day_datetimeoffset(bool isAsync)
+        {
+            return base.Time_of_day_datetimeoffset(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
         public override Task Where_datetimeoffset_year_component(bool isAsync)
         {
             return base.Where_datetimeoffset_year_component(isAsync);
         }
 
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_subquery_distinct_orderby_firstordefault_boolean(bool isAsync)
+        {
+            return base.Where_subquery_distinct_orderby_firstordefault_boolean(isAsync);
+        }
 
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_boolean_with_pushdown(bool isAsync)
+        {
+            return base.Select_subquery_boolean_with_pushdown(isAsync);
+        }
 
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_int_with_pushdown_and_coalesce(bool isAsync)
+        {
+            return base.Select_subquery_int_with_pushdown_and_coalesce(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Select_subquery_projecting_single_constant_string()
-        //{
-        //    base.Select_subquery_projecting_single_constant_string();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_enum_has_flag_subquery_with_pushdown(bool isAsync)
+        {
+            return base.Where_enum_has_flag_subquery_with_pushdown(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Select_subquery_projecting_single_constant_int()
-        //{
-        //    base.Select_subquery_projecting_single_constant_int();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_projecting_single_constant_int(bool isAsync)
+        {
+            return base.Select_subquery_projecting_single_constant_int(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Select_subquery_projecting_single_constant_bool()
-        //{
-        //    base.Select_subquery_projecting_single_constant_bool();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Correlated_collection_with_complex_order_by_funcletized_to_constant_bool(bool isAsync)
+        {
+            return base.Correlated_collection_with_complex_order_by_funcletized_to_constant_bool(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Select_subquery_boolean_empty()
-        //{
-        //    base.Select_subquery_boolean_empty();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_int_with_outside_cast_and_coalesce(bool isAsync)
+        {
+            return base.Select_subquery_int_with_outside_cast_and_coalesce(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Correlated_collections_basic_projecting_constant_bool()
-        //{
-        //    base.Correlated_collections_basic_projecting_constant_bool();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_distinct_firstordefault(bool isAsync)
+        {
+            return base.Select_subquery_distinct_firstordefault(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Select_subquery_boolean()
-        //{
-        //    base.Select_subquery_boolean();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_boolean_empty_with_pushdown(bool isAsync)
+        {
+            return base.Select_subquery_boolean_empty_with_pushdown(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Select_subquery_boolean_with_pushdown()
-        //{
-        //    base.Select_subquery_boolean_with_pushdown();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_projecting_single_constant_string(bool isAsync)
+        {
+            return base.Select_subquery_projecting_single_constant_string(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Select_subquery_boolean_empty_with_pushdown()
-        //{
-        //    base.Select_subquery_boolean_empty_with_pushdown();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_subquery_distinct_firstordefault_boolean(bool isAsync)
+        {
+            return base.Where_subquery_distinct_firstordefault_boolean(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Include_collection_OrderBy_aggregate()
-        //{
-        //    base.Include_collection_OrderBy_aggregate();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Include_collection_OrderBy_aggregate(bool isAsync)
+        {
+            return base.Include_collection_OrderBy_aggregate(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Where_enum_has_flag_subquery_with_pushdown()
-        //{
-        //    base.Where_enum_has_flag_subquery_with_pushdown();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Include_collection_with_complex_OrderBy2(bool isAsync)
+        {
+            return base.Include_collection_with_complex_OrderBy2(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Correlated_collection_with_very_complex_order_by()
-        //{
-        //    base.Correlated_collection_with_very_complex_order_by();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Query_with_complex_let_containing_ordering_and_filter_projecting_firstOrDefefault_element_of_let(bool isAsync)
+        {
+            return base.Query_with_complex_let_containing_ordering_and_filter_projecting_firstOrDefefault_element_of_let(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Correlated_collection_with_complex_OrderBy()
-        //{
-        //    base.Correlated_collection_with_complex_OrderBy();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_enum_has_flag_subquery(bool isAsync)
+        {
+            return base.Where_enum_has_flag_subquery(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Include_collection_with_complex_OrderBy2()
-        //{
-        //    base.Include_collection_with_complex_OrderBy2();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_projecting_single_constant_bool(bool isAsync)
+        {
+            return base.Select_subquery_projecting_single_constant_bool(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Include_collection_with_complex_OrderBy3()
-        //{
-        //    base.Include_collection_with_complex_OrderBy3();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Filter_on_subquery_projecting_one_value_type_from_empty_collection(bool isAsync)
+        {
+            return base.Filter_on_subquery_projecting_one_value_type_from_empty_collection(isAsync);
+        }
 
-        //[Fact(Skip ="SQLCE limitation")]
-        //public override void Project_one_value_type_from_empty_collection()
-        //{
-        //    base.Project_one_value_type_from_empty_collection();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_boolean(bool isAsync)
+        {
+            return base.Select_subquery_boolean(isAsync);
+        }
 
-        //[Fact(Skip = "SQLCE limitation")]
-        //public override void Filter_on_subquery_projecting_one_value_type_from_empty_collection()
-        //{
-        //    base.Filter_on_subquery_projecting_one_value_type_from_empty_collection();
-        //}
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Filter_with_compex_predicate_containig_subquery(bool isAsync)
+        {
+            return base.Filter_with_compex_predicate_containig_subquery(isAsync);
+        }
 
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Correlated_collection_with_complex_OrderBy(bool isAsync)
+        {
+            return base.Correlated_collection_with_complex_OrderBy(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Correlated_collection_with_very_complex_order_by(bool isAsync)
+        {
+            return base.Correlated_collection_with_very_complex_order_by(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Project_one_value_type_from_empty_collection(bool isAsync)
+        {
+            return base.Project_one_value_type_from_empty_collection(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Include_collection_with_complex_OrderBy3(bool isAsync)
+        {
+            return base.Include_collection_with_complex_OrderBy3(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Where_subquery_boolean(bool isAsync)
+        {
+            return base.Where_subquery_boolean(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Correlated_collections_with_FirstOrDefault(bool isAsync)
+        {
+            return base.Correlated_collections_with_FirstOrDefault(isAsync);
+        }
+
+        [Theory(Skip = "SQLCE limitation")]
+        public override Task Select_subquery_boolean_empty(bool isAsync)
+        {
+            return base.Select_subquery_boolean_empty(isAsync);
+        }
 
         public override void Property_access_on_derived_entity_using_cast()
         {

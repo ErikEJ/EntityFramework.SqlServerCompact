@@ -186,7 +186,6 @@
     <Compile Include="MetaData\Conventions\Internal\SqlCeConventionSetBuilder.cs" />
     <Compile Include="Storage\Internal\SqlCeDateTimeTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeDecimalTypeMapping.cs" />
-    <Compile Include="Storage\Internal\SqlCeDoubleTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeFloatTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeLongTypeMapping.cs" />
     <Compile Include="Storage\Internal\SqlCeShortTypeMapping.cs" />

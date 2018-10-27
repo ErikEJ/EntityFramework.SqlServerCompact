@@ -216,10 +216,10 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = 4000]
         public class SqlCeStringsTypeMappingSource : RelationalTypeMappingSource
         {
             private readonly SqlCeStringTypeMapping _fixedLengthUnicodeString
-                = new SqlCeStringTypeMapping("nchar", dbType: DbType.String);
+                = new SqlCeStringTypeMapping("nchar");
 
             private readonly SqlCeStringTypeMapping _variableLengthUnicodeString
-                = new SqlCeStringTypeMapping("nvarchar", dbType: null);
+                = new SqlCeStringTypeMapping("nvarchar");
 
             private readonly Dictionary<string, RelationalTypeMapping> _storeTypeMappings;
 
@@ -286,13 +286,10 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = 4000]
                             storeType = baseName + "(" + size.ToString() + ")";
                         }
 
-                        var dbType = isFixedLength ? DbType.StringFixedLength : (DbType?)null;
-
                         return new SqlCeStringTypeMapping(
                             storeType,
-                            dbType,
-                            size,
-                            isFixedLength);
+                            size: size,
+                            fixedLength: isFixedLength);
                     }
                 }
 

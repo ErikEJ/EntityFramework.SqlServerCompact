@@ -16,7 +16,7 @@ namespace EFCore.SqlCe.Storage.Internal
     /// </summary>
     public class SqlCeTypeMappingSource : RelationalTypeMappingSource
     {
-        private readonly RelationalTypeMapping _real
+        private readonly FloatTypeMapping _real
             = new SqlCeFloatTypeMapping("real", DbType.Single);
 
         private readonly ByteTypeMapping _byte
@@ -46,10 +46,10 @@ namespace EFCore.SqlCe.Storage.Internal
             = new BoolTypeMapping("bit", DbType.Boolean);
 
         private readonly SqlCeStringTypeMapping _fixedLengthUnicodeString
-            = new SqlCeStringTypeMapping("nchar", dbType: DbType.String, fixedLength: true);
+            = new SqlCeStringTypeMapping("nchar", fixedLength: true);
 
         private readonly SqlCeStringTypeMapping _variableLengthUnicodeString
-            = new SqlCeStringTypeMapping("nvarchar", dbType: null);
+            = new SqlCeStringTypeMapping("nvarchar");
 
         private readonly SqlCeByteArrayTypeMapping _variableLengthBinary
             = new SqlCeByteArrayTypeMapping("varbinary");
@@ -60,8 +60,8 @@ namespace EFCore.SqlCe.Storage.Internal
         private readonly SqlCeDateTimeTypeMapping _datetime
             = new SqlCeDateTimeTypeMapping("datetime", dbType: DbType.DateTime);
 
-        private readonly SqlCeDoubleTypeMapping _double
-            = new SqlCeDoubleTypeMapping("float", DbType.Double);
+        private readonly DoubleTypeMapping _double
+            = new DoubleTypeMapping("float", DbType.Double);
 
         private readonly GuidTypeMapping _uniqueidentifier
             = new GuidTypeMapping("uniqueidentifier", DbType.Guid);
@@ -224,13 +224,10 @@ namespace EFCore.SqlCe.Storage.Internal
                         storeType = baseName + "(" + size.ToString() + ")";
                     }
 
-                    var dbType = isFixedLength ? DbType.StringFixedLength : (DbType?)null;
-
                     return new SqlCeStringTypeMapping(
                         storeType,
-                        dbType,
-                        size,
-                        isFixedLength);
+                        size: size,
+                        fixedLength: isFixedLength);
                 }
 
                 if (clrType == typeof(byte[]))

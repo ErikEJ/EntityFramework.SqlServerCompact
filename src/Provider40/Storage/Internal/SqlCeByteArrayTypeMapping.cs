@@ -18,8 +18,6 @@ namespace EFCore.SqlCe.Storage.Internal
     {
         private const int MaxSize = 8000;
 
-        private readonly StoreTypePostfix? _storeTypePostfix;
-
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -35,13 +33,17 @@ namespace EFCore.SqlCe.Storage.Internal
                 new RelationalTypeMappingParameters(
                     new CoreTypeMappingParameters(typeof(byte[]), null, comparer),
                     storeType,
-                    storeTypePostfix ?? StoreTypePostfix.Size,
+                    //storeTypePostfix ?? StoreTypePostfix.Size,
+                    GetStoreTypePostfix(storeTypePostfix, size),
                     dbType,
                     size: size,
                     fixedLength: fixedLength))
         {
-            _storeTypePostfix = storeTypePostfix;
         }
+
+        private static StoreTypePostfix GetStoreTypePostfix(StoreTypePostfix? storeTypePostfix, int? size)
+            => storeTypePostfix
+               ?? (size != null && size <= MaxSize ? StoreTypePostfix.Size : StoreTypePostfix.None);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

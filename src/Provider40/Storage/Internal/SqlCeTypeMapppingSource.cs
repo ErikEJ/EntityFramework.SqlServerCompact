@@ -60,8 +60,8 @@ namespace EFCore.SqlCe.Storage.Internal
         private readonly SqlCeDateTimeTypeMapping _datetime
             = new SqlCeDateTimeTypeMapping("datetime", dbType: DbType.DateTime);
 
-        private readonly DoubleTypeMapping _double
-            = new DoubleTypeMapping("float", DbType.Double);
+        private readonly SqlCeDoubleTypeMapping _double
+            = new SqlCeDoubleTypeMapping("float", DbType.Double);
 
         private readonly GuidTypeMapping _uniqueidentifier
             = new GuidTypeMapping("uniqueidentifier", DbType.Guid);

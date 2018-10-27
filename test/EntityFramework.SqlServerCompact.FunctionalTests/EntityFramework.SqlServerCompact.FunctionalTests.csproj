@@ -153,10 +153,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeKeyEndToEndSqlCeTest.cs" />
     <Compile Include="ConvertToProviderTypesSqlCeTest.cs" />
     <Compile Include="CustomConvertersSqlCeTest.cs" />
     <Compile Include="EverythingIsBytesSqlCeTest.cs" />
     <Compile Include="EverythingIsStringsSqlCeTest.cs" />
+    <Compile Include="Query\QueryFilterFuncletizationSqlCeTest.cs" />
     <Compile Include="Query\GearsOfWarFromSqlQuerySqlCeTest.cs" />
     <Compile Include="Issue541Test.cs" />
     <Compile Include="LazyLoadProxySqlCeTest.cs" />
@@ -246,8 +248,8 @@
     <Compile Include="Query\QueryNavigationsWithForcedClientEvalSqlCeTest.cs" />
     <Compile Include="Query\QueryNoClientEvalSqlCeFixture.cs" />
     <Compile Include="Query\QueryNoClientEvalSqlCeTest.cs" />
+    <Compile Include="Query\QueryTaggingSqlCeTest.cs" />
     <Compile Include="Query\SimpleQuerySqlCeTest.cs" />
-    <Compile Include="Query\SimpleQuerySqlCeTest.QueryTypes.cs" />
     <Compile Include="Scaffolding\SqlCeDatabaseModelFactoryTest.cs" />
     <Compile Include="Scaffolding\SqlCeDatabaseModelFixture.cs" />
     <Compile Include="SqlCeCommandDisposeTest.cs" />
@@ -274,6 +276,7 @@
     <Compile Include="UpdatesSqlCeFixture.cs" />
     <Compile Include="UpdatesSqlCeTest.cs" />
     <Compile Include="WarningsSqlCeTest.cs" />
+    <Compile Include="WithConstructorsSqlCeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

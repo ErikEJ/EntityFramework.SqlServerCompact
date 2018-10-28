@@ -368,7 +368,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="EntityFrameworkCore.SqlServerCompact35.nuspec">
       <SubType>Designer</SubType>
     </None>

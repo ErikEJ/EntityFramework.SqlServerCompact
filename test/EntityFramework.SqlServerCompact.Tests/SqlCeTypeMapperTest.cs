@@ -600,7 +600,7 @@ namespace Microsoft.EntityFrameworkCore
                 Assert.Throws<ArgumentException>(() => mapper.FindMapping(property)).Message);
         }
 
-        [Theory(Skip = "ErikEJ Investigate fail")]
+        [Theory]
         [InlineData("national char varying")]
         [InlineData("national character varying")]
         [InlineData("national character")]
@@ -626,7 +626,7 @@ namespace Microsoft.EntityFrameworkCore
             Assert.Equal(typeName + "(2018)", mapping.StoreType);
         }
 
-        [Theory(Skip = "ErikEJ investigate fail")]
+        [Theory]
         [InlineData("binary varying")]
         [InlineData("binary")]
         [InlineData("varbinary")]

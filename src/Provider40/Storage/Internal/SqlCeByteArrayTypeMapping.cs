@@ -23,7 +23,7 @@ namespace EFCore.SqlCe.Storage.Internal
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public SqlCeByteArrayTypeMapping(
-            [NotNull] string storeType,
+            [CanBeNull] string storeType = null,
             DbType? dbType = System.Data.DbType.Binary,
             int? size = null,
             bool fixedLength = false,
@@ -32,8 +32,7 @@ namespace EFCore.SqlCe.Storage.Internal
             : base(
                 new RelationalTypeMappingParameters(
                     new CoreTypeMappingParameters(typeof(byte[]), null, comparer),
-                    storeType,
-                    //storeTypePostfix ?? StoreTypePostfix.Size,
+                    storeType ?? (fixedLength ? "binary" : "varbinary"),
                     GetStoreTypePostfix(storeTypePostfix, size),
                     dbType,
                     size: size,

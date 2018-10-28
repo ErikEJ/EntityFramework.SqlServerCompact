@@ -31,7 +31,6 @@ namespace EFCore.SqlCe.Storage.Internal
                     new CoreTypeMappingParameters(typeof(string)),
                     storeType,
                     GetStoreTypePostfix(storeTypePostfix, size),
-                    //storeTypePostfix ?? StoreTypePostfix.Size,
                     GetDbType(fixedLength),
                     true,
                     size,
@@ -42,11 +41,6 @@ namespace EFCore.SqlCe.Storage.Internal
         private static StoreTypePostfix GetStoreTypePostfix(StoreTypePostfix? storeTypePostfix, int? size)
             => storeTypePostfix
                 ?? (size != null && size <= UnicodeMax ? StoreTypePostfix.Size : StoreTypePostfix.None);
-
-        //private static StoreTypePostfix GetStoreTypePostfix(int? size)
-        //    => size.HasValue && size <= UnicodeMax
-        //            ? StoreTypePostfix.Size
-        //            : StoreTypePostfix.None;
 
         private static DbType? GetDbType(bool fixedLength) => fixedLength ? System.Data.DbType.String : (DbType?)null;
 

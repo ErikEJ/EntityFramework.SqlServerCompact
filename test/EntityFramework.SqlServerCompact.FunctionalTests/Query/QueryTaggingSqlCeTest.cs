@@ -3,13 +3,12 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class AsyncQueryNavigationsSqlCeTests : AsyncQueryNavigationsTestBase<NorthwindQuerySqlCeFixture<NoopModelCustomizer>>
+    public class QueryTaggingSqlCeTest : QueryTaggingTestBase<NorthwindQuerySqlCeFixture<NoopModelCustomizer>>
     {
-        public AsyncQueryNavigationsSqlCeTests(
+        public QueryTaggingSqlCeTest(
             NorthwindQuerySqlCeFixture<NoopModelCustomizer> fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
-            // TestSqlLoggerFactory.CaptureOutput(testOutputHelper);
         }
     }
 }

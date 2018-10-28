@@ -115,20 +115,6 @@ namespace Microsoft.EntityFrameworkCore.Storage
                     TestServiceFactory.Instance.Create<RelationalTypeMappingSourceDependencies>())
                 .FindMapping(type);
 
-        public override void GenerateSqlLiteral_returns_ByteArray_literal()
-        {
-            var value = new byte[] { 0xDA, 0x7A };
-            var literal = GetMapping(typeof(byte[])).GenerateSqlLiteral(value);
-            Assert.Equal("0xDA7A", literal);
-        }
-
-        public override void GenerateSqlLiteral_returns_DateTime_literal()
-        {
-            var value = new DateTime(2015, 3, 12, 13, 36, 37, 371);
-            var literal = GetMapping(typeof(DateTime)).GenerateSqlLiteral(value);
-
-            Assert.Equal("'2015-03-12T13:36:37.371'", literal);
-        }
 
         public static RelationalTypeMapping GetMapping(string type)
             => new SqlCeTypeMappingSource(

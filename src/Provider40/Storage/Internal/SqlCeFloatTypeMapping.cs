@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCore.SqlCe.Storage.Internal
 {
@@ -9,10 +8,8 @@ namespace EFCore.SqlCe.Storage.Internal
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public class SqlCeFloatTypeMapping : RelationalTypeMapping
+    public class SqlCeFloatTypeMapping : FloatTypeMapping
     {
-        //TODO ErikEJ Inherit FloatTypeMapping with 2.2 bits
-
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -20,7 +17,7 @@ namespace EFCore.SqlCe.Storage.Internal
         public SqlCeFloatTypeMapping(
             [NotNull] string storeType,
             DbType? dbType = null)
-            : base(storeType, typeof(float), dbType)
+            : base(storeType, dbType)
         {
         }
 
@@ -37,15 +34,8 @@ namespace EFCore.SqlCe.Storage.Internal
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public override RelationalTypeMapping Clone(string storeType, int? size)
-            => new SqlCeFloatTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));
-
-        /// <summary>
-        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public override CoreTypeMapping Clone(ValueConverter converter)
-            => new SqlCeFloatTypeMapping(Parameters.WithComposedConverter(converter));
+        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
+            => new SqlCeFloatTypeMapping(parameters);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

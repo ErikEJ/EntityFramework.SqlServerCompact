@@ -148,6 +148,8 @@ BuiltInNullableDataTypesShadow.TestNullableUnsignedInt16 ---> [nullable nvarchar
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt32 ---> [nullable nvarchar] [MaxLength = 64]
 BuiltInNullableDataTypesShadow.TestNullableUnsignedInt64 ---> [nullable nvarchar] [MaxLength = 64]
 BuiltInNullableDataTypesShadow.TestString ---> [nullable nvarchar] [MaxLength = 4000]
+EmailTemplate.Id ---> [nvarchar] [MaxLength = 36]
+EmailTemplate.TemplateType ---> [nvarchar] [MaxLength = 4000]
 MaxLengthDataTypes.ByteArray5 ---> [nullable nvarchar] [MaxLength = 8]
 MaxLengthDataTypes.ByteArray9000 ---> [nullable nvarchar] [MaxLength = 4000]
 MaxLengthDataTypes.Id ---> [nvarchar] [MaxLength = 64]
@@ -214,10 +216,10 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = 4000]
         public class SqlCeStringsTypeMappingSource : RelationalTypeMappingSource
         {
             private readonly SqlCeStringTypeMapping _fixedLengthUnicodeString
-                = new SqlCeStringTypeMapping("nchar", dbType: DbType.String);
+                = new SqlCeStringTypeMapping("nchar");
 
             private readonly SqlCeStringTypeMapping _variableLengthUnicodeString
-                = new SqlCeStringTypeMapping("nvarchar", dbType: null);
+                = new SqlCeStringTypeMapping("nvarchar");
 
             private readonly Dictionary<string, RelationalTypeMapping> _storeTypeMappings;
 
@@ -284,13 +286,10 @@ UnicodeDataTypes.StringUnicode ---> [nullable nvarchar] [MaxLength = 4000]
                             storeType = baseName + "(" + size.ToString() + ")";
                         }
 
-                        var dbType = isFixedLength ? DbType.StringFixedLength : (DbType?)null;
-
                         return new SqlCeStringTypeMapping(
                             storeType,
-                            dbType,
-                            size,
-                            isFixedLength);
+                            size: size,
+                            fixedLength: isFixedLength);
                     }
                 }
 

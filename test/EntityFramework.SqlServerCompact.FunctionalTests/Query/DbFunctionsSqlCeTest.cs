@@ -155,7 +155,7 @@ WHERE DATEDIFF(SECOND, [c].[OrderDate], GETDATE()) = 0");
                 AssertSql(
                     @"SELECT COUNT(*)
 FROM [Orders] AS [c]
-WHERE DATEDIFF(MILLISECOND, GETDATE(), DATEADD(day, 1, GETDATE())) = 0");
+WHERE DATEDIFF(MILLISECOND, GETDATE(), DATEADD(day, 1.0, GETDATE())) = 0");
             }
         }
 

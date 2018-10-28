@@ -130,7 +130,7 @@ namespace EFCore.SqlCe.Storage.Internal
                     { "decimal", _decimal },
                     { "double precision", _double },
                     { "float", _double },
-                    { "image", _variableLengthBinary },
+                    { "image", _variableLengthMaxBinary },
                     { "int", _int },
                     { "money", _decimal },
                     { "national char varying", _variableLengthUnicodeString },

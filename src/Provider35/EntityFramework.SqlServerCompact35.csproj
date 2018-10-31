@@ -318,6 +318,9 @@
     <Compile Include="..\Provider40\Storage\Internal\SqlCeDecimalTypeMapping.cs">
       <Link>Storage\Internal\SqlCeDecimalTypeMapping.cs</Link>
     </Compile>
+    <Compile Include="..\Provider40\Storage\Internal\SqlCeDoubleTypeMapping.cs">
+      <Link>Storage\Internal\SqlCeDoubleTypeMapping.cs</Link>
+    </Compile>
     <Compile Include="..\Provider40\Storage\Internal\SqlCeFloatTypeMapping.cs">
       <Link>Storage\Internal\SqlCeFloatTypeMapping.cs</Link>
     </Compile>

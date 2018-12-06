@@ -1,4 +1,4 @@
-# EntityFramework.SqlServerCompact
+# EntityFrameworkCore.SqlServerCompact
 This project is the Entity Framework Core SQL Server Compact providers for SQL Server Compact 4.0 and 3.5 SP2.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/y7eyabev603qgy7h/branch/master?svg=true)](https://ci.appveyor.com/project/ErikEJ/entityframework-sqlservercompact/branch/master)

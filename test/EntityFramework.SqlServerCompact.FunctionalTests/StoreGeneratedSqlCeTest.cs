@@ -25,6 +25,14 @@ namespace Microsoft.EntityFrameworkCore
             base.Value_generation_throws_for_common_cases();
         }
 
+        //TODO ErikEJ Update test in Core (missing Filler property)
+
+        [Fact(Skip = "ErikEJ PR to Core")]
+        public override void Fields_used_correctly_for_store_generated_values()
+        {
+            base.Fields_used_correctly_for_store_generated_values();
+        }
+
         [Fact]
         public virtual void Exception_in_SaveChanges_causes_store_values_to_be_reverted()
         {

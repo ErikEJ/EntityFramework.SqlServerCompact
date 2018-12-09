@@ -569,7 +569,7 @@ namespace Microsoft.EntityFrameworkCore
             var mapper = CreateTypeMapper();
 
             Assert.Equal(
-                $"Unqualified data type {typeName}",
+                $"Unqualified data type {typeName.ToLowerInvariant()}",
                 Assert.Throws<ArgumentException>(() => mapper.FindMapping(typeName)).Message);
         }
 
@@ -596,7 +596,7 @@ namespace Microsoft.EntityFrameworkCore
             var mapper = CreateTypeMapper();
 
             Assert.Equal(
-                $"Unqualified data type {typeName} on property {nameof(StringCheese.StringWithSize)}",
+                $"Unqualified data type {typeName.ToLowerInvariant()} on property {nameof(StringCheese.StringWithSize)}",
                 Assert.Throws<ArgumentException>(() => mapper.FindMapping(property)).Message);
         }
 

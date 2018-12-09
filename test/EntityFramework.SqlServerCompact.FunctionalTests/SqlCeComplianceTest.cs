@@ -20,8 +20,8 @@ namespace Microsoft.EntityFrameworkCore
             //No roundtrip of GUIDs with SQL CE
             typeof(StoreGeneratedFixupTestBase<>),
 
-            //TODO ErikEJ Implement
-            typeof(QueryTaggingTestBase<>)
+            //TODO ErikEJ PR for Core (missing Filler property) #561
+            typeof(GraphUpdatesTestBase<>)
         };
 
         protected override Assembly TargetAssembly { get; } = typeof(SqlCeComplianceTest).Assembly;

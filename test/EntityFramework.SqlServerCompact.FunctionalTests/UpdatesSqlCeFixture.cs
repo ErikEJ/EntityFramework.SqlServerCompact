@@ -14,6 +14,9 @@ namespace Microsoft.EntityFrameworkCore
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price).HasColumnType("decimal(18,2)");
 
+            modelBuilder.Entity<ProductWithBytes>()
+                .Property(p => p.Bytes).HasColumnType("varbinary(8000)");
+
             modelBuilder.Entity<LoginEntityTypeWithAnExtremelyLongAndOverlyConvolutedNameThatIsUsedToVerifyThatTheStoreIdentifierGenerationLengthLimitIsWorkingCorrectly>()
                 .Property(l => l.ProfileId3).HasColumnType("decimal(18,2)");
 

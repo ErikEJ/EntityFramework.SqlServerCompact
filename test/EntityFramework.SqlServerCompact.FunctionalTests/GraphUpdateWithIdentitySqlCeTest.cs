@@ -7,46 +7,46 @@ using Xunit;
 
 namespace Microsoft.EntityFrameworkCore
 {
-    public abstract class GraphUpdatesSqlCeTestBase<TFixture> : GraphUpdatesTestBase<TFixture>
-        where TFixture : GraphUpdatesSqlCeTestBase<TFixture>.GraphUpdatesSqlCeFixtureBase, new()
-    {
-        protected GraphUpdatesSqlCeTestBase(TFixture fixture)
-            : base(fixture)
-        {
-        }
+    //public abstract class GraphUpdatesSqlCeTestBase<TFixture> : GraphUpdatesTestBase<TFixture>
+    //    where TFixture : GraphUpdatesSqlCeTestBase<TFixture>.GraphUpdatesSqlCeFixtureBase, new()
+    //{
+    //    protected GraphUpdatesSqlCeTestBase(TFixture fixture)
+    //        : base(fixture)
+    //    {
+    //    }
 
-        protected override void UseTransaction(DatabaseFacade facade, IDbContextTransaction transaction)
-            => facade.UseTransaction(transaction.GetDbTransaction());
+    //    protected override void UseTransaction(DatabaseFacade facade, IDbContextTransaction transaction)
+    //        => facade.UseTransaction(transaction.GetDbTransaction());
 
-        public abstract class GraphUpdatesSqlCeFixtureBase : GraphUpdatesFixtureBase
-        {
-            public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
-            protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
-        }
-    }
+    //    public abstract class GraphUpdatesSqlCeFixtureBase : GraphUpdatesFixtureBase
+    //    {
+    //        public TestSqlLoggerFactory TestSqlLoggerFactory => (TestSqlLoggerFactory)ServiceProvider.GetRequiredService<ILoggerFactory>();
+    //        protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
+    //    }
+    //}
 
-    public class GraphUpdatesWithIdentitySqlCeTest : GraphUpdatesSqlCeTestBase<GraphUpdatesWithIdentitySqlCeTest.GraphUpdatesWithIdentitySqlCeFixture>
-    {
-        public GraphUpdatesWithIdentitySqlCeTest(GraphUpdatesWithIdentitySqlCeFixture fixture)
-            : base(fixture)
-        {
-        }
+    //public class GraphUpdatesWithIdentitySqlCeTest : GraphUpdatesSqlCeTestBase<GraphUpdatesWithIdentitySqlCeTest.GraphUpdatesWithIdentitySqlCeFixture>
+    //{
+    //    public GraphUpdatesWithIdentitySqlCeTest(GraphUpdatesWithIdentitySqlCeFixture fixture)
+    //        : base(fixture)
+    //    {
+    //    }
 
-        [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
-        public override DbUpdateException Optional_One_to_one_with_AK_relationships_are_one_to_one()
-        {
-            return base.Optional_One_to_one_with_AK_relationships_are_one_to_one();
-        }
+    //    [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
+    //    public override DbUpdateException Optional_One_to_one_with_AK_relationships_are_one_to_one()
+    //    {
+    //        return base.Optional_One_to_one_with_AK_relationships_are_one_to_one();
+    //    }
 
-        [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
-        public override DbUpdateException Optional_One_to_one_relationships_are_one_to_one()
-        {
-            return base.Optional_One_to_one_relationships_are_one_to_one();
-        }
+    //    [Fact(Skip = "SQL CE limitation: Unique keys not enforced for nullable FKs")]
+    //    public override DbUpdateException Optional_One_to_one_relationships_are_one_to_one()
+    //    {
+    //        return base.Optional_One_to_one_relationships_are_one_to_one();
+    //    }
 
-        public class GraphUpdatesWithIdentitySqlCeFixture : GraphUpdatesSqlCeFixtureBase
-        {
-            protected override string StoreName { get; } = "GraphIdentityUpdatesTest";
-        }
-    }
+    //    public class GraphUpdatesWithIdentitySqlCeFixture : GraphUpdatesSqlCeFixtureBase
+    //    {
+    //        protected override string StoreName { get; } = "GraphIdentityUpdatesTest";
+    //    }
+    //}
 }

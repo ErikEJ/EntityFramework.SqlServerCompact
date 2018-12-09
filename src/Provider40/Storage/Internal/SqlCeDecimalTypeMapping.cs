@@ -1,7 +1,7 @@
 ﻿using System.Data;
+using System.Data.Common;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCore.SqlCe.Storage.Internal
 {
@@ -44,14 +44,22 @@ namespace EFCore.SqlCe.Storage.Internal
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public override RelationalTypeMapping Clone(string storeType, int? size)
-            => new SqlCeDecimalTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));
+        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
+            => new SqlCeDecimalTypeMapping(parameters);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public override CoreTypeMapping Clone(ValueConverter converter)
-            => new SqlCeDecimalTypeMapping(Parameters.WithComposedConverter(converter));
+        protected override void ConfigureParameter(DbParameter parameter)
+        {
+            base.ConfigureParameter(parameter);
+
+            if (Size.HasValue
+                && Size.Value != -1)
+            {
+                parameter.Size = Size.Value;
+            }
+        }
     }
 }

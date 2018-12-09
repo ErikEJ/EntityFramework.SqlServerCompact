@@ -10,11 +10,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework Core. Requires the SQL Server Compact 3.5 SP2 runtime to be installed</description>
     <summary>Allows SQL Server Compact 3.5 SP2 to be used with Entity Framework Core</summary>
-    <releaseNotes>for EF Core 2.1.2</releaseNotes>
+    <releaseNotes>for EF Core 2.2.0</releaseNotes>
     <tags>EntityFramework EF sqlce sqlservercompact entity framework core provider sql server compact entityframeworkcore efcore</tags>
     <dependencies>
         <group targetFramework="net461">
-            <dependency id="Microsoft.EntityFrameworkCore.Relational" version="2.1.2" include="all" />
+            <dependency id="Microsoft.EntityFrameworkCore.Relational" version="2.2.0" include="all" />
          </group>
     </dependencies>
   </metadata>

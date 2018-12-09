@@ -63,7 +63,7 @@ namespace Microsoft.EntityFrameworkCore
         {
             protected override ITestStoreFactory TestStoreFactory => SqlCeTestStoreFactory.Instance;
 
-            protected override void Seed(DbContext context)
+            protected override void Seed(PoolableDbContext context)
             {
                 base.Seed(context);
             }

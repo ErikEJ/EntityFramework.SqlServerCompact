@@ -16,7 +16,7 @@ namespace EFCore.SqlCe.Storage.Internal
     /// </summary>
     public class SqlCeTypeMappingSource : RelationalTypeMappingSource
     {
-        private readonly RelationalTypeMapping _real
+        private readonly FloatTypeMapping _real
             = new SqlCeFloatTypeMapping("real", DbType.Single);
 
         private readonly ByteTypeMapping _byte
@@ -46,22 +46,28 @@ namespace EFCore.SqlCe.Storage.Internal
             = new BoolTypeMapping("bit", DbType.Boolean);
 
         private readonly SqlCeStringTypeMapping _fixedLengthUnicodeString
-            = new SqlCeStringTypeMapping("nchar", dbType: DbType.String, fixedLength: true);
+            = new SqlCeStringTypeMapping("nchar", fixedLength: true, storeTypePostfix: StoreTypePostfix.Size);
 
         private readonly SqlCeStringTypeMapping _variableLengthUnicodeString
-            = new SqlCeStringTypeMapping("nvarchar", dbType: null);
+            = new SqlCeStringTypeMapping("nvarchar", storeTypePostfix: StoreTypePostfix.Size);
+
+        private readonly SqlCeStringTypeMapping _variableLengthMaxUnicodeString
+            = new SqlCeStringTypeMapping("ntext", storeTypePostfix: StoreTypePostfix.None);
 
         private readonly SqlCeByteArrayTypeMapping _variableLengthBinary
-            = new SqlCeByteArrayTypeMapping("varbinary");
+            = new SqlCeByteArrayTypeMapping("varbinary", storeTypePostfix: StoreTypePostfix.Size);
+
+        private readonly SqlCeByteArrayTypeMapping _variableLengthMaxBinary
+            = new SqlCeByteArrayTypeMapping("image", storeTypePostfix: StoreTypePostfix.None);
 
         private readonly SqlCeByteArrayTypeMapping _fixedLengthBinary
-            = new SqlCeByteArrayTypeMapping("binary", fixedLength: true);
+            = new SqlCeByteArrayTypeMapping("binary", fixedLength: true, storeTypePostfix: StoreTypePostfix.Size);
 
         private readonly SqlCeDateTimeTypeMapping _datetime
             = new SqlCeDateTimeTypeMapping("datetime", dbType: DbType.DateTime);
 
         private readonly DoubleTypeMapping _double
-            = new DoubleTypeMapping("float", DbType.Double);
+            = new SqlCeDoubleTypeMapping("float", DbType.Double);
 
         private readonly GuidTypeMapping _uniqueidentifier
             = new GuidTypeMapping("uniqueidentifier", DbType.Guid);
@@ -124,14 +130,14 @@ namespace EFCore.SqlCe.Storage.Internal
                     { "decimal", _decimal },
                     { "double precision", _double },
                     { "float", _double },
-                    { "image", _variableLengthBinary },
+                    { "image", _variableLengthMaxBinary },
                     { "int", _int },
                     { "money", _decimal },
                     { "national char varying", _variableLengthUnicodeString },
                     { "national character varying", _variableLengthUnicodeString },
                     { "national character", _fixedLengthUnicodeString },
                     { "nchar", _fixedLengthUnicodeString },
-                    { "ntext", _variableLengthUnicodeString },
+                    { "ntext", _variableLengthMaxUnicodeString },
                     { "numeric", _decimal },
                     { "nvarchar", _variableLengthUnicodeString },
                     { "real", _real },
@@ -168,7 +174,8 @@ namespace EFCore.SqlCe.Storage.Internal
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         protected override RelationalTypeMapping FindMapping(in RelationalTypeMappingInfo mappingInfo)
-            => FindRawMapping(mappingInfo)?.Clone(mappingInfo);
+            => FindRawMapping(mappingInfo)?.Clone(mappingInfo)
+                ?? base.FindMapping(mappingInfo);
 
         private RelationalTypeMapping FindRawMapping(RelationalTypeMappingInfo mappingInfo)
         {
@@ -223,13 +230,10 @@ namespace EFCore.SqlCe.Storage.Internal
                         storeType = baseName + "(" + size.ToString() + ")";
                     }
 
-                    var dbType = isFixedLength ? DbType.StringFixedLength : (DbType?)null;
-
                     return new SqlCeStringTypeMapping(
                         storeType,
-                        dbType,
-                        size,
-                        isFixedLength);
+                        size: size,
+                        fixedLength: isFixedLength);
                 }
 
                 if (clrType == typeof(byte[]))
@@ -239,24 +243,17 @@ namespace EFCore.SqlCe.Storage.Internal
                         return _rowversion;
                     }
 
+                    var isFixedLength = mappingInfo.IsFixedLength == true;
+
                     var size = mappingInfo.Size ?? (mappingInfo.IsKeyOrIndex ? (int?)512 : null);
                     if (size > 8000)
                     {
-                        size = null;
+                        size = isFixedLength ? 8000 : (int?)null;
                     }
 
-                    var isFixedLength = mappingInfo.IsFixedLength == true;
-
-                    var storeType = "image";
-                    if (size != null)
-                    {
-                        storeType = (isFixedLength ? "binary(" : "varbinary(") + size.ToString() + ")";
-                    }
-
-                    return new SqlCeByteArrayTypeMapping(
-                        storeType,
-                        DbType.Binary,
-                        size);
+                    return size == null
+                       ? _variableLengthMaxBinary
+                       : new SqlCeByteArrayTypeMapping(size: size, fixedLength: isFixedLength);
                 }
             }
 

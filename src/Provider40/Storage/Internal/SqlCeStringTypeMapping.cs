@@ -4,7 +4,6 @@ using System.Data.Common;
 using System.Data.SqlServerCe;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCore.SqlCe.Storage.Internal
 {
@@ -24,20 +23,26 @@ namespace EFCore.SqlCe.Storage.Internal
         /// </summary>
         public SqlCeStringTypeMapping(
             [NotNull] string storeType,
-            DbType? dbType,
             int? size = null,
-            bool fixedLength = false)
+            bool fixedLength = false,
+            StoreTypePostfix? storeTypePostfix = null)
             : this(
                 new RelationalTypeMappingParameters(
                     new CoreTypeMappingParameters(typeof(string)),
                     storeType,
-                    GetStoreTypePostfix(size),
-                    dbType,
+                    GetStoreTypePostfix(storeTypePostfix, size),
+                    GetDbType(fixedLength),
                     true,
                     size,
                     fixedLength))
         {
         }
+
+        private static StoreTypePostfix GetStoreTypePostfix(StoreTypePostfix? storeTypePostfix, int? size)
+            => storeTypePostfix
+                ?? (size != null && size <= UnicodeMax ? StoreTypePostfix.Size : StoreTypePostfix.None);
+
+        private static DbType? GetDbType(bool fixedLength) => fixedLength ? System.Data.DbType.String : (DbType?)null;
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -49,11 +54,6 @@ namespace EFCore.SqlCe.Storage.Internal
             _maxSpecificSize = CalculateSize(parameters.Size);
         }
 
-        private static StoreTypePostfix GetStoreTypePostfix(int? size)
-            => size.HasValue && size <= UnicodeMax
-                    ? StoreTypePostfix.Size
-                    : StoreTypePostfix.None;
-
         private static int CalculateSize(int? size)
             => size.HasValue && size <= UnicodeMax
                     ? size.Value
@@ -63,15 +63,8 @@ namespace EFCore.SqlCe.Storage.Internal
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public override RelationalTypeMapping Clone(string storeType, int? size)
-            => new SqlCeStringTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size, GetStoreTypePostfix(size)));
-
-        /// <summary>
-        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public override CoreTypeMapping Clone(ValueConverter converter)
-            => new SqlCeStringTypeMapping(Parameters.WithComposedConverter(converter));
+        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
+            => new SqlCeStringTypeMapping(parameters);
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

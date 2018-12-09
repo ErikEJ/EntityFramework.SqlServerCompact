@@ -1,12 +1,6 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Extensions.Internal;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.EntityFrameworkCore.TestUtilities.Xunit;
@@ -27,48 +21,11 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        [Fact(Skip="SQLCE limitation")]
-        public override Task SelectMany_primitive_select_subquery()
-        {
-            return base.SelectMany_primitive_select_subquery();
-        }
-
-        [Fact(Skip = "SQLCE limitation")]
-        public override Task OrderBy_correlated_subquery_lol()
-        {
-            return base.OrderBy_correlated_subquery_lol();
-        }
-
-        [Fact(Skip = "SQLCE limitation")]
-        public override Task Min_over_subquery_is_client_eval()
-        {
-            return base.Min_over_subquery_is_client_eval();
-        }
-
-        [Fact(Skip = "SQLCE limitation")]
-        public override Task Average_over_subquery_is_client_eval()
-        {
-            return base.Average_over_subquery_is_client_eval();
-        }
-
-        [Fact(Skip = "SQLCE limitation")]
-        public override Task Max_over_subquery_is_client_eval()
-        {
-            return base.Max_over_subquery_is_client_eval();
-        }
-
-        [Fact(Skip = "SQLCE limitation")]
-        public override Task Sum_over_subquery_is_client_eval()
-        {
-            return base.Sum_over_subquery_is_client_eval();
-        }
-
         [Fact(Skip = "SQLCE limitation, no views")]
         public override Task Query_backed_by_database_view()
         {
             return base.Query_backed_by_database_view();
         }
-
 
         [ConditionalFact]
         public async Task Query_compiler_concurrency()
@@ -116,27 +73,6 @@ namespace Microsoft.EntityFrameworkCore.Query
             }
 
             await Assert.ThrowsAsync<ObjectDisposedException>(() => task.SingleAsync(c => c.CustomerID == "ALFKI"));
-        }
-
-        public override async Task String_Contains_Literal()
-        {
-            await AssertQuery<Customer>(
-                cs => cs.Where(c => c.ContactName.Contains("M")), // case-insensitive
-                cs => cs.Where(c => c.ContactName.Contains("M") || c.ContactName.Contains("m")), // case-sensitive
-                entryCount: 34);
-        }
-
-        public override async Task String_Contains_MethodCall()
-        {
-            await AssertQuery<Customer>(
-                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1())), // case-insensitive
-                cs => cs.Where(c => c.ContactName.Contains(LocalMethod1().ToLower()) || c.ContactName.Contains(LocalMethod1().ToUpper())), // case-sensitive
-                entryCount: 34);
-        }
-
-        public async Task Skip_when_no_order_by()
-        {
-            await Assert.ThrowsAsync<Exception>(async () => await AssertQuery<Customer>(cs => cs.Skip(5).Take(10)));
         }
 
         [Fact]
@@ -248,14 +184,6 @@ namespace Microsoft.EntityFrameworkCore.Query
             //            }
             //        }
             //    }
-        }
-
-        [Fact(Skip="SQLCE limitation")]
-        public async Task Cancelation_token_properly_passed_to_GetResult_method_for_queries_with_result_operators_and_outer_parameter_injection()
-        {
-            await AssertQuery<Order>(
-                os => os.Select(o => new { o.Customer.City, Count = o.OrderDetails.Count() }),
-                elementSorter: e => e.City + " " + e.Count);
         }
     }
 }

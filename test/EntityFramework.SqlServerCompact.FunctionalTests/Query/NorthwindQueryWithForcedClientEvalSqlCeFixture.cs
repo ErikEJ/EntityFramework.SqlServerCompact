@@ -10,7 +10,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
         {
             var optionsBuilder = base.AddOptions(builder);
-            new SqlCeDbContextOptionsBuilder(optionsBuilder).UseClientEvalForUnsupportedSqlConstructs();
+            new SqlCeDbContextOptionsBuilder(optionsBuilder).UseClientEvalForUnsupportedSqlConstructs(true);
             return optionsBuilder;
         }
     }

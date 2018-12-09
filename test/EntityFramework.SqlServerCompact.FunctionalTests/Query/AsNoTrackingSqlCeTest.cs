@@ -7,6 +7,6 @@ namespace Microsoft.EntityFrameworkCore.Query
         public AsNoTrackingSqlCeTest(NorthwindQuerySqlCeFixture<NoopModelCustomizer> fixture)
             : base(fixture)
         {
-        }
+        }       
     }
 }

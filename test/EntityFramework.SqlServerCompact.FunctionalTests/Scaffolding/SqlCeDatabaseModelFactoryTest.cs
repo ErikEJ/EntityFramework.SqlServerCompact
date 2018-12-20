@@ -159,6 +159,7 @@ CREATE TABLE [MountainsColumns] (
     Created datetime DEFAULT('October 20, 2015 11am'),
     DiscoveredDate datetime,
     Modified rowversion,
+    IsHigh bit NOT NULL DEFAULT (0),
     --VarbinaryMax image NOT NULL,
     Primary Key (Name, Id)
 );";
@@ -209,13 +210,16 @@ CREATE TABLE [MountainsColumns] (
                     Assert.Equal("datetime", discovered.StoreType);
                     Assert.True(discovered.IsNullable);
                     Assert.Null(discovered.DefaultValueSql);
-
                 },
                 modified =>
                 {
                     Assert.Equal("Modified", modified.Name);
                     Assert.Equal(ValueGenerated.OnAddOrUpdate, modified.ValueGenerated);
                     Assert.Equal("rowversion", modified.StoreType);
+                },
+                isHigh =>
+                {
+                    Assert.Null(isHigh.DefaultValueSql);
                 });
         }
 

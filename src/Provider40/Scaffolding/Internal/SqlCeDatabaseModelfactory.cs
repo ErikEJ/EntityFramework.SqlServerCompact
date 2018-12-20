@@ -551,8 +551,9 @@ namespace EFCore.SqlCe.Scaffolding.Internal
 
         private static string FilterClrDefaults(string dataTypeName, bool nullable, string defaultValue)
         {
+            var originalValue = defaultValue;
             if (defaultValue == null
-                || defaultValue == "(NULL)")
+                || defaultValue == "NULL")
             {
                 return null;
             }
@@ -560,7 +561,9 @@ namespace EFCore.SqlCe.Scaffolding.Internal
             {
                 return defaultValue;
             }
-            if (defaultValue == "((0))")
+            defaultValue = defaultValue.Replace("(", string.Empty).Replace(")", string.Empty);
+
+            if (defaultValue == "0")
             {
                 if (dataTypeName == "bigint"
                     || dataTypeName == "bit"
@@ -576,7 +579,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     return null;
                 }
             }
-            else if (defaultValue == "((0.0))")
+            else if (defaultValue == "0.0")
             {
                 if (dataTypeName == "decimal"
                     || dataTypeName == "float"
@@ -587,15 +590,15 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     return null;
                 }
             }
-            else if ((defaultValue == "(CONVERT([real],(0)))" && dataTypeName == "real")
-                || (defaultValue == "((0.0000000000000000e+000))" && dataTypeName == "float")
-                || (defaultValue == "('1900-01-01T00:00:00.000')" && (dataTypeName == "datetime" || dataTypeName == "smalldatetime"))
-                || (defaultValue == "('00000000-0000-0000-0000-000000000000')" && dataTypeName == "uniqueidentifier"))
+            else if ((defaultValue == "CONVERT[real],0" && dataTypeName == "real")
+                || (defaultValue == "0.0000000000000000e+000" && dataTypeName == "float")
+                || (defaultValue == "'1900-01-01T00:00:00.000'" && (dataTypeName == "datetime" || dataTypeName == "smalldatetime"))
+                || (defaultValue == "'00000000-0000-0000-0000-000000000000'" && dataTypeName == "uniqueidentifier"))
             {
                 return null;
             }
 
-            return defaultValue;
+            return originalValue;
         }
 
         private static ReferentialAction? ConvertToReferentialAction(string onDeleteAction)

@@ -242,7 +242,7 @@ namespace EFCore.SqlCe.Query.Migrations
         {
             Check.NotNull(operation, nameof(operation));
             Check.NotNull(builder, nameof(builder));
-            if (operation.NewName != null)
+            if (operation.NewName != null && operation.NewName != operation.Name)
             {
                 builder
                     .EndCommand()

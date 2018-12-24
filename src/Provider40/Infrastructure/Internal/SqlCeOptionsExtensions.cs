@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace EFCore.SqlCe.Infrastructure.Internal
 {
-    public class SqlCeOptionsExtension : RelationalOptionsExtension
+    public class SqlCeOptionsExtension : RelationalOptionsExtension, IDbContextOptionsExtensionWithDebugInfo
     {
         private long? _serviceProviderHash;
         private bool? _clientEvalForUnsupportedSqlConstructs;
@@ -52,6 +54,17 @@ namespace EFCore.SqlCe.Infrastructure.Internal
             services.AddEntityFrameworkSqlCe();
 
             return true;
+        }
+
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+
+        public virtual void PopulateDebugInfo(IDictionary<string, string> debugInfo)
+        {
+            debugInfo["SqlCe:" + nameof(SqlCeDbContextOptionsBuilder.UseClientEvalForUnsupportedSqlConstructs)]
+                = (_clientEvalForUnsupportedSqlConstructs?.GetHashCode() ?? 0L).ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>

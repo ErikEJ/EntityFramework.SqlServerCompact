@@ -37,6 +37,19 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         [Fact]
+        public void It_reads_all_tables()
+        {
+            var sql = new List<string>
+            {
+                "CREATE TABLE [Higher] ( id int );",
+                "CREATE TABLE [Lower] ( id int );"
+            };
+            var dbInfo = CreateModel(sql, new List<string>());
+
+            Assert.True(dbInfo.Tables.Count > 1);
+        }
+
+        [Fact]
         public void It_reads_foreign_keys()
         {
             var sql = new List<string> {

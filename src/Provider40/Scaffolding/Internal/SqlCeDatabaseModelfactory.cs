@@ -21,7 +21,10 @@ namespace EFCore.SqlCe.Scaffolding.Internal
     public class SqlCeDatabaseModelFactory : IDatabaseModelFactory
     {
         private SqlCeConnection _connection;
-        private List<string> _tableSelection;
+
+        private HashSet<string> tablesToSelect;
+        private HashSet<string> selectedTables;
+
         private DatabaseModel _databaseModel;
         private Dictionary<string, DatabaseTable> _tables = new Dictionary<string, DatabaseTable>();
         private Dictionary<string, DatabaseColumn> _tableColumns = new Dictionary<string, DatabaseColumn>();
@@ -74,9 +77,9 @@ namespace EFCore.SqlCe.Scaffolding.Internal
             }
             try
             {
-
-                _tableSelection = tables.ToList();
-
+                tablesToSelect = new HashSet<string>(tables.ToList(), StringComparer.OrdinalIgnoreCase);
+                selectedTables = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                
                 string databaseName = null;
                 try
                 {
@@ -124,13 +127,31 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                         Name = reader.GetValueOrDefault<string>("TABLE_NAME")
                     };
 
-                    if (_tableSelection.Contains(table.Name))
+                    if (!AllowsTable(tablesToSelect, selectedTables, table.Name))
                     {
-                        _databaseModel.Tables.Add(table);
-                        _tables[TableKey(table)] = table;
+                        continue;
                     }
+
+                    _databaseModel.Tables.Add(table);
+                    _tables[TableKey(table)] = table;
                 }
             }
+        }
+
+        private static bool AllowsTable(HashSet<string> tables, HashSet<string> selectedTables, string name)
+        {
+            if (tables.Count == 0)
+            {
+                return true;
+            }
+
+            if (tables.Contains(name))
+            {
+                selectedTables.Add(name);
+                return true;
+            }
+
+            return false;
         }
 
         private void GetColumns()
@@ -180,7 +201,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
 
                     Logger.ColumnFound(tableName, columnName, dataTypeName, nullable, defaultValue);
 
-                    if (!_tableSelection.Contains(tableName))
+                    if (!AllowsTable(tablesToSelect, selectedTables, tableName))
                     {
                         //Logger.ColumnSkipped(DisplayName(schemaName, tableName), columnName);
                         continue;
@@ -286,7 +307,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     //Logger.IndexColumnFound(
                     //    tableName, indexName, true, columnName, indexOrdinal);
 
-                    if (!_tableSelection.Contains(tableName))
+                    if (!AllowsTable(tablesToSelect, selectedTables, tableName))
                     {
                         //Logger.IndexColumnSkipped(columnName, indexName, DisplayName(schemaName, tableName));
                         continue;
@@ -361,7 +382,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     //Logger.IndexColumnFound(
                     //    tableName, indexName, true, columnName, indexOrdinal);
 
-                    if (!_tableSelection.Contains(tableName))
+                    if (!AllowsTable(tablesToSelect, selectedTables, tableName))
                     {
                         //Logger.IndexColumnSkipped(columnName, indexName, DisplayName(schemaName, tableName));
                         continue;
@@ -424,7 +445,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     var tableName = reader.GetValueOrDefault<string>("table_name");
                     var columnName = reader.GetValueOrDefault<string>("column_name");
 
-                    if (!_tableSelection.Contains(tableName))
+                    if (!AllowsTable(tablesToSelect, selectedTables, tableName))
                     {
                         continue;
                     }
@@ -495,7 +516,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
                     var fromColumnName = reader.GetValueOrDefault<string>("FK_COLUMN_NAME");
                     var toColumnName = reader.GetValueOrDefault<string>("UQ_COLUMN_NAME");
 
-                    if (!_tableSelection.Contains(tableName))
+                    if (!AllowsTable(tablesToSelect, selectedTables, tableName))
                     {
                         continue;
                     }

@@ -22,7 +22,7 @@ namespace EFCore.SqlCe.Scaffolding.Internal
             => new MethodCallCodeFragment(
                 nameof(SqlCeDbContextOptionsExtensions.UseSqlCe),
                 providerOptions == null
-                ? new object[] { connectionString }
-                : new object[] { connectionString, new NestedClosureCodeFragment("x", providerOptions) });
+                    ? new object[] { connectionString }
+                    : new object[] { connectionString, new NestedClosureCodeFragment("x", providerOptions) });
     }
 }

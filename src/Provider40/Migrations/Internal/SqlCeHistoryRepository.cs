@@ -24,7 +24,7 @@ namespace EFCore.SqlCe.Migrations.Internal
             }
         }
 
-        protected override bool InterpretExistsResult(object value) => value != DBNull.Value;
+        protected override bool InterpretExistsResult(object value) => Convert.ToInt64(value) != 0;
 
         public override string GetCreateIfNotExistsScript() => GetCreateScript();
 
